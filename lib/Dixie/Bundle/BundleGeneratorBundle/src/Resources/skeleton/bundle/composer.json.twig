@@ -1,0 +1,44 @@
+{
+    "name": "{{ vendor|lower }}/{{ bundle_short_name|lower }}-bundle",
+    "version": "1.0.0",
+    "description": "{{ bundle_name }} description",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Name",
+            "homepage": "http://example.com/",
+            "email": "example@example.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "{{ namespace_double }}\\": ""
+        }
+    },
+    "require": {
+        "php": ">={{ php_min }}"
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "symfony/flex": true,
+            "symfony/runtime": true,
+            "symfony/thanks": false
+        },
+        "sort-packages": true
+    }
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../*/*"
+        }
+    ]
+}

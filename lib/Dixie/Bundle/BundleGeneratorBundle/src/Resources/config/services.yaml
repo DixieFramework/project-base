@@ -1,0 +1,31 @@
+services:
+    # default configuration for services in *only in this* file
+    _defaults:
+        # Enables a mechanism to automatically inject container dependencies into your services
+        autowire: true
+        # Enables auto-configuration mechanism
+        autoconfigure: true
+        # Makes service default to public
+        public: false
+
+    # ---------------------------------------------------------
+    # Register all controllers of WebBundle as services
+    # ---------------------------------------------------------
+#    Talav\BundleGeneratorBundle\Controller\:
+#        resource: '../../Controller'
+#        public: true
+#        tags: [ 'controller.service_arguments' ]
+
+    # ---------------------------------------------------------
+    # Register all commands of WebBundle as commands
+    # ---------------------------------------------------------
+    Talav\BundleGeneratorBundle\Command\:
+        resource: '../../Command'
+        exclude: '../../Command/Validators.php'
+        tags: [ 'console.command' ]
+
+    Talav\BundleGeneratorBundle\Command\GenerateBundleCommand:
+        public: true
+
+    Talav\BundleGeneratorBundle\Command\Helper\QuestionHelper:
+        public: true

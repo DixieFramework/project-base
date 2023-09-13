@@ -51,7 +51,7 @@
         "symfony/webapp-meta": "^1.0",
         "symfony/webpack-encore-bundle": "^1.14",
         "symfony/yaml": "6.0.*",
-        "talav/user-bundle": "1.0.x-dev",
+        "talav/user-bundle": "@dev",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0"
     },
@@ -59,7 +59,8 @@
         "allow-plugins": {
             "composer/package-versions-deprecated": true,
             "symfony/flex": true,
-            "symfony/runtime": true
+            "symfony/runtime": true,
+            "php-http/discovery": true
         },
         "optimize-autoloader": true,
         "preferred-install": {
@@ -100,6 +101,11 @@
     "conflict": {
         "symfony/symfony": "*"
     },
+    "config": {
+        "github-oauth": {
+            "github.com": "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"
+        }
+    },
     "extra": {
         "symfony": {
             "allow-contrib": false,
@@ -124,23 +130,23 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/Talav/user-bundle"
+            "url": "git@github.com:DixieFramework/UserBundle.git"
         },
         {
             "type": "vcs",
-            "url": "https://github.com/Talav/user"
+            "url": "git@github.com:DixieFramework/User.git"
         },
         {
             "type": "vcs",
-            "url": "https://github.com/Talav/registry"
+            "url": "git@github.com:DixieFramework/Registry.git"
         },
         {
             "type": "vcs",
-            "url": "https://github.com/Talav/resource"
+            "url": "git@github.com:DixieFramework/Resource.git"
         },
         {
             "type": "vcs",
-            "url": "https://github.com/Talav/resource-bundle"
+            "url": "git@github.com:DixieFramework/ResourceBundle.git"
         }
     ]
 }

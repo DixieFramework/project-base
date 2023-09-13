@@ -1,0 +1,27 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }}\Controller;
+
+{% block use_statements %}
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Talav\CoreBundle\Controller\AbstractController;
+{% endblock use_statements %}
+
+{% block class_definition %}
+class DefaultController extends Abstractontroller
+{% endblock class_definition %}
+{
+{% block class_body %}
+    /**
+     * @Route("/{{ extension_alias }}")
+     */
+    public function indexAction(Request $request): Response
+    {
+        return new Response('Hello world from {{ extension_alias }}');
+    }
+{% endblock class_body %}
+}

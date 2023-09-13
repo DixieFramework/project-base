@@ -1,0 +1,121 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Talav\BundleGeneratorBundle\Command;
+
+use Symfony\Component\Console\Attribute\AsCommand;
+use Talav\BundleGeneratorBundle\Generator\BundleGenerator;
+use Talav\BundleGeneratorBundle\Model\Bundle;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
+#[AsCommand(name: 'talav:generate-bundle', description: 'Generates a Talav bundle')]
+class GenerateBundleCommand extends BaseGenerateBundleCommand
+{
+    /**
+     * @inheritDoc
+     */
+    protected function configure()
+    {
+        parent::configure();
+
+        $this
+            ->setName('talav:generate:bundle')
+            ->setDescription('Generates a Talav bundle')
+            ->setHelp(
+                <<<EOT
+The <info>%command.name%</info> command helps you generates new Pimcore bundles. If you need to create a normal Symfony
+bundle, please use the generate:bundle command without pimcore: prefix.
+
+By default, the command interacts with the developer to tweak the generation.
+Any passed option will be used as a default value for the interaction
+(<comment>--namespace</comment> is the only one needed if you follow the
+conventions):
+
+<info>php %command.full_name% --namespace=Acme/BlogBundle</info>
+
+Note that you can use <comment>/</comment> instead of <comment>\\ </comment>for the namespace delimiter to avoid any
+problems.
+
+If you want to disable any user interaction, use <comment>--no-interaction</comment> but don't forget to pass all needed options:
+
+<info>php %command.full_name% --namespace=Acme/BlogBundle --dir=src [--bundle-name=...] --no-interaction</info>
+
+Note that the bundle namespace must end with "Bundle".
+EOT
+            );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+        $input->setOption('format', 'annotation');
+
+        parent::initialize($input, $output);
+    }
+
+    /**
+     * @see Command
+     *
+     * @throws \InvalidArgumentException When namespace doesn't end with Bundle
+     * @throws \RuntimeException         When bundle can't be executed
+     *
+     * @return int
+     */
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $questionHelper = $this->getQuestionHelper();
+
+        $bundle = $this->createBundleObject($input);
+        $bundle->setTestsDirectory($bundle->getTargetDirectory() . '/tests');
+
+        $questionHelper->writeSection($output, 'Bundle generation');
+
+        /** @var BundleGenerator $generator */
+        $generator = $this->getGenerator();
+
+        $output->writeln(sprintf(
+            '> Generating a sample bundle skeleton into <info>%s</info>',
+            $this->makePathRelative($bundle->getTargetDirectory())
+        ));
+
+        $generator->generateBundle($bundle);
+
+        $errors = [];
+
+        $runner = $questionHelper->getRunner($output, $errors);
+
+        // check that the namespace is already auto loaded
+        $runner($this->checkAutoloader($output, $bundle), false);
+        $runner($this->checkBundleSearchDirectory($bundle), false);
+        $runner($this->checkBundlesPhp($bundle), false);
+
+        $questionHelper->writeGeneratorSummary($output, $errors);
+
+        return 0;
+    }
+
+    protected function checkBundleSearchDirectory(Bundle $bundle)
+    {
+        return [
+            '- Edit the application configuration and make sure',
+            sprintf('  you have added the <comment>%s</comment> to the Pimcore bundle search paths: ', $bundle->getRelativeTargetDirectory()),
+            '   <comment>pimcore:</comment>',
+            '   <comment>   bundles:</comment>',
+            '   <comment>      search_paths:</comment>',
+            sprintf('   <comment>          - %s</comment>', $bundle->getRelativeTargetDirectory())
+        ];
+    }
+
+    protected function checkBundlesPhp(Bundle $bundle)
+    {
+        return [
+            '- Edit the application config/bundles.php and make sure',
+            sprintf('  you have added the <comment>%s</comment> to the bundles array like following: ', $bundle->getBundleClassName()),
+            sprintf('   <comment> %s::class => [\'all\' => true],</comment>', $bundle->getBundleClassName())
+        ];
+    }
+}
