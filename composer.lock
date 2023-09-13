@@ -10359,12 +10359,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:DixieFramework/BundleGeneratorBundle.git",
-                "reference": "7caebf4d588f512efc4d3d04d16750c9bc2d00a6"
+                "reference": "cb320450d26810a4c66b1700c676212d709ab72b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DixieFramework/BundleGeneratorBundle/zipball/7caebf4d588f512efc4d3d04d16750c9bc2d00a6",
-                "reference": "7caebf4d588f512efc4d3d04d16750c9bc2d00a6",
+                "url": "https://api.github.com/repos/DixieFramework/BundleGeneratorBundle/zipball/cb320450d26810a4c66b1700c676212d709ab72b",
+                "reference": "cb320450d26810a4c66b1700c676212d709ab72b",
                 "shasum": ""
             },
             "require": {
@@ -10426,7 +10426,7 @@
                 "source": "https://github.com/DixieFramework/BundleGeneratorBundle/tree/main",
                 "issues": "https://github.com/DixieFramework/BundleGeneratorBundle/issues"
             },
-            "time": "2023-09-13T23:17:41+00:00"
+            "time": "2023-09-13T23:31:34+00:00"
         },
         {
             "name": "talav/registry",
