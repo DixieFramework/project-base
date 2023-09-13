@@ -1,9 +1,0 @@
-<?php
-
-declare(strict_types=1);
-
-namespace ResourceAppBundle\Entity;
-
-class Author extends AbstractAuthor
-{
-}
