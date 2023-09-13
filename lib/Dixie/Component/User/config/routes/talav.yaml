@@ -1,2 +1,0 @@
-talav_user:
-  resource: '@TalavUserBundle/Resources/config/routing.yml'
