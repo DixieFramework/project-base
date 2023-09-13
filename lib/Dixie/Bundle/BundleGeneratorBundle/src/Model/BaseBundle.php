@@ -67,7 +67,7 @@ class BaseBundle
 
     public function getRelativeTargetDirectory()
     {
-        return ltrim(str_replace(TALAV_PROJECT_ROOT, '', $this->getTargetDirectory()), '/');
+        return ltrim(str_replace(DIXIE_PROJECT_ROOT, '', $this->getTargetDirectory()), '/');
     }
 
     /**

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "05f9bbe38b1bdae1b79a6a7a5e5186ef",
+    "content-hash": "a19015da302c5bb1de1b91a08e306e49",
     "packages": [
         {
             "name": "api-platform/core",
@@ -10354,6 +10354,81 @@
             "time": "2023-01-11T11:50:03+00:00"
         },
         {
+            "name": "talav/bundle-generator-bundle",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:DixieFramework/BundleGeneratorBundle.git",
+                "reference": "7caebf4d588f512efc4d3d04d16750c9bc2d00a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DixieFramework/BundleGeneratorBundle/zipball/7caebf4d588f512efc4d3d04d16750c9bc2d00a6",
+                "reference": "7caebf4d588f512efc4d3d04d16750c9bc2d00a6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "symfony/config": "^6.0",
+                "symfony/finder": "^6.0",
+                "symfony/framework-bundle": "^6.0"
+            },
+            "require-dev": {
+                "doctrine/doctrine-fixtures-bundle": "^3.4",
+                "fakerphp/faker": "^1.19",
+                "liip/test-fixtures-bundle": "^2.2",
+                "matthiasnoback/symfony-dependency-injection-test": "^4.3",
+                "phpunit/phpunit": "^9.5",
+                "symfony/browser-kit": "^6.0",
+                "symfony/console": "^6.0",
+                "symfony/css-selector": "^6.0",
+                "symfony/phpunit-bridge": "^6.0",
+                "symfony/var-dumper": "^6.0"
+            },
+            "default-branch": true,
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Talav\\BundleGeneratorBundle\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Talav\\BundleGeneratorBundle\\Tests\\": "tests/",
+                    "BundleGeneratorAppBundle\\": "tests/TestApp/src/BundleGeneratorAppBundle/"
+                },
+                "files": [
+                    "tests/TestApp/app/BundleGeneratorAppKernel.php"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Talav",
+                    "email": "support@talav.com"
+                }
+            ],
+            "description": "Talav Bundle Generator",
+            "keywords": [
+                "bundle",
+                "generator",
+                "php",
+                "symfony"
+            ],
+            "support": {
+                "source": "https://github.com/DixieFramework/BundleGeneratorBundle/tree/main",
+                "issues": "https://github.com/DixieFramework/BundleGeneratorBundle/issues"
+            },
+            "time": "2023-09-13T23:17:41+00:00"
+        },
+        {
             "name": "talav/registry",
             "version": "dev-main",
             "source": {
@@ -13600,7 +13675,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "talav/user-bundle": 20
+        "talav/user-bundle": 20,
+        "talav/bundle-generator-bundle": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

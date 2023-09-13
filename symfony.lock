@@ -813,6 +813,9 @@
     "symplify/easy-coding-standard": {
         "version": "10.2.8"
     },
+    "talav/bundle-generator-bundle": {
+        "version": "dev-main"
+    },
     "talav/registry": {
         "version": "1.0.x-dev"
     },

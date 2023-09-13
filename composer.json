@@ -53,7 +53,8 @@
         "symfony/yaml": "6.0.*",
         "talav/user-bundle": "@dev",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+        "talav/bundle-generator-bundle": "@dev"
     },
     "config": {
         "allow-plugins": {
@@ -103,7 +104,7 @@
     },
     "config": {
         "github-oauth": {
-            "github.com": "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"
+            "github.com": "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"
         }
     },
     "extra": {
@@ -147,6 +148,10 @@
         {
             "type": "vcs",
             "url": "git@github.com:DixieFramework/ResourceBundle.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:DixieFramework/BundleGeneratorBundle.git"
         }
     ]
 }
