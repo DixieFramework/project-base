@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a19015da302c5bb1de1b91a08e306e49",
+    "content-hash": "12870256cc1cf51556672240634c9ea7",
     "packages": [
         {
             "name": "api-platform/core",
@@ -10429,6 +10429,44 @@
             "time": "2023-09-13T23:31:34+00:00"
         },
         {
+            "name": "talav/core-bundle",
+            "version": "1.0.0",
+            "dist": {
+                "type": "path",
+                "url": "bundles/Talav/CoreBundle",
+                "reference": "14913ac14dc4ce21065357a61cfd8b05276c348b"
+            },
+            "require": {
+                "php": ">=8.1.14"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Talav\\CoreBundle\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Name",
+                    "homepage": "http://example.com/",
+                    "email": "example@example.com"
+                }
+            ],
+            "description": "CoreBundle description",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "talav/registry",
             "version": "dev-main",
             "source": {
@@ -13675,8 +13713,9 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "talav/user-bundle": 20,
-        "talav/bundle-generator-bundle": 20
+        "talav/bundle-generator-bundle": 20,
+        "talav/core-bundle": 20,
+        "talav/user-bundle": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

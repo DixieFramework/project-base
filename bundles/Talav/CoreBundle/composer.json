@@ -13,7 +13,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Talav\\CoreBundle\\": ""
+            "Talav\\CoreBundle\\": "src/"
         }
     },
     "require": {
@@ -27,10 +27,10 @@
             "symfony/thanks": false
         },
         "sort-packages": true
-    }
+    },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0.x-dev"
+            "dev-main": "1.0.x-dev"
         }
     },
     "minimum-stability": "dev",

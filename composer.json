@@ -51,12 +51,16 @@
         "symfony/webapp-meta": "^1.0",
         "symfony/webpack-encore-bundle": "^1.14",
         "symfony/yaml": "6.0.*",
+        "talav/bundle-generator-bundle": "@dev",
+        "talav/core-bundle": "@dev",
         "talav/user-bundle": "@dev",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0",
-        "talav/bundle-generator-bundle": "@dev"
+        "twig/twig": "^2.12|^3.0"
     },
     "config": {
+        "github-oauth": {
+
+        },
         "allow-plugins": {
             "composer/package-versions-deprecated": true,
             "symfony/flex": true,
@@ -101,11 +105,6 @@
     },
     "conflict": {
         "symfony/symfony": "*"
-    },
-    "config": {
-        "github-oauth": {
-            "github.com": "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"
-        }
     },
     "extra": {
         "symfony": {
@@ -152,6 +151,13 @@
         {
             "type": "vcs",
             "url": "git@github.com:DixieFramework/BundleGeneratorBundle.git"
+        },
+        {
+            "type": "path",
+            "options": {
+                "symlink": true
+            },
+            "url": "bundles/Talav/CoreBundle"
         }
     ]
 }

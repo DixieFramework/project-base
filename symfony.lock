@@ -816,6 +816,9 @@
     "talav/bundle-generator-bundle": {
         "version": "dev-main"
     },
+    "talav/core-bundle": {
+        "version": "1.0.0"
+    },
     "talav/registry": {
         "version": "1.0.x-dev"
     },
