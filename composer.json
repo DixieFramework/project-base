@@ -52,7 +52,6 @@
         "symfony/webpack-encore-bundle": "^1.14",
         "symfony/yaml": "6.0.*",
         "talav/bundle-generator-bundle": "@dev",
-        "talav/core-bundle": "@dev",
         "talav/user-bundle": "@dev",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0"
@@ -151,13 +150,6 @@
         {
             "type": "vcs",
             "url": "git@github.com:DixieFramework/BundleGeneratorBundle.git"
-        },
-        {
-            "type": "path",
-            "options": {
-                "symlink": true
-            },
-            "url": "bundles/Talav/CoreBundle"
         }
     ]
 }
