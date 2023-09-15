@@ -1,14 +1,13 @@
 {
     "name": "talav/core-bundle",
     "version": "1.0.0",
-    "description": "CoreBundle description",
+    "description": "CoreBundle Symfony Bundle",
     "type": "symfony-bundle",
     "license": "MIT",
     "authors": [
         {
-            "name": "Name",
-            "homepage": "http://example.com/",
-            "email": "example@example.com"
+            "name": "Dixie Software",
+            "email": "dev@dixiesoftware.com"
         }
     ],
     "minimum-stability": "dev",
@@ -22,6 +21,7 @@
         "elao/enum": "^2.0",
         "google/recaptcha": "^1.2",
         "imagine/imagine": "^1.2",
+        "joomla/filter": "~1.4.4",
         "symfony/asset": "6.3.*",
         "symfony/console": "6.3.*",
         "symfony/dotenv": "6.3.*",
