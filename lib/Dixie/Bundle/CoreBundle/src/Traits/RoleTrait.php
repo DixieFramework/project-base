@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 trait RoleTrait
 {
-    use RightsTrait;
+//    use RightsTrait;
 
     /**
      * The role name.

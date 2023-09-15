@@ -28,6 +28,9 @@
     "clue/stream-filter": {
         "version": "v1.6.0"
     },
+    "createnl/zxcvbn-bundle": {
+        "version": "3.0.1"
+    },
     "dama/doctrine-test-bundle": {
         "version": "7.1",
         "recipe": {

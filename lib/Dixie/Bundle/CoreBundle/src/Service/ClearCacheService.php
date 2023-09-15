@@ -12,9 +12,9 @@ use Symfony\Component\HttpKernel\KernelInterface;
 /**
  * Service to clear the cache.
  */
-readonly class ClearCacheService
+class ClearCacheService
 {
-    public function __construct(private KernelInterface $kernel)
+    public function __construct(private readonly KernelInterface $kernel)
     {
     }
 

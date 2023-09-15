@@ -1,3 +1,6 @@
+parameters:
+  talav_user.display_captcha: false
+
 services:
   _defaults:
     autowire: true
