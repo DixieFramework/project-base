@@ -3057,6 +3057,150 @@
             "time": "2023-02-15T13:44:18+00:00"
         },
         {
+            "name": "joomla/filter",
+            "version": "1.4.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/joomla-framework/filter.git",
+                "reference": "09733d70db6c6d91e53e0e0d0fcde9b8638175c4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/joomla-framework/filter/zipball/09733d70db6c6d91e53e0e0d0fcde9b8638175c4",
+                "reference": "09733d70db6c6d91e53e0e0d0fcde9b8638175c4",
+                "shasum": ""
+            },
+            "require": {
+                "joomla/string": "~1.3|~2.0",
+                "php": "^5.3.10|~7.0|^8.0"
+            },
+            "require-dev": {
+                "joomla/coding-standards": "~2.0@alpha",
+                "joomla/language": "~1.3",
+                "phpunit/phpunit": "^4.8.35|^5.4.3|~6.0"
+            },
+            "suggest": {
+                "joomla/language": "Required only if you want to use `OutputFilter::stringURLSafe`."
+            },
+            "type": "joomla-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Joomla\\Filter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "Joomla Filter Package",
+            "homepage": "https://github.com/joomla-framework/filter",
+            "keywords": [
+                "filter",
+                "framework",
+                "joomla"
+            ],
+            "support": {
+                "issues": "https://github.com/joomla-framework/filter/issues",
+                "source": "https://github.com/joomla-framework/filter/tree/1.4.4"
+            },
+            "funding": [
+                {
+                    "url": "https://community.joomla.org/sponsorship-campaigns.html",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/joomla",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-03-29T12:14:25+00:00"
+        },
+        {
+            "name": "joomla/string",
+            "version": "1.4.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/joomla-framework/string.git",
+                "reference": "728ba9e39a8f1bd15b75ab878f57fa505184b8ab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/joomla-framework/string/zipball/728ba9e39a8f1bd15b75ab878f57fa505184b8ab",
+                "reference": "728ba9e39a8f1bd15b75ab878f57fa505184b8ab",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3.10|^7.0|^8.0"
+            },
+            "require-dev": {
+                "joomla/coding-standards": "^2.0@alpha",
+                "joomla/test": "^1.0",
+                "phpunit/phpunit": "^4.8.35|^5.4.3|^6.0|^7.0|^8.0"
+            },
+            "suggest": {
+                "ext-mbstring": "For improved processing"
+            },
+            "type": "joomla-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/phputf8/utf8.php",
+                    "src/phputf8/ord.php",
+                    "src/phputf8/str_ireplace.php",
+                    "src/phputf8/str_pad.php",
+                    "src/phputf8/str_split.php",
+                    "src/phputf8/strcasecmp.php",
+                    "src/phputf8/strcspn.php",
+                    "src/phputf8/stristr.php",
+                    "src/phputf8/strrev.php",
+                    "src/phputf8/strspn.php",
+                    "src/phputf8/trim.php",
+                    "src/phputf8/ucfirst.php",
+                    "src/phputf8/ucwords.php",
+                    "src/phputf8/utils/ascii.php",
+                    "src/phputf8/utils/validation.php"
+                ],
+                "psr-4": {
+                    "Joomla\\String\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "Joomla String Package",
+            "homepage": "https://github.com/joomla-framework/string",
+            "keywords": [
+                "framework",
+                "joomla",
+                "string"
+            ],
+            "support": {
+                "issues": "https://github.com/joomla-framework/string/issues",
+                "source": "https://github.com/joomla-framework/string/tree/1.4.6"
+            },
+            "funding": [
+                {
+                    "url": "https://community.joomla.org/sponsorship-campaigns.html",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/joomla",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-01-25T15:16:52+00:00"
+        },
+        {
             "name": "knplabs/knp-menu",
             "version": "v3.4.0",
             "source": {
@@ -11004,7 +11148,7 @@
             "dist": {
                 "type": "path",
                 "url": "lib/Dixie/Bundle/CoreBundle",
-                "reference": "5f88682619f1c5e7d3ed3c1b74da3e935c9c85da"
+                "reference": "f6c6a04c89daef05da58a5d752e105a0f0902581"
             },
             "require": {
                 "createnl/zxcvbn-bundle": "^3.0",
@@ -11014,6 +11158,7 @@
                 "ext-intl": "*",
                 "google/recaptcha": "^1.2",
                 "imagine/imagine": "^1.2",
+                "joomla/filter": "~1.4.4",
                 "php": ">=8.1.14",
                 "symfony/asset": "6.3.*",
                 "symfony/console": "6.3.*",
@@ -11098,12 +11243,11 @@
             ],
             "authors": [
                 {
-                    "name": "Name",
-                    "homepage": "http://example.com/",
-                    "email": "example@example.com"
+                    "name": "Dixie Software",
+                    "email": "dev@dixiesoftware.com"
                 }
             ],
-            "description": "CoreBundle description",
+            "description": "CoreBundle Symfony Bundle",
             "transport-options": {
                 "symlink": true,
                 "relative": true
@@ -11174,12 +11318,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:DixieFramework/Resource.git",
-                "reference": "b322d6feb5dca04b2b121b688427ca2e4174f96b"
+                "reference": "97454ae633394bb8f4a5c90f71e2421398d8ff2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DixieFramework/Resource/zipball/b322d6feb5dca04b2b121b688427ca2e4174f96b",
-                "reference": "b322d6feb5dca04b2b121b688427ca2e4174f96b",
+                "url": "https://api.github.com/repos/DixieFramework/Resource/zipball/97454ae633394bb8f4a5c90f71e2421398d8ff2c",
+                "reference": "97454ae633394bb8f4a5c90f71e2421398d8ff2c",
                 "shasum": ""
             },
             "require": {
@@ -11230,7 +11374,7 @@
                 "source": "https://github.com/DixieFramework/Resource/tree/main",
                 "issues": "https://github.com/DixieFramework/Resource/issues"
             },
-            "time": "2023-09-13T21:15:55+00:00"
+            "time": "2023-09-15T20:48:06+00:00"
         },
         {
             "name": "talav/resource-bundle",
@@ -11310,12 +11454,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:DixieFramework/User.git",
-                "reference": "b0a2c3063d519092f34c770270c0f950780c9165"
+                "reference": "88cd17334bfeb55bf581ccbb8bca040602f78861"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DixieFramework/User/zipball/b0a2c3063d519092f34c770270c0f950780c9165",
-                "reference": "b0a2c3063d519092f34c770270c0f950780c9165",
+                "url": "https://api.github.com/repos/DixieFramework/User/zipball/88cd17334bfeb55bf581ccbb8bca040602f78861",
+                "reference": "88cd17334bfeb55bf581ccbb8bca040602f78861",
                 "shasum": ""
             },
             "require": {
@@ -11370,7 +11514,7 @@
                 "source": "https://github.com/DixieFramework/User/tree/main",
                 "issues": "https://github.com/DixieFramework/User/issues"
             },
-            "time": "2023-09-13T19:56:52+00:00"
+            "time": "2023-09-15T20:48:06+00:00"
         },
         {
             "name": "talav/user-bundle",

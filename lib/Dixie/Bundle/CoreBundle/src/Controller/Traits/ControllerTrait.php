@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Talav\CoreBundle\Controller;
+namespace Talav\CoreBundle\Controller\Traits;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
