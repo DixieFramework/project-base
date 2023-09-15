@@ -1,0 +1,110 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Talav\CoreBundle\Service;
+
+use Talav\CoreBundle\Traits\MathTrait;
+use Talav\CoreBundle\Traits\TranslatorTrait;
+use ReCaptcha\ReCaptcha;
+use ReCaptcha\Response;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+/**
+ * Service to validate a reCaptcha.
+ */
+class RecaptchaService
+{
+    use MathTrait;
+    use TranslatorTrait;
+
+    private string $action = 'login';
+    private float $scoreThreshold = 0.5;
+    private int $timeoutSeconds = 60;
+
+    public function __construct(
+        #[\SensitiveParameter]
+        #[Autowire('%google_recaptcha_site_key%')]
+        private readonly string $siteKey,
+        #[\SensitiveParameter]
+        #[Autowire('%google_recaptcha_secret_key%')]
+        private readonly string $secretKey,
+        #[Autowire('%kernel.debug%')]
+        private readonly bool $debug,
+        private readonly TranslatorInterface $translator
+    ) {
+    }
+
+    public function getAction(): string
+    {
+        return $this->action;
+    }
+
+    public function getSecretKey(): string
+    {
+        return $this->secretKey;
+    }
+
+    public function getSiteKey(): string
+    {
+        return $this->siteKey;
+    }
+
+    public function getTranslator(): TranslatorInterface
+    {
+        return $this->translator;
+    }
+
+    public function setAction(string $action): self
+    {
+        $this->action = $action;
+
+        return $this;
+    }
+
+    public function setScoreThreshold(float $scoreThreshold): self
+    {
+        $this->scoreThreshold = $this->validateFloatRange($scoreThreshold, 0, 1);
+
+        return $this;
+    }
+
+    public function setTimeoutSeconds(int $timeoutSeconds): self
+    {
+        $this->timeoutSeconds = \max(0, $timeoutSeconds);
+
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function translateErrors(array $codes): array
+    {
+        $errors = \array_map(fn (mixed $code): string => $this->trans("recaptcha.$code", [], 'validators'), $codes);
+        if ([] === $errors) {
+            $errors[] = $this->trans('recaptcha.unknown-error', [], 'validators');
+        }
+
+        return $errors;
+    }
+
+    public function verify(string $response, Request $request = null): Response
+    {
+        $recaptcha = new ReCaptcha($this->secretKey);
+        $recaptcha->setChallengeTimeout($this->timeoutSeconds)
+            ->setScoreThreshold($this->scoreThreshold)
+            ->setExpectedAction($this->action);
+
+        $remoteIp = null;
+        if ($request instanceof Request) {
+            $hostname = (string) $request->server->get('SERVER_NAME');
+            $remoteIp = (string) $request->server->get('REMOTE_ADDR');
+            $recaptcha->setExpectedHostname($this->debug ? $remoteIp : $hostname);
+        }
+
+        return $recaptcha->verify($response, $remoteIp);
+    }
+}
