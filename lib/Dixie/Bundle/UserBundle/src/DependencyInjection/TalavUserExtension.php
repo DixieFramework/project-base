@@ -42,14 +42,14 @@ class TalavUserExtension extends AbstractResourceExtension
             $container->removeDefinition(WelcomeEmailSubscriber::class);
         }
 
+        $container->setParameter('talav_user.display_captcha', $config['display_captcha']);
         $container->setParameter('talav_user.resetting.retry_ttl', $config['resetting']['retry_ttl']);
         $container->setParameter('talav_user.resetting.token_ttl', $config['resetting']['token_ttl']);
         $container->setParameter('talav_user.registration.form_type', $config['registration']['form']['type']);
         $container->setParameter('talav_user.registration.form_model', $config['registration']['form']['model']);
-        $container->setParameter(
-            'talav_user.registration.form_validation_groups',
-            $config['registration']['form']['validation_groups']
-        );
+        $container->setParameter('talav_user.registration.form_validation_groups', $config['registration']['form']['validation_groups']);
+        $container->setParameter('talav_user.registration.display_captcha', $config['registration']['display_captcha']);
+        $container->setParameter('talav_user.login.display_captcha', $config['login']['display_captcha']);
 
         $this->registerResources('app', $config['resources'], $container);
     }

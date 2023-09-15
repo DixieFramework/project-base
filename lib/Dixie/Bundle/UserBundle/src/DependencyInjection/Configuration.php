@@ -64,10 +64,13 @@ final class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end();
+                ->booleanNode('display_captcha')->defaultValue(false)->end()
+            ->end()
+        ;
 
         $this->addResourceSection($treeBuilder->getRootNode());
         $this->addRegistrationSection($treeBuilder->getRootNode());
+        $this->addLoginSection($treeBuilder->getRootNode());
 
         return $treeBuilder;
     }
@@ -143,8 +146,36 @@ final class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                         ->booleanNode('email')->defaultValue(true)->end()
+                        ->booleanNode('display_captcha')->defaultValue(false)->end()
                     ->end()
                 ->end()
-            ->end();
+            ->end()
+        ;
+    }
+
+    private function addLoginSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('login')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+//                        ->arrayNode('form')
+//                            ->addDefaultsIfNotSet()
+//                            ->children()
+//                                ->scalarNode('type')->defaultValue(RegistrationFormType::class)->end()
+//                                ->scalarNode('model')->defaultValue(RegistrationFormModel::class)->end()
+//                                ->arrayNode('validation_groups')
+//                                    ->prototype('scalar')->end()
+//                                    ->defaultValue(['Registration', 'Default'])
+//                                ->end()
+//                            ->end()
+//                        ->end()
+                        ->booleanNode('display_captcha')->defaultValue(false)->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
     }
 }
