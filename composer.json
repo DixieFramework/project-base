@@ -161,6 +161,13 @@
                 "symlink": true
             },
             "url": "lib/Dixie/Bundle/UserBundle"
+        },
+        {
+            "type": "path",
+            "options": {
+                "symlink": true
+            },
+            "url": "lib/Dixie/Bundle/WebBundle"
         }
     ]
 }

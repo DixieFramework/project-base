@@ -1,0 +1,5 @@
+talav_web:
+    resource: "@TalavWebBundle/src/Controller/"
+    type:     annotation
+    prefix:   /
+
