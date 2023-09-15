@@ -15,6 +15,11 @@ final class FormatUtils
     private const LOCALE_FR_CH = 'fr_CH';
 
     /**
+     * The US English locale.
+     */
+    private const LOCALE_EN_US = 'en_US';
+
+    /**
      * The date formatters.
      *
      * @var \IntlDateFormatter[]
