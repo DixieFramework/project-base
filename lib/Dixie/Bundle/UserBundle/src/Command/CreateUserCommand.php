@@ -11,7 +11,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Talav\Component\User\Message\Command\User\CreateUserCommand as MessageCommand;
+use Talav\Component\User\Message\Command\CreateUserCommand as MessageCommand;
 use Talav\Component\User\Message\Dto\CreateUserDto;
 
 class CreateUserCommand extends Command
@@ -47,15 +47,18 @@ EOT
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->bus->dispatch(new MessageCommand(new CreateUserDto(
             $username = $input->getArgument('username'),
             $email = $input->getArgument('email'),
             $password = $input->getArgument('password'),
-            $inactive = !$input->getArgument('inactive'),
+            $inactive = !$input->getOption('inactive'),
         )));
+
         $output->writeln(sprintf('Created user <comment>%s</comment>', $username));
+
+        return Command::SUCCESS;
     }
 
     protected function interact(InputInterface $input, OutputInterface $output): void

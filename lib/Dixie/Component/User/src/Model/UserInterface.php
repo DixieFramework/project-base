@@ -48,27 +48,6 @@ interface UserInterface extends SymfonyUserInterface, PasswordAuthenticatedUserI
      */
     public function setEmailCanonical(?string $usernameCanonical): void;
 
-    /**
-     * Gets last password reset token.
-     */
-    public function getPasswordResetToken(): ?string;
-
-    public function setPasswordResetToken(?string $passwordResetToken): void;
-
-    public function getPasswordRequestedAt(): ?DateTimeInterface;
-
-    /**
-     * Sets the timestamp that the user requested a password reset.
-     */
-    public function setPasswordRequestedAt(?DateTimeInterface $date): void;
-
-    /**
-     * Checks whether the password reset request has expired.
-     *
-     * @param DateInterval $ttl Requests older than this many seconds will be considered expired
-     */
-    public function isPasswordRequestNonExpired(DateInterval $ttl): bool;
-
     public function getLastLogin(): ?DateTimeInterface;
 
     public function setLastLogin(?DateTimeInterface $time): void;
@@ -123,4 +102,16 @@ interface UserInterface extends SymfonyUserInterface, PasswordAuthenticatedUserI
      * Tells if the the given user has the super admin role.
      */
     public function isSuperAdmin(): bool;
+
+    /**
+     * Sets the plain password.
+     * (non mapped)
+     */
+    public function setPlainPassword(?string $plainPassword): UserInterface;
+
+    /**
+     * Returns the plain password.
+     * (non mapped)
+     */
+    public function getPlainPassword(): ?string;
 }

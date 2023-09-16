@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a17c88ea73ded120dd9fb39d04deb948",
+    "content-hash": "a00f9a4f7b9cce09af30ef573ad1f530",
     "packages": [
         {
             "name": "api-platform/core",
@@ -11451,16 +11451,10 @@
         {
             "name": "talav/user",
             "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:DixieFramework/User.git",
-                "reference": "88cd17334bfeb55bf581ccbb8bca040602f78861"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DixieFramework/User/zipball/88cd17334bfeb55bf581ccbb8bca040602f78861",
-                "reference": "88cd17334bfeb55bf581ccbb8bca040602f78861",
-                "shasum": ""
+                "type": "path",
+                "url": "lib/Dixie/Component/User",
+                "reference": "e90e4a71b8fce4eaaf9541a8c95bc7536cd363a7"
             },
             "require": {
                 "mark-gerarts/auto-mapper-plus": "^1.3",
@@ -11477,7 +11471,6 @@
                 "phpunit/phpunit": "^9.5",
                 "symfony/thanks": "^1.2"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -11510,11 +11503,10 @@
                 "symfony",
                 "user"
             ],
-            "support": {
-                "source": "https://github.com/DixieFramework/User/tree/main",
-                "issues": "https://github.com/DixieFramework/User/issues"
-            },
-            "time": "2023-09-15T20:48:06+00:00"
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "talav/user-bundle",

@@ -1,0 +1,83 @@
+parameters:
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    sonata.form.type.alpha_captcha:
+        class: Talav\CoreBundle\Form\Type\AlphaCaptchaType
+        tags:
+            - { name: form.type, alias: [ sonata_type_alpha_captcha ] }
+
+    sonata.form.type.captcha_image:
+        class: Talav\CoreBundle\Form\Type\CaptchaImageType
+        tags:
+            - { name: form.type, alias: [ sonata_type_captcha_image ] }
+
+    sonata.form.type.country_flag:
+        class: Talav\CoreBundle\Form\Type\CountryFlagType
+        tags:
+            - { name: form.type, alias: [ sonata_type_country_flag ] }
+
+    sonata.form.type.current_password:
+        class: Talav\CoreBundle\Form\Type\CurrentPasswordType
+        tags:
+            - { name: form.type, alias: [ sonata_type_current_password ] }
+
+    sonata.form.type.plain:
+        class: Talav\CoreBundle\Form\Type\PlainType
+        tags:
+            - { name: form.type, alias: [ sonata_type_plain ] }
+
+    sonata.form.type.repeat_password:
+        class: Talav\CoreBundle\Form\Type\RepeatPasswordType
+        tags:
+            - { name: form.type, alias: [ sonata_type_repeat_password ] }
+
+    sonata.form.type.simple_editor:
+        class: Talav\CoreBundle\Form\Type\SimpleEditorType
+        tags:
+            - { name: form.type, alias: [ sonata_type_simple_editor ] }
+
+    # User Types
+
+    sonata.form.user.profile_change_password:
+        class: Talav\CoreBundle\Form\User\ProfileChangePasswordType
+        tags:
+            - { name: form.type, alias: [ sonata_type_user_profile_change_password ] }
+
+    sonata.form.user.profile_edit:
+        class: Talav\CoreBundle\Form\User\ProfileEditType
+        tags:
+            - { name: form.type, alias: [ sonata_type_user_profile_edit ] }
+
+    sonata.form.user.request_change_password:
+        class: Talav\CoreBundle\Form\User\RequestChangePasswordType
+        tags:
+            - { name: form.type, alias: [ sonata_type_user_request_change_password ] }
+
+    sonata.form.user.reset_change_password:
+        class: Talav\CoreBundle\Form\User\ResetChangePasswordType
+        tags:
+            - { name: form.type, alias: [ sonata_type_user_reset_change_password ] }
+
+    sonata.form.user.user_change_password:
+        class: Talav\CoreBundle\Form\User\UserChangePasswordType
+        tags:
+            - { name: form.type, alias: [ sonata_type_user_user_change_password ] }
+
+    talav_core.form.user.user_login:
+        class: Talav\CoreBundle\Form\User\UserLoginType
+        tags:
+            - { name: form.type, alias: [ talav_type_user_user_login ] }
+
+    sonata.form.user.user_registration:
+        class: Talav\CoreBundle\Form\User\UserRegistrationType
+        tags:
+            - { name: form.type, alias: [ sonata_type_user_user_registration ] }
+
+    sonata.form.user.user_user:
+        class: Talav\CoreBundle\Form\User\UserType
+        tags:
+            - { name: form.type, alias: [ sonata_type_user_user ] }

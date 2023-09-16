@@ -1,7 +1,7 @@
 {
-    "name": "talav/web-bundle",
+    "name": "talav/profile-bundle",
     "version": "1.0.0",
-    "description": "WebBundle description",
+    "description": "ProfileBundle description",
     "type": "symfony-bundle",
     "license": "MIT",
     "authors": [
@@ -13,7 +13,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Talav\\WebBundle\\": "src/"
+            "Talav\\ProfileBundle\\": ""
         }
     },
     "require": {
@@ -27,7 +27,7 @@
             "symfony/thanks": false
         },
         "sort-packages": true
-    },
+    }
     "extra": {
         "branch-alias": {
             "dev-master": "1.0.x-dev"

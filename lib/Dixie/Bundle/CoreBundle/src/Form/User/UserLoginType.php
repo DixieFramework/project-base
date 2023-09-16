@@ -38,6 +38,11 @@ class UserLoginType extends AbstractUserCaptchaType
             ->addCheckboxType();
     }
 
+    public function getBlockPrefix(): string
+    {
+        return 'talav_type_user_user_login';
+    }
+
     protected function getLabelPrefix(): ?string
     {
         return 'security.login.';

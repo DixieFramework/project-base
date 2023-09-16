@@ -130,10 +130,6 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "git@github.com:DixieFramework/User.git"
-        },
-        {
-            "type": "vcs",
             "url": "git@github.com:DixieFramework/Registry.git"
         },
         {
@@ -168,6 +164,13 @@
                 "symlink": true
             },
             "url": "lib/Dixie/Bundle/WebBundle"
+        },
+        {
+            "type": "path",
+            "options": {
+                "symlink": true
+            },
+            "url": "lib/Dixie/Component/User"
         }
     ]
 }

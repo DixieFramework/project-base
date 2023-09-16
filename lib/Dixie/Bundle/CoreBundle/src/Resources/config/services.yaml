@@ -1,3 +1,6 @@
+imports:
+    - { resource: './form.yaml' }
+
 services:
     # default configuration for services in *only in this* file
     _defaults:
@@ -15,6 +18,7 @@ services:
         exclude:
             - '../../DependencyInjection/'
             - '../../Entity/'
+            - '../../Form/'
             - '../../Migrations'
             - '../../Tests/'
 

@@ -1,6 +1,8 @@
 #!/usr/bin/env php
 <?php
 
+declare(strict_types=1);
+
 use Groshy\Kernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 
@@ -10,8 +12,15 @@ if (!is_file(dirname(__DIR__).'/vendor/autoload_runtime.php')) {
 
 require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-return function (array $context) {
-    $kernel = new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
+return static function (array $context): Application {
+    $kernel = new Kernel(
+        appNamespace: $context['APP_NAMESPACE'],
+        appSystem: $context['APP_SYSTEM'],
+        appVersion: $context['APP_VERSION'],
+        appReadOnlyMode: (bool) $context['APP_READ_ONLY_MODE'],
+        environment: $context['APP_ENV'],
+        debug: (bool) $context['APP_DEBUG'],
+    );
 
     return new Application($kernel);
 };
