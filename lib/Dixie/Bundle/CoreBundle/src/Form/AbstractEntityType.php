@@ -34,7 +34,7 @@ abstract class AbstractEntityType extends AbstractHelperType
      */
     protected function __construct(string $className)
     {
-        $this->checkSubClass($className, AbstractEntity::class);
+//        $this->checkSubClass($className, AbstractEntity::class);
         $this->className = $className;
     }
 

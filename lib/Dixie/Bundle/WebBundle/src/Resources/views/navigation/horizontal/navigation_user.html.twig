@@ -1,3 +1,4 @@
+{% trans_default_domain 'TalavUserBundle' %}
 {# user menu #}
 {% from '@TalavWeb/macros/_icons.html.twig' import icon, dropdownSeparator, dropdownItem %}
 <li class="nav-item dropdown">
@@ -13,9 +14,9 @@
         {{ icon('user fa-lg far fa-fw') }}&nbsp;{{ app.user.userIdentifier }}
     </button>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-        <li>{{ dropdownItem(path('talav_web_index'), 'profile.edit.title', 'user-gear') }}</li>
-        <li>{{ dropdownItem(path('talav_web_index'), 'profile.change_password.title', 'unlock') }}</li>
-        <li>{{ dropdownItem(path('talav_user_logout'), 'index.logout', 'sign-out-alt') }}</li>
+        <li>{{ dropdownItem(path('user_profile_edit'), 'profile.edit.title', 'user-gear', 'TalavUserBundle') }}</li>
+        <li>{{ dropdownItem(path('user_profile_change_password'), 'profile.change_password.title', 'unlock', 'TalavUserBundle') }}</li>
+        <li>{{ dropdownItem(path('talav_user_logout'), 'index.logout', 'sign-out-alt', 'TalavWebBundle') }}</li>
         <li>{{ dropdownSeparator() }}</li>
 {#        <li>{{ dropdownItem(path('user_parameters'), 'user.parameters.title', 'user-gear') }}</li>#}
 {#        {% if is_previous_admin -%}#}

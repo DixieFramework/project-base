@@ -43,6 +43,7 @@ class TalavUserExtension extends AbstractResourceExtension
         }
 
         $container->setParameter('talav_user.display_captcha', $config['display_captcha']);
+        $container->setParameter('talav_user.password_strength_level', $config['password_strength_level']);
         $container->setParameter('talav_user.resetting.retry_ttl', $config['resetting']['retry_ttl']);
         $container->setParameter('talav_user.resetting.token_ttl', $config['resetting']['token_ttl']);
         $container->setParameter('talav_user.registration.form_type', $config['registration']['form']['type']);

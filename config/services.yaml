@@ -1,8 +1,10 @@
 # Put parameters here that don't need to change on each machine where the application is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    translation_domain: 'TalavWebBundle'
+
     # fixed
-    locale:             fr_CH
+    locale:             en
     app_name:           Calculation
     app_version:        3.0.0
     app_owner:          bibi.nu

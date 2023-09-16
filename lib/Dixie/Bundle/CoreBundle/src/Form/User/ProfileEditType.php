@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Talav\CoreBundle\Form\User;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Talav\CoreBundle\Entity\User;
 use Talav\CoreBundle\Form\AbstractEntityType;
 use Talav\CoreBundle\Form\FormHelper;
@@ -20,7 +21,7 @@ class ProfileEditType extends AbstractEntityType
      */
     public function __construct()
     {
-        parent::__construct(User::class);
+        parent::__construct(\Talav\UserBundle\Entity\User::class);
     }
 
     public function getBlockPrefix(): string
@@ -30,6 +31,8 @@ class ProfileEditType extends AbstractEntityType
 
     protected function addFormFields(FormHelper $helper): void
     {
+        $helper->domain('TalavUserBundle');
+
         // username
         $helper->field('username')
             ->addUserNameType();
@@ -44,13 +47,29 @@ class ProfileEditType extends AbstractEntityType
             ->label('user.password.current')
             ->addCurrentPasswordType();
 
-        // image
-        $helper->field('imageFile')
-            ->updateOption('delete_label', 'user.edit.delete_image')
-            ->addVichImageType();
+//        $helper->field('firstName')
+//            ->label('user.fields.firstName')
+//            ->addTextType();
+//
+//        $helper->field('lastName')
+//            ->label('user.fields.lastName')
+//            ->addTextType();
+//
+//        // image
+//        $helper->field('imageFile')
+//            ->updateOption('delete_label', 'user.edit.delete_image')
+//            ->addVichImageType();
 
         // id for ajax validation
         $helper->field('id')
+            ->notMapped()
             ->addHiddenType();
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'translation_domain' => 'TalavUserBundle'
+        ]);
     }
 }

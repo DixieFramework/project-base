@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Talav\CoreBundle\Form\User;
 
-use Talav\CoreBundle\Entity\User;
 use Talav\CoreBundle\Form\AbstractEntityType;
 use Talav\CoreBundle\Form\FormHelper;
 use Symfony\Component\Form\FormError;
@@ -13,6 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Talav\UserBundle\Entity\User;
 
 /**
  * Type to change the password of the current (logged) user.
@@ -38,6 +38,7 @@ class ProfileChangePasswordType extends AbstractEntityType
                     $this->validate($context);
                 }),
             ],
+            'translation_domain' => 'TalavUserBundle'
         ]);
     }
 
@@ -94,4 +95,11 @@ class ProfileChangePasswordType extends AbstractEntityType
             $password->addError(new FormError((string) $violations));
         }
     }
+
+//    public function configureOptions(OptionsResolver $resolver): void
+//    {
+//        $resolver->setDefaults([
+//            'translation_domain' => 'TalavUserBundle'
+//        ]);
+//    }
 }

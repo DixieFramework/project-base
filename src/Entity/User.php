@@ -69,4 +69,12 @@ class User extends BaseUser
     #[GeneratedValue(strategy: 'CUSTOM')]
     #[CustomIdGenerator(class: UuidGenerator::class)]
     protected mixed $id = null;
+
+//    /**
+//     * @param mixed $id
+//     */
+//    public function setId(mixed $id): void
+//    {
+//        $this->id = $id;
+//    }
 }

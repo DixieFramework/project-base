@@ -24,4 +24,16 @@ class UserRepository extends ResourceRepository implements UserRepositoryInterfa
     {
         return $this->findOneBy(['emailCanonical' => $email]);
     }
+
+    /**
+     * Finds a user by their username or email.
+     */
+    public function findByUsernameOrEmail(string $usernameOrEmail): ?UserInterface
+    {
+        if (false !== \filter_var($usernameOrEmail, \FILTER_VALIDATE_EMAIL)) {
+            return $this->findOneByEmail($usernameOrEmail);
+        }
+
+        return $this->findOneByUsername($usernameOrEmail);
+    }
 }

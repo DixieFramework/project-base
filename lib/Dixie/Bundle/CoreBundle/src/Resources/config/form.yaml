@@ -81,3 +81,9 @@ services:
         class: Talav\CoreBundle\Form\User\UserType
         tags:
             - { name: form.type, alias: [ sonata_type_user_user ] }
+
+
+    sonata.form.extension.text:
+        class: Talav\CoreBundle\Form\Extension\TextTypeExtension
+        tags:
+            - { name: form.type_extension, alias: [ sonata_extension_text ] }

@@ -113,20 +113,20 @@
 {{- _self.link(href, text, class, 'home', 'index.title_help', domain) -}}
 {%- endmacro %}
 
-{% macro button_submit(text='common.button_ok', class='btn btn-form btn-primary', parameters=[]) -%}
+{% macro button_submit(text='common.button_ok', class='btn btn-form btn-primary', parameters=[], domain=null) -%}
 {% from '@TalavWeb/macros/_attributes.html.twig' import attributes %}
 {%- set parameters = parameters|merge({'type': 'submit', 'class': class, 'role': 'button'}) -%}
-<button{{ attributes(parameters) }}>{{ text|trans }}</button>
+<button{{ attributes(parameters) }}>{{ text|trans({}, domain) }}</button>
 {%- endmacro %}
 
 {% macro button_ok(href='#', text='common.button_ok', class='btn btn-ok btn-form btn-primary', autofocus=false) -%}
 {{- _self.link(href, text, class) -}}
 {%- endmacro %}
 
-{% macro button_cancel(href='#', text='common.button_cancel', class='btn btn-cancel btn-form btn-secondary') -%}
+{% macro button_cancel(href='#', text='common.button_cancel', class='btn btn-cancel btn-form btn-secondary', domain=null) -%}
 {%- set text = text|default('common.button_cancel') -%}
 {%- set class = class|default('btn btn-cancel btn-form btn-secondary') -%}
-{{- _self.link(href, text, class) -}}
+{{- _self.link(href, text, class, '', '', domain) -}}
 {%- endmacro %}
 
 {% macro button_pdf(route, parameters=[], title=null) -%}

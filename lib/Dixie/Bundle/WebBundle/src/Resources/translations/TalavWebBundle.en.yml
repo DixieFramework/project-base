@@ -1,0 +1,71 @@
+common:
+    actions: Actions
+    button_add: Add
+    button_back: Back
+    button_back_list: Back To List
+    button_browse: Browse
+    button_cancel: Cancel
+    button_clone: Créer une copie
+    button_close: Close
+    button_copy: Copy
+    button_delete: Delete
+    button_edit: Edit
+    button_export: Exporter
+    button_export_pdf: Exporter au format PDF
+    button_export_excel: Exporter vers Microsoft® Excel
+    button_export_word: Exporter vers Microsoft® Word
+    button_excel_list: Exporter la liste
+    button_card: Mode mosaïque
+    button_import: Import
+    button_ok: OK
+    button_pdf: Télécharger
+    button_pdf_list: Télécharger la liste
+    button_property: Propriétés
+    button_refresh: Refresh
+    button_search: Search
+    button_show: Show
+    button_table: Mode tabulaire
+    clone_description: '%description% - Copie'
+    count: 'Nombre d''éléments : %count%'
+    add_success: L'objet <b>%name%</b> a été ajouté avec succès.
+    edit_success: L'objet <b>%name%</b> a été mis à jour avec succès.
+    delete_success: L'objet <b>%name%</b> a été supprimé avec succès.
+    delete_title: Supprimer un objet
+    delete_message: Êtes-vous sûr de vouloir supprimer l'objet <b>%name%</b> ?
+    delete_failure: Impossible de supprimer l'objet <b>%name%</b> de la base de données.
+    empty: ''
+    empty_date: Inconnue
+    empty_user: Système
+    entity_created: 'Création : %date% - %user%'
+    entity_created_empty: 'Création : Système'
+    entity_created_short: '%date% - %user%'
+    entity_created_tooltip: Date de création et nom de l'utilisateur
+    entity_updated: 'Mise à jour : %date% - %user%'
+    entity_updated_empty: 'Mise à jour : Système         '
+    entity_updated_short: '%date% - %user%'
+    entity_updated_tooltip: Date de mise à jour et nom de l'utilisateur
+    hide_password: Masquer le mot de passe
+    id: Numéro
+    no_script_support: Votre navigateur ne supporte pas JavaScript !
+    other_actions: Autre actions
+    required: <span class="text-danger">*</span> = Required Field
+    show_password: Afficher le mot de passe
+    toggle_password: Afficher/Masquer le mot de passe
+    top_of_page: Haut de la page
+    value_disabled: Désactivé
+    value_enabled: Activé
+    value_false: Non
+    value_none: Aucune
+    value_null: Vide
+    value_true: Oui
+    value_unknown: Inconnu
+    save_data: Sauvegarde des données...
+    data_changed: Données modifiées
+    api_documentation: Documentation (API)
+
+index:
+    change_password: Modifier le mot de passe
+    disabled: <b>%username%</b>, vous ne pouvez pas accéder à ce site car votre profile a été désactivé.<br><br>Veuillez demander à votre supérieur hiérarchique de vous octroyer les droits nécessaires ou à l'administrateur du site de réactiver votre compte.
+    login: Sign In
+    logout: Sign Out
+    register: Register

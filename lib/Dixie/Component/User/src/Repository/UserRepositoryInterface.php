@@ -18,4 +18,9 @@ interface UserRepositoryInterface extends RepositoryInterface
      * Finds a user by its email.
      */
     public function findOneByEmail(string $email): ?UserInterface;
+
+    /**
+     * Finds a user by their username or email.
+     */
+    public function findByUsernameOrEmail(string $usernameOrEmail): ?UserInterface;
 }

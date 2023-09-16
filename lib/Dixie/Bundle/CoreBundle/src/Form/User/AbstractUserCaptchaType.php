@@ -44,6 +44,8 @@ abstract class AbstractUserCaptchaType extends AbstractHelperType
     protected function addFormFields(FormHelper $helper): void
     {
         if ($this->displayCaptcha) {
+            $helper->domain('TalavUserBundle');
+
             $helper->field('captcha')
                 ->label('captcha.label')
                 ->constraints(new NotBlank(), new Captcha())

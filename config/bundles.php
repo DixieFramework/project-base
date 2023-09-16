@@ -31,4 +31,6 @@ return [
     Talav\CoreBundle\TalavCoreBundle::class => ['all' => true],
     Createnl\ZxcvbnBundle\ZxcvbnBundle::class => ['all' => true],
     Talav\WebBundle\TalavWebBundle::class => ['all' => true],
+    SymfonyCasts\Bundle\VerifyEmail\SymfonyCastsVerifyEmailBundle::class => ['all' => true],
+    SymfonyCasts\Bundle\ResetPassword\SymfonyCastsResetPasswordBundle::class => ['all' => true],
 ];

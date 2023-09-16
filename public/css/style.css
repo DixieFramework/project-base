@@ -74,7 +74,7 @@ html:not(:has(.sidebar-hide)) footer:before {
  * required
  */
 .required:not(.form-check-label):after {
-    content: "*";
+    content: "\00a0\002a";
     color: var(--bs-danger);
 }
 

@@ -51,3 +51,63 @@ talav:
     submit: 'Change password'
     flash:
       success: 'The password has been changed.'
+
+user:
+  change_password:
+    title: Modifier le mot de passe
+    change_success: Le mot de passe de l'utilisateur <b>%name%</b> a été modifié avec succès.
+    check_password: Check if password is compromised
+
+  fields:
+    attachments: Fichier
+    email: E-mail
+    enabled: Status
+    fromAddress: Auteur
+    imageFile: Image
+    lastLogin: Connexion
+    message: Message
+    overwrite: Remplacer les droits d'accès par défaut
+    recaptcha: Vérification
+    role: Role
+    subject: Objet
+    toAddress: Destinataire
+    username: Username
+    username_short: Nick
+    password: Password
+
+  password:
+    confirmation: Re-Type Password
+    current: Current Password
+    label: Password
+    new: New Password
+    new_confirmation: Re-Type New Password
+  reset:
+    title: Supprimer la demande de mot de passe
+    confirmation: Êtes-vous sûr de vouloir supprimer la demande de mot de passe pour l'utilisateur <b>%name%</b> ?
+    success: La demande de mot de passe pour l'utilisateur <b>%name%</b> a été supprimée avec succès.
+    error: Aucune demande de mot de passe pour l'utilisateur <b>%name%</b> n'a été requise.
+
+profile:
+  change_password:
+    title: Change Password
+    success: <b>%username%</b>, votre mot de passe a été modifié avec succès.
+    failure: Impossible de trouver l'utilisateur actuel.
+  edit:
+    title: Edit Profile
+    success: <b>%username%</b>, votre profil a été mis à jour avec succès.
+    failure: Impossible de trouver l'utilisateur actuel.
+    submit: Submit
+
+security:
+  link: Déjà un compte ?
+  login:
+    title: Connexion à l'application
+    description: Connectez-vous avec votre nom d'utilisateur et votre mot de passe.
+    username: Username
+    password: Password
+    remember_me: Se souvenir de moi
+    submit: Connexion
+    success: Bienvenue <b>%user_name%</b>. Vous vous êtes connecté à l'application <b>%app_name% v%app_version%</b> avec succès.
+    error: Le nom de l'utilisateur ou le mot de passe est invalide.
+  logout:
+    success: Vous vous êtes déconnecté de l'application <b>%app_name%</b> avec succès.
