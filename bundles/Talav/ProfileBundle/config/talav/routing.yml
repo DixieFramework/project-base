@@ -1,5 +1,0 @@
-talav_profile:
-    resource: "@TalavProfileBundle/src/Controller/"
-    type:     annotation
-    prefix:   /
-
