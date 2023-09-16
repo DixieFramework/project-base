@@ -98,6 +98,17 @@ profile:
     failure: Impossible de trouver l'utilisateur actuel.
     submit: Submit
 
+registration:
+  agreeTerms:
+    error: Vous devez accepter les conditions générales d'utilisation.
+    label: J'accepte les conditions générales d'utilisation de l'application.
+  confirmed: Félicitations <b>%username%</b>, votre compte est maintenant activé.
+  register:
+    title: Créer un compte
+    submit: Créer
+  subject: Création d'un compte
+  action: Confirmer
+
 security:
   link: Déjà un compte ?
   login:

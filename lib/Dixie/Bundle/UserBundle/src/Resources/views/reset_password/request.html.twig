@@ -1,0 +1,24 @@
+{% extends '@TalavWeb/cards/card_edit_center.html.twig' %}
+{# parameters #}
+{%- set title = 'resetting.request.title' -%}
+{%- set title_description = 'resetting.request.description' -%}
+{%- set title_icon = 'eraser' -%}
+{%- set submit_text = 'resetting.request.submit' -%}
+{%- set cancel_path = false -%}
+{%- set form_attr = form_attr|default({})|merge({'data-check-user': url('ajax_check_user')}) -%}
+{# actions #}
+{% block actions_form %}
+{{ parent() }}
+<a href="{{ path('app_login') }}" class="align-self-center" title="{{ 'security.login.description'|trans }}">{{ 'security.login.submit'|trans }}</a>
+{% endblock %}
+{# javascripts #}
+{% block javascripts -%}
+{% if app.debug %}
+{{ parent() }}
+{{ asset_js('js/extensions/password-extensions.js') }}
+{{ asset_js('js/application/user_recaptcha.js') }}
+{{ asset_js('js/application/user_request.js') }}
+{% else %}
+{{ asset_js('js/user_request.js') }}
+{% endif %}
+{%- endblock %}

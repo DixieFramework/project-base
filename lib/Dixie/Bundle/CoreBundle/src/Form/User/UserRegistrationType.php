@@ -30,9 +30,17 @@ class UserRegistrationType extends AbstractUserCaptchaType implements ServiceSub
         parent::__construct($service, $displayCaptcha);
     }
 
+//    public function configureOptions(OptionsResolver $resolver): void
+//    {
+//        $resolver->setDefault('data_class', User::class);
+//    }
+
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefault('data_class', User::class);
+        $resolver->setDefaults([
+            'data_class' => User::class,
+            'translation_domain' => 'TalavUserBundle'
+        ]);
     }
 
     protected function addFormFields(FormHelper $helper): void

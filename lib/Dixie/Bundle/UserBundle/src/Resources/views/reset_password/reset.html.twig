@@ -1,0 +1,25 @@
+{% extends '@TalavWeb/cards/card_edit_center.html.twig' %}
+{# parameters #}
+{%- set title = 'resetting.request.title' -%}
+{%- set title_icon = 'eraser' -%}
+{%- set submit_text = 'resetting.request.submit' -%}
+{%- set cancel_path = false -%}
+{%- set form_attr = form_attr|default({})|merge({'data-equal_to': 'password.mismatch'|trans([], 'validators')}) -%}
+{# actions #}
+{% block actions_form %}
+{{ parent() }}
+<a href="{{ path('app_login') }}" class="align-self-center">{{ 'security.link'|trans }}</a>
+{% endblock %}
+{# javascripts #}
+{% block javascripts -%}
+{% if app.debug %}
+{{ parent() }}
+{{ asset_js('js/vendor/zxcvbn/zxcvbn.js') }}
+{{ asset_js('js/plugins/plugin-password-strength.js') }}
+{{ asset_js('js/extensions/password-extensions.js') }}
+{{ asset_js('js/application/user_recaptcha.js') }}
+{{ asset_js('js/application/user_reset.js') }}
+{% else %}
+{{ asset_js('js/user_reset.js') }}
+{% endif %}
+{%- endblock %}

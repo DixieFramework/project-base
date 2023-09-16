@@ -19,6 +19,7 @@ use Talav\Component\User\Message\Dto\CreateUserDto;
 use Talav\UserBundle\Event\TalavUserEvents;
 use Talav\UserBundle\Event\UserEvent;
 
+#[Route(path: 'frontend', name: 'talav_frontend_registration_')]
 class RegistrationController extends AbstractController
 {
     public function __construct(

@@ -53,6 +53,7 @@
         "symfony/yaml": "6.3.*",
         "talav/bundle-generator-bundle": "@dev",
         "talav/core-bundle": "@dev",
+        "talav/profile-bundle": "@dev",
         "talav/user-bundle": "@dev",
         "talav/web-bundle": "@dev",
         "twig/extra-bundle": "^2.12|^3.0",
@@ -165,6 +166,13 @@
                 "symlink": true
             },
             "url": "lib/Dixie/Bundle/WebBundle"
+        },
+        {
+            "type": "path",
+            "options": {
+                "symlink": true
+            },
+            "url": "lib/Dixie/Bundle/ProfileBundle"
         },
         {
             "type": "path",

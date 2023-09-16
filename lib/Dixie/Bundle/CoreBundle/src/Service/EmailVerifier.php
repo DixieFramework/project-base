@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Talav\CoreBundle\Service;
 
+use Talav\Component\User\Model\UserInterface;
 use Talav\CoreBundle\Entity\User;
 use Talav\CoreBundle\Mime\RegistrationEmail;
 use Talav\CoreBundle\Traits\TranslatorAwareTrait;
@@ -40,7 +41,7 @@ class EmailVerifier implements ServiceSubscriberInterface
      *
      * @throws VerifyEmailExceptionInterface
      */
-    public function handleEmail(Request $request, User $user): void
+    public function handleEmail(Request $request, UserInterface $user): void
     {
         $this->validateEmail($request, $user);
         $user->setVerified(true);
@@ -53,7 +54,7 @@ class EmailVerifier implements ServiceSubscriberInterface
      *
      * @throws TransportExceptionInterface
      */
-    public function sendEmail(string $routeName, User $user, RegistrationEmail $email): void
+    public function sendEmail(string $routeName, UserInterface $user, RegistrationEmail $email): void
     {
         $signature = $this->generateSignature($routeName, $user);
         $email->action($this->trans('registration.action'), $signature->getSignedUrl());
@@ -68,7 +69,7 @@ class EmailVerifier implements ServiceSubscriberInterface
     /**
      * Generate signature.
      */
-    private function generateSignature(string $routeName, User $user): VerifyEmailSignatureComponents
+    private function generateSignature(string $routeName, UserInterface $user): VerifyEmailSignatureComponents
     {
         $userId = (string) $user->getId();
         $userEmail = (string) $user->getEmail();
@@ -91,7 +92,7 @@ class EmailVerifier implements ServiceSubscriberInterface
      *
      * @throws VerifyEmailExceptionInterface
      */
-    private function validateEmail(Request $request, User $user): void
+    private function validateEmail(Request $request, UserInterface $user): void
     {
         $signedUrl = $request->getUri();
         $userId = (string) $user->getId();
