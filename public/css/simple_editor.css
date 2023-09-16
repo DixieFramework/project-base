@@ -1,0 +1,104 @@
+@import 'fileinput.css';
+
+/**! compression tag for ftp-deployment */
+
+.simple-editor .simple-editor-toolbar {
+    border-bottom: 0;
+}
+
+/**
+ * scrollbar for toolbar
+ */
+.simple-editor .simple-editor-toolbar::-webkit-scrollbar {
+    height: 3px;
+}
+.simple-editor .simple-editor-toolbar::-webkit-scrollbar-thumb {
+    background-color: var(--bs-secondary);
+}
+.simple-editor .simple-editor-toolbar button {
+    border-radius: 0;
+    border: 0;
+}
+
+/*
+ * first button
+ */
+.simple-editor .simple-editor-toolbar .btn-group:first-child button:first-child {
+    border-top-left-radius: var(--bs-border-radius) !important;
+}
+
+/**
+ * scrollbar for content
+ */
+.simple-editor .simple-editor-content::-webkit-scrollbar {
+    width: 8px;
+}
+.simple-editor .simple-editor-content::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+.simple-editor .simple-editor-content::-webkit-scrollbar-thumb {
+    background-color: #888;
+}
+.simple-editor .simple-editor-content::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
+.simple-editor .simple-editor-content {
+    box-sizing: border-box;
+    max-height: 500px;
+    min-height: 150px;
+    overflow-y: auto;
+    resize: vertical;
+    padding: 0.5rem;
+    height: 250px;
+    outline: 0;
+}
+
+.simple-editor .simple-editor-toolbar .h1,
+.simple-editor .simple-editor-toolbar .h2,
+.simple-editor .simple-editor-toolbar .h3,
+.simple-editor .simple-editor-toolbar .h4,
+.simple-editor .simple-editor-toolbar .h5,
+.simple-editor .simple-editor-toolbar .h6,
+.simple-editor .simple-editor-content h1,
+.simple-editor .simple-editor-content h2,
+.simple-editor .simple-editor-content h3,
+.simple-editor .simple-editor-content h4,
+.simple-editor .simple-editor-content h5,
+.simple-editor .simple-editor-content h6 {
+	font-weight: normal !important;
+}
+
+.simple-editor .simple-editor-toolbar .h1,
+.simple-editor .simple-editor-content h1 {
+	font-size: 2em;
+}
+
+.simple-editor .simple-editor-toolbar .h2,
+.simple-editor .simple-editor-content h2 {
+	font-size: 1.75em;
+}
+
+.simple-editor .simple-editor-toolbar .h3,
+.simple-editor .simple-editor-content h3 {
+	font-size: 1.5em;
+}
+
+.simple-editor .simple-editor-toolbar .h4,
+.simple-editor .simple-editor-content h4 {
+  	font-size: 1.25em;
+}
+
+.simple-editor .simple-editor-toolbar .h5,
+.simple-editor .simple-editor-content h5 {
+  font-size: 1.1em;
+}
+
+.simple-editor .simple-editor-toolbar .h6,
+.simple-editor .simple-editor-content h6 {
+  font-size: 1em;
+}
+
+.simple-editor .separator {
+    width: 1px;
+}

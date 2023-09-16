@@ -1,0 +1,48 @@
+{# horizontal toolbar #}
+{% from '@TalavWeb/macros/_icons.html.twig' import icon, navItem %}
+{# horizontal navigation #}
+{% set display_style = sidebar_hide ? 'flex' : 'none' %}
+<nav id="navigation"class="navbar navbar-horizontal navbar-expand-lg bg-body-tertiary border-bottom ps-2" style="display: {{ display_style }}">
+    <div class="container">
+        <button class="btn btn-outline-secondary rounded-circle show-sidebar py-0 px-2 mt-0" title="{{ 'index.sidebar_show'|trans }}">
+            <i class="fa-solid fa-angle-right"></i>
+        </button>
+        <a class="navbar-brand nav-sidebar-horizontal ms-3" href="{{ path('homepage') }}" title="{{ 'index.title_help'|trans }}">
+            {{- icon('home') -}}
+        </a>
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-horizontal" aria-controls="navbarContent" aria-expanded="false" aria-label="{{ 'index.toggle_navigation'|trans }}">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbar-horizontal">
+            <ul class="navbar-nav me-auto">
+{#                {% if is_granted_calculation -%}#}
+{#                    {{ navItem(path('calculation_table'), 'calculation.list.title', ICON_CALCULATION) }}#}
+{#                {% endif %}#}
+{#                {% if is_granted_data -%}#}
+{#                   {{ include('navigation/horizontal/navigation_data.html.twig') }}#}
+{#                {% endif %}#}
+{#                {% if is_granted_calculation %}#}
+{#                    {{ include('navigation/horizontal/navigation_chart.html.twig') }}#}
+{#                {% endif %}#}
+{#                {% if is_granted_data or is_admin %}#}
+{#                    {{ include('navigation/horizontal/navigation_tools.html.twig') }}#}
+{#                {% endif %}#}
+{#                {% if is_admin -%}#}
+{#                    {{ include('navigation/horizontal/navigation_admin.html.twig') }}#}
+{#                {% endif %}#}
+            </ul>
+            <ul class="navbar-nav">
+{#                {% if is_granted_data and show_navigation_search ?? false -%}#}
+{#                    {{ include('@TalavWeb/navigation/horizontal/navigation_search.html.twig') }}#}
+{#                {% endif %}#}
+                {{ include('@TalavWeb/navigation/horizontal/navigation_theme.html.twig') }}
+                {% if is_remembered -%}
+                    {{ include('@TalavWeb/navigation/horizontal/navigation_user.html.twig') }}
+                {% else %}
+                    {{ navItem(path('talav_user_login'), 'login', 'fas fa-sign-in fa-fw me-2') }}
+                    {{ navItem(path('talav_user_register'), 'register', 'fas fa-user-plus fa-fw me-2') }}
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

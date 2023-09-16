@@ -30,4 +30,5 @@ return [
     Elao\Enum\Bridge\Symfony\Bundle\ElaoEnumBundle::class => ['all' => true],
     Talav\CoreBundle\TalavCoreBundle::class => ['all' => true],
     Createnl\ZxcvbnBundle\ZxcvbnBundle::class => ['all' => true],
+    Talav\WebBundle\TalavWebBundle::class => ['all' => true],
 ];

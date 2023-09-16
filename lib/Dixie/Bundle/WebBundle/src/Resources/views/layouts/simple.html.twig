@@ -1,0 +1,15 @@
+{% extends '@TalavWeb/base.html.twig' %}
+
+{% block layout %}
+    {% include '@TalavWeb/layouts/_flash-messages.html.twig' %}
+    <h1>{% block titre 'Hello' %}</h1>
+    <div class="{% block container_class 'container' %}" id="container">
+        <div class="card">
+            <div class="card-body">
+                <div class="px-md-5">
+                    {% block layout_body %}{% block body %}{% endblock %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

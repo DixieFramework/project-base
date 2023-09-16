@@ -1,0 +1,176 @@
+{# parameters #}
+{%- set is_env_dev = app_mode == 'dev' -%}
+{%- set is_env_prod = app_mode == 'prod' -%}
+{%- set is_env_local = app_mode == 'local' -%}
+{%- set is_dev = app.debug or is_env_dev -%}
+{%- set is_admin = is_granted('ROLE_ADMIN') -%}
+{%- set is_super_admin = is_granted('ROLE_SUPER_ADMIN') -%}
+{%- set is_previous_admin = is_granted('IS_IMPERSONATOR') -%}
+{%- set is_remembered = is_granted('IS_AUTHENTICATED_REMEMBERED') -%}
+{%- set is_actived = is_remembered and app.user.enabled|default(false) -%}
+{%- set is_test = is_dev and is_remembered and app.user.userIdentifier == 'Bibi' -%}
+{%- set title_parameters = title_parameters|default({}) -%}
+{%- set title_domain = title_domain|default(null) -%}
+{%- set page_title = app_name ~ (title is defined ? ' - ' ~ title|trans(title_parameters, title_domain) : '') -%}
+{%- set sidebar_hide = is_remembered and is_actived ? app.request.cookies.get('SIDEBARHIDE', true) : true -%}
+{%- set sidebar_class = sidebar_hide ? ' sidebar-hide' : '' -%}
+{%- set status_bar = status_bar is defined ? status_bar : true and is_remembered and is_actived -%}
+<!DOCTYPE HTML>
+<!--
+_______     __  _   _ _____ _____ _    _ _______
+|  _ \ \   / / | \ | |_   _/ ____| |  | |__   __|
+| |_) \ \_/ /  |  \| | | || |  __| |__| |  | |
+|  _ < \   /   | . ` | | || | |_ |  __  |  | |
+| |_) | | |    | |\  |_| || |__| | |  | |  | |
+|____/  |_|    |_| \_|_____\_____|_|  |_|  |_|
+
+-->
+<html prefix="og: http://ogp.me/ns#" lang="{{ app.request.locale }}" xmlns:fb="http://ogp.me/ns/fb#">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Language" content="fr">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% apply spaceless %}{%- block meta_title -%}{%- endblock -%}{% endapply %} - By Night</title>
+    <meta name="title" content="{{- block('meta_title') -}}">
+    <meta name="keywords" content="{% block meta_full_keywords %}{% block meta_keywords %}{% endblock %}aujourd'hui,ce,soir,soiree,sortie,concert,spectacle,musique,discotheque,boite,de,nuit{% endblock %}">
+    <meta name="description" content="{% block meta_description %}By Night vous fait découvrir tous les événements du moment !{% endblock %}">
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=yyQOxPP629">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=yyQOxPP629">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=yyQOxPP629">
+    <link rel="manifest" href="/site.webmanifest?v=yyQOxPP629">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg?v=yyQOxPP629" color="#3f51b5">
+    <link rel="shortcut icon" href="/favicon.ico?v=yyQOxPP629">
+    <meta name="msapplication-TileColor" content="#3f51b5">
+    <meta name="theme-color" content="#3f51b5">
+    <!-- ./Icons -->
+
+    <!-- OpenGraph -->
+    <meta property="og:site_name" content="By Night">
+    <meta property="og:description" content="{% block og_description block('meta_description') %}">
+    <meta property="og:title" content="{% block og_title block('meta_title') %}">
+    <meta property="og:type" content="{% block og_type 'website' %}">
+    <meta property="og:url" content="{% block og_url url('talav_web_index') %}">
+    <meta property="og:locale" content="fr" />
+    <meta property="og:image" content="{% block og_image asset('build/images/by-night.png') %}">
+    <!-- ./OpenGraph -->
+
+    <!-- Google -->
+    {% block google %}{% endblock %}
+    <!-- ./Google -->
+
+    <!-- DC -->
+    <meta name="dc.description" content="{{ block('og_description') }}">
+    <meta name="dc.title" content="{{ block('og_title') }}">
+    <meta name="dc.keywords" content="{{ block('meta_full_keywords') }}" />
+    <!-- ./DC -->
+
+    {% block metas %}{% endblock %}
+
+    <link rel="canonical" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" />
+
+    {# stylesheets #}
+    {{- asset_css('js/vendor/bootstrap/css/bootstrap.css') }}
+    {{- asset_css('js/vendor/font-awesome/css/all.css') }}
+    {% block stylesheets %}
+        {{- asset_css('css/style.css') }}
+    {% endblock %}
+    {# javascript #}
+    {{- asset_js('js/application/core-theme.js') }}
+
+    <!-- CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    {{ encore_entry_link_tags('app') }}
+    {% block css %}{% endblock %}
+    <!-- ./CSS -->
+
+    {% block head_js_layout %}{% endblock %}
+    {% block head_js %}{% endblock %}
+</head>
+{#<body itemscope itemtype="http://schema.org/WebPage">#}
+<body{% if status_bar %} class="status-bar"{% endif %} data-cookie-path="{{ cookie_path }}">
+{# vertical navigation #}
+{%- block navigation_vertical -%}
+    {{- include('@TalavWeb/navigation/vertical/navigation.html.twig') }}
+{%- endblock %}
+{# main content #}
+<div class="page-content{{ sidebar_class }}">
+{#    <header>#}
+{#        <!-- Menu -->#}
+{#        {% if location is defined and location.isCity %}#}
+{#            {{ render_esi(path('app_private_header', {'id': location.city.id})) }}#}
+{#        {% else %}#}
+{#            {{ render_esi(path('app_private_header')) }}#}
+{#        {% endif %}#}
+{#        <!-- ./Menu -->#}
+{#    </header>#}
+
+    {# horizontal navigation #}
+    {%- block navigation_horizontal -%}
+        {{ include('@TalavWeb/navigation/horizontal/navigation.html.twig') }}
+    {%- endblock %}
+
+    {# container #}
+    <div role="main" class="{% block container_class 'container' %}">
+        {% block body -%}{%- endblock %}
+    </div>
+
+    <!-- Main -->
+{#    {% block layout %}{% endblock %}#}
+    <!-- ./Main -->
+</div>
+<div id="search-menu-backdrop"></div>
+
+<!-- Modals -->
+<div class="modal fade" id="dialog_details" tabindex="-1" role="dialog" aria-hidden="true">
+    {% include '@TalavWeb/layouts/modal.html.twig' %}
+</div>
+{% block modals %}{% endblock %}
+<!-- ./Modals -->
+
+<!-- Footer -->
+{# messages #}
+{% block flashbag -%}{{ include('@TalavWeb/flash_bag.html.twig') }}{%- endblock %}
+{# footer #}
+{% block footer -%}{% if status_bar %}{{ include('@TalavWeb/footer.html.twig') }}{% endif %}{%- endblock %}
+{# cookie_banner #}
+{% block cookie_banner -%}{{ include('@TalavWeb/cookie_banner.html.twig') }}{%- endblock %}
+{# back to top #}
+{% block back_to_top -%}{{ include('@TalavWeb/back_to_top.html.twig') }}{%- endblock %}
+{#{% if location is defined %}#}
+{#    {% set countryId = location.isCountry ? location.country.id : location.city.country.id %}#}
+{#    {{ render_esi(controller('App\\Controller\\Fragments\\CommonController::footer', {'id': countryId})) }}#}
+{#{% else %}#}
+{#    {{ render_esi(controller('App\\Controller\\Fragments\\CommonController::footer')) }}#}
+{#{% endif %}#}
+<!-- ./Footer -->
+
+<!-- JS -->
+{{ encore_entry_script_tags('app') }}
+{%- block js -%}{%- endblock -%}
+{# java scripts #}
+<noscript>{{ 'common.no_script_support'|trans }}</noscript>
+{% block javascripts %}
+    {% if app.debug %}
+        {{- asset_js('js/vendor/jquery/jquery.js') }}
+        {{- asset_js('js/vendor/bootstrap/js/bootstrap.bundle.js') }}
+        {{- asset_js('js/extensions/array-extensions.js') }}
+        {{- asset_js('js/extensions/jquery-extensions.js') }}
+        {{- asset_js('js/extensions/params-extensions.js') }}
+        {{- asset_js('js/extensions/string-extensions.js') }}
+        {{- asset_js('js/plugins/plugin-sidebar.js') }}
+        {{- asset_js('js/plugins/plugin-toast.js') }}
+        {{- asset_js('js/application/core_common.js') }}
+    {% else %}
+        {{- asset_js('js/core_common.js') }}
+    {% endif %}
+{% endblock %}
+<!-- ./JS -->
+</body>
+</html>

@@ -1,0 +1,35 @@
+{% extends '@TalavWeb/base.html.twig' %}
+{% from '@TalavWeb/macros/_icons.html.twig' import icon %}
+{# body #}
+{% block body -%}
+<div class="row g-0">
+    {% block start_card_container -%}
+    <div class="col{% block card_container_class %} col-xl-8 offset-xl-2{% endblock -%}">
+    {% endblock %}
+        {# card #}
+        <div class="card mb-3{% block card_class %}{% endblock card_class %}">
+            {# card header #}
+            <div class="card-header{% block card_header_class %}{% endblock %}">
+                {% block card_header %}
+                <h1 class="card-title">
+                    {{- icon(title_icon, title, title_domain|default(null), title_parameters|default({})) -}}
+                </h1>
+                {% if title_description is defined and title_description %}
+                    <small>{% block card_header_description %}{{ title_description|trans }}{%- endblock %}</small>
+                {% endif %}
+                {%- endblock %}
+            </div>
+            {# card body #}
+            <div class="card-body{% block card_body_class %}{% endblock %}">
+                {% block card_body -%}{%- endblock %}
+            </div>
+            {# card footer #}
+            <div class="card-footer d-print-none{% block card_footer_class %}{% endblock %}">
+                {% block card_footer -%}{%- endblock %}
+            </div>
+        </div>
+        {%- block end_card_container %}
+    </div>
+    {%- endblock %}
+</div>
+{%- endblock %}

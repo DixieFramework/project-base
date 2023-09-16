@@ -1,0 +1,32 @@
+body {
+    background-color: #fff;
+}
+
+table.container {
+    width: 720px;
+}
+
+.wrapper.secondary {
+    background-color: #fff;
+
+}
+
+table.body.wrapper {
+    background-color: #fff;
+}
+
+.container.body_alert,
+.container.body_warning,
+.container.body_default {
+    border-left: 1px solid #f3f3f3;
+    border-right: 1px solid #f3f3f3;
+    border-bottom: 1px solid #f3f3f3;
+}
+
+#csp td {
+    padding-top: 5px;
+}
+
+.footer-text {
+    color: darkgray;
+}

@@ -54,6 +54,7 @@
         "talav/bundle-generator-bundle": "@dev",
         "talav/core-bundle": "@dev",
         "talav/user-bundle": "@dev",
+        "talav/web-bundle": "@dev",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0"
     },

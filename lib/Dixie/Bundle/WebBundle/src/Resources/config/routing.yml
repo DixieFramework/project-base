@@ -1,0 +1,6 @@
+ria_web:
+    resource: "@TalavWebBundle/Controller"
+    type:     annotation
+
+#talav_user:
+#    resource: "@TalavUserBundle/Resources/config/routing.yml"

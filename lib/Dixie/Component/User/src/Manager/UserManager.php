@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Talav\Component\User\Manager;
 
 use Doctrine\ORM\EntityManagerInterface;
+use InvalidArgumentException;
 use Talav\Component\Resource\Factory\FactoryInterface;
 use Talav\Component\Resource\Manager\ResourceManager;
 use Talav\Component\Resource\Model\ResourceInterface;
@@ -76,7 +77,7 @@ class UserManager extends ResourceManager implements UserManagerInterface
     {
         $user = $this->findUserByUsernameOrThrowException($username);
         $user->setEnabled(true);
-        $this->userManager->update($user, true);
+        $this->update($user, true);
     }
 
     /**
@@ -86,7 +87,7 @@ class UserManager extends ResourceManager implements UserManagerInterface
     {
         $user = $this->findUserByUsernameOrThrowException($username);
         $user->setEnabled(false);
-        $this->userManager->update($user, true);
+        $this->update($user, true);
     }
 
     /**
@@ -96,7 +97,7 @@ class UserManager extends ResourceManager implements UserManagerInterface
     {
         $user = $this->findUserByUsernameOrThrowException($username);
         $user->setSuperAdmin(true);
-        $this->userManager->update($user, true);
+        $this->update($user, true);
     }
 
     /**
@@ -106,7 +107,7 @@ class UserManager extends ResourceManager implements UserManagerInterface
     {
         $user = $this->findUserByUsernameOrThrowException($username);
         $user->setSuperAdmin(false);
-        $this->userManager->update($user, true);
+        $this->update($user, true);
     }
 
     /**
@@ -121,7 +122,7 @@ class UserManager extends ResourceManager implements UserManagerInterface
             return false;
         }
         $user->addRole($role);
-        $this->userManager->update($user, true);
+        $this->update($user, true);
 
         return true;
     }
@@ -138,7 +139,7 @@ class UserManager extends ResourceManager implements UserManagerInterface
             return false;
         }
         $user->removeRole($role);
-        $this->userManager->update($user, true);
+        $this->update($user, true);
 
         return true;
     }

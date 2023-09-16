@@ -12,10 +12,10 @@ use Talav\CoreBundle\Controller\AbstractController;
 #[Route(path: '/web', name: 'talav_web_')]
 class DefaultController extends AbstractController
 {
-
     #[Route(path: '/', name: 'index')]
     public function indexAction(Request $request): Response
     {
+        return $this->render('@TalavWeb/index/index.html.twig');
         return new Response('Hello world from talav_web');
     }
 }

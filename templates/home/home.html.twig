@@ -1,5 +1,30 @@
-{% extends 'base.html.twig' %}
-
-{% block body %}
-    <h1>Home page</h1>
-{% endblock %}
+{% extends '@TalavWeb/layouts/default.html.twig' %}
+{# parameters #}
+{%- set title = 'index.title' -%}
+{%- set enabled = app.user.enabled() -%}
+{%- set show_navigation_search = enabled -%}
+{# show body #}
+{% block body -%}
+    <div class="row">
+        {% if app.user and enabled %}
+            <div class="col">
+{#                {{- include('@TalavWeb/index/panel_calculation.html.twig') }}#}
+{#                {% if user_service.panelState %}#}
+{#                    {{ include('index/panel_state.html.twig') }}#}
+{#                {% endif %}#}
+{#                {% if user_service.panelMonth %}#}
+{#                    {{ include('index/panel_month.html.twig') }}#}
+{#                {% endif %}#}
+{#                {% if user_service.panelCatalog %}#}
+{#                    {{ include('index/panel_catalog.html.twig') }}#}
+{#                {% endif %}#}
+                {{ include('@TalavWeb/user/user_switch.html.twig') }}
+            </div>
+        {% else %}
+            <div class="col-md-8 offset-md-2 my-auto h-50">
+                {{ include('@TalavWeb/index/panel_disabled.html.twig') }}
+                {{ include('@TalavWeb/user/user_switch.html.twig') }}
+            </div>
+        {% endif %}
+    </div>
+{%- endblock %}

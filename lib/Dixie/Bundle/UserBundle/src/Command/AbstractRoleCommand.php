@@ -47,6 +47,8 @@ abstract class AbstractRoleCommand extends Command
             throw new \RuntimeException('Not enough arguments.');
         }
         $this->executeRoleCommand($this->userManager, $output, $username, $super, $role);
+
+        return Command::SUCCESS;
     }
 
     /**

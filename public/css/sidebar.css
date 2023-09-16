@@ -1,0 +1,129 @@
+/**! compression tag for ftp-deployment */
+
+/* navigation bar */
+.navbar-vertical {
+    top: 0;
+    left: 0;
+    position: fixed;
+    height: 100vh;
+    min-width: 18rem;
+    max-width: 18rem;
+    padding: 0.5rem 1rem 0.1rem;
+    transition: margin-left 0.35s ease-in-out;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-direction: column !important;
+    text-align: left !important;
+    justify-content: initial;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+}
+
+.navbar-vertical.sidebar-hide {
+    margin-left: -18rem;
+}
+
+/* page-content */
+.page-content {
+    width: calc(100% - 18rem);
+    margin-top: 20px;
+    margin-left: 18rem;
+}
+
+.page-content.sidebar-hide {
+    width: 100%;
+    margin: 0;
+}
+
+/* menus */
+.navbar-vertical .navbar-nav {
+    list-style: none;
+    flex-direction: column !important;
+    margin-bottom: 0;
+}
+
+.navbar-vertical .dropdown-header {
+    text-align: left;
+    font-weight: bold;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.navbar-vertical .dropdown-divider {
+    border-top: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color-translucent) !important;
+}
+
+.navbar-vertical ul ul {
+    padding-left: 1.5rem;
+}
+
+.navbar-vertical .nav-link-toggle {
+    width: 100%;
+    text-align: left;
+}
+
+.navbar-vertical .dropup .nav-link {
+    color: var(--bs-navbar-color);
+}
+
+.navbar-vertical .dropup .nav-link:hover,
+.navbar-vertical .dropup .nav-link:focus {
+    color: var(--bs-navbar-hover-color);
+}
+
+.navbar-vertical .dropup .nav-link:focus-visible {
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.navbar-vertical .dropup .nav-link.disabled {
+    color: var(--bs-navbar-disabled-color);
+    pointer-events: none;
+    cursor: default;
+}
+
+/*
+ * Toggle menu arrow
+ */
+.navbar-vertical .nav-link-toggle::after {
+    font-family: "Font Awesome 6 Free", sans-serif;
+    font-weight: 900;
+    float: right;
+    margin-left: 6px;
+    transition: transform 0.15s ease-in-out;
+    content: "\f104";
+}
+
+.navbar-vertical .nav-link-toggle[aria-expanded="true"]::after {
+    transform: rotate(-90deg);
+}
+
+@media print {
+    .page-content {
+        width: 100%;
+        margin: 0;
+    }
+}
+
+/* scrollbar */
+.navbar-vertical::-webkit-scrollbar {
+    width: 8px;
+}
+
+.navbar-vertical::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+/* dark mode */
+html[data-bs-theme=dark] .navbar-vertical::-webkit-scrollbar-track {
+    background-color: #343a40;
+}
+
+html[data-bs-theme=dark] .navbar-vertical::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, .1);
+}
+
+html[data-bs-theme=dark] .navbar-vertical::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(128, 135, 139, .8)
+}

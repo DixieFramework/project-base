@@ -11,7 +11,7 @@ use Talav\CoreBundle\Service\SymfonyInfoService;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/")
+     * @Route("/", name="homepage")
      */
     public function homeAction(SymfonyInfoService $service): Response
     {

@@ -1,0 +1,177 @@
+@import 'style.css';
+@import '../js/vendor/bootstrap-table/bootstrap-table.css';
+@import '../js/vendor/jquery-contextmenu/jquery.contextMenu.css';
+
+/**! compression tag for ftp-deployment */
+
+/**
+ * Global styles
+ */
+.bootstrap-table .fixed-table-container .fixed-table-body .table {
+    table-layout: fixed !important;
+}
+
+.bootstrap-table .fixed-table-container .fixed-table-body .table td {
+    vertical-align: top !important;
+}
+
+.bootstrap-table .fixed-table-container .fixed-table-body .fixed-table-loading {
+    background: initial;
+}
+
+/**
+ * Card View
+ */
+.bootstrap-table .fixed-table-container .fixed-table-body .table tbody tr .card-views {
+    cursor: pointer;
+}
+
+.bootstrap-table .fixed-table-container .fixed-table-body .table tbody tr .card-view .card-view-title {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: normal;
+    overflow: hidden;
+    min-width: 10rem;
+}
+
+.bootstrap-table .fixed-table-container .fixed-table-body .table tbody tr .card-view .card-view-value {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: left;
+}
+
+/**
+ * Reset color for colored headers
+ */
+.bootstrap-table .fixed-table-container .table thead th.text-danger {
+    color: inherit !important;
+}
+
+/**
+ * Use sort arrows from FontAwesome
+ */
+.bootstrap-table .fixed-table-container .table thead th .sortable {
+    padding-right: 0 !important;
+}
+
+.bootstrap-table .fixed-table-container .table thead th .both,
+.bootstrap-table .fixed-table-container .table thead th .asc,
+.bootstrap-table .fixed-table-container .table thead th .desc {
+    background-image: none;
+}
+
+.bootstrap-table .fixed-table-container .table thead th .sortable:after {
+    font-family: "Font Awesome 6 Free", sans-serif;
+    font-weight: 900;
+    padding-left: 0.35rem;
+    opacity: 0.3;
+}
+
+.bootstrap-table .fixed-table-container .table thead th .both:after {
+    content: "\f0dc";
+}
+
+.bootstrap-table .fixed-table-container .table thead th .asc:after {
+    content: "\f0d8";
+    opacity: 1;
+}
+
+.bootstrap-table .fixed-table-container .table thead th .desc:after {
+    content: "\f0d7";
+    opacity: 1;
+}
+
+/*
+ * Hide icons on print
+ */
+@media print {
+    .bootstrap-table .fixed-table-container .table thead th .sortable:after,
+    .bootstrap-table .fixed-table-container .table thead th .both:after,
+    .bootstrap-table .fixed-table-container .table thead th .asc:after,
+    .bootstrap-table .fixed-table-container .table thead th .desc:after {
+        display: none;
+    }
+}
+
+/**
+ * Page informations
+ */
+.pagination-detail {
+    line-height: 2rem;
+}
+
+/*
+ * Calculation overall margin below
+ */
+tr.text-body-secondary td .text-danger {
+    opacity: 0.75;
+}
+
+/*
+ * Loading message
+ */
+.loading-message {
+    width: 50%;
+}
+
+@media (max-width: 992px) {
+    .loading-message {
+        width: 70%;
+    }
+}
+
+@media (max-width: 768px) {
+    .loading-message {
+        width: 100%;
+    }
+}
+
+/*
+ * selection
+ */
+
+.bootstrap-table .custom-item.table-primary {
+    background-color: var(--bs-table-bg) !important;
+}
+
+.bootstrap-table tr.table-primary.text-body-secondary,
+.bootstrap-table .custom-item.table-primary.text-body-secondary,
+html[data-bs-theme=dark] .bootstrap-table .custom-item.table-primary hr,
+html[data-bs-theme=dark] .bootstrap-table .custom-item.table-primary a.text-body {
+    color: var(--bs-table-color) !important;
+}
+
+/**
+ * pagination
+ */
+.fixed-table-pagination {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    align-items: center;
+}
+
+.fixed-table-pagination .float-left {
+    margin-right: auto;
+    line-height: initial;
+}
+
+/*
+.fixed-table-pagination .float-right {
+}
+*/
+
+/**
+ * search control
+ */
+.form-control.form-control-search {
+    width: 130px;
+}
+
+/**
+ * drop-down second level
+ */
+.dropdown-item.dropdown-child {
+    padding-left: calc(2 * var(--bs-dropdown-item-padding-x)) !important;
+}

@@ -1,0 +1,59 @@
+{# imports #}
+{% from '@TalavWeb/macros/_icons.html.twig' import icon, dropdownSeparator %}
+{% from '@TalavWeb/macros/_attributes.html.twig' import attributes %}
+{# attributes #}
+{%- set sidebar_attributes = {
+    'url': url('talav_web_index'),
+    'show-menu': 'index.menu_show'|trans,
+    'hide-menu': 'index.menu_hide'|trans
+} -%}
+{# sidebar #}
+<div id="sidebar" class="navbar navbar-vertical bg-body-tertiary border-end d-print-none{{ sidebar_class }}"{{ attributes(sidebar_attributes, 'data-') }}>
+    {# toggle sidebar #}
+    <button class="btn btn-outline-secondary rounded-circle py-0 px-2 hide-sidebar" title="{{ 'index.sidebar_hide'|trans }}">
+        <i class="fa-solid fa-angle-left"></i>
+    </button>
+    {% if not status_bar %}
+        {# about image and link #}
+        <div class="d-flex position-relative mb-2" style="margin-right: 28px">
+            <div class="flex-shrink-0">
+                <img class="rounded-1" src="{{ asset_icon(57) }}" width="57" height="57" alt="{{ app_name }}">
+            </div>
+            <div class="flex-grow-1 ms-2">
+                <p class="navbar-brand p-0 m-0" style="font-size: 1.5rem; line-height: initial;">{{ app_name }}</p>
+                <p class="text-body-secondary p-0 m-0">{{ 'about.version'|trans({'%version%': app_version}) }}</p>
+                <a href="{{ path('talav_web_index') }}" class="stretched-link" title="{{ 'footer.about_title'|trans }}"></a>
+            </div>
+        </div>
+        {{ dropdownSeparator(false, 'my-1 w-100') }}
+    {% endif %}
+    {# home page #}
+    <a class="navbar-brand mb-2" href="{{ path('homepage') }}" title="{{ 'index.title_help'|trans }}">
+        {{- icon('home', 'index.title') -}}
+    </a>
+    {# menus #}
+    <ul class="navbar-nav mb-auto border-top w-100">
+{#        {% if is_granted_data %}#}
+{#            {{ include('navigation/vertical/navigation_data.html.twig') }}#}
+{#        {% endif %}#}
+{#        {% if is_granted_calculation %}#}
+{#            {{ include('navigation/vertical/navigation_chart.html.twig') }}#}
+{#        {% endif %}#}
+{#        {% if is_granted_data or is_admin %}#}
+{#            {{ include('navigation/vertical/navigation_tools.html.twig') }}#}
+{#        {% endif %}#}
+{#        {% if is_admin -%}#}
+{#            {{ include('navigation/vertical/navigation_admin.html.twig') }}#}
+{#        {% endif %}#}
+{#        {% if is_test -%}#}
+{#            {{ include('navigation/vertical/navigation_test.html.twig') }}#}
+{#        {% endif %}#}
+    </ul>
+    {# bottom menus #}
+    <div class="d-flex-wrap-center border-top w-100 pt-2{% if not status_bar %} mb-4{% endif %}">
+        {% if is_remembered %}
+        {{ include('@TalavWeb/navigation/vertical/navigation_user.html.twig') }}
+        {% endif %}
+        {{ include('@TalavWeb/navigation/vertical/navigation_theme.html.twig') }}
+    </div>
+</div>

@@ -861,6 +861,9 @@
     "talav/user-bundle": {
         "version": "1.0.x-dev"
     },
+    "talav/web-bundle": {
+        "version": "1.0.0"
+    },
     "theseer/tokenizer": {
         "version": "1.2.1"
     },

@@ -1,0 +1,89 @@
+@import 'style.css';
+
+/**! compression tag for ftp-deployment */
+
+ul.timeline {
+    list-style-type: none;
+    position: relative;
+    padding-left: 20px;
+}
+
+ul.timeline:before {
+    content: ' ';
+    background-color: #d4d9df;
+    display: inline-block;
+    position: absolute;
+    left: 9px;
+    width: 2px;
+    height: 100%;
+    margin-top: 0.25rem;
+}
+
+ul.timeline > li {
+    margin-bottom: 20px;
+}
+
+ul.timeline > li:last-child {
+    margin-bottom: 0;
+}
+
+ul.timeline > li:before {
+    content: ' ';
+    background-color: var(--bs-white);
+    display: inline-block;
+    position: absolute;
+    border-radius: 50%;
+    border: 3px solid var(--bs-primary);
+    left: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-top: 0.25rem;
+}
+
+ul.timeline-square > li:before {
+    border-radius: initial;
+}
+
+ul.timeline-fill > li:before {
+    border: initial;
+}
+
+ul.timeline > li.secondary:before {
+    border: 3px solid var(--bs-secondary);
+}
+
+ul.timeline-fill > li.secondary:before {
+    background-color: var(--bs-secondary);
+}
+
+ul.timeline > li.success:before {
+    border: 3px solid var(--bs-success);
+}
+
+ul.timeline-fill > li.success:before {
+    background-color: var(--bs-success);
+}
+
+ul.timeline > li.info:before {
+    border: 3px solid var(--bs-info);
+}
+
+ul.timeline-fill > li.info:before {
+    background-color: var(--bs-info);
+}
+
+ul.timeline > li.danger:before {
+    border: 3px solid var(--bs-danger);
+}
+
+ul.timeline-fill > li.danger:before {
+    background-color: var(--bs-danger);
+}
+
+ul.timeline > li.warning:before {
+    border: 3px solid var(--bs-warning);
+}
+
+ul.timeline-fill > li.warning:before {
+    background-color: var(--bs-warning);
+}

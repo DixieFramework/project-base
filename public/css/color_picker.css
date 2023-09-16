@@ -1,0 +1,30 @@
+/**! compression tag for ftp-deployment */
+
+.color-picker .btn-color {
+    height: 1.25rem;
+    width: 1.5rem;
+    margin: 2px;
+    border-radius: 0;
+}
+
+.color-picker .btn-color:focus {
+    outline: solid var(--bs-link-color) 2px;
+}
+
+.color-picker .btn-color:hover {
+    outline: solid var(--bs-link-hover-color) 2px;
+}
+
+.color-picker .dropdown-color {
+    height: 1rem;
+    width: 1.5rem;
+    margin-right: 0.25rem;
+}
+
+.color-picker .dropdown-text {
+    text-overflow: ellipsis;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    flex: 1 1 auto;
+}

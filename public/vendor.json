@@ -1,0 +1,162 @@
+{
+    "source": "https://cdn.jsdelivr.net/npm/",
+    "target": "js/vendor/",
+    "format": "{source}{name}@{version}/{file}",
+    "prefixes": {
+        "js": "/**! compression tag for ftp-deployment */\n\n",
+        "css": "/**! compression tag for ftp-deployment */\n\n"
+    },
+    "plugins": [
+        {
+            "name": "jquery",
+            "version": "3.7.1",
+            "files": [
+                "dist/jquery.js"
+            ]
+        },
+        {
+            "name": "bootstrap",
+            "version": "5.3.2",
+            "files": [
+                "dist/js/bootstrap.bundle.js",
+                "dist/js/bootstrap.bundle.js.map",
+                "dist/css/bootstrap.css",
+                "dist/css/bootstrap.css.map"
+            ]
+        },
+        {
+            "name": "@fortawesome/fontawesome-free",
+            "display": "fontawesome-free",
+            "version": "6.4.2",
+            "target": "font-awesome",
+            "files": [
+                "css/all.css",
+                "webfonts/fa-brands-400.ttf",
+                "webfonts/fa-brands-400.woff2",
+                "webfonts/fa-regular-400.ttf",
+                "webfonts/fa-regular-400.woff2",
+                "webfonts/fa-solid-900.ttf",
+                "webfonts/fa-solid-900.woff2",
+                "webfonts/fa-v4compatibility.ttf",
+                "webfonts/fa-v4compatibility.woff2"
+            ]
+        },
+        {
+            "name": "jquery-validation",
+            "version": "1.19.5",
+            "files": [
+                "dist/jquery.validate.js",
+                "dist/additional-methods.js",
+                "dist/localization/messages_fr.js"
+            ]
+        },
+        {
+            "name": "highcharts",
+            "version": "11.1.0",
+            "files": [
+                "highcharts.js",
+                "highcharts.js.map",
+                "modules/accessibility.js",
+                "modules/accessibility.js.map"
+            ]
+        },
+        {
+            "name": "html5sortable",
+            "version": "0.13.3",
+            "files": [
+                "dist/html5sortable.js"
+            ]
+        },
+        {
+            "name": "mark.js",
+            "version": "8.11.1",
+            "target": "jquery-mark",
+            "files": [
+                "dist/jquery.mark.js"
+            ]
+        },
+        {
+            "name": "zxcvbn",
+            "version": "4.4.2",
+            "files": [
+                "dist/zxcvbn.js",
+                "dist/zxcvbn.js.map"
+            ]
+        },
+        {
+            "name": "jquery-contextmenu",
+            "version": "2.9.2",
+            "files": [
+                "dist/jquery.contextMenu.css",
+                "dist/jquery.contextMenu.js",
+                "dist/font/context-menu-icons.eot",
+                "dist/font/context-menu-icons.ttf",
+                "dist/font/context-menu-icons.woff",
+                "dist/font/context-menu-icons.woff2"
+            ]
+        },
+        {
+            "name": "clipboard",
+            "version": "2.0.11",
+            "files": [
+                "dist/clipboard.js"
+            ]
+        },
+        {
+            "display": "iconify",
+            "name": "@iconify/iconify",
+            "version": "1.0.7",
+            "disabled": true,
+            "files": [
+                "dist/iconify.js"
+            ]
+        },
+        {
+            "name": "bootstrap-table",
+            "version": "1.22.1",
+            "files": [
+                "dist/bootstrap-table.js",
+                "dist/bootstrap-table.css",
+                "dist/extensions/defer-url/bootstrap-table-defer-url.js",
+                "dist/extensions/custom-view/bootstrap-table-custom-view.js"
+            ]
+        },
+        {
+            "name": "select2",
+            "version": "4.1.0-rc.0",
+            "files": [
+                "dist/js/select2.js",
+                "dist/js/i18n/fr.js",
+                "dist/css/select2.css"
+            ]
+        },
+        {
+            "see": "https://apalfrey.github.io/select2-bootstrap-5-theme",
+            "example": "https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.css",
+            "name": "select2-bootstrap-5-theme",
+            "version": "1.3.0",
+            "target": "select2/css",
+            "files": [
+                "dist/select2-bootstrap-5-theme.css"
+            ]
+        },
+        {
+            "name": "currency-flags",
+            "version": "4.0.7",
+            "files": [
+                "dist/currency-flags.css"
+            ]
+        },
+        {
+            "name": "font-mfizz",
+            "version": "2.4.1",
+            "files": [
+                "dist/font-mfizz.css",
+                "dist/font-mfizz.eot",
+                "dist/font-mfizz.svg",
+                "dist/font-mfizz.ttf",
+                "dist/font-mfizz.woff"
+            ]
+        }
+    ]
+}

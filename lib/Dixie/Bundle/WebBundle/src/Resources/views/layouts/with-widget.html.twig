@@ -1,0 +1,21 @@
+{% extends '@TalavWeb/layouts/default.html.twig' %}
+
+{% block head_js_layout %}
+    <script type="text/javascript">
+        var fbAppId = "{{ facebook_app_id }}";
+    </script>
+{% endblock %}
+
+{% block layout %}
+    <div class="container">
+        <h1>{% block titre 'Hello' %}</h1>
+        <div class="row">
+            <div id="content" class="col-lg-8">
+                {% block body %}{% endblock %}
+            </div>
+            <div id="widgets" class="col-lg-4">
+                {% block widgets %}{% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
