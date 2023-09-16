@@ -1,12 +1,12 @@
-{% extends '@TalavWeb/layouts/default.html.twig' %}
+{% extends '@TalavWeb/base.html.twig' %}
 {# parameters #}
 {%- set title = 'index.title' -%}
-{%- set enabled = app.user.enabled() -%}
+{%- set enabled = app.user and app.user.enabled() -%}
 {%- set show_navigation_search = enabled -%}
 {# show body #}
 {% block body -%}
     <div class="row">
-        {% if app.user and enabled %}
+        {% if enabled %}
             <div class="col">
 {#                {{- include('@TalavWeb/index/panel_calculation.html.twig') }}#}
 {#                {% if user_service.panelState %}#}
