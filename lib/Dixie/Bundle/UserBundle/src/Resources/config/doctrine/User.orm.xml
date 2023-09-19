@@ -33,6 +33,13 @@
             </cascade>
         </one-to-many>
 
+        <one-to-one field="profile" target-entity="Talav\ProfileBundle\Entity\ProfileInterface" inversed-by="user" fetch="EAGER">
+            <cascade>
+                <cascade-remove/>
+                <cascade-persist/>
+            </cascade>
+        </one-to-one>
+
         <many-to-many field="roles" target-entity="Talav\PermissionBundle\Entity\RoleInterface">
             <join-table name="user_role">
                 <join-columns>

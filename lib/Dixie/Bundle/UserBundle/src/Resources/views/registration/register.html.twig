@@ -1,4 +1,4 @@
-{% extends '@TalavWeb/cards/card_edit.html.twig' %}
+{% extends '@TalavWeb/cards/card_edit_center.html.twig' %}
 {% trans_default_domain 'TalavUserBundle' %}
 {# parameters #}
 {%- set title = 'registration.register.title' -%}
@@ -12,7 +12,7 @@
 {% block actions_form %}
 {{ parent() }}
 <a href="{{ path('app_login') }}" class="align-self-center" title="{{ 'security.login.description'|trans }}">{{ 'security.login.submit'|trans({},'TalavUserBundle') }}</a>
-<a href="{{ path('app_forgot_password_request') }}" class="align-self-center" title="{{ 'resetting.request.description'|trans }}">{{ 'resetting.link'|trans }}</a>
+<a href="{{ path('app_forgot_password_request') }}" class="align-self-center" title="{{ 'resetting.request.description'|trans({}, 'TalavUserBundle') }}">{{ 'resetting.link'|trans({}, 'TalavUserBundle') }}</a>
 {% endblock %}
 
 {% block javascripts -%}

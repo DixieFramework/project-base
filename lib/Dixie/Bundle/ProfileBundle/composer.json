@@ -13,7 +13,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Talav\\ProfileBundle\\": ""
+            "Talav\\ProfileBundle\\": "src/"
         }
     },
     "require": {

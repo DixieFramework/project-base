@@ -40,10 +40,13 @@ use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Mime\MimeTypes;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Exception\UnexpectedValueException;
 use Symfony\Contracts\Translation\TranslatableInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Talav\CoreBundle\Validator\LettersAndNumbers;
+use Talav\UserBundle\Validator\Constraints\RegisteredUser;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 /**
@@ -465,6 +468,24 @@ class FormHelper
     {
         return $this->updateOption('prepend_icon', 'fa-fw fa-regular fa-user')
             ->autocomplete($autocomplete)
+            ->constraints(
+                new Constraints\NotBlank([
+                    'message' => 'username.blank',
+                ]),
+                new LettersAndNumbers([
+                    'message' => 'username.letters_and_numbers',
+                ]),
+                new RegisteredUser([
+                    'message' => 'username.already_used',
+                    'field' => 'username'
+                ]),
+                new Constraints\Length([
+                    'minMessage' => 'username.short',
+                    'maxMessage' => 'username.long',
+                    'min' => UserInterface::MIN_USERNAME_LENGTH,
+                    'max' => UserInterface::MAX_USERNAME_LENGTH,
+                ])
+            )
             ->updateAttributes([
                 'minLength' => UserInterface::MIN_USERNAME_LENGTH,
                 'maxLength' => UserInterface::MAX_USERNAME_LENGTH,

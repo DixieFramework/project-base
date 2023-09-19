@@ -34,4 +34,5 @@ return [
     Talav\WebBundle\TalavWebBundle::class => ['all' => true],
     SymfonyCasts\Bundle\VerifyEmail\SymfonyCastsVerifyEmailBundle::class => ['all' => true],
     SymfonyCasts\Bundle\ResetPassword\SymfonyCastsResetPasswordBundle::class => ['all' => true],
+    Talav\ProfileBundle\TalavProfileBundle::class => ['all' => true],
 ];

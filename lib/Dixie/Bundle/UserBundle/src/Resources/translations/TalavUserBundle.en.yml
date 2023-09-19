@@ -100,14 +100,25 @@ profile:
 
 registration:
   agreeTerms:
-    error: Vous devez accepter les conditions générales d'utilisation.
-    label: J'accepte les conditions générales d'utilisation de l'application.
+    error: You must accept the general conditions of use.
+    label: I accept the general conditions of use of the application.
   confirmed: Félicitations <b>%username%</b>, votre compte est maintenant activé.
   register:
-    title: Créer un compte
-    submit: Créer
+    title: Create Account
+    submit: Submit
   subject: Création d'un compte
   action: Confirmer
+
+resetting:
+  link: Forgot your password ?
+  not_found_password_token: Aucun jeton de réinitialisation du mot de passe n'a été
+    trouvé dans l'URL ou dans la session.
+  request:
+    description: Enter your username or email address to request a password reset.
+    submit: Reset
+    title: Reset Password
+    user: Username or E-mail address
+  success: <b>%username%</b>, votre mot de passe a été réinitialisé avec succès.
 
 security:
   link: Déjà un compte ?

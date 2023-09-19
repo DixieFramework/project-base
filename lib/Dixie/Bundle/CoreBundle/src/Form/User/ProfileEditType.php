@@ -62,7 +62,7 @@ class ProfileEditType extends AbstractEntityType
 
         // id for ajax validation
         $helper->field('id')
-            ->notMapped()
+//            ->notMapped()
             ->addHiddenType();
     }
 

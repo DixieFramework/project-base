@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Talav\CoreBundle\Form\User;
 
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\Validator\Constraints\IsTrue;
 use Talav\CoreBundle\Form\FormHelper;
 use Talav\CoreBundle\Service\ApplicationService;
 use Talav\CoreBundle\Service\CaptchaImageService;
@@ -62,7 +63,12 @@ class UserRegistrationType extends AbstractUserCaptchaType implements ServiceSub
             ->notMapped()
             ->rowClass('mb-0')
             ->label('registration.agreeTerms.label')
-            ->updateAttribute('data-error', $this->trans('registration.agreeTerms.error'))
+            ->updateAttribute('data-error', $this->trans('registration.agreeTerms.error', [], 'TalavUserBundle'))
+            ->constraints(
+                new IsTrue([
+                    'message' => $this->trans('registration.agreeTerms.error', [], 'TalavUserBundle'),
+                ])
+            )
             ->addCheckboxType();
     }
 

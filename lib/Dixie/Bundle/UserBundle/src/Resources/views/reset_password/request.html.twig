@@ -1,7 +1,9 @@
-{% extends '@TalavWeb/cards/card_edit.html.twig' %}
+{% extends '@TalavWeb/cards/card_edit_center.html.twig' %}
 {# parameters #}
 {%- set title = 'resetting.request.title' -%}
+{%- set title_domain = 'TalavUserBundle' -%}
 {%- set title_description = 'resetting.request.description' -%}
+{%- set title_description_domain = 'TalavUserBundle' -%}
 {%- set title_icon = 'eraser' -%}
 {%- set submit_text = 'resetting.request.submit' -%}
 {%- set cancel_path = false -%}
@@ -9,7 +11,7 @@
 {# actions #}
 {% block actions_form %}
 {{ parent() }}
-<a href="{{ path('app_login') }}" class="align-self-center" title="{{ 'security.login.description'|trans }}">{{ 'security.login.submit'|trans }}</a>
+<a href="{{ path('app_login') }}" class="align-self-center" title="{{ 'security.login.description'|trans }}">{{ 'security.login.submit'|trans({}, 'TalavUserBundle') }}</a>
 {% endblock %}
 {# javascripts #}
 {% block javascripts -%}

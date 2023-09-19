@@ -11,6 +11,7 @@ use Talav\Component\User\Model\AbstractUser;
 use Talav\CoreBundle\Entity\Traits\HasRelations;
 use Talav\PermissionBundle\Entity\Role;
 use Talav\PermissionBundle\Traits\HasRoles;
+use Talav\ProfileBundle\Entity\ProfileInterface;
 use Talav\UserBundle\Model\UserInterface;
 
 class User extends AbstractUser implements UserInterface
@@ -18,6 +19,8 @@ class User extends AbstractUser implements UserInterface
     use ResourceTrait;
 
     use HasRoles, HasRelations;
+
+    protected ?ProfileInterface $profile = null;
 
 //    #[ORM\ManyToMany(targetEntity: 'Talav\PermissionBundle\Entity\Role')]
     protected Collection $roles;
@@ -34,6 +37,26 @@ class User extends AbstractUser implements UserInterface
 
         $this->roles = new ArrayCollection();
         $this->permissions = new ArrayCollection();
+    }
+
+    /**
+     * @return ProfileInterface|null
+     */
+    public function getProfile(): ?ProfileInterface
+    {
+        return $this->profile;
+    }
+
+    /**
+     * @param ProfileInterface|null $profile
+     */
+    public function setProfile(?ProfileInterface $profile): void
+    {
+        // prevent setting a new profile once set
+        if (! $this->getProfile()) {
+            $this->profile = $profile;
+            $profile->setUser($this);
+        }
     }
 
     public function getPermissions(): Collection

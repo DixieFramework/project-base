@@ -864,6 +864,9 @@
     "talav/permission-bundle": {
         "version": "dev-main"
     },
+    "talav/profile-bundle": {
+        "version": "1.0.0"
+    },
     "talav/registry": {
         "version": "1.0.x-dev"
     },

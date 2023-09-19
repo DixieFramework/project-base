@@ -42,6 +42,7 @@ class RegistrationController extends AbstractController
             new $this->parameters['form_model'](),
             ['validation_groups' => $this->parameters['form_validation_groups']]
         );
+
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {

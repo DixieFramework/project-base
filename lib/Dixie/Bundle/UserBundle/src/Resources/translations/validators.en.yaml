@@ -10,23 +10,24 @@ new_password:
   blank: Entrez un nouveau mot de passe s'il vous plait.
   short: Le nouveau mot de passe est trop court.
 password:
-  empty: Le mot de passe est vide.
+  empty: Password is empty.
   case_diff: Le mot de passe doit contenir une majuscule et une minuscule.
   email: Le mot de passe ne peut être une adresse e-mail.
   letters: Le mot de passe doit contenir une lettre.
-  mismatch: Les deux mots de passe ne sont pas identiques.
+  mismatch: Password and Re-Type Password are not the same.
   numbers: Le mot de passe doit contenir un chiffre.
   pwned: Le mot de passe a été trouvé {{count}} fois dans une base de données de mots de passe compromis.
   special_char: Le mot de passe doit contenir un caractère spécial.
-  strength_level: Le mot de passe doit avoir une force "%minimum%", la force actuelle est "%score%".
+  strength_level: Password must have strength "%minimum%", current strength is "%score%".
   strength_disabled: La force minimum du mot de passe est désactivée.
   strength_invalid: La force "%value%" est invalide. Les valeurs autorisée sont "%allowed%".
 username:
+  letters_and_numbers: "Username may only contain unaccented letters and numbers, no spaces"
   already_used: Username is already in use.
-  blank: Le nom d'utilisateur est requis.
-  long: Le nom d'utilisateur est trop long.
-  not_found: Le nom de l'utilisateur ou l'adresse e-mail est introuvable.
-  short: Le nom d'utilisateur est trop court.
+  blank: Username is required.
+  long: Username is too long.
+  not_found: Username or e-mail address not found.
+  short: Username is too short.
 
 talav:
   password:

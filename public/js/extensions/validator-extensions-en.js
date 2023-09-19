@@ -426,8 +426,8 @@
         /*
          * minlength
          */
-        minlengthFallback: 'Veuillez fournir au moins {0} caractères.',
-        minlengthLabel: 'The field \"{0}\" doit avoir au moins {1} caractères.',
+        minlengthFallback: 'Please provide at least {0} characters.',
+        minlengthLabel: 'The field \"{0}\" must have at least {1} characters.',
         minlength: function (parameters, element) {
             return $.validator.formatLabel(element, $.validator.messages.minlengthLabel, $.validator.messages.minlengthFallback, parameters);
         },
@@ -435,8 +435,8 @@
         /*
          * maxlength
          */
-        maxlengthFallback: 'Veuillez fournir au plus {0} caractères.',
-        maxlengthLabel: 'The field \"{0}\" doit avoir au plus {0} caractères.',
+        maxlengthFallback: 'Please provide at most {0} characters.',
+        maxlengthLabel: 'The field \"{0}\" must have at most {0} characters.',
         maxlength: function (parameters, element) {
             return $.validator.formatLabel(element, $.validator.messages.maxlengthLabel, $.validator.messages.maxlengthFallback, parameters);
         },
@@ -444,8 +444,8 @@
         /*
          * alphanumeric
          */
-        alphanumericFallback: 'Ce champ ne doit contenir que des lettres, nombres, espaces et soulignages.',
-        alphanumericLabel: 'The field \"{0}\" ne doit contenir que des lettres, nombres, espaces et soulignages.',
+        alphanumericFallback: 'This field should only contain letters, numbers, spaces and underscores.',
+        alphanumericLabel: 'The field \"{0}\" must only contain letters, numbers, spaces and underscores.',
         alphanumeric: function (_parameters, element) {
             return $.validator.formatLabel(element, $.validator.messages.alphanumericLabel, $.validator.messages.alphanumericFallback);
         },
@@ -453,8 +453,8 @@
         /*
          * lettersonly
          */
-        lettersonlyFallback: 'Ce champ ne doit contenir que des lettres.',
-        lettersonlyLabel: 'The field \"{0}\" ne doit contenir que des lettres.',
+        lettersonlyFallback: 'This field must only contain letters.',
+        lettersonlyLabel: 'The field \"{0}\" must only contain letters.',
         lettersonly: function (_parameters, element) {
             return $.validator.formatLabel(element, $.validator.messages.lettersonlyLabel, $.validator.messages.lettersonlyFallback);
         },
@@ -462,8 +462,8 @@
         /*
          * nowhitespace
          */
-        nowhitespaceFallback: 'Ce champ ne doit pas contenir d\'espace.',
-        nowhitespaceLabel: 'The field \"{0}\" ne doit pas contenir d\'espace.',
+        nowhitespaceFallback: 'This field must not contain spaces.',
+        nowhitespaceLabel: 'The field \"{0}\" must not contain spaces.',
         nowhitespace: function (_parameters, element) {
             return $.validator.formatLabel(element, $.validator.messages.nowhitespaceLabel, $.validator.messages.nowhitespaceFallback);
         },
@@ -471,8 +471,8 @@
         /*
          * zipcodeCh
          */
-        zipcodeChFallback: "Ce champ doit contenir un numéro postal valide.",
-        zipcodeChLabel: "Le champ \"{0}\" doit contenir un numéro postal valide.",
+        zipcodeChFallback: "This field must contain a valid postal number.",
+        zipcodeChLabel: "The \"{0}\" field must contain a valid postal number.",
         zipcodeCH: function (_parameters, element) {
             return $.validator.formatLabel(element, $.validator.messages.zipcodeChLabel, $.validator.messages.zipcodeChFallback);
         },
@@ -480,8 +480,8 @@
         /*
          * min
          */
-        minFallback: 'Veuillez fournir une valeur supérieure ou égale à {0}.',
-        minLabel: 'The field \"{0}\" doit avoir une valeur supérieure ou égale à {1}.',
+        minFallback: 'Please provide a value greater than or equal to {0}.',
+        minLabel: 'The field \"{0}\" must have a value greater than or equal to {1}.',
         min: function (parameters, element) {
             return $.validator.formatLabel(element, $.validator.messages.minLabel, $.validator.messages.minFallback, parameters);
         },
@@ -498,8 +498,8 @@
         /*
          * unique
          */
-        uniqueFallback: 'La valeur doit être unique.',
-        uniqueLabel: 'The field \"{0}\" doit être unique.',
+        uniqueFallback: 'The value must be unique.',
+        uniqueLabel: 'The field \"{0}\" must be unique.',
         unique: function (parameters, element) {
             return $.validator.formatLabel(element, $.validator.messages.uniqueLabel, $.validator.messages.uniqueFallback, parameters);
         },
@@ -507,8 +507,8 @@
         /*
          * step
          */
-        stepFallback: 'La valeur doit être un multiple de {0}.',
-        stepLabel: 'The field \"{0}\" doit être un multiple de {1}.',
+        stepFallback: 'The value must be a multiple of {0}.',
+        stepLabel: 'The field \"{0}\" must be a multiple of {1}.',
         step: function (parameters, element) {
             return $.validator.formatLabel(element, $.validator.messages.stepLabel, $.validator.messages.stepFallback, parameters);
         },
@@ -516,8 +516,8 @@
         /*
         * number
         */
-        numberFallback: 'La valeur doit être un nombre.',
-        numberLabel: 'The field \"{0}\" doit être un nombre.',
+        numberFallback: 'Value must be a number.',
+        numberLabel: 'The field \"{0}\" must be a number.',
         number: function (parameters, element) {
             return $.validator.formatLabel(element, $.validator.messages.numberLabel, $.validator.messages.numberFallback, parameters);
         },

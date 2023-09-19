@@ -70,11 +70,11 @@ class User extends BaseUser
     #[CustomIdGenerator(class: UuidGenerator::class)]
     protected mixed $id = null;
 
-//    /**
-//     * @param mixed $id
-//     */
-//    public function setId(mixed $id): void
-//    {
-//        $this->id = $id;
-//    }
+    /**
+     * @param mixed $id
+     */
+    public function setId(mixed $id): void
+    {
+        $this->id = $id;
+    }
 }
