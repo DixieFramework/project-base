@@ -861,6 +861,9 @@
     "talav/core-bundle": {
         "version": "1.0.0"
     },
+    "talav/permission-bundle": {
+        "version": "dev-main"
+    },
     "talav/registry": {
         "version": "1.0.x-dev"
     },

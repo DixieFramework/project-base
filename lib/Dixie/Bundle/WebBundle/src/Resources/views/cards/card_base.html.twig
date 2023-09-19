@@ -15,7 +15,7 @@
                     {{- icon(title_icon, title, title_domain|default(null), title_parameters|default({})) -}}
                 </h1>
                 {% if title_description is defined and title_description %}
-                    <small>{% block card_header_description %}{{ title_description|trans }}{%- endblock %}</small>
+                    <small>{% block card_header_description %}{{ title_description|trans({}, title_description_domain) }}{%- endblock %}</small>
                 {% endif %}
                 {%- endblock %}
             </div>

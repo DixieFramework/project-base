@@ -24,7 +24,8 @@
 {%- endblock %}
 {# body #}
 {% block card_body %}
-    {{ form_rest(form) }}
+    {{ form_widget(form) }}
+{#    {{ form_rest(form) }}#}
 {% endblock %}
 {# footer #}
 {% block card_footer -%}

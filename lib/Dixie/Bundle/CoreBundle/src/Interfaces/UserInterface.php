@@ -21,7 +21,7 @@ interface UserInterface extends BaseUserInterface, EntityInterface, PasswordAuth
     /**
      * The minimum length for the password.
      */
-    final public const MIN_PASSWORD_LENGTH = 6;
+    final public const MIN_PASSWORD_LENGTH = 5;
 
     /**
      * The minimum length for a username property.

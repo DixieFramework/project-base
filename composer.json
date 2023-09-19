@@ -53,6 +53,7 @@
         "symfony/yaml": "6.3.*",
         "talav/bundle-generator-bundle": "@dev",
         "talav/core-bundle": "@dev",
+        "talav/permission-bundle": "@dev",
         "talav/profile-bundle": "@dev",
         "talav/user-bundle": "@dev",
         "talav/web-bundle": "@dev",
@@ -166,6 +167,13 @@
                 "symlink": true
             },
             "url": "lib/Dixie/Bundle/WebBundle"
+        },
+        {
+            "type": "path",
+            "options": {
+                "symlink": true
+            },
+            "url": "lib/Dixie/Bundle/PermissionBundle"
         },
         {
             "type": "path",

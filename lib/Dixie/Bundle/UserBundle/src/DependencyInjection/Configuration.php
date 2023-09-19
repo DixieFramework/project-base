@@ -71,7 +71,7 @@ final class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->booleanNode('display_captcha')->defaultValue(false)->end()
-                ->integerNode('password_strength_level')->defaultValue(5)->end()
+                ->integerNode('password_strength_level')->defaultValue(2)->end()
             ->end()
         ;
 

@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Talav\Component\User\Model;
 
+use DateInterval;
+use DateTime;
 use DateTimeInterface;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Exception;
 use Talav\Component\Resource\Model\ResourceTrait;
 use Talav\Component\Resource\Model\Timestampable;
 use Talav\Component\Resource\Model\TimestampableTrait;
@@ -39,7 +42,7 @@ abstract class AbstractUser implements UserInterface
 
     protected ?DateTimeInterface $passwordRequestedAt = null;
 
-    protected iterable $roles = [];
+    protected iterable $arrRoles = [];
 
     protected ?string $email = null;
 
@@ -157,14 +160,14 @@ abstract class AbstractUser implements UserInterface
 
     public function getRoles(): array
     {
-        return $this->roles;
+        return $this->arrRoles;
     }
 
     public function addRole(string $role): void
     {
         $role = strtoupper($role);
         if (!$this->hasRole($role)) {
-            $this->roles[] = $role;
+            $this->arrRoles[] = $role;
         }
     }
 
@@ -175,9 +178,9 @@ abstract class AbstractUser implements UserInterface
 
     public function removeRole(string $role): void
     {
-        if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
-            unset($this->roles[$key]);
-            $this->roles = array_values($this->roles);
+        if (false !== $key = array_search(strtoupper($role), $this->arrRoles, true)) {
+            unset($this->arrRoles[$key]);
+            $this->arrRoles = array_values($this->arrRoles);
         }
     }
 

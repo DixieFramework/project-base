@@ -143,7 +143,7 @@
 
 {% macro copyright_link(class=null) -%}
 {%- set parameters = {'%year%': 'now'|date('Y'), '%owner%': app_owner} -%}
-{{- _self.linkExternal(app_owner_url, 'footer.copyright', class, null, 'footer.copyright_title', null, parameters) -}}
+{{- _self.linkExternal(app_owner_url, 'footer.copyright', class, null, 'footer.copyright_title', 'TalavWebBundle', parameters) -}}
 {%- endmacro %}
 
 {% macro dropdownItemCard(route_name, parameters=[]) -%}

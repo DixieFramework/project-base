@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "64c51c4b825a273b3917a58c65ec51f9",
+    "content-hash": "1aa162381539c8dbf25bbc5dda20595d",
     "packages": [
         {
             "name": "api-platform/core",
@@ -11469,6 +11469,80 @@
             }
         },
         {
+            "name": "talav/permission-bundle",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "lib/Dixie/Bundle/PermissionBundle",
+                "reference": "f0f8091d3dd07ba8f6b8f1a45d2b0df9d9807280"
+            },
+            "require": {
+                "php": ">=8.0",
+                "symfony/config": "^6.0",
+                "symfony/form": "^6.0",
+                "symfony/framework-bundle": "^6.0",
+                "symfony/monolog-bundle": "^3.7",
+                "symfony/orm-pack": "^2.2",
+                "symfony/translation": "^6.0",
+                "symfony/twig-bundle": "^6.0",
+                "talav/user-bundle": "@dev",
+                "webmozart/assert": "^1.10"
+            },
+            "require-dev": {
+                "doctrine/doctrine-fixtures-bundle": "^3.4",
+                "fakerphp/faker": "^1.19",
+                "liip/test-fixtures-bundle": "^2.2",
+                "matthiasnoback/symfony-dependency-injection-test": "^4.3",
+                "phpunit/phpunit": "^9.5",
+                "symfony/browser-kit": "^6.0",
+                "symfony/console": "^6.0",
+                "symfony/css-selector": "^6.0",
+                "symfony/phpunit-bridge": "^6.0",
+                "symfony/var-dumper": "^6.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Talav\\PermissionBundle\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Talav\\PermissionBundle\\Tests\\": "tests/",
+                    "PermissionAppBundle\\": "tests/TestApp/src/PermissionAppBundle/"
+                },
+                "files": [
+                    "tests/TestApp/app/PermissionAppKernel.php"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Talav",
+                    "email": "support@talav.com"
+                }
+            ],
+            "description": "Symfony bundle to provide permission functionality for User bundle",
+            "keywords": [
+                "bundle",
+                "permission",
+                "php",
+                "symfony",
+                "user"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "talav/profile-bundle",
             "version": "1.0.0",
             "dist": {
@@ -11852,7 +11926,7 @@
             "dist": {
                 "type": "path",
                 "url": "lib/Dixie/Bundle/WebBundle",
-                "reference": "66d7558fb89bba0dc19fd34cbd4d9ecc04bd6d08"
+                "reference": "028fbc72f723d55ce54d54d2f3601289b59f6031"
             },
             "require": {
                 "php": ">=8.1.14",
@@ -11863,7 +11937,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-main": "1.0.x-dev"
                 }
             },
             "autoload": {
@@ -15064,6 +15138,7 @@
     "stability-flags": {
         "talav/bundle-generator-bundle": 20,
         "talav/core-bundle": 20,
+        "talav/permission-bundle": 20,
         "talav/profile-bundle": 20,
         "talav/user-bundle": 20,
         "talav/web-bundle": 20

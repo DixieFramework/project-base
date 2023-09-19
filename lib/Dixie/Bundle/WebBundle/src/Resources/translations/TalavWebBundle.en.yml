@@ -69,3 +69,10 @@ index:
     login: Sign In
     logout: Sign Out
     register: Register
+
+footer:
+    about_title: Afficher les informations à propos de l'application
+    breadcrumb_title: Accéder à la page %title%
+    copyright: Copyright © %year% %owner%
+    copyright_title: Afficher le site du concepteur de l'application
+    environment_title: Environnement d'exécution de l'application

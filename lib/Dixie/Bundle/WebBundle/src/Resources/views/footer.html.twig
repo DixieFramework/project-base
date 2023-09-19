@@ -2,13 +2,13 @@
 <footer class="navbar navbar-footer bg-body-tertiary py-1 justify-content-md-end fixed-bottom small d-print-none">
     <div class="navbar-nav flex-row">
         <span class="navbar-text text-truncate text-danger border-end" id="footer-message" style="display: none;">
-            {{- 'common.data_changed'|trans -}}
+            {{- 'common.data_changed'|trans({}, 'TalavWebBundle') -}}
         </span>
-        <a class="nav-link text-truncate border-end{% if app.current_route == 'about' %} active{% endif %}" href="{{ path('talav_web_index') }}" title="{{ 'footer.about_title'|trans }}">
+        <a class="nav-link text-truncate border-end{% if app.current_route == 'about' %} active{% endif %}" href="{{ path('talav_web_index') }}" title="{{ 'footer.about_title'|trans({}, 'TalavWebBundle') }}">
             {{- app_name_version -}}
         </a>
-        <span class="navbar-text text-truncate border-end" title="{{ 'footer.environment_title'|trans }}">
-            {{- ('environment.' ~ app_mode)|trans -}}
+        <span class="navbar-text text-truncate border-end" title="{{ 'footer.environment_title'|trans({}, 'TalavWebBundle') }}">
+            {{- ('environment.' ~ app_mode)|trans({}, 'TalavWebBundle') -}}
         </span>
         {{- copyright_link('nav-link text-truncate') -}}
     </div>

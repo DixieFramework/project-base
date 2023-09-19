@@ -11,6 +11,7 @@
 {%- set is_test = is_dev and is_remembered and app.user.userIdentifier == 'Bibi' -%}
 {%- set title_parameters = title_parameters|default({}) -%}
 {%- set title_domain = title_domain|default(null) -%}
+{%- set title_description_domain = title_description_domain|default(null) -%}
 {%- set page_title = app_name ~ (title is defined ? ' - ' ~ title|trans(title_parameters, title_domain) : '') -%}
 {%- set sidebar_hide = is_remembered and is_actived ? app.request.cookies.get('SIDEBARHIDE', true) : true -%}
 {%- set sidebar_class = sidebar_hide ? ' sidebar-hide' : '' -%}

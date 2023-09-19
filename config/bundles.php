@@ -28,6 +28,7 @@ return [
     Talav\BundleGeneratorBundle\TalavBundleGeneratorBundle::class => ['all' => true],
     Vich\UploaderBundle\VichUploaderBundle::class => ['all' => true],
     Elao\Enum\Bridge\Symfony\Bundle\ElaoEnumBundle::class => ['all' => true],
+    Talav\PermissionBundle\TalavPermissionBundle::class => ['all' => true],
     Talav\CoreBundle\TalavCoreBundle::class => ['all' => true],
     Createnl\ZxcvbnBundle\ZxcvbnBundle::class => ['all' => true],
     Talav\WebBundle\TalavWebBundle::class => ['all' => true],

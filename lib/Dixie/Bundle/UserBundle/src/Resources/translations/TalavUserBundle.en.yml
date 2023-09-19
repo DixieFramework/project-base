@@ -112,12 +112,12 @@ registration:
 security:
   link: Déjà un compte ?
   login:
-    title: Connexion à l'application
-    description: Connectez-vous avec votre nom d'utilisateur et votre mot de passe.
+    title: Sign In
+    description: Log in with your username and password.
     username: Username
     password: Password
-    remember_me: Se souvenir de moi
-    submit: Connexion
+    remember_me: Remember me
+    submit: Login
     success: Bienvenue <b>%user_name%</b>. Vous vous êtes connecté à l'application <b>%app_name% v%app_version%</b> avec succès.
     error: Le nom de l'utilisateur ou le mot de passe est invalide.
   logout:

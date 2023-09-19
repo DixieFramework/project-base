@@ -1,8 +1,11 @@
-{% extends '@TalavWeb/cards/card_edit.html.twig' %}
+{% extends '@TalavWeb/cards/card_edit_center.html.twig' %}
+{% trans_default_domain 'TalavUserBundle' %}
 {# parameters #}
 {%- set title = 'security.login.title' -%}
 {%- set title_description = 'security.login.description' -%}
-{%- set title_icon = 'sign-in-alt' -%}
+{%- set title_description_domain = 'TalavUserBundle' -%}
+{%- set title_icon = 'sign-in-alt fa-fw me-2' -%}
+{%- set title_domain = 'TalavUserBundle' -%}
 {%- set submit_text = 'security.login.submit' -%}
 {%- set cancel_path = false -%}
 {# footer #}
