@@ -21,15 +21,15 @@
             </div>
             <div class="flex-grow-1 ms-2">
                 <p class="navbar-brand p-0 m-0" style="font-size: 1.5rem; line-height: initial;">{{ app_name }}</p>
-                <p class="text-body-secondary p-0 m-0">{{ 'about.version'|trans({'%version%': app_version}) }}</p>
-                <a href="{{ path('talav_web_index') }}" class="stretched-link" title="{{ 'footer.about_title'|trans }}"></a>
+                <p class="text-body-secondary p-0 m-0">{{ 'about.version'|trans({'%version%': app_version}, 'TalavWebBundle') }}</p>
+                <a href="{{ path('talav_web_index') }}" class="stretched-link" title="{{ 'footer.about_title'|trans({}, 'TalavWebBundle') }}"></a>
             </div>
         </div>
         {{ dropdownSeparator(false, 'my-1 w-100') }}
     {% endif %}
     {# home page #}
-    <a class="navbar-brand mb-2" href="{{ path('homepage') }}" title="{{ 'index.title_help'|trans }}">
-        {{- icon('home', 'index.title') -}}
+    <a class="navbar-brand mb-2" href="{{ path('homepage') }}" title="{{ 'index.title_help'|trans({}, 'TalavWebBundle') }}">
+        {{- icon('home', 'index.title', 'TalavWebBundle') -}}
     </a>
     {# menus #}
     <ul class="navbar-nav mb-auto border-top w-100">

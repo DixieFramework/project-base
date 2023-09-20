@@ -1,3 +1,33 @@
+about:
+    title: A propos de
+    app_customer: Client
+    app_customer_email: E-mail
+    app_customer_fax: Télécopieur
+    app_customer_phone: Téléphone
+    app_environment: Environnement
+    app_mode: Mode d'exécution
+    app_name: Application
+    app_owner: Concepteur
+    app_version: Version
+    app_github: Code source
+    app_github_url: GitHub
+    error: Erreur lors du chargement des informations.
+    extern_link: Accéder au site
+    licence: Accord de licence
+    licence_short: Licence
+    loading: Recherche des informations...
+    mysql: Configuration de MySQL
+    mysql_version: Configuration de MySQL v%version%
+    php: Configuration de PHP
+    php_version: Configuration de PHP v%version%
+    policy: Politique de confidentialité
+    policy_short: Confidentialité
+    symfony: Configuration de Symfony
+    symfony_version: Configuration de Symfony v%version%
+    version: Version %version%
+    expand: Afficher le contenu
+    collapse: Masquer le contenu
+
 common:
     actions: Actions
     button_add: Add
@@ -69,6 +99,13 @@ index:
     login: Sign In
     logout: Sign Out
     register: Register
+    title: Accueil
+    title_help: Afficher la page d'accueil
+    toggle_navigation: Basculer la navigation horizontal
+    sidebar_show: Afficher la barre latérale
+    sidebar_hide: Masquer la barre latérale
+    menu_show: Développer le menu
+    menu_hide: Réduire le menu
 
 footer:
     about_title: Afficher les informations à propos de l'application
