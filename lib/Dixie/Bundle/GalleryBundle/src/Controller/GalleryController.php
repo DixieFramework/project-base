@@ -32,6 +32,11 @@ class GalleryController extends AbstractController
     private const GALLERY_PER_PAGE = 25;
 
     /**
+     * @var int
+     */
+    private const PHOTO_PER_PAGE = 25;
+
+    /**
      * Constructor.
      *
      * @param GalleryServiceInterface $galleryRepository Gallery service
@@ -95,6 +100,16 @@ class GalleryController extends AbstractController
     public function view(Request $request, Gallery $gallery): Response
     {
         $this->denyAccessUnlessGranted(GalleryVoter::VIEW, $gallery);
+
+        $page = (int) $request->query->get('page', 1);
+        $galleries = $this->createQueryBuilderPaginator(
+            $this->galleryRepository->findAllByUserQueryBuilder($user),
+            $page,
+            self::PHOTO_PER_PAGE
+        );
+
+
+
 
         $page = $request->query->getInt('page', 1);
         $imagesPagination = $this->imageService->getPaginatedList($gallery, $page);

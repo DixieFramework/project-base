@@ -46,7 +46,7 @@ class ProfileController extends AbstractController
     /**
      * Edit the profile of the current user (if any).
      */
-    #[Route(path: '/edit', name: 'user_profile_edit')]
+    #[Route(path: '/edit', name: 'user_user_profile_edit')]
     public function editProfil(Request $request, #[CurrentUser] UserInterface $user, EntityManagerInterface $manager): Response
     {
         $form = $this->createForm(ProfileEditType::class, $user);

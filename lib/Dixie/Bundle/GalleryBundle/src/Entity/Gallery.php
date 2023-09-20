@@ -28,8 +28,8 @@ class Gallery
     #[Assert\NotBlank]
     protected string $name;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'images')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     protected UserInterface $user;
 
     /**

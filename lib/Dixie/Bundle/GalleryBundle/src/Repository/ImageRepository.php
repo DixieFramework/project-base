@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Talav\GalleryBundle\Repository;
 
+use Doctrine\Common\Collections\Criteria;
+use Talav\Component\User\Model\UserInterface;
 use Talav\GalleryBundle\Entity\Gallery;
 use Talav\GalleryBundle\Entity\Image;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -43,6 +45,17 @@ class ImageRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('image')
             ->orderBy('image.id', 'DESC');
+    }
+
+    public function findAllByGalleryQueryBuilder(Gallery $gallery): QueryBuilder
+    {
+        return $this
+            ->createQueryBuilder('i')
+            ->leftJoin('i.user', 'u')
+            ->where('i.gallery = :gallery')
+            ->andWhere('g.user = :user')
+            ->setParameters(['user' => $gallery, 'gallery' => $gallery])
+            ->orderBy('g.id', Criteria::DESC);
     }
 
     /**

@@ -28,6 +28,10 @@ final class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('talav_user');
         $treeBuilder->getRootNode()
             ->children()
+                ->scalarNode('login_route')->defaultValue('talav_user_login')->end()
+                ->scalarNode('login_redirect_route')->defaultValue('parthenon_user_profile')->end()
+                ->scalarNode('signup_success_route')->defaultValue('parthenon_user_signed_up')->end()
+                ->scalarNode('firewall_name')->end()
                 ->arrayNode('class')
                     ->addDefaultsIfNotSet()
                     ->children()

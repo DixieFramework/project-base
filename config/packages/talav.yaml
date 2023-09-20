@@ -1,4 +1,6 @@
 talav_user:
+  login_route: talav_user_login
+  signup_success_route: user_profile_edit
   resources:
     user:
       classes:

@@ -42,6 +42,18 @@ class TalavUserExtension extends AbstractResourceExtension
             $container->removeDefinition(WelcomeEmailSubscriber::class);
         }
 
+        if (isset($config['login_route'])) {
+            $container->setParameter('talav_user.login_route', $config['login_route']);
+        }
+
+        if (isset($config['signup_success_route'])) {
+            $container->setParameter('talav_user.signup_success_route', $config['signup_success_route']);
+        }
+
+        if (isset($config['firewall_name'])) {
+            $container->setParameter('talav_user.firewall_name', $config['firewall_name']);
+        }
+
         $container->setParameter('talav_user.display_captcha', $config['display_captcha']);
         $container->setParameter('talav_user.password_strength_level', $config['password_strength_level']);
         $container->setParameter('talav_user.resetting.retry_ttl', $config['resetting']['retry_ttl']);
