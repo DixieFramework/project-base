@@ -9,6 +9,26 @@ namespace Talav\UserBundle\Event;
  */
 final class TalavUserEvents
 {
+	/**
+	 * The SECURITY_LOGIN_INITIALIZE event occurs when the send email process is initialized.
+	 *
+	 * This event allows you to set the response to bypass the login.
+	 * The event listener method receives a Talav\UserBundle\Event\GetResponseLoginEvent instance.
+	 *
+	 * @Event("Talav\UserBundle\Event\GetResponseLoginEvent")
+	 */
+	public const SECURITY_LOGIN_INITIALIZE = 'talav_user.security.login.initialize';
+
+	/**
+	 * The SECURITY_LOGIN_COMPLETED event occurs after the user is logged in.
+	 *
+	 * This event allows you to set the response to bypass the the redirection after the user is logged in.
+	 * The event listener method receives a Talav\UserBundle\Event\GetResponseUserEvent instance.
+	 *
+	 * @Event("Talav\UserBundle\Event\GetResponseUserEvent")
+	 */
+	public const SECURITY_LOGIN_COMPLETED = 'talav_user.security.login.completed';
+
     /**
      * The SECURITY_IMPLICIT_LOGIN event occurs when the user is logged in programmatically.
      *

@@ -11,7 +11,7 @@ use Talav\Component\User\Canonicalizer\Canonicalizer;
 use Talav\Component\User\Manager\UserManager;
 use Talav\Component\User\Manager\UserOAuthManager;
 use Talav\Component\User\Repository\UserRepository;
-use Talav\Component\User\Security\PasswordUpdater;
+use Talav\Component\User\Util\PasswordUpdater;
 use Talav\UserBundle\Entity\User;
 use Talav\UserBundle\Entity\UserOAuth;
 use Talav\UserBundle\Form\Model\RegistrationFormModel;

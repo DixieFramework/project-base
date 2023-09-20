@@ -40,3 +40,10 @@ services:
     resource: '%kernel.project_dir%/vendor/talav/user/src/Message/CommandHandler/*'
   Talav\Component\User\Mapper\Configurator\:
     resource: '%kernel.project_dir%/vendor/talav/user/src/Mapper/Configurator/*'
+
+  Talav\UserBundle\EventListener\InjectRoleHierarchyListener:
+    class: Talav\UserBundle\EventListener\InjectRoleHierarchyListener
+    arguments: [ '@service_container' ]
+    tags:
+      - { name: 'doctrine.event_listener', event: 'postLoad' }
+      - { name: 'doctrine.event_listener', event: 'preLoad' }

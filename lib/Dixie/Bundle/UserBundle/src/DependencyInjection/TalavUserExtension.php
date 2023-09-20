@@ -8,7 +8,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Talav\Component\User\Canonicalizer\CanonicalizerInterface;
-use Talav\Component\User\Security\PasswordUpdaterInterface;
+use Talav\Component\User\Util\PasswordUpdaterInterface;
 use Talav\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
 use Talav\UserBundle\EventSubscriber\WelcomeEmailSubscriber;
 use Talav\UserBundle\Mailer\UserMailer;

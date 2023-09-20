@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Talav\UserBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Talav\CoreBundle\Controller\AbstractController;
 use Talav\CoreBundle\Form\User\UserLoginType;
 use Talav\CoreBundle\Interfaces\RoleInterface;
@@ -15,6 +17,8 @@ use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Talav\UserBundle\Event\GetResponseLoginEvent;
+use Talav\UserBundle\Event\TalavUserEvents;
 
 /**
  * Controller for login user.
@@ -22,14 +26,25 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 #[AsController]
 class SecurityController extends AbstractController
 {
+	public function __construct(private readonly EventDispatcherInterface $eventDispatcher)
+	{
+	}
+
     #[IsGranted(AuthenticatedVoter::PUBLIC_ACCESS)]
     #[Route(path: '/login', name: 'talav_user_login')]
     #[Route(path: '/login', name: 'app_login')]
-    public function login(#[CurrentUser] ?UserInterface $user, AuthenticationUtils $utils): Response
+    public function login(Request $request, #[CurrentUser] ?UserInterface $user, AuthenticationUtils $utils): Response
     {
         if ($user instanceof UserInterface) {
             return $this->redirectToHomePage();
         }
+
+	    $event = new GetResponseLoginEvent($request);
+	    $this->eventDispatcher->dispatch($event, TalavUserEvents::SECURITY_LOGIN_INITIALIZE);
+
+	    if (null !== $event->getResponse()) {
+		    return $event->getResponse();
+	    }
 
         $form = $this->createForm(UserLoginType::class, [
             'username' => $utils->getLastUsername(),

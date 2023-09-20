@@ -20,6 +20,7 @@ use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Talav\SettingsBundle\Trait\SettingManagerAwareTrait;
 
 /**
  * Controller for user profile.
@@ -29,7 +30,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted(RoleInterface::ROLE_USER)]
 class ProfileController extends AbstractController
 {
-    public function __construct(
+	use SettingManagerAwareTrait;
+
+	public function __construct(
         private UserManagerInterface $userManager,
         private TranslatorInterface $translator,
         private MessageBusInterface $messageBus,
@@ -64,7 +67,11 @@ class ProfileController extends AbstractController
     #[Route(path: '/edit', name: 'user_profile_edit')]
     public function editProfil(Request $request, #[CurrentUser] UserInterface $user, EntityManagerInterface $manager): Response
     {
-        $form = $this->createForm(ProfileEditType::class, $user);
+		dd($this->getUser()->hasRole('ROLE_USER'));
+
+	    dd($this->settingManager->all());
+
+	    $form = $this->createForm(ProfileEditType::class, $user);
         if ($this->handleRequestForm($request, $form)) {
             $this->userManager->update($user, true);
 
