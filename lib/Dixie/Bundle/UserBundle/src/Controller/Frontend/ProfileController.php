@@ -53,7 +53,6 @@ class ProfileController extends AbstractController
             $this->addFlashMessage(FlashType::SUCCESS, $message);
 
             return $this->redirectToRoute('user_profile_change_password');
-            return $this->redirectToHomePage('profile.change_password.success', ['%username%' => $user->getUserIdentifier()]);
         }
 
         return $this->render('@TalavUser/frontend/profile/profile_change_password.html.twig', [
@@ -67,10 +66,6 @@ class ProfileController extends AbstractController
     #[Route(path: '/edit', name: 'user_profile_edit')]
     public function editProfil(Request $request, #[CurrentUser] UserInterface $user, EntityManagerInterface $manager): Response
     {
-		dd($this->getUser()->hasRole('ROLE_USER'));
-
-	    dd($this->settingManager->all());
-
 	    $form = $this->createForm(ProfileEditType::class, $user);
         if ($this->handleRequestForm($request, $form)) {
             $this->userManager->update($user, true);
@@ -79,7 +74,6 @@ class ProfileController extends AbstractController
             $this->addFlashMessage(FlashType::SUCCESS, $message);
 
             return $this->redirectToRoute('user_profile_edit');
-            return $this->redirectToHomePage('profile.edit.success', ['%username%' => $user->getUserIdentifier()]);
         }
 
         return $this->render('@TalavUser/frontend/profile/profile_edit.html.twig', [

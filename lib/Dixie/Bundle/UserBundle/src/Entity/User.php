@@ -100,7 +100,19 @@ class User extends AbstractUser implements UserInterface
 	 */
 	public function hasRole($role): bool
 	{
-		return in_array($role, array_values(self::$roleHierarchy->getReachableRoleNames($this->getRoles())));
+		if ($role instanceof RoleInterface) {
+			$role = $role->getName();
+		}
+
+		if (is_string($role)) {
+			return in_array($role, array_values(self::$roleHierarchy->getReachableRoleNames($this->getRoles())));
+		}
+
+		if (is_array($role)) {
+			foreach ($role as $item)
+				if ($this->hasRole($item)) return true;
+			return false;
+		}
 	}
 
 	public function removeRole(string $role): void

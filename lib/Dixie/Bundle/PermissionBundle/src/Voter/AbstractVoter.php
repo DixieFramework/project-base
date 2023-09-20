@@ -26,9 +26,11 @@ abstract class AbstractVoter extends Voter
             return true;
 
         /** @var PermissionInterface $permission */
-        if ($permission = $this->permissionRepository->findOneBy(['name' => $accessIdentifier]))
-            if ($user->hasPermissionTo($permission))
-                return true;
+        if ($permission = $this->permissionRepository->findOneBy(['name' => $accessIdentifier])) {
+	        if ($user->hasPermissionTo($permission))
+		        return true;
+        }
+
 
         return false;
     }
