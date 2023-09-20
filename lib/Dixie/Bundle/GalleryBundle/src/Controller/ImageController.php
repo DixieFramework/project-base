@@ -20,7 +20,7 @@ use Talav\GalleryBundle\Repository\ImageRepository;
 /**
  * Class ImagesController.
  */
-#[Route('/images')]
+#[Route('/gallery-image')]
 class ImageController extends AbstractController
 {
     /**
