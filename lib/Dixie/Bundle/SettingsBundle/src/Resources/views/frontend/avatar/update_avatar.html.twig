@@ -1,0 +1,31 @@
+{% extends '@TalavAvatar/layout.html.twig' %}
+
+{% trans_default_domain 'TalavAvatarBundle' %}
+
+{%- block title %}{% endblock title -%}
+
+{% block talav_avatar_content %}
+<div class="card card-primary">
+    <!-- Card header START -->
+    <div class="card-header border-bottom pb-1">
+        <h5 class="card-title">Upload Avatar</h5>
+    </div>
+    <!-- Card header END -->
+
+    {{ form_start(form, { 'action': path('talav_user_profile_avatar') }) }}
+
+    <div class="card-body">
+        {{ form_row(form.file) }}
+        {{ form_row(form.unlink, {'row_attr': {'class': 'checkbox'}, 'attr': {'class': 'ms-2'}}) }}
+    </div>
+
+    <div class="card-footer">
+        <div class="d-sm-flex justify-content-between align-items-center mt-0">
+            <button type="submit" class="btn btn-primary me-3">{{ 'talav.update_avatar.form.submit'|trans }}</button>
+            <button type="reset" class="btn btn-secondary align-content-end">Cancel</button>
+        </div>
+    </div>
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+    {{ form_end(form) }}
+</div>
+{% endblock talav_avatar_content %}

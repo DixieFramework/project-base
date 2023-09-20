@@ -1,0 +1,30 @@
+services:
+  _defaults:
+    public: true
+
+  talav_settings.manager.settings:
+    class: Talav\SettingsBundle\Manager\SettingsManager
+    public: true
+    arguments:
+      - 'entity name'
+      - '@doctrine.orm.entity_manager'
+      - '@app.factory.settings'
+      - '@talav_settings.provider.configuration_settings'
+      - '@app.repository.settings'
+      - '@talav_settings.context.scope'
+
+  Talav\SettingsBundle\Manager\SettingsManagerInterface: '@app.manager.settings'
+
+  talav_settings.context.scope:
+    class: Talav\SettingsBundle\Context\ScopeContext
+    public: true
+  Talav\SettingsBundle\Context\ScopeContextInterface: '@talav_settings.context.scope'
+
+  Talav\SettingsBundle\Provider\ConfigurationSettingsProvider:
+    arguments:
+      - '%talav_settings.settings%'
+
+  talav_settings.provider.configuration_settings:
+    class: Talav\SettingsBundle\Provider\SettingsProviderChain
+    arguments:
+      - ['@Talav\SettingsBundle\Provider\ConfigurationSettingsProvider']

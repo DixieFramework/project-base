@@ -1,0 +1,27 @@
+{% extends "@TalavUser/layout.html.twig" %}
+
+{# class styles #}
+{% block main_row_class ' g-4' %}
+{% block main_container_class ' col-lg-8 vstack gap-4' %}
+{% block main_sidebar_class ' col-lg-4' %}
+
+{% block title %}
+    Upload Avatar
+{% endblock %}
+
+{% block talav_user_content %}
+    {% if app.request.hasPreviousSession %}
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="alert alert-{{ type }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+
+    <div>
+        {% block talav_avatar_content %}
+        {% endblock talav_avatar_content %}
+    </div>
+{% endblock talav_user_content %}
