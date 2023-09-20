@@ -1,6 +1,11 @@
 # Put parameters here that don't need to change on each machine where the application is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    patterns.path: '.+'
+    patterns.page: '[1-9](\d*)'
+    patterns.id: '\d+'
+    patterns.slug: '[^/]+'
+
     translation_domain: 'TalavWebBundle'
 
     # fixed

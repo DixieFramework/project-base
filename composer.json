@@ -53,6 +53,7 @@
         "symfony/yaml": "6.3.*",
         "talav/bundle-generator-bundle": "@dev",
         "talav/core-bundle": "@dev",
+        "talav/gallery-bundle": "@dev",
         "talav/permission-bundle": "@dev",
         "talav/profile-bundle": "@dev",
         "talav/user-bundle": "@dev",
@@ -181,6 +182,13 @@
                 "symlink": true
             },
             "url": "lib/Dixie/Bundle/ProfileBundle"
+        },
+        {
+            "type": "path",
+            "options": {
+                "symlink": true
+            },
+            "url": "lib/Dixie/Bundle/GalleryBundle"
         },
         {
             "type": "path",

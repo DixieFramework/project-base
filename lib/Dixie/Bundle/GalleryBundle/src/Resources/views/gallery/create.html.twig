@@ -1,0 +1,60 @@
+{% extends '@TalavWeb/layouts/default.html.twig' %}
+
+{% block title %}
+    Utwórz galerie
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-8">
+
+            <!-- Card feed item START -->
+            <div class="card">
+                <!-- Card header START -->
+                <div class="card-header pb-0">
+                    <h3 class="card-title h5">Create Gallery</h3>
+                </div>
+                <!-- Card header START -->
+
+                <!-- Card body START -->
+                <div class="card-body">
+
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+
+{#                    <div class="d-flex justify-content-between flex-wrap ">#}
+{#                        <button type="button" class="btn btn-secondary auto-connect d-block" style="width:23%" data-username="user" data-password="123456">User</button>#}
+{#                        <button type="button" class="btn btn-secondary auto-connect d-block" style="width:23%" data-username="editor" data-password="123456">Editor</button>#}
+{#                        <button type="button" class="btn btn-secondary auto-connect d-block" style="width:23%" data-username="admin" data-password="123456">Admin</button>#}
+{#                        <button type="button" class="btn btn-secondary auto-connect d-block" style="width:23%" data-username="root" data-password="123456">Root</button>#}
+{#                    </div>#}
+{#                    #}
+
+                    <hr class="w-100 border-bottom-1">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <input name="submit" type="submit" value="{{ 'common.button_ok'|trans({}, 'TalavWebBundle') }}" class="btn btn-primary"/>
+                        <a href="{{ url('gallery_index') }}" class="btn btn-secondary">{{ 'common.button_back_list'|trans({}, 'TalavWebBundle') }}</a>
+                    </div>
+                    {{ form_end(form) }}
+
+                </div>
+                <!-- Card body END -->
+
+                <!-- Card Footer START -->
+                <div class="card-footer border-0 d-flex justify-content-between align-items-center p-3">
+                    <input name="submit" type="submit" value="{{ 'common.button_ok'|trans({}, 'TalavWebBundle') }}" class="btn btn-primary"/>
+                    <a href="{{ url('gallery_index') }}" class="btn btn-secondary">{{ 'common.button_back_list'|trans({}, 'TalavWebBundle') }}</a>
+                </div>
+{#                <div class="card-footer">#}
+{#                    ccc#}
+{#                </div>#}
+                <!-- Card Footer END -->
+            </div>
+            <!-- Card feed item END -->
+
+        </div>
+        <div class="col-md-4">
+            ccc
+        </div>
+    </div>
+{% endblock %}

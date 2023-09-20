@@ -47,4 +47,22 @@ trait HasRoles
     {
         return explode('|', $roles);
     }
+
+
+
+
+
+    public function isSuperAdmin(): bool
+    {
+        return $this->hasRole(static::ROLE_SUPER_ADMIN);
+    }
+
+    public function setSuperAdmin($boolean): void
+    {
+        if (true === $boolean) {
+            $this->addRole(static::ROLE_SUPER_ADMIN);
+        } else {
+            $this->removeRole(static::ROLE_SUPER_ADMIN);
+        }
+    }
 }

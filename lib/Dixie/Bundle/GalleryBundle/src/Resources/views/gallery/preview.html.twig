@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Galeria: {{ gallery.name }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ gallery.name }}</h1>
+
+    {% if is_granted('GALLERY_EDIT', gallery) %}
+        <a href="{{ url('gallery_edit', {'id': gallery.id}) }}">Edytuj galerię</a>
+    {% endif %}
+    {% if is_granted('IMAGE_CREATE') %}
+        <a href="{{ url('image_create', {'id': gallery.id}) }}">Dodaj obrazek</a>
+    {% endif %}
+
+    {% if imagesPagination is defined and imagesPagination.items|length %}
+
+        <div class="navigation text-center">
+            {{ knp_pagination_render(imagesPagination) }}
+        </div>
+
+        {% for image in imagesPagination.items %}
+            <div class="image_preview">
+                <h3>{{ image.title }}</h3>
+                <p>{{ image.description }}</p>
+                <img width="100%" src="{{ image.path }}" alt="{{ image.title }}"/>
+                {% if is_granted('IMAGE_DELETE', image) %}
+                    <a href="{{ url('image_delete', {'id': image.id}) }}">Usuń obrazek</a>
+                {% endif %}
+                {% if is_granted('COMMENT_LIST', image) %}
+                    <a href="{{ url('comment_list', {'id': image.id}) }}">Komentarze</a>
+                {% endif %}
+{#                {% for comment in image.comments %}#}
+{#                    <div style="border: 1px solid black; margin: 0.5em; padding: 0.5em;">#}
+{#                        <h6>Nick: {{ comment.nick }}({{ comment.email }})</h6>#}
+{#                        <hr/>#}
+{#                        Comment:#}
+{#                        <p>{{ comment.text }}</p>#}
+{#                        {% if is_granted('COMMENT_DELETE', comment) %}#}
+{#                            <hr/>#}
+{#                            <a href="{{ url('comment_delete', {'id': comment.id}) }}">Usuń komentarz</a>#}
+{#                        {% endif %}#}
+{#                    </div>#}
+{#                {% endfor %}#}
+            </div>
+        {% endfor %}
+
+        <div class="navigation text-center">
+            {{ knp_pagination_render(imagesPagination) }}
+        </div>
+    {% else %}
+        <p>
+            {{ 'message.empty_list'|trans }}
+        </p>
+    {% endif %}
+
+    <a href="{{ url('gallery_index') }}" class="btn btn-link">
+        Wróć na listę galerii
+    </a>
+{% endblock %}

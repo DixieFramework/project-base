@@ -1,0 +1,5 @@
+talav_gallery:
+    resource: "@TalavGalleryBundle/src/Controller/"
+    type:     annotation
+    prefix:   /
+

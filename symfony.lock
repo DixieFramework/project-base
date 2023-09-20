@@ -861,6 +861,9 @@
     "talav/core-bundle": {
         "version": "1.0.0"
     },
+    "talav/gallery-bundle": {
+        "version": "dev-main"
+    },
     "talav/permission-bundle": {
         "version": "dev-main"
     },

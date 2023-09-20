@@ -4,3 +4,6 @@ ria_web:
 
 #talav_user:
 #    resource: "@TalavUserBundle/Resources/config/routing.yml"
+
+talav_gallery_bundle:
+    resource: "@TalavGalleryBundle/Resources/config/talav/routing.yml"

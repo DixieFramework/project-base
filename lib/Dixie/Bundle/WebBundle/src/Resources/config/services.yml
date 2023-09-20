@@ -15,6 +15,7 @@ services:
            - '../../Entity/'
            - '../../Migrations'
            - '../../Tests/'
+
     # ---------------------------------------------------------
     # Register all controllers of WebBundle as services
     # ---------------------------------------------------------

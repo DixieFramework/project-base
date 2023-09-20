@@ -7,7 +7,9 @@ namespace Talav\CoreBundle\Controller;
 use Talav\Component\User\Model\UserInterface;
 use Talav\CoreBundle\Enums\FlashType;
 use Talav\CoreBundle\Form\FormHelper;
+use Talav\CoreBundle\Traits\EntityManagerAwareTrait;
 use Talav\CoreBundle\Traits\ExceptionContextTrait;
+use Talav\CoreBundle\Traits\PaginateTrait;
 use Talav\CoreBundle\Traits\RequestTrait;
 use Talav\CoreBundle\Traits\TranslatorFlashMessageAwareTrait;
 use Psr\Log\LoggerInterface;
@@ -29,6 +31,9 @@ abstract class AbstractController extends BaseController
     use ExceptionContextTrait;
     use RequestTrait;
     use TranslatorFlashMessageAwareTrait;
+
+    use EntityManagerAwareTrait;
+    use PaginateTrait;
 
     /**
      * The home route name.
