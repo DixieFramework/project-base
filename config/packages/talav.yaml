@@ -32,6 +32,41 @@ talav_profile:
       classes:
         model: Groshy\Entity\Profile
 
+talav_settings:
+  resources:
+    settings:
+      classes:
+        model: Groshy\Entity\Settings
+  settings:
+    registration_enabled:
+      type: boolean
+      scope: tenant
+      value: true
+    site.name:
+      type: string
+      scope: global
+    site.version:
+      type: string
+      scope: global
+    meta.keywords:
+      type: string
+      scope: global
+    meta.description:
+      type: string
+      scope: global
+    contact.email:
+      type: string
+      scope: global
+    contact.support_email:
+      type: string
+      scope: global
+    contact.no_reply_email:
+      type: string
+      scope: global
+    other.google_analytics_code:
+      type: string
+      scope: global
+
 auto_mapper_plus:
   options:
     create_unregistered_mappings: true

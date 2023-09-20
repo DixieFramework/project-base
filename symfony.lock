@@ -879,6 +879,9 @@
     "talav/resource-bundle": {
         "version": "1.0.x-dev"
     },
+    "talav/settings-bundle": {
+        "version": "dev-main"
+    },
     "talav/user": {
         "version": "1.0.x-dev"
     },

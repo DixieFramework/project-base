@@ -25,10 +25,3 @@ services:
         resource: '../../Controller'
         public: true
         tags: [ 'controller.service_arguments' ]
-
-    # ---------------------------------------------------------
-    # Register all commands of ProfileBundle as commands
-    # ---------------------------------------------------------
-    Talav\ProfileBundle\Command\:
-        resource: '../../Command'
-        tags: [ 'console.command' ]

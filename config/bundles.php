@@ -36,4 +36,5 @@ return [
     SymfonyCasts\Bundle\ResetPassword\SymfonyCastsResetPasswordBundle::class => ['all' => true],
     Talav\ProfileBundle\TalavProfileBundle::class => ['all' => true],
     Talav\GalleryBundle\TalavGalleryBundle::class => ['all' => true],
+    Talav\SettingsBundle\TalavSettingsBundle::class => ['all' => true],
 ];
