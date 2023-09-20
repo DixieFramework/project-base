@@ -99,8 +99,8 @@ index:
     login: Sign In
     logout: Sign Out
     register: Register
-    title: Accueil
-    title_help: Afficher la page d'accueil
+    title: Home
+    title_help: Go to homepage
     toggle_navigation: Basculer la navigation horizontal
     sidebar_show: Afficher la barre latérale
     sidebar_hide: Masquer la barre latérale
