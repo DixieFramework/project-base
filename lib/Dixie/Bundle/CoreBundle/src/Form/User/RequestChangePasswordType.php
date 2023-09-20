@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Talav\CoreBundle\Form\User;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Talav\CoreBundle\Form\FormHelper;
 
 /**
@@ -20,4 +21,11 @@ class RequestChangePasswordType extends AbstractUserCaptchaType
 
         parent::addFormFields($helper);
     }
+
+	public function configureOptions(OptionsResolver $resolver): void
+	{
+		$resolver->setDefaults([
+			'translation_domain' => 'TalavUserBundle'
+		]);
+	}
 }
