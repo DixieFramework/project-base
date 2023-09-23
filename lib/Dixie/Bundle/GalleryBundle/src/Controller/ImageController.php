@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Talav\GalleryBundle\Controller;
 
+use Talav\Component\Resource\Manager\ManagerInterface;
 use Talav\GalleryBundle\Entity\Gallery;
 use Talav\GalleryBundle\Entity\Image;
 use Talav\GalleryBundle\Form\Type\ImageType;
@@ -23,15 +24,18 @@ use Talav\GalleryBundle\Repository\ImageRepository;
 #[Route('/gallery-image')]
 class ImageController extends AbstractController
 {
+    private ImageRepository $imageRepository;
+
     /**
      * Constructor.
      *
-     * @param ImageServiceInterface $imageService Image service
+     * @param ImageServiceInterface $imageRepository Image service
      * @param TranslatorInterface   $translator   Translator
      */
 //    public function __construct(private ImageServiceInterface $imageService, private TranslatorInterface $translator)
-    public function __construct(private readonly ImageRepository $imageService, private TranslatorInterface $translator)
+    public function __construct(private readonly ManagerInterface $galleryImageManager, private TranslatorInterface $translator)
     {
+        $this->imageRepository = $galleryImageManager->getRepository();
     }
 
     /**
@@ -58,7 +62,7 @@ class ImageController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->imageService->save($image);
+            $this->imageRepository->save($image);
 
             $redirectTo = $this->generateUrl('gallery_preview', ['id' => $gallery->getId()]);
 
@@ -101,14 +105,14 @@ class ImageController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->imageService->delete($image);
+            $this->imageRepository->delete($image);
 
             $this->addFlash(
                 'success',
                 $this->translator->trans('message.deleted_successfully')
             );
 
-            return $this->redirectToRoute('gallery_index');
+            return $this->redirectToRoute('talav_gallery_index');
         }
 
         return $this->render(

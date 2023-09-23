@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Talav\GalleryBundle\Entity;
 
+use Talav\Component\Resource\Model\ResourceInterface;
 use Talav\GalleryBundle\Repository\ImageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -16,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
 #[ORM\Table(name: 'gallery_image')]
-class Image
+class Image implements ResourceInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

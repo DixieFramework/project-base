@@ -9,13 +9,14 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 use Talav\GalleryBundle\DependencyInjection\Configuration;
+use Talav\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
 
 /**
  * This is the class that loads and manages your bundle configuration.
  *
  * @link http://symfony.com/doc/current/cookbook/bundles/extension.html
  */
-class TalavGalleryExtension extends Extension
+class TalavGalleryExtension extends AbstractResourceExtension
 {
     /**
      * {@inheritdoc}
@@ -28,5 +29,6 @@ class TalavGalleryExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $this->registerResources('app', $config['resources'], $container);
     }
 }

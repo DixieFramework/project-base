@@ -17,6 +17,8 @@ services:
             - '../../DependencyInjection/'
             - '../../Entity/'
             - '../../Migrations'
+            - '../../Repository/GalleryRepository.php'
+            - '../../Repository/ImageRepository.php'
             - '../../Tests/'
 
     # ---------------------------------------------------------

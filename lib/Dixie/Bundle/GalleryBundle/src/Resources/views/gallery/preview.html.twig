@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends '@TalavWeb/layouts/default.html.twig' %}
 
 {% block title %}
     Galeria: {{ gallery.name }}
@@ -8,19 +8,19 @@
     <h1>{{ gallery.name }}</h1>
 
     {% if is_granted('GALLERY_EDIT', gallery) %}
-        <a href="{{ url('gallery_edit', {'id': gallery.id}) }}">Edytuj galerię</a>
+        <a href="{{ url('talav_gallery_edit', {'id': gallery.id}) }}">Edytuj galerię</a>
     {% endif %}
     {% if is_granted('IMAGE_CREATE') %}
         <a href="{{ url('image_create', {'id': gallery.id}) }}">Dodaj obrazek</a>
     {% endif %}
 
-    {% if imagesPagination is defined and imagesPagination.items|length %}
+    {% if galleries is defined and galleries|length > 0 %}
 
         <div class="navigation text-center">
-            {{ knp_pagination_render(imagesPagination) }}
+{#            {{ knp_pagination_render(imagesPagination) }}#}
         </div>
 
-        {% for image in imagesPagination.items %}
+        {% for image in galleries %}
             <div class="image_preview">
                 <h3>{{ image.title }}</h3>
                 <p>{{ image.description }}</p>
@@ -47,7 +47,7 @@
         {% endfor %}
 
         <div class="navigation text-center">
-            {{ knp_pagination_render(imagesPagination) }}
+{#            {{ knp_pagination_render(imagesPagination) }}#}
         </div>
     {% else %}
         <p>
@@ -55,7 +55,7 @@
         </p>
     {% endif %}
 
-    <a href="{{ url('gallery_index') }}" class="btn btn-link">
+    <a href="{{ url('talav_gallery_index') }}" class="btn btn-link">
         Wróć na listę galerii
     </a>
 {% endblock %}

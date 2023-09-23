@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Talav\GalleryBundle\Repository;
 
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\EntityRepository;
+use Talav\Component\Resource\Repository\ResourceRepository;
 use Talav\Component\User\Model\UserInterface;
 use Talav\GalleryBundle\Entity\Gallery;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -21,19 +23,20 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Gallery[]    findAll()
  * @method Gallery[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class GalleryRepository extends ServiceEntityRepository
+//class GalleryRepository extends ServiceEntityRepository
+class GalleryRepository extends ResourceRepository
 {
     public const PAGINATOR_ITEMS_PER_PAGE = 5;
 
-    /**
-     * Constructor.
-     *
-     * @param ManagerRegistry $registry Object manager
-     */
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, Gallery::class);
-    }
+//    /**
+//     * Constructor.
+//     *
+//     * @param ManagerRegistry $registry Object manager
+//     */
+//    public function __construct(ManagerRegistry $registry)
+//    {
+//        parent::__construct($registry, Gallery::class);
+//    }
 
     /**
      * Query all records.

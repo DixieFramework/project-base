@@ -120,7 +120,8 @@ final class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end();
+            ->end()
+        ;
     }
 
     private function addRegistrationSection(ArrayNodeDefinition $node)

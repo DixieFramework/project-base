@@ -147,7 +147,7 @@ class CommentController extends AbstractController
                 $this->translator->trans('message.deleted_successfully')
             );
 
-            return $this->redirectToRoute('gallery_index');
+            return $this->redirectToRoute('talav_gallery_index');
         }
 
         return $this->render(

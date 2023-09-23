@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Talav\GalleryBundle\Controller;
 
+use phpDocumentor\Reflection\Types\This;
+use Talav\Component\Resource\Manager\ManagerInterface;
 use Talav\Component\User\Model\UserInterface;
 use Talav\CoreBundle\Controller\AbstractController;
 use Talav\GalleryBundle\Entity\Gallery;
@@ -23,7 +25,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * Class GalleriesController.
  */
-#[Route('/gallery')]
+#[Route('/gallery', name: 'talav_gallery_')]
 class GalleryController extends AbstractController
 {
     /**
@@ -36,16 +38,21 @@ class GalleryController extends AbstractController
      */
     private const PHOTO_PER_PAGE = 25;
 
+    private GalleryRepository $galleryRepository;
+
+    private ImageRepository $imageRepository;
+
     /**
      * Constructor.
      *
-     * @param GalleryServiceInterface $galleryRepository Gallery service
-     * @param ImageServiceInterface   $imageService   Image service
-     * @param TranslatorInterface     $translator     Translator
+     * @param ManagerInterface $galleryManager
+     * @param ManagerInterface $galleryImageManager
+     * @param TranslatorInterface $translator
      */
-//    public function __construct(private GalleryServiceInterface $galleryService, private ImageServiceInterface $imageService, private TranslatorInterface $translator)
-    public function __construct(private readonly GalleryRepository $galleryRepository, private readonly ImageRepository $imageService, private TranslatorInterface $translator)
+    public function __construct(private readonly ManagerInterface $galleryManager, private readonly ManagerInterface $galleryImageManager, private readonly TranslatorInterface $translator)
     {
+        $this->galleryRepository = $this->galleryManager->getRepository();
+        $this->imageRepository = $this->galleryImageManager->getRepository();
     }
 
     /**
@@ -55,16 +62,16 @@ class GalleryController extends AbstractController
      *
      * @return Response HTTP response
      */
-    #[Route(name: 'gallery_index', methods: 'GET')]
-    public function index(Request $request, GalleryRepository $galleryRepository): Response
+    #[Route(name: 'index', methods: 'GET')]
+    public function index(Request $request, ManagerInterface $galleryManager): Response
     {
         $this->denyAccessUnlessGranted(GalleryVoter::LIST);
 
         /** @var UserInterface $user */
         $user = $this->getUser();
-        $page = (int) $request->query->get('page', 1);
+        $page = $request->query->getInt('page', 1);
         $galleries = $this->createQueryBuilderPaginator(
-            $galleryRepository->findAllByUserQueryBuilder($user),
+            $galleryManager->getRepository()->findAllByUserQueryBuilder($user),
             $page,
             self::GALLERY_PER_PAGE
         );
@@ -77,10 +84,9 @@ class GalleryController extends AbstractController
 
         $page = $request->query->getInt('page', 1);
 
-        return $this->render(
-            'galleries/index.html.twig',
-            ['pagination' => $this->galleryRepository->getPaginatedList($page)],
-        );
+        return $this->render('galleries/index.html.twig', [
+            'pagination' => $this->galleryRepository->getPaginatedList($page)
+        ]);
     }
 
     /**
@@ -91,33 +97,28 @@ class GalleryController extends AbstractController
      *
      * @return Response HTTP response
      */
-    #[Route(
-        '/{id}',
-        name: 'gallery_preview',
-        requirements: ['id' => '[1-9]\d*'],
-        methods: 'GET',
-    )]
+    #[Route('/{id}', name: 'preview', requirements: ['id' => '[1-9]\d*'], methods: 'GET')]
     public function view(Request $request, Gallery $gallery): Response
     {
         $this->denyAccessUnlessGranted(GalleryVoter::VIEW, $gallery);
 
+        /** @var UserInterface $user */
+        $user = $this->getUser();
+
         $page = (int) $request->query->get('page', 1);
         $galleries = $this->createQueryBuilderPaginator(
-            $this->galleryRepository->findAllByUserQueryBuilder($user),
+            $this->imageRepository->findAllByGalleryQueryBuilder($gallery),
             $page,
             self::PHOTO_PER_PAGE
         );
 
+//        $page = $request->query->getInt('page', 1);
+//        $imagesPagination = $this->imageService->getPaginatedList($gallery, $page);
 
-
-
-        $page = $request->query->getInt('page', 1);
-        $imagesPagination = $this->imageService->getPaginatedList($gallery, $page);
-
-        return $this->render(
-            '@TalavGallery/gallery/preview.html.twig',
-            ['gallery' => $gallery, 'imagesPagination' => $imagesPagination],
-        );
+        return $this->render('@TalavGallery/gallery/preview.html.twig', [
+            'gallery' => $gallery,
+            'imagesPagination' => $galleries
+        ]);
     }
 
     /**
@@ -128,12 +129,7 @@ class GalleryController extends AbstractController
      *
      * @return Response HTTP response
      */
-    #[Route(
-        '/edit/{id}',
-        name: 'gallery_edit',
-        requirements: ['id' => '[1-9]\d*'],
-        methods: 'GET|POST',
-    )]
+    #[Route('/edit/{id}', name: 'edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
     public function edit(Request $request, Gallery $gallery): Response
     {
         $this->denyAccessUnlessGranted(GalleryVoter::EDIT, $gallery);
@@ -144,18 +140,14 @@ class GalleryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->galleryRepository->save($gallery, true);
 
-            $this->addFlash(
-                'success',
-                $this->translator->trans('message.updated_successfully')
-            );
+            $this->successTrans('message.updated_successfully');
 
-            return $this->redirectToRoute('gallery_index');
+            return $this->redirectToRoute('talav_gallery_index');
         }
 
-        return $this->render(
-            '@TalavGallery/gallery/edit.html.twig',
-            ['form' => $form->createView()],
-        );
+        return $this->render('@TalavGallery/gallery/edit.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**
@@ -165,11 +157,7 @@ class GalleryController extends AbstractController
      *
      * @return Response HTTP response
      */
-    #[Route(
-        '/create',
-        name: 'gallery_create',
-        methods: 'GET|POST',
-    )]
+    #[Route('/create', name: 'create', methods: 'GET|POST')]
     public function create(Request $request): Response
     {
         /** @var ?UserInterface $user */
@@ -186,18 +174,14 @@ class GalleryController extends AbstractController
             $this->entityManager->persist($gallery);
             $this->entityManager->flush();
 
-            $this->addFlash(
-                'success',
-                $this->translator->trans('message.created_successfully')
-            );
+            $this->successTrans('message.created_successfully');
 
             return $this->redirectToRoute('gallery_preview', ['id' => $gallery->getId()]);
         }
 
-        return $this->render(
-            '@TalavGallery/gallery/create.html.twig',
-            ['form' => $form->createView()],
-        );
+        return $this->render('@TalavGallery/gallery/create.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**
@@ -208,34 +192,28 @@ class GalleryController extends AbstractController
      *
      * @return Response HTTP response
      */
-    #[Route('/delete/{id}', name: 'gallery_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
+    #[Route('/delete/{id}', name: 'delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
     public function delete(Request $request, Gallery $gallery): Response
     {
         $this->denyAccessUnlessGranted(GalleryVoter::DELETE, $gallery);
 
         $form = $this->createForm(FormType::class, $gallery, [
             'method' => 'DELETE',
-            'action' => $this->generateUrl('gallery_delete', ['id' => $gallery->getId()]),
+            'action' => $this->generateUrl('talav_gallery_delete', ['id' => $gallery->getId()]),
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->galleryRepository->delete($gallery);
 
-            $this->addFlash(
-                'success',
-                $this->translator->trans('message.deleted_successfully')
-            );
+            $this->successTrans('message.deleted_successfully');
 
-            return $this->redirectToRoute('gallery_index');
+            return $this->redirectToRoute('talav_gallery_index');
         }
 
-        return $this->render(
-            '@TalavGallery/gallery/delete.html.twig',
-            [
-                'form' => $form->createView(),
-                'gallery' => $gallery,
-            ]
-        );
+        return $this->render('@TalavGallery/gallery/delete.html.twig', [
+            'form' => $form->createView(),
+            'gallery' => $gallery,
+        ]);
     }
 }

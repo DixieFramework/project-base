@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Talav\GalleryBundle\Repository;
 
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\EntityRepository;
+use Talav\Component\Resource\Repository\ResourceRepository;
 use Talav\Component\User\Model\UserInterface;
 use Talav\GalleryBundle\Entity\Gallery;
 use Talav\GalleryBundle\Entity\Image;
@@ -22,7 +24,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Image[]    findAll()
  * @method Image[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ImageRepository extends ServiceEntityRepository
+//class ImageRepository extends ServiceEntityRepository
+class ImageRepository extends ResourceRepository
 {
     public const PAGINATOR_ITEMS_PER_PAGE = 5;
 
@@ -31,10 +34,10 @@ class ImageRepository extends ServiceEntityRepository
      *
      * @param ManagerRegistry $registry Object manager
      */
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, Image::class);
-    }
+//    public function __construct(ManagerRegistry $registry)
+//    {
+//        parent::__construct($registry, Image::class);
+//    }
 
     /**
      * Query all records.
@@ -47,15 +50,26 @@ class ImageRepository extends ServiceEntityRepository
             ->orderBy('image.id', 'DESC');
     }
 
-    public function findAllByGalleryQueryBuilder(Gallery $gallery): QueryBuilder
+//    public function findAllByGalleryQueryBuilder(Gallery $gallery): QueryBuilder
+//    {
+//        return $this
+//            ->createQueryBuilder('i')
+//            ->leftJoin('i.user', 'u')
+//            ->where('i.gallery = :gallery')
+//            ->andWhere('g.user = :user')
+//            ->setParameters(['user' => $gallery, 'gallery' => $gallery])
+//            ->orderBy('g.id', Criteria::DESC);
+//    }
+
+    public function findAllByGalleryQueryBuilder(Gallery $gallery): QueryBuilder//, int $limit = 25): QueryBuilder
     {
-        return $this
-            ->createQueryBuilder('i')
-            ->leftJoin('i.user', 'u')
-            ->where('i.gallery = :gallery')
-            ->andWhere('g.user = :user')
-            ->setParameters(['user' => $gallery, 'gallery' => $gallery])
+        return $this->createQueryBuilder('i')
+            ->leftJoin('i.gallery', 'g')
+            ->andWhere('i.gallery = :gallery')
+            ->setParameter('gallery', $gallery)
             ->orderBy('g.id', Criteria::DESC);
+//            ->setMaxResults($limit)
+//            ->orderBy('i.position', 'ASC');
     }
 
     /**

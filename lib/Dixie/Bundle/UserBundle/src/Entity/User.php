@@ -191,6 +191,22 @@ class User extends AbstractUser implements UserInterface
 	}
 
     /**
+     * @see RoleInterface
+     */
+    public function isAdmin(): bool
+    {
+        return $this->isSuperAdmin() || $this->hasRole(RoleInterface::ROLE_ADMIN);
+    }
+
+    /**
+     * @see RoleInterface
+     */
+    public function isSuperAdmin(): bool
+    {
+        return $this->hasRole(RoleInterface::ROLE_SUPER_ADMIN);
+    }
+
+    /**
      * Setzt eine Userflag. Wenn nicht vorhanden, wird sie neu generiert.
      *
      * @param string $flagKey
