@@ -1,16 +1,16 @@
 {% extends '@TalavUser/frontend/profile/layout.html.twig' %}
-
+{% trans_default_domain 'TalavProfileBundle' %}
 {% block page_content %}
     <input type="hidden" id="read.more" value="{{ 'comment.read.more'|trans }}">
     <input type="hidden" id="show.less" value="{{ 'comment.show.less'|trans }}">
-    <h1>{{ 'profile.relations'|trans }}</h1>
+    <h1>{{ 'talav.profile.relations.title'|trans }}</h1>
     {% if relations.haveToPaginate %}
         {{ pagerfanta(relations, 'rounded_pagination_end') }}
     {% endif %}
     {% for relation in relations %}
         {% include '@TalavProfile/user_relation/relation.html.twig' with {relation: relation} %}
     {% else %}
-        {{ 'profile.no.relations'|trans }}
+        {{ 'talav.profile.relations.no_relations'|trans }}
     {% endfor %}
     {% if relations.haveToPaginate %}
         {{ pagerfanta(relations, 'rounded_pagination_end') }}

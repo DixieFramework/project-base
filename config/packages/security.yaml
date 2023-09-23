@@ -16,7 +16,13 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            entry_point: form_login
+            lazy: true
+            provider: user_provider
+            pattern: ^/
+            entry_point: Talav\UserBundle\Security\UserFormAuthenticator
+            custom_authenticators:
+                - Talav\UserBundle\Security\UserFormAuthenticator
+#            entry_point: form_login
             form_login:
                 login_path: talav_user_login
                 check_path: talav_user_login

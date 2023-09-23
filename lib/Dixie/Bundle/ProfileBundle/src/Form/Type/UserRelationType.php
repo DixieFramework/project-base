@@ -16,7 +16,7 @@ class UserRelationType extends AbstractType
     {
         $builder
             ->add('comment', TextType::class, [
-                'label' => 'profile.relation.comment',
+                'label' => 'talav.profile.relations.fields.comment',
                 'property_path' => 'commentText',
                 'constraints' => [
                     new NotBlank(),
@@ -29,7 +29,8 @@ class UserRelationType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'data_class' => UserRelation::class
+                'data_class' => UserRelation::class,
+	            'translation_domain' => 'TalavProfileBundle'
             ])
         ;
     }

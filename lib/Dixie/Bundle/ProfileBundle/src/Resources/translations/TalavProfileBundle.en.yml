@@ -1,0 +1,10 @@
+talav:
+    profile:
+        relations:
+            title: My Relations
+            no_relations: No relations were found.
+            with_username: 'Relation with %username%'
+            fields:
+                comment: Comment
+            add_submit_text: Add
+            edit_submit_text: Edit

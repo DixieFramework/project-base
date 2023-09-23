@@ -38,7 +38,7 @@ class UserLoginType extends AbstractUserCaptchaType
             ->rowClass('float-end')
             ->notRequired()
             ->addCheckboxType();
-    }
+	}
 
     public function configureOptions(OptionsResolver $resolver): void
     {

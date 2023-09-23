@@ -12,7 +12,7 @@
 {# footer #}
 {% block card_footer -%}
 {{ parent() }}
-<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+{#<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">#}
 {% endblock %}
 {# actions #}
 {% block actions_form %}
