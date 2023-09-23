@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Talav\GalleryBundle\Controller;
 
 use Talav\Component\Resource\Manager\ManagerInterface;
+use Talav\CoreBundle\Controller\AbstractController;
 use Talav\GalleryBundle\Entity\Gallery;
 use Talav\GalleryBundle\Entity\Image;
 use Talav\GalleryBundle\Form\Type\ImageType;
 use Talav\GalleryBundle\Voter\ImageVoter;
 use Talav\GalleryBundle\Service\ImageServiceInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,18 +21,18 @@ use Talav\GalleryBundle\Repository\ImageRepository;
 /**
  * Class ImagesController.
  */
-#[Route('/gallery-image')]
+#[Route('/gallery/image', name: 'talav_gallery_image_')]
 class ImageController extends AbstractController
 {
     private ImageRepository $imageRepository;
 
+
     /**
      * Constructor.
      *
-     * @param ImageServiceInterface $imageRepository Image service
-     * @param TranslatorInterface   $translator   Translator
+     * @param ManagerInterface $galleryImageManager
+     * @param TranslatorInterface $translator
      */
-//    public function __construct(private ImageServiceInterface $imageService, private TranslatorInterface $translator)
     public function __construct(private readonly ManagerInterface $galleryImageManager, private TranslatorInterface $translator)
     {
         $this->imageRepository = $galleryImageManager->getRepository();
@@ -46,12 +46,7 @@ class ImageController extends AbstractController
      *
      * @return Response HTTP response
      */
-    #[Route(
-        '/create/{id}',
-        name: 'image_create',
-        requirements: ['id' => '[1-9]\d*'],
-        methods: 'GET|POST',
-    )]
+    #[Route('/create/{id}', name: 'create', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
     public function create(Request $request, Gallery $gallery): Response
     {
         $this->denyAccessUnlessGranted(ImageVoter::CREATE);
@@ -64,20 +59,16 @@ class ImageController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->imageRepository->save($image);
 
-            $redirectTo = $this->generateUrl('gallery_preview', ['id' => $gallery->getId()]);
+            $redirectTo = $this->generateUrl('talav_gallery_preview', ['id' => $gallery->getId()]);
 
-            $this->addFlash(
-                'success',
-                $this->translator->trans('message.created_successfully')
-            );
+            $this->successTrans('message.created_successfully');
 
             return $this->redirect($redirectTo);
         }
 
-        return $this->render(
-            'images/create.html.twig',
-            ['form' => $form->createView()],
-        );
+        return $this->render('@TalavGallery/image/create.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**
@@ -88,39 +79,28 @@ class ImageController extends AbstractController
      *
      * @return Response HTTP response
      */
-    #[Route(
-        '/delete/{id}',
-        name: 'image_delete',
-        requirements: ['id' => '[1-9]\d*'],
-        methods: 'GET|DELETE',
-    )]
+    #[Route('/delete/{id}', name: 'delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
     public function delete(Request $request, Image $image): Response
     {
         $this->denyAccessUnlessGranted(ImageVoter::DELETE, $image);
 
         $form = $this->createForm(FormType::class, $image, [
             'method' => 'DELETE',
-            'action' => $this->generateUrl('image_delete', ['id' => $image->getId()]),
+            'action' => $this->generateUrl('talav_gallery_image_delete', ['id' => $image->getId()]),
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->imageRepository->delete($image);
 
-            $this->addFlash(
-                'success',
-                $this->translator->trans('message.deleted_successfully')
-            );
+            $this->successTrans('message.deleted_successfully');
 
             return $this->redirectToRoute('talav_gallery_index');
         }
 
-        return $this->render(
-            'images/delete.html.twig',
-            [
-                'form' => $form->createView(),
-                'image' => $image,
-            ]
-        );
+        return $this->render('@TalavGallery/image/delete.html.twig', [
+            'form' => $form->createView(),
+            'image' => $image,
+        ]);
     }
 }

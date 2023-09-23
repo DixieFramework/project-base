@@ -176,7 +176,7 @@ class GalleryController extends AbstractController
 
             $this->successTrans('message.created_successfully');
 
-            return $this->redirectToRoute('gallery_preview', ['id' => $gallery->getId()]);
+            return $this->redirectToRoute('talav_gallery_preview', ['id' => $gallery->getId()]);
         }
 
         return $this->render('@TalavGallery/gallery/create.html.twig', [

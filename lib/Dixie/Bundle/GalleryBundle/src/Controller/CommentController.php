@@ -70,7 +70,7 @@ class CommentController extends AbstractController
                 $this->translator->trans('message.created_successfully')
             );
 
-            return $this->redirectToRoute('gallery_preview', ['id' => $image->getGallery()->getId()]);
+            return $this->redirectToRoute('talav_gallery_preview', ['id' => $image->getGallery()->getId()]);
         }
 
         return $this->render(
