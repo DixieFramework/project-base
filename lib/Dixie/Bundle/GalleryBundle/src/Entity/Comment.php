@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class Comment.
  */
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
-#[ORM\Table(name: '`comments`')]
+#[ORM\Table(name: 'gallery_image_comment')]
 class Comment
 {
     #[ORM\Id]

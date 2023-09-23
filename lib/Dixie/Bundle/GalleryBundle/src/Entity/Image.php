@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class Image entity.
  */
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
-#[ORM\Table(name: 'images')]
+#[ORM\Table(name: 'gallery_image')]
 class Image
 {
     #[ORM\Id]
