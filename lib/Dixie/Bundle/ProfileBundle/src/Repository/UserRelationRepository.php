@@ -57,11 +57,14 @@ class UserRelationRepository extends EntityRepository
 
     public function findRelationBetween(UserInterface $owner, UserInterface $receiver): ?UserRelation
     {
+        $qb = $this->createQueryBuilder('r');
+
         return
-            $this
-                ->createQueryBuilder('r')
-                ->where('r.owner = :member')
-                ->andWhere('r.receiver = :receiver')
+            $qb
+                ->where($qb->expr()->orX(
+                    'r.owner = :member AND r.receiver = :receiver',
+                    'r.receiver = :member AND r.owner = :receiver',
+                ))
                 ->setParameter(':member', $owner)
                 ->setParameter(':receiver', $receiver)
                 ->getQuery()

@@ -69,6 +69,11 @@ class ProfileController extends AbstractController
     public function editProfil(Request $request, #[CurrentUser] UserInterface $user, EntityManagerInterface $manager): Response
     {
 
+        if (false) {
+            $user1 = $this->userManager->findUserByUsername('root');
+            $user2 = $this->userManager->findUserByUsername('user0');
+            dd($this->entityManager->getRepository(UserRelation::class)->findRelationBetween($user1, $user2));
+        }
 
 
         /** @var \Talav\UserBundle\Model\UserInterface $user */
