@@ -1,0 +1,9 @@
+{% extends '@TalavUser/frontend/profile/layout.html.twig' %}
+
+{% block page_content %}
+    {% if true is same as true %}
+        Your own profile
+    {% else %}
+        {{ member.Username }}'s profile
+    {% endif %}
+{% endblock %}

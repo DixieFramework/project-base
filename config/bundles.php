@@ -37,4 +37,5 @@ return [
     Talav\ProfileBundle\TalavProfileBundle::class => ['all' => true],
     Talav\GalleryBundle\TalavGalleryBundle::class => ['all' => true],
     Talav\SettingsBundle\TalavSettingsBundle::class => ['all' => true],
+    Exercise\HTMLPurifierBundle\ExerciseHTMLPurifierBundle::class => ['all' => true],
 ];

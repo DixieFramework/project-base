@@ -148,6 +148,18 @@
             "config/packages/elao_enum.yaml"
         ]
     },
+    "exercise/htmlpurifier-bundle": {
+        "version": "4.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "3.0",
+            "ref": "99590c5352b58fadacd5535337589aba7e44f5a7"
+        },
+        "files": [
+            "config/packages/exercise_html_purifier.yaml"
+        ]
+    },
     "fakerphp/faker": {
         "version": "v1.19.0"
     },
@@ -288,6 +300,18 @@
     },
     "phpstan/phpdoc-parser": {
         "version": "1.5.1"
+    },
+    "phpstan/phpstan": {
+        "version": "1.10",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "f10b8054de1a94a3b9e8806a6453fd5c98491c44"
+        },
+        "files": [
+            "phpstan.dist.neon"
+        ]
     },
     "phpunit/php-code-coverage": {
         "version": "9.2.15"

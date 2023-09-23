@@ -14,6 +14,8 @@
         "doctrine/doctrine-bundle": "^2.6",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.12",
+        "exercise/htmlpurifier-bundle": "^4.1",
+        "ezyang/htmlpurifier": "^4.16",
         "knplabs/knp-menu-bundle": "^3.2",
         "nelmio/cors-bundle": "^2.2",
         "phpdocumentor/reflection-docblock": "^5.3",
@@ -60,7 +62,8 @@
         "talav/user-bundle": "@dev",
         "talav/web-bundle": "@dev",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+        "xemlock/htmlpurifier-html5": "^0.1.10"
     },
     "config": {
         "github-oauth": {
@@ -123,6 +126,7 @@
         "fakerphp/faker": "^1.19",
         "justinrainbow/json-schema": "^5.2",
         "phpunit/phpunit": "^9.5",
+        "rector/rector": "^0.18.3",
         "symfony/browser-kit": "6.3.*",
         "symfony/css-selector": "6.3.*",
         "symfony/debug-bundle": "6.3.*",
@@ -146,8 +150,11 @@
             "url": "git@github.com:DixieFramework/ResourceBundle.git"
         },
         {
-            "type": "vcs",
-            "url": "git@github.com:DixieFramework/BundleGeneratorBundle.git"
+            "type": "path",
+            "options": {
+                "symlink": true
+            },
+            "url": "lib/Dixie/Bundle/BundleGeneratorBundle"
         },
         {
             "type": "path",

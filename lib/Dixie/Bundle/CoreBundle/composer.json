@@ -13,6 +13,7 @@
     "prefer-stable": true,
     "require": {
         "php": ">=8.1.14",
+        "ext-dom": "*",
         "ext-gd": "*",
         "ext-intl": "*",
         "babdev/pagerfanta-bundle": "^3.7",
@@ -104,7 +105,11 @@
     "autoload": {
         "psr-4": {
             "Talav\\CoreBundle\\": "src/"
-        }
+        },
+        "files": [
+            "src/Resources/functions/functions.php",
+            "src/Resources/functions/serializer.php"
+        ]
     },
     "scripts": {
         "bin": "echo 'bin not installed'",

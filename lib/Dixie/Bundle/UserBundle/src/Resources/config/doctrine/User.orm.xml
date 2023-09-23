@@ -5,7 +5,7 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
 
-    <mapped-superclass name="Talav\UserBundle\Entity\User" table="user_user">
+    <mapped-superclass name="Talav\UserBundle\Entity\User" table="user">
         <field name="username" column="username" length="180" />
         <field name="usernameCanonical" column="username_canonical" length="180" unique="true" />
         <field name="email" column="email" type="string" length="180" />
@@ -40,6 +40,12 @@
             </cascade>
         </one-to-one>
 
+        <one-to-many field="metadata" target-entity="Talav\ProfileBundle\Entity\UserMetadata" mapped-by="user" orphan-removal="true">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+
         <many-to-many field="roles" target-entity="Talav\PermissionBundle\Entity\RoleInterface">
             <join-table name="user_role">
                 <join-columns>
@@ -61,6 +67,12 @@
             </join-table>
         </many-to-many>
 
+        <field name="flags" column="flags" type="json" column-definition="JSON DEFAULT NULL">
+            <options>
+                <option name="comment">Your SQL field comment goes here.</option>
+                <option name="default">Default Value</option>
+            </options>
+        </field>
     </mapped-superclass>
 
 </doctrine-mapping>

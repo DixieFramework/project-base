@@ -20,6 +20,8 @@ use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Talav\CoreBundle\Utils\TypeCast;
+use Talav\ProfileBundle\Entity\UserRelation;
 use Talav\SettingsBundle\Trait\SettingManagerAwareTrait;
 
 /**
@@ -66,6 +68,22 @@ class ProfileController extends AbstractController
     #[Route(path: '/edit', name: 'user_profile_edit')]
     public function editProfil(Request $request, #[CurrentUser] UserInterface $user, EntityManagerInterface $manager): Response
     {
+
+
+
+        /** @var \Talav\UserBundle\Model\UserInterface $user */
+        $user = $this->userManager->findUserByUsername('root');
+//        $user->setMetadata('PROFILE_COMPLETED','0');
+//        $this->userManager->update($user);
+
+        dd(TypeCast::try($user->getMetadataValue('PROFILE_COMPLETED'), 'string'));
+
+        $user1 = $this->userManager->findUserByUsername('root');
+        $user2 = $this->userManager->findUserByUsername('user0');
+
+        dd($this->entityManager->getRepository(UserRelation::class)->findUnconfirmedRelationBetween($user1, $user2));
+
+
 	    $form = $this->createForm(ProfileEditType::class, $user);
         if ($this->handleRequestForm($request, $form)) {
             $this->userManager->update($user, true);

@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Talav\UserBundle\Controller;
 
+use Groshy\Entity\User;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Talav\CoreBundle\Controller\AbstractController;
 use Talav\CoreBundle\Form\User\ProfileChangePasswordType;
@@ -59,6 +62,39 @@ class ProfileController extends AbstractController
 
         return $this->render('@TalavUser/profile/profile_edit.html.twig', [
             'form' => $form,
+        ]);
+    }
+
+    /**
+     * @Route("/members/{username}/new", name="members_profile_new")
+     *
+     * @ParamConverter("member", class="App\Entity\Member", options={"mapping": {"username": "username"}})
+     */
+
+    #[Route(path: '/view/{username}', name: 'user_profile_show', requirements: ['username' => Requirement::ASCII_SLUG])]
+    #[ParamConverter('member', class: User::class, options: ['mapping' => ['username' => 'username']])]
+    public function show(User $member): Response
+    {
+//        if (!$member->isBrowsable()) {
+//            throw new AccessDeniedException();
+//        }
+
+        /** @var User $loggedInMember */
+        $loggedInMember = $this->getUser();
+//        if ($loggedInMember === $member) {
+//            return $this->showOwnProfile($member);
+//        }
+
+        return $this->renderProfile(false, $member, $loggedInMember);
+    }
+
+    private function renderProfile(bool $ownProfile, User $member, User $loggedInMember): Response
+    {
+        return $this->render('@TalavUser/frontend/profile/profile_view.html.twig', [
+            'member' => $member,
+            'own' => $ownProfile,
+//            'globals_js_json' => $this->globals->getGlobalsJsAsJson($member, $loggedInMember),
+//            'submenu' => $this->profileSubmenu->getSubmenu($member, $loggedInMember),
         ]);
     }
 }

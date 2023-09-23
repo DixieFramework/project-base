@@ -33,10 +33,11 @@ class GalleryType extends AbstractType
             'label' => 'label.name',
             'required' => true,
             'attr' => ['max_length' => 64],
+            'error_bubbling' => true,
             'constraints' => [
                 new Constraints\Regex([
-                    'pattern' => '/^[A-Za-z0-9-éèàêï\s]{2,}$/i',
-                    'message' => 'Gallery name must only contain letters and/or numbers.'
+                    'pattern' => '/^[A-Za-z0-9-éèàêï\s]{2,64}$/i',
+                    'message' => 'Gallery name must only contain letters and/or numbers, with a length of 2 to 64 characters.'
                 ]),
                 new Constraints\NotBlank([
                     'message' => 'What name would you like to give to your gallery ?'

@@ -28,7 +28,7 @@ class Profile implements ProfileInterface
     /**
      * @var ArrayCollection
      */
-    private Collection $relationships;
+    private readonly Collection $relationships;
 
     public function __construct()
     {

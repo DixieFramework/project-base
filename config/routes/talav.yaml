@@ -1,3 +1,8 @@
+# auto loads routes from all bundles in Resources/config/talav/routing.yml
+_talav_bundle_auto:
+  resource: .
+  type: talav_bundle
+
 talav_user:
   resource: '@TalavUserBundle/Resources/config/routing.yml'
 

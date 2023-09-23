@@ -20,6 +20,7 @@ services:
             - '../../Entity/'
             - '../../Form/'
             - '../../Migrations'
+            - '../../Resources/functions/'
             - '../../Tests/'
 
     # ---------------------------------------------------------
@@ -29,3 +30,8 @@ services:
         resource: '../../Controller'
         public: true
         tags: ['controller.service_arguments']
+
+    # routing loader for bundle routing auto loading
+    Talav\CoreBundle\Routing\Loader\BundleRoutingLoader:
+        tags:
+            - { name: routing.loader }

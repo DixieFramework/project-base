@@ -247,3 +247,18 @@
     </div>
 </div>
 {%- endblock -%}
+
+{% block form_errors -%}
+    {%- if errors|length > 0 -%}
+        <span class="{% if form is not rootform %}invalid-feedback{% else %}alert alert-danger{% endif %} d-block">
+            <span class="d-block">
+            {{ errors[0].message }}
+            </span>
+{#            {%- for error in errors -%}#}
+{#                <span class="d-block">#}
+{#                    <span class="form-error-message">{{ error.message }}</span>#}
+{#                </span>#}
+{#            {%- endfor -%}#}
+        </span>
+    {%- endif %}
+{%- endblock form_errors %}

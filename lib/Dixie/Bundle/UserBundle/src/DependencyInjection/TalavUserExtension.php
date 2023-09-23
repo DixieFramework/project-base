@@ -31,7 +31,7 @@ class TalavUserExtension extends AbstractResourceExtension
 
         if (UserMailer::class == $config['mailer']['class']) {
             $definition = $container->getDefinition(UserMailerInterface::class);
-            $definition->setArgument(3, [
+            $definition->setArgument(4, [
                 'email' => $config['email']['from']['email'],
                 'name' => $config['email']['from']['name'],
             ]);
