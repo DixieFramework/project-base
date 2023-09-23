@@ -62,6 +62,7 @@ class TalavUserExtension extends AbstractResourceExtension
         $container->setParameter('talav_user.registration.form_model', $config['registration']['form']['model']);
         $container->setParameter('talav_user.registration.form_validation_groups', $config['registration']['form']['validation_groups']);
         $container->setParameter('talav_user.registration.display_captcha', $config['registration']['display_captcha']);
+        $container->setParameter('talav_user.login.options', $config['login']['options']);
         $container->setParameter('talav_user.login.display_captcha', $config['login']['display_captcha']);
 
         $this->registerResources('app', $config['resources'], $container);

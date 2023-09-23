@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Talav\UserBundle\Security;
 
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,9 +16,12 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Http\Authenticator\AbstractLoginFormAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\PasswordUpgradeBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
@@ -47,20 +51,33 @@ class UserFormAuthenticator extends AbstractLoginFormAuthenticator
         private readonly UrlGeneratorInterface $urlGenerator,
         private readonly TranslatorInterface $translator,
         private readonly UserAuthenticatorInterface $userAuthenticator,
+        private readonly UserProviderInterface $userProvider,
         private readonly HttpUtils $httpUtils,
+        #[Autowire('%talav_user.login.options%')] array $options
     ) {
-        $this->options = [
-            'username_parameter' => 'talav_type_user_user_login[username]',
-            'password_parameter' => 'talav_type_user_user_login[password]',
-            'check_path' => '/login',
-            'login_path' => '/login',
+//        $this->options = [
+//            'username_parameter' => 'talav_type_user_user_login[username]',
+//            'password_parameter' => 'talav_type_user_user_login[password]',
+//            'check_path' => $this->urlGenerator->generate(self::LOGIN_ROUTE),
+//            'login_path' => $this->urlGenerator->generate(self::LOGIN_ROUTE),
+//            'post_only' => true,
+//            'form_only' => false,
+//            'use_forward' => false,
+//            'enable_csrf' => false,
+//            'csrf_parameter' => 'talav_type_user_user_login[_csrf_token]',
+//            'csrf_token_id' => 'authenticate',
+//        ];
+
+        $this->options = array_merge([
+            'username_parameter' => '_username',
+            'password_parameter' => '_password',
+            'check_path' => '/login_check',
             'post_only' => true,
             'form_only' => false,
-            'use_forward' => false,
             'enable_csrf' => false,
-            'csrf_parameter' => 'talav_type_user_user_login[_csrf_token]',
+            'csrf_parameter' => '_csrf_token',
             'csrf_token_id' => 'authenticate',
-        ];
+        ], $options);
     }
 
     #[Required]
@@ -94,14 +111,29 @@ class UserFormAuthenticator extends AbstractLoginFormAuthenticator
 
         $request->getSession()->set(Security::LAST_USERNAME, $username);
 
-        return new Passport(
-            new UserBadge($username),
-            new PasswordCredentials($password),
-            [
-                new CsrfTokenBadge('authenticate', $csrfToken),
-                new RememberMeBadge(),
-            ]
+        $passport = new Passport(
+            new UserBadge($credentials['username'], $this->userProvider->loadUserByIdentifier(...)),
+            new PasswordCredentials($credentials['password']),
+            [new RememberMeBadge()]
         );
+
+        if ($this->options['enable_csrf']) {
+            $passport->addBadge(new CsrfTokenBadge($this->options['csrf_token_id'], $credentials['csrf_token']));
+        }
+
+        if ($this->userProvider instanceof PasswordUpgraderInterface) {
+            $passport->addBadge(new PasswordUpgradeBadge($credentials['password'], $this->userProvider));
+        }
+
+        return $passport;
+//        return new Passport(
+//            new UserBadge($username),
+//            new PasswordCredentials($password),
+//            [
+//                new CsrfTokenBadge('authenticate', $csrfToken),
+//                new RememberMeBadge(),
+//            ]
+//        );
     }
 //    public function authenticate(Request $request): Passport
 //    {
@@ -157,7 +189,7 @@ class UserFormAuthenticator extends AbstractLoginFormAuthenticator
 
         $credentials['username'] = trim($credentials['username']);
 
-        if (\strlen($credentials['username']) > Security::MAX_USERNAME_LENGTH) {
+        if (\strlen($credentials['username']) > UserBadge::MAX_USERNAME_LENGTH) {
             throw new BadCredentialsException('Invalid username.');
         }
 

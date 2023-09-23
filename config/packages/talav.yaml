@@ -16,6 +16,12 @@ talav_user:
     form:
       type: Groshy\Form\Type\RegistrationFormType
       model: Groshy\Form\Model\RegistrationFormModel
+  login:
+    options:
+      username_parameter: talav_type_user_user_login[username]
+      password_parameter: talav_type_user_user_login[password]
+      enable_csrf: true
+      csrf_parameter: talav_type_user_user_login[_csrf_token]
 
 talav_permission:
   resources:
