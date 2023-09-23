@@ -77,7 +77,7 @@ class GalleryController extends AbstractController
         );
 
         return $this->render('@TalavGallery/gallery/index.html.twig', [
-            'galleries' => $galleries->getCurrentPageResults(),
+            'galleries' => $galleries,
         ]);
 
 
@@ -117,6 +117,7 @@ class GalleryController extends AbstractController
 
         return $this->render('@TalavGallery/gallery/preview.html.twig', [
             'gallery' => $gallery,
+            'galleryImages' => $galleries,
             'imagesPagination' => $galleries
         ]);
     }

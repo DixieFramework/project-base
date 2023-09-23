@@ -1,35 +1,41 @@
 {% extends '@TalavWeb/layouts/default.html.twig' %}
 
-{% block title %}
+{% trans_default_domain 'TalavGalleryBundle' %}
+
+{% block titre %}
     Galeria: {{ gallery.name }}
 {% endblock %}
 
 {% block body %}
+<div class="row">
+    <div class="col-md-8">
+
     <h1>{{ gallery.name }}</h1>
 
     {% if is_granted('GALLERY_EDIT', gallery) %}
-        <a href="{{ url('talav_gallery_edit', {'id': gallery.id}) }}">Edytuj galerię</a>
+        <a href="{{ url('talav_gallery_edit', {'id': gallery.id}) }}">{{ 'talav.gallery.edit.link'|trans }}</a>
     {% endif %}
     {% if is_granted('IMAGE_CREATE') %}
-        <a href="{{ url('image_create', {'id': gallery.id}) }}">Dodaj obrazek</a>
+        <a href="{{ url('talav_gallery_image_create', {'id': gallery.id}) }}">{{ 'talav.gallery.image.create.link'|trans }}</a>
     {% endif %}
 
-    {% if galleries is defined and galleries|length > 0 %}
+    {% if galleryImages is defined and galleryImages|length > 0 %}
 
         <div class="navigation text-center">
+            {{ pagerfanta(galleryImages) }}
 {#            {{ knp_pagination_render(imagesPagination) }}#}
         </div>
 
-        {% for image in galleries %}
+        {% for image in galleryImages %}
             <div class="image_preview">
                 <h3>{{ image.title }}</h3>
                 <p>{{ image.description }}</p>
                 <img width="100%" src="{{ image.path }}" alt="{{ image.title }}"/>
                 {% if is_granted('IMAGE_DELETE', image) %}
-                    <a href="{{ url('image_delete', {'id': image.id}) }}">Usuń obrazek</a>
+                    <a href="{{ url('talav_gallery_image_delete', {'id': image.id}) }}">Usuń obrazek</a>
                 {% endif %}
                 {% if is_granted('COMMENT_LIST', image) %}
-                    <a href="{{ url('comment_list', {'id': image.id}) }}">Komentarze</a>
+                    <a href="{{ url('talav_gallery_comment_list', {'id': image.id}) }}">Komentarze</a>
                 {% endif %}
 {#                {% for comment in image.comments %}#}
 {#                    <div style="border: 1px solid black; margin: 0.5em; padding: 0.5em;">#}
@@ -47,15 +53,19 @@
         {% endfor %}
 
         <div class="navigation text-center">
-{#            {{ knp_pagination_render(imagesPagination) }}#}
+            {{ pagerfanta(galleryImages) }}
         </div>
     {% else %}
         <p>
-            {{ 'message.empty_list'|trans }}
+            {{ 'talav.gallery.message.empty_list'|trans }}
         </p>
     {% endif %}
 
-    <a href="{{ url('talav_gallery_index') }}" class="btn btn-link">
-        Wróć na listę galerii
-    </a>
+    <a href="{{ url('talav_gallery_index') }}" class="btn btn-link">{{ 'talav.gallery.index.link'|trans }}</a>
+
+    </div>
+    <div class="col-md-4">
+        ccc
+    </div>
+</div>
 {% endblock %}

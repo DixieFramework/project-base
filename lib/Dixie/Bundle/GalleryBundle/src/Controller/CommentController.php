@@ -20,7 +20,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * Class CommentController.
  */
-#[Route('/comments')]
+#[Route('/comments', name: 'talav_gallery_comment_')]
 class CommentController extends AbstractController
 {
     /**
@@ -93,7 +93,7 @@ class CommentController extends AbstractController
 //        requirements: ['id' => '[1-9]\d*'],
 //        methods: 'GET',
 //    )]
-    #[Route(path: '/{id<%patterns.id%>}/{page<%patterns.page%>}', name: 'app_comment_list', methods: ['GET'])]
+    #[Route(path: '/{id<%patterns.id%>}/{page<%patterns.page%>}', name: 'list', methods: ['GET'])]
     public function list(Request $request, Image $image, int $page = 1): Response
     {
         $this->denyAccessUnlessGranted(CommentVoter::LIST);

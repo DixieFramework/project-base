@@ -1,6 +1,8 @@
 {% extends '@TalavWeb/layouts/default.html.twig' %}
 
-{% block title %}
+{% trans_default_domain 'TalavGalleryBundle' %}
+
+{% block titre %}
     Galleries
 {% endblock %}
 
@@ -20,12 +22,12 @@
             </li>
         {% endfor %}
     </ul>
+
     <div class="navigation text-center">
-{#        {{ knp_pagination_render(pagination) }}#}
+        {{ pagerfanta(galleries) }}
     </div>
+
     {% if is_granted('GALLERY_CREATE') %}
-        <a href="{{ url('talav_gallery_create') }}" class="btn btn-link">
-            Dodaj galerię
-        </a>
+        <a href="{{ url('talav_gallery_create') }}" class="btn btn-link">{{ 'talav.gallery.create.link'|trans }}</a>
     {% endif %}
 {% endblock %}

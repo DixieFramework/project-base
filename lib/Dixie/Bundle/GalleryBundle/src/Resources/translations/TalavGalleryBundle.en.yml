@@ -1,0 +1,16 @@
+talav:
+    gallery:
+        index:
+            title: Galleries
+            link: Go To Galleries List
+        create:
+            link: Create Gallery
+        edit:
+            link: Edit Gallery
+        preview:
+
+        image:
+            create:
+                link: Add Photo
+        message:
+            empty_list: No records were found.
