@@ -7,7 +7,7 @@
 
     {% if owned_relations %}<div class="relation-actions">
         <a href="{{ path('user_profile_user_relation_edit', {username: relation.receiver.username}) }}" class="o-button"><i class="fa fa-fw fa-edit"></i></a>
-        <button class="o-button" data-micromodal-trigger="relation-delete-{{ relation.id }}"><i class="fa fa-fw fa-trash-alt"></i></button>
+        <button class="o-button" data-micromodal-trigger="relation-delete-{{ relation.id }}" data-bs-target="#modalDelete" data-bs-toggle="modal"  data-bs-dismiss="modal"><i class="fa fa-fw fa-trash-alt"></i></button>
     </div>
     {% endif %}
 </div>
