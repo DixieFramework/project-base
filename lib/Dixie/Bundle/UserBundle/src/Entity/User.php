@@ -7,6 +7,7 @@ namespace Talav\UserBundle\Entity;
 use Doctrine\Common\Collections\{Collection, ArrayCollection};
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 use Talav\Component\Resource\Model\ResourceTrait;
 use Talav\Component\User\Model\AbstractUser;
 use Talav\CoreBundle\Entity\Traits\HasRelations;
@@ -43,6 +44,20 @@ class User extends AbstractUser implements UserInterface
     protected array $flags;
 
     /** ------------ (non mapped) ------------ */
+	#[
+		Assert\Length(
+			min: 8,
+			minMessage: 'Le mot de passe doit avoir au moins 8 caractères'
+		)
+	]
+	#[
+		Assert\Regex(
+			pattern: '/^(?=.*[A-Z])(?=.*\d).+$/',
+			message: 'Le mot de passe doit contenir au moins une lettre majuscule et un chiffre'
+		)
+	]
+	protected ?string $plainPassword = null;
+
     protected bool $sendCreationEmail = false;
 
     public function __construct()
@@ -214,6 +229,18 @@ class User extends AbstractUser implements UserInterface
 
         return $this;
     }
+
+	public function getPlainPassword(): ?string
+	{
+		return $this->plainPassword;
+	}
+
+	public function setPlainPassword(?string $plainPassword): UserInterface
+	{
+		$this->plainPassword = $plainPassword;
+
+		return $this;
+	}
 
     public function setSendCreationEmail(bool $send): UserInterface
     {

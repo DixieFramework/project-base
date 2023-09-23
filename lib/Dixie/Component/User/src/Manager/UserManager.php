@@ -12,6 +12,7 @@ use Talav\Component\Resource\Model\ResourceInterface;
 use Talav\Component\User\Canonicalizer\CanonicalizerInterface;
 use Talav\Component\User\Model\UserInterface;
 use Talav\Component\User\Repository\UserRepositoryInterface;
+use Talav\Component\User\Util\PasswordUpdaterInterface;
 use Webmozart\Assert\Assert;
 
 class UserManager extends ResourceManager implements UserManagerInterface
@@ -20,7 +21,8 @@ class UserManager extends ResourceManager implements UserManagerInterface
         protected string $className,
         protected EntityManagerInterface $em,
         protected FactoryInterface $factory,
-        protected CanonicalizerInterface $canonicalizer
+        protected CanonicalizerInterface $canonicalizer,
+	    protected readonly PasswordUpdaterInterface $passwordUpdater
     ) {
         parent::__construct($className, $em, $factory);
     }
@@ -61,6 +63,24 @@ class UserManager extends ResourceManager implements UserManagerInterface
         $user->setEmailCanonical($this->canonicalizer->canonicalize($user->getEmail()));
         $user->setUsernameCanonical($this->canonicalizer->canonicalize($user->getUsername()));
     }
+
+	/**
+	 * Updates a user password if a plain password is set
+	 *
+	 * @param UserInterface $user
+	 */
+	public function updatePassword(UserInterface $user)
+	{
+		$password = $user->getPlainPassword();
+		if (0 !== strlen($password)) {
+			$this->passwordUpdater->hashPassword($user);
+
+			$user->setPasswordResetToken(null);
+			$user->setPasswordRequestedAt(null);
+
+			$this->update($user, true);
+		}
+	}
 
     public function update(ResourceInterface $user, $flush = true): void
     {
