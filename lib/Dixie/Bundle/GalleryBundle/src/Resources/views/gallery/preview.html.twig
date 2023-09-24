@@ -14,10 +14,10 @@
                 <h1 class="h3 mb-2 mb-sm-0">{{ gallery.name }}</h1>
                 <div class="d-flex justify-content-end">
                 {% if is_granted('GALLERY_EDIT', gallery) %}
-                    <a href="{{ url('talav_gallery_edit', {'id': gallery.id}) }}" class="btn btn-primary me-2"><i class="fas fa-edit fa-fw">&nbsp;</i>{{ 'talav.gallery.edit.link'|trans }}</a>
+                    <a href="{{ url('talav_gallery_edit', {'id': gallery.id}) }}" class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit fa-fw">&nbsp;</i>{{ 'talav.gallery.edit.link'|trans }}</a>
                 {% endif %}
                 {% if is_granted('IMAGE_CREATE') %}
-                    <a href="{{ url('talav_gallery_image_create', {'id': gallery.id}) }}" class="btn btn-primary mb-0"><i class="fas fa-plus fa-fw">&nbsp;</i>{{ 'talav.gallery.image.create.link'|trans }}</a>
+                    <a href="{{ url('talav_gallery_image_create', {'id': gallery.id}) }}" class="btn btn-sm btn-outline-primary mb-0"><i class="fas fa-plus fa-fw">&nbsp;</i>{{ 'talav.gallery.image.create.link'|trans }}</a>
                 {% endif %}
                 </div>
             </div>
