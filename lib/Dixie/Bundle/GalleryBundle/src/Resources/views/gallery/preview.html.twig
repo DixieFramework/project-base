@@ -64,9 +64,9 @@
             {{ pagerfanta(galleryImages) }}
         </div>
     {% else %}
-        <p>
+        <div class="alert alert-primary" role="alert">
             {{ 'talav.gallery.message.empty_list'|trans }}
-        </p>
+        </div>
     {% endif %}
 
     <a href="{{ url('talav_gallery_index') }}" class="btn btn-secondary">{{ 'talav.gallery.index.link'|trans }}</a>
