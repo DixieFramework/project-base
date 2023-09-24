@@ -16,8 +16,10 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Talav\Component\User\Model\UserInterface;
 use Talav\CoreBundle\Controller\AbstractController;
 use Talav\CoreBundle\Interfaces\RoleInterface;
+use Talav\ProfileBundle\Entity\UserProfileRelation;
 use Talav\ProfileBundle\Entity\UserRelation;
 use Talav\ProfileBundle\Form\Type\UserRelationType;
+use Talav\ProfileBundle\Repository\UserProfileRelationRepository;
 use Talav\ProfileBundle\Repository\UserRelationRepository;
 use Talav\UserBundle\Mailer\UserMailerInterface;
 
@@ -31,7 +33,46 @@ class UserRelationController extends AbstractController
      */
     private const RELATIONS_PER_PAGE = 25;
 
-    #[Route(path: '/add/{username}', name: 'user_profile_user_relation_add', requirements: ['username' => Requirement::ASCII_SLUG])]
+	#[Route('/', name: 'user_profile_relation_index', methods: ['GET'])]
+	public function index(UserProfileRelationRepository $userProfileRelationRepository): Response
+	{
+		$user = $this->getUser();
+		$userRelations = $userProfileRelationRepository->findAllFriendUserProfileRelation($user);
+
+		return $this->render('@TalavProfile/user_relation/index.html.twig', [
+			'user_relations' => $userRelations,
+		]);
+	}
+
+	#[Route('/delete/{id}', name: 'user_profile_relation_delete', methods: ['POST'])]
+	public function delete(Request $request, UserProfileRelation $userProfileRelation): Response
+	{
+		if ($this->isCsrfTokenValid('delete'.$userProfileRelation->getId(), $request->request->get('_token'))) {
+			$entityManager = $this->entityManager;
+			$entityManager->remove($userProfileRelation);
+			$entityManager->flush();
+
+			$this->addFlash('success',
+				"Votre relation avec cet utilisateur a été supprimer"
+			);
+		}
+
+		return $this->redirectToRoute('user_relation_request_index', [], Response::HTTP_SEE_OTHER);
+
+	}
+
+	#[Route('/block/{user_slug}', name: 'user_profile_relation_block', methods: ['GET', 'POST'])]
+	#[ParamConverter('user', options: ['mapping' => ['user_slug' => 'slug']])]
+	public function blockUser(/*UserRelationService $userRelationService,*/UserProfileRelationRepository $userProfileRelationRepository, User $user): Response
+	{
+		$this->addFlash('success', 'dd'
+//			$userRelationService->handleBlock($user)
+		);
+
+		return $this->redirectToRoute('user_profile_index', [], Response::HTTP_SEE_OTHER);
+	}
+
+	#[Route(path: '/add/{username}', name: 'user_profile_user_relation_add', requirements: ['username' => Requirement::ASCII_SLUG])]
     #[ParamConverter('member', class: User::class, options: ['mapping' => ['username' => 'username']])]
     public function add(Request $request, User $user, UserMailerInterface $mailer): Response
     {

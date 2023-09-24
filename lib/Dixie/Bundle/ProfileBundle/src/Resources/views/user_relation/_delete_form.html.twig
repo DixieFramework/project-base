@@ -1,0 +1,8 @@
+<form method="post" action="{{ path('user_profile_relation_delete', {'id': user_relation.id}) }}" onsubmit="return confirm('Etes vous sur de supprimer cette relation ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user_relation.id) }}">
+    <button class="text-red-600 background-transparent font-bold uppercase px-3 py-1 text-xs outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-full" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7a4 4 0 11-8 0 4 4 0 018 0zM9 14a6 6 0 00-6 6v1h12v-1a6 6 0 00-6-6zM21 12h-6" />
+        </svg>
+    Supprimer relation</button>
+</form>

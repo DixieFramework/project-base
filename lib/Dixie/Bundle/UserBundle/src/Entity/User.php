@@ -16,6 +16,7 @@ use Talav\PermissionBundle\Entity\RoleInterface;
 use Talav\PermissionBundle\Traits\HasRoles;
 use Talav\ProfileBundle\Entity\ProfileInterface;
 use Talav\ProfileBundle\Entity\UserMetadata;
+use Talav\ProfileBundle\Entity\UserProfileRelation;
 use Talav\UserBundle\Enum\UserFlagKey;
 use Talav\UserBundle\Model\UserInterface;
 
@@ -30,6 +31,12 @@ class User extends AbstractUser implements UserInterface
 	public static $roleHierarchy;
 
 	protected ?ProfileInterface $profile = null;
+
+	#[ORM\OneToMany(targetEntity: UserProfileRelation::class, mappedBy: 'sender')]
+	private $sendedUserRelations;
+
+	#[ORM\OneToMany(targetEntity: UserProfileRelation::class, mappedBy: 'recipient')]
+	private $receivedUserRelations;
 
     #[ORM\OneToMany(targetEntity: UserMetadata::class, mappedBy: 'user', orphanRemoval: true, cascade: ['persist'])]
     protected Collection $metadata;
@@ -64,6 +71,9 @@ class User extends AbstractUser implements UserInterface
     {
         parent::__construct();
 
+	    $this->sendedUserRelations = new ArrayCollection();
+	    $this->receivedUserRelations = new ArrayCollection();
+
         $this->metadata = new ArrayCollection();
         $this->roles = new ArrayCollection();
         $this->permissions = new ArrayCollection();
@@ -90,6 +100,66 @@ class User extends AbstractUser implements UserInterface
             $profile->setUser($this);
         }
     }
+
+	/**
+	 * @return Collection|UserProfileRelation[]
+	 */
+	public function getSendedUserRelations(): Collection
+	{
+		return $this->sendedUserRelations;
+	}
+
+	public function addSendedUserRelation(UserProfileRelation $sendedUserRelation): self
+	{
+		if (!$this->sendedUserRelations->contains($sendedUserRelation)) {
+			$this->sendedUserRelations[] = $sendedUserRelation;
+			$sendedUserRelation->setSender($this);
+		}
+
+		return $this;
+	}
+
+	public function removeSendedUserRelation(UserProfileRelation $sendedUserRelation): self
+	{
+		if ($this->sendedUserRelations->removeElement($sendedUserRelation)) {
+			// set the owning side to null (unless already changed)
+			if ($sendedUserRelation->getSender() === $this) {
+				$sendedUserRelation->setSender(null);
+			}
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @return Collection|UserProfileRelation[]
+	 */
+	public function getReceivedUserRelations(): Collection
+	{
+		return $this->receivedUserRelations;
+	}
+
+	public function addReceivedUserRelation(UserProfileRelation $receivedUserRelation): self
+	{
+		if (!$this->receivedUserRelations->contains($receivedUserRelation)) {
+			$this->receivedUserRelations[] = $receivedUserRelation;
+			$receivedUserRelation->setRecipient($this);
+		}
+
+		return $this;
+	}
+
+	public function removeReceivedUserRelation(UserProfileRelation $receivedUserRelation): self
+	{
+		if ($this->receivedUserRelations->removeElement($receivedUserRelation)) {
+			// set the owning side to null (unless already changed)
+			if ($receivedUserRelation->getRecipient() === $this) {
+				$receivedUserRelation->setRecipient(null);
+			}
+		}
+
+		return $this;
+	}
 
     public function getMetadata(string $key): ?UserMetadata
     {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b86af49cb3aa4116363fddec6be19456",
+    "content-hash": "3191212b79bcd7da49be3b363cecf7cf",
     "packages": [
         {
             "name": "api-platform/core",
@@ -5032,16 +5032,16 @@
         },
         {
             "name": "psr/http-client",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/http-client.git",
-                "reference": "0955afe48220520692d2d09f7ab7e0f93ffd6a31"
+                "reference": "bb5906edc1c324c9a05aa0873d40117941e5fa90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-client/zipball/0955afe48220520692d2d09f7ab7e0f93ffd6a31",
-                "reference": "0955afe48220520692d2d09f7ab7e0f93ffd6a31",
+                "url": "https://api.github.com/repos/php-fig/http-client/zipball/bb5906edc1c324c9a05aa0873d40117941e5fa90",
+                "reference": "bb5906edc1c324c9a05aa0873d40117941e5fa90",
                 "shasum": ""
             },
             "require": {
@@ -5078,9 +5078,9 @@
                 "psr-18"
             ],
             "support": {
-                "source": "https://github.com/php-fig/http-client/tree/1.0.2"
+                "source": "https://github.com/php-fig/http-client"
             },
-            "time": "2023-04-10T20:12:12+00:00"
+            "time": "2023-09-23T14:17:50+00:00"
         },
         {
             "name": "psr/http-factory",
@@ -11710,10 +11710,11 @@
             "dist": {
                 "type": "path",
                 "url": "lib/Dixie/Bundle/ProfileBundle",
-                "reference": "ca7460ac4b9444057c9d53dd663ae4d298a7046f"
+                "reference": "2bdc637765b1e0b865111e7b25a5c14a4f55f6db"
             },
             "require": {
                 "php": ">=8.1.14",
+                "twig/extra-bundle": "^3.0",
                 "twig/intl-extra": "^3.0",
                 "twig/twig": "^3.0"
             },
@@ -12507,6 +12508,73 @@
             ],
             "support": {
                 "source": "https://github.com/twigphp/intl-extra/tree/v3.7.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/twig/twig",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-07-29T15:34:56+00:00"
+        },
+        {
+            "name": "twig/string-extra",
+            "version": "v3.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/string-extra.git",
+                "reference": "7230d630a25e91cd91a2bd8e2f0e872962507eab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/string-extra/zipball/7230d630a25e91cd91a2bd8e2f0e872962507eab",
+                "reference": "7230d630a25e91cd91a2bd8e2f0e872962507eab",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.5",
+                "symfony/string": "^5.4|^6.0",
+                "symfony/translation-contracts": "^1.1|^2|^3",
+                "twig/twig": "^2.7|^3.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^5.4|^6.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Twig\\Extra\\String\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "A Twig extension for Symfony String",
+            "homepage": "https://twig.symfony.com",
+            "keywords": [
+                "html",
+                "string",
+                "twig",
+                "unicode"
+            ],
+            "support": {
+                "source": "https://github.com/twigphp/string-extra/tree/v3.7.1"
             },
             "funding": [
                 {

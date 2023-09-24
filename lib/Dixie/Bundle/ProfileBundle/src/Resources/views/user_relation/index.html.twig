@@ -1,0 +1,130 @@
+{% extends '@TalavUser/frontend/profile/layout.html.twig' %}
+{% trans_default_domain 'TalavProfileBundle' %}
+{% block page_content %}
+    <table class="table-fixed min-w-1/2 divide-y divide-gray-200 mx-16">
+        <thead class="bg-gray-100 w-1/2">
+        <tr>
+            <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercas">
+                User
+            </th>
+            <th scope="col" class="p-4 text-center text-xs font-medium text-gray-500 uppercase">
+                Status
+            </th>
+            <th scope="col" class="p-4 text-center text-xs font-medium text-gray-500 uppercase">
+                Actions
+            </th>
+        </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+        {% for user_relation in user_relations %}
+            <tr class="hover:bg-gray-100">
+            {% if user_relation %}
+                {% if user_relation.status == 'accepted' %}
+                    {% if app.user == user_relation.sender %}
+                        <td class="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0zz">
+{#                            {% if user_relation.recipient.image == null %}#}
+{#                                <img class="h-10 w-10 rounded-full" src="{{ asset('/images/profil/playerz.png') }}" width="64" height="auto" alt="{{ user_relation.recipient.image }}" alt="user image">#}
+{#                            {% else %}#}
+{#                                <img class="h-10 w-10 rounded-full" src=" {{ vich_uploader_asset(user, 'image') }}" width="640" height="auto" alt="user image">#}
+{#                            {% endif %}#}
+                            Image
+                        <td class="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0">
+                            <div class="text-sm font-normal text-gray-500">
+                                <div class="text-base font-semibold text-gray-900">
+                                    {{user_relation.recipient.username}}
+                                </div>
+                                <div class="text-sm font-normal text-gray-500">{{user_relation.recipient.email}}</div>
+                            </div>
+                        </td>
+                        </td>
+                    {% else %}
+                        <td class="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0">
+                            {% if user_relation.recipient.image == null %}
+                                <img class="h-10 w-10 rounded-full" src="{{ asset('/images/profil/playerz.png') }}" width="64" height="auto" alt="{{ user_relation.recipient.image }}" alt="user image">
+                            {% else %}
+                                <img class="h-10 w-10 rounded-full" src=" {{ vich_uploader_asset(user, 'image') }}" width="70" height="100" alt="user image">
+                            {% endif %}
+                        <td class="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0">
+                            <div class="text-sm font-normal text-gray-500">
+                                <div class="text-base font-semibold text-gray-900">
+                                    {{user_relation.recipient.username}}
+                                </div>
+                                <div class="text-sm font-normal text-gray-500">{{user_relation.recipient.email}}</div>
+                            </div>
+                        </td>
+                        </td>
+                    {% endif %}
+                    <td class="text-left">Friend</td>
+                {% elseif user_relation.status == 'blocked' %}
+                    <td class="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0">
+                        {% if user_relation.recipient.image == null %}
+                            <img class="h-10 w-10 rounded-full" src="{{ asset('/images/profil/playerz.png') }}" width="64" height="auto" alt="{{ user_relation.recipient.image }}" alt="user image">
+                        {% else %}
+                            <img class="h-10 w-10 rounded-full" src=" {{ vich_uploader_asset(user, 'image') }}" width="70" height="100" alt="user image">
+                        {% endif %}
+                    <td class="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0">
+                        <div class="text-sm font-normal text-gray-500">
+                            <div class="text-base font-semibold text-gray-900">
+                                {{user_relation.recipient.username}}
+                            </div>
+                            <div class="text-sm font-normal text-gray-500">{{user_relation.recipient.email}}</div>
+                        </div>
+                    </td>
+                    </td>
+                    <td class="text-left">Bloqué</td>
+                {% endif %}
+
+                <td class="p-4 whitespace-nowrap space-x-2 my-5">
+                    {{ include('@TalavProfile/user_relation/_delete_form.html.twig') }}
+                    {% if user_relation.status == 'accepted' %}
+                    <form method="post" action="{{ path('user_profile_relation_block', {'user_slug' : user_relation.recipient|slug }) }}" onsubmit="return confirm('Etes vous sur de vouloir bloquer cet utilisateur ?');">
+                        <button class="text-red-600 background-transparent font-bold uppercase px-3 py-1 text-xs outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-full" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                            </svg>
+                            Bloquer
+                        </button>
+                        {% endif %}
+                </td>
+            {% else %}
+                <tr>
+                    <td colspan="7">
+                        Aucun utilisateurs trouvés !
+                    </td>
+                </tr>
+            {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+        </tr>
+        </tbody></tr></tbody></table>
+{% endblock page_content %}
+
+{#{% block modals %}#}
+{#    {% include '@TalavProfile/user_relation/_modal-delete.html.twig' with {'member': member, 'relations': relations} %}#}
+{#{% endblock %}#}
+
+{#{% block modals %}#}
+{#    {% for relation in relations %}#}
+{#        <div class="micromodal-slide" id="relation-delete-{{ relation.id }}">#}
+{#            <div class="modal__overlay u-bg-gray-80 u-bg-opacity-50 u-flex u-justify-center u-absolute u-inset-0 u-z-[2001]">#}
+{#            <div class="u-bg-white u-p-16 u-m-16 u-rounded-8 u-w-[70%] sm:u-w-[30%] md:u-w-[20%]">#}
+{#                <p class="u-text-24 u-mb-4 u-font-700 ">{{ 'profile.relation.delete.modal'|trans }}</p>#}
+{#                <p class="u-text-16 u-mb-8">{{ 'profile.relation.delete'|trans }}</p>#}
+{#                <hr>#}
+{#                    {% if relation.commentText is empty %}#}
+{#                        {{ 'profile.relation.no.comment'|trans }}#}
+{#                    {% else %}#}
+{#                        {{ relation.commentText|purify|truncate(150) }}#}
+{#                    {% endif %}#}
+{#                <hr>#}
+{#                <footer class="u-flex u-flex-row u-justify-between">#}
+{#                    <button class="o-button" data-micromodal-close>{{ 'profile.relation.delete.no'|trans|capitalize }}</button>#}
+{#                    <a href="{{ url('user_profile_user_relation_delete', {'username': relation.receiver.username }) }}" class="o-button">{{ 'profile.relation.delete.yes'|trans|capitalize }}</a>#}
+{#                </footer>#}
+{#            </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    {% else %}#}
+{#    {% endfor %}#}
+{#{% endblock %}#}

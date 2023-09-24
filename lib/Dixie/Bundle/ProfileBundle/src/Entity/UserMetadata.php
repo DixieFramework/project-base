@@ -11,7 +11,7 @@ use Talav\UserBundle\Model\UserInterface;
 #[ORM\Entity(repositoryClass: UserMetadataRepository::class)]
 class UserMetadata
 {
-	public const TRIAL_ENDING_NOTICE_SENT = 'trial_ending_notice_sent';
+	final public const TRIAL_ENDING_NOTICE_SENT = 'trial_ending_notice_sent';
 
 	#[ORM\Id]
 	#[ORM\GeneratedValue]
