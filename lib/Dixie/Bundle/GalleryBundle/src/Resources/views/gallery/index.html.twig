@@ -63,32 +63,13 @@
             </div>
         </div>
         <div class="col-lg-3">
-            123
+            {% if is_granted('GALLERY_CREATE') %}
+                <a href="{{ url('talav_gallery_create') }}" class="btn btn-link">{{ 'talav.gallery.create.link'|trans }}</a>
+            {% endif %}
         </div>
     </div>
-
-
-    <ul>
-        {% for gallery in galleries %}
-            <li>
-                {% if is_granted('GALLERY_VIEW', gallery) %}
-                    <a href="{{ url('talav_gallery_preview', {'id': gallery.id}) }}">{{ gallery.name|e }}</a>
-                {% endif %}
-                {% if is_granted('GALLERY_EDIT', gallery) %}
-                    <a href="{{ url('talav_gallery_edit', {'id': gallery.id}) }}">{{ 'talav.gallery.edit.link'|trans }}</a>
-                {% endif %}
-                {% if is_granted('GALLERY_DELETE', gallery) %}
-                    <a href="{{ url('talav_gallery_delete', {'id': gallery.id}) }}">{{ 'talav.gallery.delete.link'|trans }}</a>
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
 
     <div class="navigation text-center">
         {{ pagerfanta(galleries) }}
     </div>
-
-    {% if is_granted('GALLERY_CREATE') %}
-        <a href="{{ url('talav_gallery_create') }}" class="btn btn-link">{{ 'talav.gallery.create.link'|trans }}</a>
-    {% endif %}
 {% endblock %}
