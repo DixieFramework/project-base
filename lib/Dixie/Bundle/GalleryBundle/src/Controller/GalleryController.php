@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace Talav\GalleryBundle\Controller;
 
 use phpDocumentor\Reflection\Types\This;
+use Symfony\Component\HttpKernel\Attribute\AsController;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Talav\Component\Resource\Manager\ManagerInterface;
 use Talav\Component\User\Model\UserInterface;
 use Talav\CoreBundle\Controller\AbstractController;
+use Talav\CoreBundle\Interfaces\RoleInterface;
 use Talav\GalleryBundle\Entity\Gallery;
 use Talav\GalleryBundle\Form\Type\GalleryType;
 use Talav\GalleryBundle\Repository\GalleryRepository;
@@ -25,7 +28,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * Class GalleriesController.
  */
+#[AsController]
 #[Route('/gallery', name: 'talav_gallery_')]
+#[IsGranted(RoleInterface::ROLE_USER)]
 class GalleryController extends AbstractController
 {
     /**

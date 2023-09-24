@@ -7,6 +7,67 @@
 {% endblock %}
 
 {% block body %}
+    <!-- Title -->
+    <div class="row">
+        <div class="col-12 mb-4 mb-sm-5">
+            <div class="d-sm-flex justify-content-between align-items-center">
+                <h1 class="h3 mb-2 mb-sm-0">Dashboard</h1>
+                <div class="d-grid"><a href="#" class="btn btn-primary-soft mb-0"><i class="bi bi-plus-lg fa-fw"></i> New Booking</a></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-8 col-lg-6 vstack gap-4">
+            <div class="row g-3">
+                {% for gallery in galleries %}
+                    <!-- Album item START -->
+                    <div class="col-6 col-lg-3">
+                        <!-- Album poster -->
+                        <a href="#">
+                            <img class="rounded img-fluid" src="assets/images/albums/01.jpg" alt="">
+                        </a>
+
+                        <!-- Album name -->
+                        <div class="hstack mt-3">
+                            <div>
+                                <h6 class="mb-0"><a href="#!">{{ gallery.name|e }}</a></h6>
+                                <a class="text-secondary small" href="#!">{{ gallery.images|length}} Items</a>
+                            </div>
+                            <!-- Dropdown START -->
+                            <div class="dropdown ms-auto">
+                                <a href="#" class="icon-sm bg-light text-secondary rounded-circle" id="photoActionEdit17" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis"></i>
+                                </a>
+
+                                <!-- Dropdown menu -->
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="photoActionEdit17">
+                                    {% if is_granted('GALLERY_VIEW', gallery) %}
+                                    <li><a class="dropdown-item" href="{{ url('talav_gallery_preview', {'id': gallery.id}) }}"><i class="bi bi-download fa-fw pe-1"></i>View</a></li>
+                                    {% endif %}
+                                    {% if is_granted('GALLERY_EDIT', gallery) %}
+                                    <li><a class="dropdown-item" href="{{ url('talav_gallery_edit', {'id': gallery.id}) }}"><i class="bi bi-pencil fa-fw pe-1"></i>{{ 'talav.gallery.edit.link'|trans }}</a></li>
+                                    {% endif %}
+                                    {% if is_granted('GALLERY_DELETE', gallery) %}
+                                    <li><a class="dropdown-item" href="{{ url('talav_gallery_delete', {'id': gallery.id}) }}"><i class="bi bi-trash fa-fw pe-1"></i>{{ 'talav.gallery.delete.link'|trans }}</a></li>
+                                    {% endif %}
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-flag fa-fw pe-1"></i>Report album</a></li>
+                                </ul>
+                            </div>
+                            <!-- Dropdown END -->
+                        </div>
+                    </div>
+                    <!-- Album item END -->
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-lg-3">
+            123
+        </div>
+    </div>
+
+
     <ul>
         {% for gallery in galleries %}
             <li>
@@ -14,10 +75,10 @@
                     <a href="{{ url('talav_gallery_preview', {'id': gallery.id}) }}">{{ gallery.name|e }}</a>
                 {% endif %}
                 {% if is_granted('GALLERY_EDIT', gallery) %}
-                    <a href="{{ url('talav_gallery_edit', {'id': gallery.id}) }}">Edytuj galerię</a>
+                    <a href="{{ url('talav_gallery_edit', {'id': gallery.id}) }}">{{ 'talav.gallery.edit.link'|trans }}</a>
                 {% endif %}
                 {% if is_granted('GALLERY_DELETE', gallery) %}
-                    <a href="{{ url('talav_gallery_delete', {'id': gallery.id}) }}">Usuń galerię</a>
+                    <a href="{{ url('talav_gallery_delete', {'id': gallery.id}) }}">{{ 'talav.gallery.delete.link'|trans }}</a>
                 {% endif %}
             </li>
         {% endfor %}

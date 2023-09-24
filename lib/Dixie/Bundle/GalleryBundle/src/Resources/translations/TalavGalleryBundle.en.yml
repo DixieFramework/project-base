@@ -7,6 +7,8 @@ talav:
             link: Create Gallery
         edit:
             link: Edit Gallery
+        delete:
+            link: Delete Gallery
         preview:
 
         image:
