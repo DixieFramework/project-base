@@ -75,6 +75,7 @@ class ProfileController extends AbstractController
             dd($this->entityManager->getRepository(UserRelation::class)->findRelationBetween($user1, $user2));
         }
 
+        if (false) {
 
         /** @var \Talav\UserBundle\Model\UserInterface $user */
         $user = $this->userManager->findUserByUsername('root');
@@ -87,6 +88,7 @@ class ProfileController extends AbstractController
         $user2 = $this->userManager->findUserByUsername('user0');
 
         dd($this->entityManager->getRepository(UserRelation::class)->findUnconfirmedRelationBetween($user1, $user2));
+        }
 
 
 	    $form = $this->createForm(ProfileEditType::class, $user);

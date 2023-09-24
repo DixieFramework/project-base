@@ -1,12 +1,88 @@
 {% extends '@TalavUser/frontend/profile/base.html.twig' %}
 
 {% block talav_profile_content %}
-    <div class="u-mb-16">
-        {% block profile_header %}
-        {% endblock profile_header %}
+    <div class="row">
+        <!-- Sidebar-->
+        <aside class="col-lg-4 pe-xl-5">
+            <div class="h-100 border-end p-4">
+                <div class="p-2">
+                    <!-- Avatar and content -->
+                    <div class="text-center mb-3">
+                        <!-- Avatar -->
+                        <div class="avatar avatar-xl mb-2">
+                            <img class="avatar-img rounded-circle border border-2 border-white" src="{{ asset('images/albums/01.jpg') }}" alt="">
+                        </div>
+                        <h6 class="mb-0">Jacqueline Miller</h6>
+                        <a href="#" class="text-reset text-primary-hover small">hello@gmail.com</a>
+                        <hr>
+                    </div>
+
+                    <h6>About</h6>
+
+{#                    <ul class="list-unstyled w-75">#}
+{#                        <li class="d-sm-flex justify-content-sm-between align-items-center mb-4"><span>Age</span><span>28</span></li>#}
+{#                        <li class="d-sm-flex justify-content-sm-between align-items-center mb-4"><span>City</span><span>Copenhagen</span></li>#}
+{#                    </ul>#}
+{#                    #}
+                    <dl class="row">
+                        <dt class="col-sm-3">City</dt>
+                        <dd class="col-sm-9">Copenhagen</dd>
+
+                        <dt class="col-sm-3">Euismod</dt>
+                        <dd class="col-sm-9">
+                            <p>Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.</p>
+                            <p>Donec id elit non mi porta gravida at eget metus.</p>
+                        </dd>
+                    </dl>
+
+                    <p class="fs-ms text-muted">Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+                        accusantium viras doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
+                        veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                    <hr class="my-4">
+                    <h6>Contacts</h6>
+                    <ul class="list-unstyled fs-sm">
+                        <li><a class="nav-link-style d-flex align-items-center" href="mailto:contact@example.com"><i
+                                        class="ci-mail opacity-60 me-2"></i>contact@example.com</a></li>
+                        <li><a class="nav-link-style d-flex align-items-center" href="#"><i
+                                        class="ci-globe opacity-60 me-2"></i>www.createx.studio</a></li>
+                    </ul>
+                    <a class="btn-social bs-facebook bs-outline bs-sm me-2 mb-2" href="#"><i
+                                class="ci-facebook"></i></a><a class="btn-social bs-twitter bs-outline bs-sm me-2 mb-2"
+                                                               href="#"><i class="ci-twitter"></i></a><a
+                            class="btn-social bs-dribbble bs-outline bs-sm me-2 mb-2" href="#"><i
+                                class="ci-dribbble"></i></a><a class="btn-social bs-behance bs-outline bs-sm me-2 mb-2"
+                                                               href="#"><i class="ci-behance"></i></a>
+                    <hr class="my-4">
+                    <h6 class="pb-1">Send message</h6>
+                    <form class="needs-validation pb-2" method="post" novalidate>
+                        <div class="mb-3">
+                            <textarea class="form-control" rows="6" placeholder="Your message" required></textarea>
+                            <div class="invalid-feedback">Please wirte your message!</div>
+                        </div>
+                        <button class="btn btn-primary btn-sm d-block w-100" type="submit">Send</button>
+                    </form>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Content-->
+        <section class="col-lg-8 pt-lg-4 pb-md-4">
+            {% block page_content %}
+            {% endblock page_content %}
+        </section>
     </div>
-    <div class="u-mb-16">
-        {% block page_content%}
-        {% endblock page_content %}
-    </div>
+
+{#    <div class="u-mb-16">#}
+{#        {% block profile_header %}#}
+{#        {% endblock profile_header %}#}
+{#    </div>#}
+{#    <div class="u-mb-16">#}
+{#        {% block page_content%}#}
+{#        {% endblock page_content %}#}
+{#    </div>#}
 {% endblock talav_profile_content %}
+
+{% block stylesheets %}
+{{ parent() }}
+{{- asset_css('css/theme.min.css') }}
+{% endblock %}
