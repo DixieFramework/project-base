@@ -69,6 +69,8 @@ class GalleryVoter extends Voter
         switch ($attribute) {
             case self::EDIT:
             case self::DELETE:
+				return $subject->getUser()->getId() === $user->getId();
+
             case self::CREATE:
                 return $user->isSuperAdmin();
         }

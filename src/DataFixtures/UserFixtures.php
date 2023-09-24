@@ -29,14 +29,14 @@ final class UserFixtures extends BaseFixture implements OrderedFixtureInterface
     public function loadData(): void
     {
 	    $rootUsername = 'root';
-	    $rootEmail = 'root@ria.az';
-	    $rootPassword = 'secret';
+	    $rootEmail = 'root@local.dev';
+	    $rootPassword = '123456';
 
         $users = [
             1 => [
                 'rootUsername' => 'root',
-                'rootEmail' => 'root@ria.az',
-                'rootPassword' => 'secret',
+                'rootEmail' => 'root@local.dev',
+                'rootPassword' => '123456',
             ],
             2 => [
                 'rootUsername' => 'user',

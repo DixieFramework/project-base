@@ -99,6 +99,8 @@ index:
     login: Sign In
     logout: Sign Out
     register: Register
+    photos: Photos
+    galleries: Galleries
     title: Home
     title_help: Go to homepage
     toggle_navigation: Basculer la navigation horizontal

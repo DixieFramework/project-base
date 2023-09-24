@@ -30,7 +30,7 @@ class GalleryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('name',  TextType::class, [
-            'label' => 'label.name',
+            'label' => 'talav.gallery.fields.name',
             'required' => true,
             'attr' => ['max_length' => 64],
             'error_bubbling' => true,
@@ -59,7 +59,10 @@ class GalleryType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => Gallery::class]);
+        $resolver->setDefaults([
+			'data_class' => Gallery::class,
+	        'translation_domain' => 'TalavGalleryBundle'
+        ]);
     }
 
     /**

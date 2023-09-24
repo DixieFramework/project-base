@@ -10,10 +10,8 @@ use Talav\CoreBundle\Service\SymfonyInfoService;
 
 class HomeController extends AbstractController
 {
-    /**
-     * @Route("/", name="homepage")
-     */
-    public function homeAction(SymfonyInfoService $service): Response
+	#[Route(path: '/', name: AbstractController::HOME_PAGE)]
+	public function homeAction(SymfonyInfoService $service): Response
     {
         return $this->render('home/home.html.twig', []);
     }

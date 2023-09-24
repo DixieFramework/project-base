@@ -1,5 +1,7 @@
 talav:
     gallery:
+        fields:
+            name: Name
         index:
             title: Galleries
             link: Go To Galleries List

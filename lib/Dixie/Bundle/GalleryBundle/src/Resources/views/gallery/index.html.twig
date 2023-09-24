@@ -12,7 +12,9 @@
         <div class="col-12 mb-4 mb-sm-5">
             <div class="d-sm-flex justify-content-between align-items-center">
                 <h1 class="h3 mb-2 mb-sm-0">Dashboard</h1>
-                <div class="d-grid"><a href="#" class="btn btn-primary-soft mb-0"><i class="bi bi-plus-lg fa-fw"></i> New Booking</a></div>
+                {% if is_granted('GALLERY_CREATE') %}
+                <div class="d-grid"><a href="{{ url('talav_gallery_create') }}" class="btn btn-primary mb-0"><i class="fas fa-plus fa-fw">&nbsp;</i>{{ 'talav.gallery.create.link'|trans }}</a></div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -24,19 +26,19 @@
                     <!-- Album item START -->
                     <div class="col-6 col-lg-3">
                         <!-- Album poster -->
-                        <a href="#">
-                            <img class="rounded img-fluid" src="assets/images/albums/01.jpg" alt="">
+                        <a href="{{ url('talav_gallery_preview', {'id': gallery.id}) }}">
+                            <img class="rounded img-fluid" src="{{ asset('images/albums/01.jpg') }}" alt="">
                         </a>
 
                         <!-- Album name -->
                         <div class="hstack mt-3">
                             <div>
-                                <h6 class="mb-0"><a href="#!">{{ gallery.name|e }}</a></h6>
-                                <a class="text-secondary small" href="#!">{{ gallery.images|length}} Items</a>
+                                <h6 class="mb-0"><a href="{{ url('talav_gallery_preview', {'id': gallery.id}) }}">{{ gallery.name|e }}</a></h6>
+                                <a class="text-secondary small" href="{{ url('talav_gallery_preview', {'id': gallery.id}) }}">{{ gallery.images|length}} Items</a>
                             </div>
                             <!-- Dropdown START -->
                             <div class="dropdown ms-auto">
-                                <a href="#" class="icon-sm bg-light text-secondary rounded-circle" id="photoActionEdit17" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a href="{{ url('talav_gallery_preview', {'id': gallery.id}) }}" class="icon-sm bg-light text-secondary rounded-circle" id="photoActionEdit17" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fas fa-ellipsis"></i>
                                 </a>
 
@@ -63,9 +65,7 @@
             </div>
         </div>
         <div class="col-lg-3">
-            {% if is_granted('GALLERY_CREATE') %}
-                <a href="{{ url('talav_gallery_create') }}" class="btn btn-link">{{ 'talav.gallery.create.link'|trans }}</a>
-            {% endif %}
+
         </div>
     </div>
 

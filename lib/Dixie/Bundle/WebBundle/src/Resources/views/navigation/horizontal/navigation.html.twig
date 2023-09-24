@@ -15,7 +15,8 @@
         </button>
         <div class="navbar-collapse collapse" id="navbar-horizontal">
             <ul class="navbar-nav me-auto">
-{#                {% if is_granted_calculation -%}#}
+                {{ include('@TalavWeb/navigation/horizontal/navigation_gallery.html.twig') }}
+                {#                {% if is_granted_calculation -%}#}
 {#                    {{ navItem(path('calculation_table'), 'calculation.list.title', ICON_CALCULATION) }}#}
 {#                {% endif %}#}
 {#                {% if is_granted_data -%}#}

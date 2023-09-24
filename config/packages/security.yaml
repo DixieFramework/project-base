@@ -27,7 +27,8 @@ security:
                 login_path: talav_user_login
                 check_path: talav_user_login
                 enable_csrf: true
-                default_target_path: groshy_frontend_dashboard_dashboard
+#                default_target_path: groshy_frontend_dashboard_dashboard
+                default_target_path: home_page
                 username_parameter: talav_type_user_user_login[username]
                 password_parameter: talav_type_user_user_login[password]
             logout:

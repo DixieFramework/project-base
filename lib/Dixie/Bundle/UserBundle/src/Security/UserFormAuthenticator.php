@@ -33,6 +33,7 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use Symfony\Contracts\Service\Attribute\Required;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Talav\Component\User\Model\UserInterface;
+use Talav\CoreBundle\Controller\AbstractController;
 use Talav\CoreBundle\Utils\Type;
 
 class UserFormAuthenticator extends AbstractLoginFormAuthenticator
@@ -157,7 +158,7 @@ class UserFormAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        return new RedirectResponse($this->urlGenerator->generate('groshy_frontend_dashboard_dashboard'));
+        return new RedirectResponse($this->urlGenerator->generate(AbstractController::HOME_PAGE));
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
