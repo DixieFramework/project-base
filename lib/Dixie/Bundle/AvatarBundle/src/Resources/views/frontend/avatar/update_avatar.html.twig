@@ -1,13 +1,40 @@
-{% extends '@TalavAvatar/layout.html.twig' %}
-
+{% extends '@TalavWeb/cards/card_edit.html.twig' %}
 {% trans_default_domain 'TalavAvatarBundle' %}
+{# parameters #}
+{%- set title = 'profile.update_avatar.title' -%}
+{%- set title_icon = 'image fa-fw me-2' -%}
+{%- set title_domain = 'TalavAvatarBundle' -%}
+{%- set cancel_path = path('homepage') -%}
+{%- set form_attr = form_attr|default({})|merge({'id': 'edit-form', 'data-save': 'common.save_data'|trans, 'class': 'position-relative'}) -%}
+{%- block row_class '' -%}
+{#{%- block card_container_class '-xl-7 col-lg-8 col-md-7 order-md-1 mb-5' -%}#}
+{#{%- block card_sidebar_class '-lg-4 col-md-5 offset-xl-1 order-md-2 mb-5' -%}#}
+{%- block card_container_class ' col-md-8 offset-lg-1 pb-5 mb-2 mb-lg-4 pt-md-5 mt-n3 mt-md-0' -%}
+{%- block card_sidebar_class ' col-lg-3 col-md-4 border-end pb-5 mt-n5' -%}
+{% block card_sidebar %}
+    {% include '@TalavUser/profile/_side_menu.html.twig' with {'user': app.user} %}
+{% endblock %}
+{% block stylesheets %}
+    {{ asset_css('css/fileinput.css') }}
+{% endblock %}
+{% block javascripts -%}
+    {% if app.debug %}
+        {{ parent() }}
+        {{ asset_js('js/plugins/plugin-input-file.js') }}
+        {{ asset_js('js/extensions/file-input-extensions.js') }}
+        {{ asset_js('js/extensions/password-extensions.js') }}
+        {{ asset_js('js/application/user_profile.js') }}
+    {% else %}
+        {{ asset_js('js/user_profile.js') }}
+    {% endif %}
+{%- endblock %}
 
-{% block talav_avatar_content %}
-    {{ form_start(form, { 'action': path('talav_user_profile_avatar') }) }}
-    {{ form_widget(form) }}
-    <div>
-        <input type="submit" value="{{ 'talav.update_avatar.form.submit'|trans }}" />
-    </div>
-    {{ form_end(form) }}
+{#{% block talav_avatar_content %}#}
+{#    {{ form_start(form, { 'action': path('talav_user_profile_avatar') }) }}#}
+{#    {{ form_widget(form) }}#}
+{#    <div>#}
+{#        <input type="submit" value="{{ 'talav.update_avatar.form.submit'|trans }}" />#}
+{#    </div>#}
+{#    {{ form_end(form) }}#}
 
-{% endblock talav_avatar_content %}
+{#{% endblock talav_avatar_content %}#}

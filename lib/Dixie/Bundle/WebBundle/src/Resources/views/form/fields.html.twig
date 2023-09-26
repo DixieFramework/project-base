@@ -146,6 +146,18 @@
 {%- endblock -%}
 
 {# vich_image #}
+{#{% block media_widget -%}#}
+{#    #}{# file #}
+{#    {%- set alt = 'user.image.title' -%}#}
+{#    {%- set src = asset_exists(image_uri) ? asset_versioned(image_uri|trim('/', 'left')) : false -%}#}
+{#    {{- form_widget(form.file, {thumbnail: true, thumbnail_src: src, thumbnail_alt: alt}) -}}#}
+{#    #}{# delete #}
+{#    {% if form.delete is defined -%}#}
+{#        <div class="d-none">{{- form_widget(form.delete, {hidden: true, type: 'hidden'}) -}}</div>#}
+{#    {%- endif %}#}
+{#{%- endblock %}#}
+
+{# vich_image #}
 {% block vich_image_widget -%}
 {# file #}
 {%- set alt = 'user.image.title' -%}

@@ -67,6 +67,7 @@ class MediaType extends AbstractType
                 'provider' => null,
                 'context' => null,
                 // defines if existing media should be deleted after it's unlinked
+                'image_uri' => true,
                 'delete_on_unlink' => true,
                 'data_class' => MediaModel::class,
                 'translation_domain' => 'TalavMediaBundle',

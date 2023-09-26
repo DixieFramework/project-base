@@ -35,7 +35,7 @@
     {% block actions_form -%}
         {{ button_submit(submit_text, submit_class, submit_params, submit_domain) }}
         {% if cancel_path|default(false) -%}
-            {{ button_cancel(cancel_path, cancel_text, 'btn btn-cancel btn-form btn-secondary', submit_domain) }}
+            {{ button_cancel(cancel_path, cancel_text, 'btn btn-cancel btn-form btn-danger', submit_domain) }}
         {%- endif %}
     {%- endblock %}
     {% if show_required -%}
