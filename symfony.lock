@@ -241,6 +241,9 @@
     "nikic/php-parser": {
         "version": "v4.13.2"
     },
+    "oneup/flysystem-bundle": {
+        "version": "dev-allow_compatibility_with_flysysytem3"
+    },
     "pagerfanta/pagerfanta": {
         "version": "v3.6.1"
     },
@@ -879,6 +882,9 @@
     "symplify/easy-coding-standard": {
         "version": "10.2.8"
     },
+    "talav/avatar-bundle": {
+        "version": "dev-main"
+    },
     "talav/bundle-generator-bundle": {
         "version": "dev-main"
     },
@@ -886,6 +892,9 @@
         "version": "1.0.0"
     },
     "talav/gallery-bundle": {
+        "version": "dev-main"
+    },
+    "talav/media-bundle": {
         "version": "dev-main"
     },
     "talav/permission-bundle": {

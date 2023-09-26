@@ -35,14 +35,21 @@
 
         <one-to-one field="profile" target-entity="Talav\ProfileBundle\Entity\ProfileInterface" inversed-by="user" fetch="EAGER">
             <cascade>
-                <cascade-remove/>
-                <cascade-persist/>
+                <cascade-remove />
+                <cascade-persist />
+            </cascade>
+        </one-to-one>
+
+        <one-to-one field="avatar" target-entity="Talav\Component\Media\Model\MediaInterface">
+            <join-column name="media_id"/>
+            <cascade>
+                <cascade-persist />
             </cascade>
         </one-to-one>
 
         <one-to-many field="metadata" target-entity="Talav\ProfileBundle\Entity\UserMetadata" mapped-by="user" orphan-removal="true">
             <cascade>
-                <cascade-persist/>
+                <cascade-persist />
             </cascade>
         </one-to-many>
 

@@ -1,81 +1,164 @@
 talav_user:
-  login_route: talav_user_login
-  signup_success_route: user_profile_edit
-  resources:
-    user:
-      classes:
-        model: Groshy\Entity\User
-    user_oauth:
-      classes:
-        model: Groshy\Entity\UserOAuth
-  email:
-    from:
-      email: samsung.android1890i@gmail.com
-      name: Samsung Android
-  registration:
-    form:
-      type: Groshy\Form\Type\RegistrationFormType
-      model: Groshy\Form\Model\RegistrationFormModel
-  login:
-    options:
-      username_parameter: talav_type_user_user_login[username]
-      password_parameter: talav_type_user_user_login[password]
-      enable_csrf: true
-      csrf_parameter: talav_type_user_user_login[_csrf_token]
+    login_route: talav_user_login
+    signup_success_route: user_profile_edit
+    resources:
+        user:
+            classes:
+                model: Groshy\Entity\User
+        user_oauth:
+            classes:
+                model: Groshy\Entity\UserOAuth
+    email:
+        from:
+            email: samsung.android1890i@gmail.com
+            name: Samsung Android
+    registration:
+        form:
+            type: Groshy\Form\Type\RegistrationFormType
+            model: Groshy\Form\Model\RegistrationFormModel
+    login:
+        options:
+            username_parameter: talav_type_user_user_login[username]
+            password_parameter: talav_type_user_user_login[password]
+            enable_csrf: true
+            csrf_parameter: talav_type_user_user_login[_csrf_token]
 
 talav_permission:
-  resources:
-    role:
-      classes:
-        model: Groshy\Entity\Role
-    permission:
-      classes:
-        model: Groshy\Entity\Permission
+    resources:
+        role:
+            classes:
+                model: Groshy\Entity\Role
+        permission:
+            classes:
+                model: Groshy\Entity\Permission
 
 talav_profile:
-  resources:
-    profile:
-      classes:
-        model: Groshy\Entity\Profile
+    resources:
+        profile:
+            classes:
+                model: Groshy\Entity\Profile
 
 talav_settings:
-  resources:
+    resources:
+        settings:
+            classes:
+                model: Groshy\Entity\Settings
     settings:
-      classes:
-        model: Groshy\Entity\Settings
-  settings:
-    registration_enabled:
-      type: boolean
-      scope: tenant
-      value: true
-    site.name:
-      type: string
-      scope: global
-    site.version:
-      type: string
-      scope: global
-    meta.keywords:
-      type: string
-      scope: global
-    meta.description:
-      type: string
-      scope: global
-    contact.email:
-      type: string
-      scope: global
-    contact.support_email:
-      type: string
-      scope: global
-    contact.no_reply_email:
-      type: string
-      scope: global
-    other.google_analytics_code:
-      type: string
-      scope: global
+        registration_enabled:
+            type: boolean
+            scope: tenant
+            value: true
+        site.name:
+            type: string
+            scope: global
+        site.version:
+            type: string
+            scope: global
+        meta.keywords:
+            type: string
+            scope: global
+        meta.description:
+            type: string
+            scope: global
+        contact.email:
+            type: string
+            scope: global
+        contact.support_email:
+            type: string
+            scope: global
+        contact.no_reply_email:
+            type: string
+            scope: global
+        other.google_analytics_code:
+            type: string
+            scope: global
+
+talav_media:
+    resources:
+        media:
+            classes:
+                model: Groshy\Entity\Media
+                manager: Talav\Component\Media\Manager\MediaManager
+                repository: Talav\Component\Resource\Repository\ResourceRepository
+    providers:
+        file:
+            service: talav.media.provider.file
+            generator: talav.media.generator.uuid
+            filesystem: oneup_flysystem.default_filesystem
+            cdn: talav.media.cdn.server
+            constraints:
+                extensions: [
+                    'pdf', 'txt', 'rtf','doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx',
+                    'odt', 'odg', 'odp', 'ods', 'odc', 'odf', 'odb', 'csv', 'xml'
+                ]
+                file_constraints:
+                    mimeTypes: [
+                        'application/pdf', 'application/x-pdf', 'application/rtf', 'text/html', 'text/rtf', 'text/plain',
+                        'application/excel', 'application/msword', 'application/vnd.ms-excel', 'application/vnd.ms-powerpoint',
+                        'application/vnd.ms-powerpoint', 'application/vnd.oasis.opendocument.text', 'application/vnd.oasis.opendocument.graphics', 'application/vnd.oasis.opendocument.presentation', 'application/vnd.oasis.opendocument.spreadsheet', 'application/vnd.oasis.opendocument.chart', 'application/vnd.oasis.opendocument.formula', 'application/vnd.oasis.opendocument.database', 'application/vnd.oasis.opendocument.image',
+                        'text/comma-separated-values', 'text/xml', 'application/xml', 'application/zip',
+                    ]
+        image:
+            service: talav.media.provider.image
+            generator: talav.media.generator.uuid
+            filesystem: oneup_flysystem.default_filesystem
+            cdn: talav.media.cdn.server
+            thumbnail: talav.media.thumbnail.glide
+            constraints:
+                extensions: [ 'jpg', 'png', 'jpeg' ]
+                file_constraints:
+                    mimeTypes: [ 'image/pjpeg', 'image/jpeg', 'image/png', 'image/x-png' ]
+                # both parameters are merged internally so image parameters override file parameters with the same key
+                image_constraints:
+                    minWidth: 100
+                    minHeight: 100
+                    maxWidth: 3000
+                    maxHeight: 3000
+
+    contexts:
+        avatar:
+            providers:
+                - talav.media.provider.image
+            formats:
+                large:
+                    w: 300
+                    h: 300
+                medium:
+                    w: 200
+                    h: 200
+                square_medium:
+                    w: 200
+                    h: 200
+                    fit: crop
+                small:
+                    w: 120
+                    h: 120
+                square_small:
+                    w: 120
+                    h: 120
+                    fit: crop
+
+        cover:
+            providers:
+                - talav.media.provider.image
+            formats:
+                user_cover:
+                    w: 1500
+                    h: 500
+                    fit: crop
+
+        doc:
+            providers:
+                - talav.media.provider.file
+
+    cdn:
+        server:
+            path: /uploads/media
+
 
 auto_mapper_plus:
-  options:
-    create_unregistered_mappings: true
+    options:
+        create_unregistered_mappings: true
 
 #oneup_flysystem:
 #  adapters:

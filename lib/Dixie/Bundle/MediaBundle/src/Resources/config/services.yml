@@ -44,6 +44,6 @@ services:
     tags:
       - { name: form.type }
   Talav\Component\Media\Message\CommandHandler\:
-    resource: '../../../vendor/talav/media/src/Message/CommandHandler/*/*'
+    resource: '%kernel.project_dir%/vendor/talav/media/src/Message/CommandHandler/*/*'
   Talav\Component\Media\Mapper\Configurator\:
-    resource: '../../../vendor/talav/media/src/Mapper/Configurator/*'
+    resource: '%kernel.project_dir%/vendor/talav/media/src/Mapper/Configurator/*'

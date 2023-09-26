@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3191212b79bcd7da49be3b363cecf7cf",
+    "content-hash": "6ffc0da724d3ab02a1101d10cd41e32b",
     "packages": [
         {
             "name": "api-platform/core",
@@ -3116,6 +3116,90 @@
             "time": "2023-06-07T14:49:52+00:00"
         },
         {
+            "name": "intervention/image",
+            "version": "2.7.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Intervention/image.git",
+                "reference": "04be355f8d6734c826045d02a1079ad658322dad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/04be355f8d6734c826045d02a1079ad658322dad",
+                "reference": "04be355f8d6734c826045d02a1079ad658322dad",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "guzzlehttp/psr7": "~1.1 || ^2.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9.2",
+                "phpunit/phpunit": "^4.8 || ^5.7 || ^7.5.15"
+            },
+            "suggest": {
+                "ext-gd": "to use GD library based image processing.",
+                "ext-imagick": "to use Imagick based image processing.",
+                "intervention/imagecache": "Caching extension for the Intervention Image library"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Intervention\\Image\\ImageServiceProvider"
+                    ],
+                    "aliases": {
+                        "Image": "Intervention\\Image\\Facades\\Image"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Intervention\\Image\\": "src/Intervention/Image"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oliver Vogel",
+                    "email": "oliver@intervention.io",
+                    "homepage": "https://intervention.io/"
+                }
+            ],
+            "description": "Image handling and manipulation library with support for Laravel integration",
+            "homepage": "http://image.intervention.io/",
+            "keywords": [
+                "gd",
+                "image",
+                "imagick",
+                "laravel",
+                "thumbnail",
+                "watermark"
+            ],
+            "support": {
+                "issues": "https://github.com/Intervention/image/issues",
+                "source": "https://github.com/Intervention/image/tree/2.7.2"
+            },
+            "funding": [
+                {
+                    "url": "https://paypal.me/interventionio",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/Intervention",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-05-21T17:30:32+00:00"
+        },
+        {
             "name": "jms/metadata",
             "version": "2.8.0",
             "source": {
@@ -3524,6 +3608,277 @@
             "time": "2023-09-06T14:56:25+00:00"
         },
         {
+            "name": "league/flysystem",
+            "version": "3.16.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/flysystem.git",
+                "reference": "4fdf372ca6b63c6e281b1c01a624349ccb757729"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/4fdf372ca6b63c6e281b1c01a624349ccb757729",
+                "reference": "4fdf372ca6b63c6e281b1c01a624349ccb757729",
+                "shasum": ""
+            },
+            "require": {
+                "league/flysystem-local": "^3.0.0",
+                "league/mime-type-detection": "^1.0.0",
+                "php": "^8.0.2"
+            },
+            "conflict": {
+                "async-aws/core": "<1.19.0",
+                "async-aws/s3": "<1.14.0",
+                "aws/aws-sdk-php": "3.209.31 || 3.210.0",
+                "guzzlehttp/guzzle": "<7.0",
+                "guzzlehttp/ringphp": "<1.1.1",
+                "phpseclib/phpseclib": "3.0.15",
+                "symfony/http-client": "<5.2"
+            },
+            "require-dev": {
+                "async-aws/s3": "^1.5",
+                "async-aws/simple-s3": "^1.1",
+                "aws/aws-sdk-php": "^3.220.0",
+                "composer/semver": "^3.0",
+                "ext-fileinfo": "*",
+                "ext-ftp": "*",
+                "ext-zip": "*",
+                "friendsofphp/php-cs-fixer": "^3.5",
+                "google/cloud-storage": "^1.23",
+                "microsoft/azure-storage-blob": "^1.1",
+                "phpseclib/phpseclib": "^3.0.14",
+                "phpstan/phpstan": "^0.12.26",
+                "phpunit/phpunit": "^9.5.11|^10.0",
+                "sabre/dav": "^4.3.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "League\\Flysystem\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frankdejonge.nl"
+                }
+            ],
+            "description": "File storage abstraction for PHP",
+            "keywords": [
+                "WebDAV",
+                "aws",
+                "cloud",
+                "file",
+                "files",
+                "filesystem",
+                "filesystems",
+                "ftp",
+                "s3",
+                "sftp",
+                "storage"
+            ],
+            "support": {
+                "issues": "https://github.com/thephpleague/flysystem/issues",
+                "source": "https://github.com/thephpleague/flysystem/tree/3.16.0"
+            },
+            "funding": [
+                {
+                    "url": "https://ecologi.com/frankdejonge",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/frankdejonge",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-09-07T19:22:17+00:00"
+        },
+        {
+            "name": "league/flysystem-local",
+            "version": "3.16.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/flysystem-local.git",
+                "reference": "ec7383f25642e6fd4bb0c9554fc2311245391781"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-local/zipball/ec7383f25642e6fd4bb0c9554fc2311245391781",
+                "reference": "ec7383f25642e6fd4bb0c9554fc2311245391781",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "league/flysystem": "^3.0.0",
+                "league/mime-type-detection": "^1.0.0",
+                "php": "^8.0.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "League\\Flysystem\\Local\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frankdejonge.nl"
+                }
+            ],
+            "description": "Local filesystem adapter for Flysystem.",
+            "keywords": [
+                "Flysystem",
+                "file",
+                "files",
+                "filesystem",
+                "local"
+            ],
+            "support": {
+                "issues": "https://github.com/thephpleague/flysystem-local/issues",
+                "source": "https://github.com/thephpleague/flysystem-local/tree/3.16.0"
+            },
+            "funding": [
+                {
+                    "url": "https://ecologi.com/frankdejonge",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/frankdejonge",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-08-30T10:23:59+00:00"
+        },
+        {
+            "name": "league/glide",
+            "version": "2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/glide.git",
+                "reference": "2ff92c8f1edc80b74e2d3c5efccfc7223f74d407"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/glide/zipball/2ff92c8f1edc80b74e2d3c5efccfc7223f74d407",
+                "reference": "2ff92c8f1edc80b74e2d3c5efccfc7223f74d407",
+                "shasum": ""
+            },
+            "require": {
+                "intervention/image": "^2.7",
+                "league/flysystem": "^2.0|^3.0",
+                "php": "^7.2|^8.0",
+                "psr/http-message": "^1.0|^2.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.3.3",
+                "phpunit/php-token-stream": "^3.1|^4.0",
+                "phpunit/phpunit": "^8.5|^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "League\\Glide\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jonathan Reinink",
+                    "email": "jonathan@reinink.ca",
+                    "homepage": "http://reinink.ca"
+                },
+                {
+                    "name": "Titouan Galopin",
+                    "email": "galopintitouan@gmail.com",
+                    "homepage": "https://titouangalopin.com"
+                }
+            ],
+            "description": "Wonderfully easy on-demand image manipulation library with an HTTP based API.",
+            "homepage": "http://glide.thephpleague.com",
+            "keywords": [
+                "ImageMagick",
+                "editing",
+                "gd",
+                "image",
+                "imagick",
+                "league",
+                "manipulation",
+                "processing"
+            ],
+            "support": {
+                "issues": "https://github.com/thephpleague/glide/issues",
+                "source": "https://github.com/thephpleague/glide/tree/2.3.0"
+            },
+            "time": "2023-07-08T06:26:07+00:00"
+        },
+        {
+            "name": "league/mime-type-detection",
+            "version": "1.13.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/mime-type-detection.git",
+                "reference": "a6dfb1194a2946fcdc1f38219445234f65b35c96"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/mime-type-detection/zipball/a6dfb1194a2946fcdc1f38219445234f65b35c96",
+                "reference": "a6dfb1194a2946fcdc1f38219445234f65b35c96",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.2",
+                "phpstan/phpstan": "^0.12.68",
+                "phpunit/phpunit": "^8.5.8 || ^9.3 || ^10.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "League\\MimeTypeDetection\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frankdejonge.nl"
+                }
+            ],
+            "description": "Mime-type detection for Flysystem",
+            "support": {
+                "issues": "https://github.com/thephpleague/mime-type-detection/issues",
+                "source": "https://github.com/thephpleague/mime-type-detection/tree/1.13.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/frankdejonge",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/league/flysystem",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-08-05T12:09:49+00:00"
+        },
+        {
             "name": "lorenzo/pinky",
             "version": "1.1.0",
             "source": {
@@ -3846,6 +4201,101 @@
                 "source": "https://github.com/nelmio/NelmioCorsBundle/tree/2.3.1"
             },
             "time": "2023-02-16T08:49:29+00:00"
+        },
+        {
+            "name": "oneup/flysystem-bundle",
+            "version": "dev-allow_compatibility_with_flysysytem3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mihaileu/OneupFlysystemBundle.git",
+                "reference": "13e99fa69d2beeff01c73f575a2d8adfad4650fb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mihaileu/OneupFlysystemBundle/zipball/13e99fa69d2beeff01c73f575a2d8adfad4650fb",
+                "reference": "13e99fa69d2beeff01c73f575a2d8adfad4650fb",
+                "shasum": ""
+            },
+            "require": {
+                "league/flysystem": "^2.0 || ^3.0",
+                "php": "^7.4 || ^8.0",
+                "symfony/config": "^4.4 || ^5.3 || ^6.0",
+                "symfony/dependency-injection": "^4.4 || ^5.3 || ^6.0",
+                "symfony/http-kernel": "^4.4 || ^5.3 || ^6.0"
+            },
+            "require-dev": {
+                "ext-simplexml": "*",
+                "friendsofphp/php-cs-fixer": "^2.16 || ^3.5",
+                "league/flysystem-async-aws-s3": "^2.0 || ^3.0",
+                "league/flysystem-aws-s3-v3": "^2.0 || ^3.0",
+                "league/flysystem-ftp": "^2.0 || ^3.0",
+                "league/flysystem-google-cloud-storage": "^2.0 || ^3.0",
+                "league/flysystem-memory": "^2.0 || ^3.0",
+                "league/flysystem-sftp": "^2.0 || ^3.0",
+                "phpstan/phpstan": "^1.4",
+                "phpunit/phpunit": "^9.5",
+                "royvoetman/flysystem-gitlab-storage": "^2.0",
+                "symfony/asset": "^4.4 || ^5.3 || ^6.0",
+                "symfony/browser-kit": "^4.4 || ^5.3 || ^6.0",
+                "symfony/finder": "^4.4 || ^5.3 || ^6.0",
+                "symfony/framework-bundle": "^4.4 || ^5.3 || ^6.0",
+                "symfony/phpunit-bridge": "^6.0",
+                "symfony/templating": "^4.4 || ^5.3 || ^6.0",
+                "symfony/translation": "^4.4 || ^5.3 || ^6.0",
+                "symfony/yaml": "^4.4 || ^5.3 || ^6.0"
+            },
+            "suggest": {
+                "ext-fileinfo": "Required for MimeType",
+                "ext-ftp": "Required for FTP and SFTP",
+                "league/flysystem-async-aws-s3": "Use flysystem S3 adapter from AsyncAws",
+                "league/flysystem-aws-s3-v3": "Use S3 storage with AWS SDK v3",
+                "league/flysystem-google-cloud-storage": "Use Google Cloud Storage Adapter for Flysystem",
+                "league/flysystem-sftp": "Allows SFTP server storage via phpseclib",
+                "royvoetman/flysystem-gitlab-storage": "Use Gitlab Storage filesystem for Flysystem"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Oneup\\FlysystemBundle\\": "src"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Oneup\\FlysystemBundle\\Tests\\": "tests"
+                },
+                "classmap": [
+                    "tests/App/Kernel.php"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jim Schmid",
+                    "email": "js@1up.io",
+                    "homepage": "https://1up.io",
+                    "role": "Developer"
+                },
+                {
+                    "name": "David Greminger",
+                    "email": "dg@1up.io",
+                    "homepage": "https://1up.io",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Integrates Flysystem filesystem abstraction library to your Symfony project.",
+            "homepage": "https://1up.io",
+            "keywords": [
+                "abstraction",
+                "filesystem",
+                "flysystem",
+                "symfony"
+            ],
+            "support": {
+                "source": "https://github.com/mihaileu/OneupFlysystemBundle/tree/allow_compatibility_with_flysysytem3"
+            },
+            "time": "2022-03-01T10:16:07+00:00"
         },
         {
             "name": "pagerfanta/pagerfanta",
@@ -11406,6 +11856,80 @@
             "time": "2023-09-22T11:15:22+00:00"
         },
         {
+            "name": "talav/avatar-bundle",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "lib/Dixie/Bundle/AvatarBundle",
+                "reference": "1aaa6a0d529fae0acfb05767a54db49e6dd4d8ba"
+            },
+            "require": {
+                "php": ">=8.0",
+                "symfony/config": "^6.0",
+                "symfony/form": "^6.0",
+                "symfony/framework-bundle": "^6.0",
+                "symfony/monolog-bundle": "^3.7",
+                "symfony/orm-pack": "^2.2",
+                "symfony/translation": "^6.0",
+                "symfony/twig-bundle": "^6.0",
+                "talav/media-bundle": "@dev",
+                "talav/user-bundle": "@dev",
+                "webmozart/assert": "^1.10"
+            },
+            "require-dev": {
+                "doctrine/doctrine-fixtures-bundle": "^3.4",
+                "fakerphp/faker": "^1.19",
+                "liip/test-fixtures-bundle": "^2.2",
+                "matthiasnoback/symfony-dependency-injection-test": "^4.3",
+                "phpunit/phpunit": "^9.5",
+                "symfony/browser-kit": "^6.0",
+                "symfony/console": "^6.0",
+                "symfony/css-selector": "^6.0",
+                "symfony/phpunit-bridge": "^6.0",
+                "symfony/var-dumper": "^6.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Talav\\AvatarBundle\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Talav\\AvatarBundle\\Tests\\": "tests/",
+                    "AvatarAppBundle\\": "tests/TestApp/src/AvatarAppBundle/"
+                },
+                "files": [
+                    "tests/TestApp/app/AvatarAppKernel.php"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Talav",
+                    "email": "support@talav.com"
+                }
+            ],
+            "description": "Symfony bundle to provide avatar functionality for users",
+            "keywords": [
+                "bundle",
+                "php",
+                "symfony",
+                "user"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "talav/bundle-generator-bundle",
             "version": "dev-main",
             "dist": {
@@ -11625,6 +12149,142 @@
                 }
             ],
             "description": "GalleryBundle for Symfony",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "talav/media",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "lib/Dixie/Component/Media",
+                "reference": "35ce455e11b9908e3281da61b04e5d68f477a19f"
+            },
+            "require": {
+                "league/flysystem": "^3.0",
+                "league/glide": "^2.2",
+                "mark-gerarts/auto-mapper-plus": "^1.3",
+                "php": ">=8.0",
+                "symfony/event-dispatcher": "^6.0",
+                "symfony/http-foundation": "^6.0",
+                "symfony/messenger": "^6.0",
+                "symfony/mime": "^6.0",
+                "symfony/validator": "^6.0",
+                "talav/resource": "@dev",
+                "webmozart/assert": "^1.10"
+            },
+            "require-dev": {
+                "fakerphp/faker": "^1.19",
+                "league/flysystem-memory": "^3.0",
+                "phpunit/phpunit": "^9.5",
+                "symfony/thanks": "^1.2",
+                "symfony/var-dumper": "^6.0",
+                "webfactory/doctrine-orm-test-infrastructure": "^1.10"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Talav\\Component\\Media\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Talav\\Component\\Media\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Talav",
+                    "email": "support@talav.com"
+                }
+            ],
+            "description": "Plan and plan feature functionality for SaaS applications",
+            "keywords": [
+                "bundle",
+                "php",
+                "subscription",
+                "symfony"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "talav/media-bundle",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "lib/Dixie/Bundle/MediaBundle",
+                "reference": "0a6dbbbff81f730c95c90407019f0d44c7bb60e6"
+            },
+            "require": {
+                "mark-gerarts/automapper-plus-bundle": "^1.4",
+                "oneup/flysystem-bundle": "dev-allow_compatibility_with_flysysytem3#684c77ebe3507462f9129d39e1ff75cf89d37b2e",
+                "php": ">=8.0",
+                "symfony/form": "^6.0",
+                "symfony/framework-bundle": "^6.0",
+                "symfony/translation": "^6.0",
+                "symfony/twig-bundle": "^6.0",
+                "talav/media": "@dev",
+                "talav/resource-bundle": "@dev"
+            },
+            "require-dev": {
+                "doctrine/doctrine-fixtures-bundle": "^3.4",
+                "fakerphp/faker": "^1.19",
+                "liip/test-fixtures-bundle": "^2.2",
+                "matthiasnoback/symfony-dependency-injection-test": "^4.3",
+                "phpunit/phpunit": "^9.5",
+                "symfony/browser-kit": "^6.0",
+                "symfony/css-selector": "^6.0",
+                "symfony/phpunit-bridge": "^6.0",
+                "symfony/var-dumper": "^6.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Talav\\MediaBundle\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Talav\\MediaBundle\\Tests\\": "tests/",
+                    "MediaAppBundle\\": "tests/TestApp/src/MediaAppBundle/"
+                },
+                "files": [
+                    "tests/TestApp/app/MediaAppKernel.php"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Talav",
+                    "email": "support@talav.com"
+                }
+            ],
+            "description": "Symfony bundle to provide base media management.",
+            "keywords": [
+                "bundle",
+                "media",
+                "symfony"
+            ],
             "transport-options": {
                 "symlink": true,
                 "relative": true
@@ -15678,9 +16338,11 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "talav/avatar-bundle": 20,
         "talav/bundle-generator-bundle": 20,
         "talav/core-bundle": 20,
         "talav/gallery-bundle": 20,
+        "talav/media-bundle": 20,
         "talav/permission-bundle": 20,
         "talav/profile-bundle": 20,
         "talav/settings-bundle": 20,

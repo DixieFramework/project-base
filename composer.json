@@ -53,9 +53,11 @@
         "symfony/webapp-meta": "^1.0",
         "symfony/webpack-encore-bundle": "^1.14",
         "symfony/yaml": "6.3.*",
+        "talav/avatar-bundle": "@dev",
         "talav/bundle-generator-bundle": "@dev",
         "talav/core-bundle": "@dev",
         "talav/gallery-bundle": "@dev",
+        "talav/media-bundle": "@dev",
         "talav/permission-bundle": "@dev",
         "talav/profile-bundle": "@dev",
         "talav/settings-bundle": "@dev",
@@ -140,6 +142,10 @@
     "repositories": [
         {
             "type": "vcs",
+            "url": "https://github.com/mihaileu/OneupFlysystemBundle.git"
+        },
+        {
+            "type": "vcs",
             "url": "git@github.com:DixieFramework/Registry.git"
         },
         {
@@ -212,6 +218,27 @@
                 "symlink": true
             },
             "url": "lib/Dixie/Component/User"
+        },
+        {
+            "type": "path",
+            "options": {
+                "symlink": true
+            },
+            "url": "lib/Dixie/Component/Media"
+        },
+        {
+            "type": "path",
+            "options": {
+                "symlink": true
+            },
+            "url": "lib/Dixie/Bundle/MediaBundle"
+        },
+        {
+            "type": "path",
+            "options": {
+                "symlink": true
+            },
+            "url": "lib/Dixie/Bundle/AvatarBundle"
         }
     ]
 }

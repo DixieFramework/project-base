@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\{Collection, ArrayCollection};
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Talav\Component\Media\Model\MediaInterface;
 use Talav\Component\Resource\Model\ResourceTrait;
 use Talav\Component\User\Model\AbstractUser;
 use Talav\CoreBundle\Entity\Traits\HasRelations;
@@ -32,11 +33,15 @@ class User extends AbstractUser implements UserInterface
 
 	protected ?ProfileInterface $profile = null;
 
+    #[ORM\OneToOne(targetEntity: MediaInterface::class, cascade: ['persist'])]
+    #[ORM\JoinColumn(name: 'media_id')]
+    protected ?MediaInterface $avatar = null;
+
 	#[ORM\OneToMany(targetEntity: UserProfileRelation::class, mappedBy: 'sender')]
-	private $sendedUserRelations;
+    protected $sendedUserRelations;
 
 	#[ORM\OneToMany(targetEntity: UserProfileRelation::class, mappedBy: 'recipient')]
-	private $receivedUserRelations;
+    protected $receivedUserRelations;
 
     #[ORM\OneToMany(targetEntity: UserMetadata::class, mappedBy: 'user', orphanRemoval: true, cascade: ['persist'])]
     protected Collection $metadata;
@@ -99,6 +104,26 @@ class User extends AbstractUser implements UserInterface
             $this->profile = $profile;
             $profile->setUser($this);
         }
+    }
+
+    public function getAvatar(): ?MediaInterface
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?MediaInterface $avatar): void
+    {
+        $this->avatar = $avatar;
+    }
+
+    public function getAvatarName(): ?string
+    {
+        return $this->getFirstName().' '.$this->getLastName();
+    }
+
+    public function getAvatarDescription(): ?string
+    {
+        return $this->getAvatarName();
     }
 
 	/**

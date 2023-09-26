@@ -38,4 +38,7 @@ return [
     Talav\GalleryBundle\TalavGalleryBundle::class => ['all' => true],
     Talav\SettingsBundle\TalavSettingsBundle::class => ['all' => true],
     Exercise\HTMLPurifierBundle\ExerciseHTMLPurifierBundle::class => ['all' => true],
+    Oneup\FlysystemBundle\OneupFlysystemBundle::class => ['all' => true],
+    Talav\MediaBundle\TalavMediaBundle::class => ['all' => true],
+    Talav\AvatarBundle\TalavAvatarBundle::class => ['all' => true],
 ];
