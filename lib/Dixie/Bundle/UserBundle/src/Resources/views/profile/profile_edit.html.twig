@@ -1,5 +1,4 @@
 {% extends '@TalavWeb/cards/card_edit.html.twig' %}
-
 {# parameters #}
 {%- set title = 'profile.edit.title' -%}
 {%- set title_icon = 'user-gear fa-fw me-2' -%}
@@ -7,11 +6,12 @@
 {%- set form_attr = form_attr|default({})|merge({
                         'data-check-name': url('ajax_check_user_name'),
                         'data-check-email': url('ajax_check_user_email')}) -%}
-
+{% block card_sidebar %}
+{% include '@TalavUser/profile/_side_menu.html.twig' with {'user': app.user} %}
+{% endblock %}
 {% block stylesheets %}
 {{ asset_css('css/fileinput.css') }}
 {% endblock %}
-
 {% block javascripts -%}
 {% if app.debug %}
 {{ parent() }}

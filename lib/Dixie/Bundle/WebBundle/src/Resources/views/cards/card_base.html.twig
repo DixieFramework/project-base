@@ -2,7 +2,13 @@
 {% from '@TalavWeb/macros/_icons.html.twig' import icon %}
 {# body #}
 {% block body -%}
-<div class="row g-0">
+<div class="row{% block row_class %} g-4{% endblock %}">
+    {% if block('card_sidebar') is defined %}
+    <div class="col{% block card_sidebar_class %} col-xl-2{% endblock -%}">
+        {% block card_sidebar %}{% endblock card_sidebar %}
+    </div>
+    {% endif %}
+
     {% block start_card_container -%}
     <div class="col{% block card_container_class %} col-xl-8 offset-xl-2{% endblock -%}">
     {% endblock %}

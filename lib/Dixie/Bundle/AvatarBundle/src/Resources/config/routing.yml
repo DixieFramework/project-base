@@ -1,3 +1,0 @@
-controllers:
-  resource: '../../Controller/Frontend/*'
-  type:     annotation
