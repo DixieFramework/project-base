@@ -1,0 +1,101 @@
+{% extends '@TalavUser/frontend/profile/layout.html.twig' %}
+{% trans_default_domain 'TalavProfileBundle' %}
+{% block page_content %}
+    {# <h1>Demande d'utilisateurs</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Utilisateur</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user_relation in user_relations %}
+            <tr>
+                {% if user_relation.type == 'friend' %}
+                    <td>Demande d'ami</td>
+                {% elseif user_relation.type == 'team' %}
+                    <td>Invitation d'équipe</td>
+                {% endif %}
+                <td>{{ user_relation.sender.username }}</td>
+                <td>
+                    <a class="text-green-500 background-transparent font-bold uppercase px-3 py-1 text-xs outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" href="{{ path('user_relation_accept', {'id': user_relation.id}) }}">Accepter</a>
+                    <a class="text-red-500 background-transparent font-bold uppercase px-3 py-1 text-xs outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" href="{{ path('user_relation_decline', {'id': user_relation.id}) }}">Refuser</a>
+                    <form method="post" action="{{ path('user_relation_block', {'user_slug' : user_relation.sender.slug }) }}" onsubmit="return confirm('Etes vous sur de vouloir bloquer cet utilisateur ?');">
+                        <button class="btn text-red-500 background-transparent font-bold uppercase px-3 py-1 text-xs outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">Bloquer</button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Aucune demande d'utilisateurs</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table> #}
+<h1 class="text-5xl text-left font-normal leading-normal mx-10 mt-20 mb-2 text-indigo-500">Demande d'utilisateur</h1>
+<div class="flex flex-col container max-w-md mt-10 mx-auto w-full items-center justify-center shadow-2xl bg-white dark:bg-gray-800 rounded-lg shadow">
+    {% for user_relation in user_relations %}
+        {% if user_relation.type == 'friend' %}
+            <td class="font-medium text-2xl dark:text-white mx-5">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                </svg>
+                Demande d'ami
+            </td>
+        {% elseif user_relation.type == 'team' %}
+            <td class="font-medium text-2xl dark:text-white mx-5">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                Invitation tournoi
+            </td>
+        {% endif %}
+        <ul class="flex flex-col divide-y w-full">
+            <li class="flex flex-row">
+                <div class="select-none cursor-pointer hover:bg-gray-50 flex flex-1 items-center p-4">
+
+                    <div class="flex flex-col w-10 h-10 justify-center items-center mr-4">
+                        <a href="#" class="block relative">
+                            {% if user_relation.sender.path %}
+                                <img alt="profil" src="{{ vich_uploader_asset(user_relation, 'image') }}" class="mx-auto object-cover rounded-full h-10 w-10" />
+                            {% else %}
+                                <img alt="profil" src="{{ asset('images/profil/playerz.png') }}" class="mx-auto object-cover rounded-full h-10 w-10" />
+                            {% endif %}
+                        </a>
+                    </div>
+                    <div class="flex-1 pl-1">
+                        <div class="font-medium dark:text-white">{{ user_relation.sender.username }}</div>
+                        <div class="text-gray-600 dark:text-gray-200 text-sm">{{ user_relation.sender.description }}</div>
+                    </div>
+                    <div class="flex flex-row justify-center">
+
+                        <button class="text-green-500 background-transparent font-bold uppercase px-3 py-1 text-xs outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                            <a href ="{{ path('user_relation_accept', {'id': user_relation.id}) }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </a>
+                            Accepter
+                        </button>
+                        <button class="text-red-500 background-transparent font-bold uppercase px-3 py-1 text-xs outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                            <a href ="{{ path('user_relation_decline', {'id': user_relation.id}) }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </a>
+                            Refuser
+                        </button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    {% else %}
+        <tr>
+            <td colspan="3">Aucune demande d'utilisateurs</td>
+        </tr>
+    {% endfor %}
+</div>
+{#{% endblock %}#}

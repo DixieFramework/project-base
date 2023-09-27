@@ -18,6 +18,7 @@ use Talav\PermissionBundle\Traits\HasRoles;
 use Talav\ProfileBundle\Entity\ProfileInterface;
 use Talav\ProfileBundle\Entity\UserMetadata;
 use Talav\ProfileBundle\Entity\UserProfileRelation;
+use Talav\ProfileBundle\Entity\UserRelation;
 use Talav\UserBundle\Enum\UserFlagKey;
 use Talav\UserBundle\Model\UserInterface;
 
@@ -37,10 +38,10 @@ class User extends AbstractUser implements UserInterface
     #[ORM\JoinColumn(name: 'media_id')]
     protected ?MediaInterface $avatar = null;
 
-	#[ORM\OneToMany(targetEntity: UserProfileRelation::class, mappedBy: 'sender')]
+	#[ORM\OneToMany(targetEntity: UserRelation::class, mappedBy: 'owner')]
     protected $sendedUserRelations;
 
-	#[ORM\OneToMany(targetEntity: UserProfileRelation::class, mappedBy: 'recipient')]
+	#[ORM\OneToMany(targetEntity: UserRelation::class, mappedBy: 'receiver')]
     protected $receivedUserRelations;
 
     #[ORM\OneToMany(targetEntity: UserMetadata::class, mappedBy: 'user', orphanRemoval: true, cascade: ['persist'])]
@@ -127,29 +128,29 @@ class User extends AbstractUser implements UserInterface
     }
 
 	/**
-	 * @return Collection|UserProfileRelation[]
+	 * @return Collection|UserRelation[]
 	 */
 	public function getSendedUserRelations(): Collection
 	{
 		return $this->sendedUserRelations;
 	}
 
-	public function addSendedUserRelation(UserProfileRelation $sendedUserRelation): self
+	public function addSendedUserRelation(UserRelation $sendedUserRelation): self
 	{
 		if (!$this->sendedUserRelations->contains($sendedUserRelation)) {
 			$this->sendedUserRelations[] = $sendedUserRelation;
-			$sendedUserRelation->setSender($this);
+			$sendedUserRelation->setOwner($this);
 		}
 
 		return $this;
 	}
 
-	public function removeSendedUserRelation(UserProfileRelation $sendedUserRelation): self
+	public function removeSendedUserRelation(UserRelation $sendedUserRelation): self
 	{
 		if ($this->sendedUserRelations->removeElement($sendedUserRelation)) {
 			// set the owning side to null (unless already changed)
-			if ($sendedUserRelation->getSender() === $this) {
-				$sendedUserRelation->setSender(null);
+			if ($sendedUserRelation->getOwner() === $this) {
+				$sendedUserRelation->setOwner(null);
 			}
 		}
 
@@ -157,29 +158,29 @@ class User extends AbstractUser implements UserInterface
 	}
 
 	/**
-	 * @return Collection|UserProfileRelation[]
+	 * @return Collection|UserRelation[]
 	 */
 	public function getReceivedUserRelations(): Collection
 	{
 		return $this->receivedUserRelations;
 	}
 
-	public function addReceivedUserRelation(UserProfileRelation $receivedUserRelation): self
+	public function addReceivedUserRelation(UserRelation $receivedUserRelation): self
 	{
 		if (!$this->receivedUserRelations->contains($receivedUserRelation)) {
 			$this->receivedUserRelations[] = $receivedUserRelation;
-			$receivedUserRelation->setRecipient($this);
+			$receivedUserRelation->setReceiver($this);
 		}
 
 		return $this;
 	}
 
-	public function removeReceivedUserRelation(UserProfileRelation $receivedUserRelation): self
+	public function removeReceivedUserRelation(UserRelation $receivedUserRelation): self
 	{
 		if ($this->receivedUserRelations->removeElement($receivedUserRelation)) {
 			// set the owning side to null (unless already changed)
-			if ($receivedUserRelation->getRecipient() === $this) {
-				$receivedUserRelation->setRecipient(null);
+			if ($receivedUserRelation->getReceiver() === $this) {
+				$receivedUserRelation->setReceiver(null);
 			}
 		}
 

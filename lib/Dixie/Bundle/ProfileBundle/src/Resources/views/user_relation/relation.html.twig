@@ -1,12 +1,38 @@
 {#{% import 'macros.twig' as macros %}#}
 {% set owned_relations = relation.owner == app.user %}
+<!-- Connections Item -->
+{#<div class="d-md-flex align-items-center mb-4">#}
+<div class="d-md-flex justify-content-between align-items-center mb-4">
+    <!-- Avatar -->
+    <div class="avatar me-3 mb-3 mb-md-0">
+        <a href="#!"> <img class="avatar-img rounded-circle" src="assets/images/avatar/02.jpg" alt=""> </a>
+    </div>
+    <!-- Info -->
+    <div class="w-100">
+        <div class="d-sm-flex align-items-end">
+            <h6 class="mb-0"><a href="#!">{{ relation.receiver.username }}</a></h6>
+{#            <p class="small ms-sm-2 mb-0">{{ relation.updatedAt|format_date('medium') }}</p>#}
+        </div>
+        <!-- Connections START -->
+        <p class="small mb-0"><strong>Last Updated:</strong> {{ relation.updatedAt|format_date('medium') }}</p>
+        <!-- Connections END -->
+    </div>
+    <!-- Button -->
+    <div class="ms-md-auto d-flex">
+        <button class="btn btn-danger btn-sm mb-0 me-2"> Remove </button>
+        <a href="{{ path('user_relation_edit_relation', {username: relation.receiver.username|slug}) }}" class="btn btn-primary btn-sm mb-0">Edit</a>
+    </div>
+</div>
+
+
+
 <div class="{% if owned_relations %}relations-card{% else %}relations-card-other{% endif %}">
 {#    <div class="relation-avatar"><div class="o-avatar o-avatar--m">{{ macros.roundedavatarstack(relation.receiver.username, 48) }}</div></div>#}
-    <div class="relation-relation js-read-more u-break-words">{{ relation.commentText|purify }}</div>
+    <div class="relation-relation js-read-more u-break-words">{{ relation.receiver.username }} {{ relation.commentText|purify }}</div>
     <div class="relation-updated"><span class="u-text-12">{{ relation.updatedAt|format_date('medium') }}</span></div>
 
     {% if owned_relations %}<div class="relation-actions">
-        <a href="{{ path('user_profile_user_relation_edit', {username: relation.receiver.username}) }}" class="o-button"><i class="fa fa-fw fa-edit"></i></a>
+        <a href="{{ path('user_relation_edit_relation', {username: relation.receiver.username|slug}) }}" class="o-button"><i class="fa fa-fw fa-edit"></i></a>
         <button class="o-button" data-micromodal-trigger="relation-delete-{{ relation.id }}" data-bs-target="#modalDelete" data-bs-toggle="modal"  data-bs-dismiss="modal"><i class="fa fa-fw fa-trash-alt"></i></button>
     </div>
     {% endif %}

@@ -9,6 +9,8 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Talav\ProfileBundle\Entity\Profile;
+use Talav\ProfileBundle\Entity\UserRelation;
+use Talav\ProfileBundle\Repository\UserRelationRepository;
 
 /**
  * This is the class that validates and merges configuration from your app/config files.
@@ -53,6 +55,18 @@ class Configuration implements ConfigurationInterface
                                     ->children()
                                         ->scalarNode('model')->defaultValue(Profile::class)->end()
 //                                        ->scalarNode('repository')->defaultValue(EntityRepository::class)->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('user_relation')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(UserRelation::class)->end()
+                                        ->scalarNode('repository')->defaultValue(UserRelationRepository::class)->end()
                                     ->end()
                                 ->end()
                             ->end()

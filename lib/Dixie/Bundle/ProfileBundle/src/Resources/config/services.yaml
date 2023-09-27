@@ -16,6 +16,7 @@ services:
             - '../../DependencyInjection/'
             - '../../Entity/'
             - '../../Migrations'
+            - '../../Repository/'
             - '../../Tests/'
 
     # ---------------------------------------------------------

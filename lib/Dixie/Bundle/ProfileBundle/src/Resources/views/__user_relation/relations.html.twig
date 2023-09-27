@@ -3,15 +3,7 @@
 {% block page_content %}
     <input type="hidden" id="read.more" value="{{ 'comment.read.more'|trans }}">
     <input type="hidden" id="show.less" value="{{ 'comment.show.less'|trans }}">
-<!-- Card Connections START -->
-<div class="card">
-    <!-- Card header START -->
-    <div class="card-header border-0 pb-0">
-        <h5 class="card-title">{{ 'talav.profile.relations.title'|trans }}</h5>
-    </div>
-    <!-- Card header END -->
-    <!-- Card body START -->
-    <div class="card-body">
+    <h1>{{ 'talav.profile.relations.title'|trans }}</h1>
     {% if relations.haveToPaginate %}
         {{ pagerfanta(relations, 'rounded_pagination_end') }}
     {% endif %}
@@ -23,10 +15,6 @@
     {% if relations.haveToPaginate %}
         {{ pagerfanta(relations, 'rounded_pagination_end') }}
     {% endif %}
-    </div>
-    <!-- Card body END -->
-</div>
-<!-- Card Connections END -->
 {% endblock page_content %}
 
 {% block modals %}

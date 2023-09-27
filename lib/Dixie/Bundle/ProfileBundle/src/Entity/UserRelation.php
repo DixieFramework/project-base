@@ -17,6 +17,7 @@ use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Validator\Constraints;
+use Talav\Component\Resource\Model\ResourceInterface;
 use Talav\Component\Resource\Model\ResourceTrait;
 use Talav\Component\User\Model\UserInterface;
 use Talav\ProfileBundle\Repository\UserRelationRepository;
@@ -33,32 +34,32 @@ use Talav\ProfileBundle\Repository\UserRelationRepository;
 #[ORM\UniqueConstraint(name: 'unique_relation', columns: ['owner_id', 'relation_id'])]
 #[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: UserRelationRepository::class)]
-class UserRelation
+class UserRelation implements ResourceInterface
 {
     use ResourceTrait;
 
-    #[ORM\Column(name: 'comment', type: Types::INTEGER, nullable: false)]
+//    #[ORM\Column(name: 'comment', type: Types::INTEGER, nullable: false)]
     protected int $comment = 0;
 
-    #[ORM\Column(type: 'text')]
-    #[Constraints\NotBlank]
+//    #[ORM\Column(type: 'text')]
+//    #[Constraints\NotBlank]
     protected string $commentText = "";
 
-    #[ORM\Column(name: 'created_at', type: Types::DATETIME_IMMUTABLE, options: ['default' => 'CURRENT_TIMESTAMP'])]
+//    #[ORM\Column(name: 'created_at', type: Types::DATETIME_IMMUTABLE, options: ['default' => 'CURRENT_TIMESTAMP'])]
     protected ?\DateTimeImmutable $createdAt;
 
-    #[ORM\Column(name: 'updated_at', type: Types::DATETIME_IMMUTABLE,  options: ['default' => 'CURRENT_TIMESTAMP'])]
+//    #[ORM\Column(name: 'updated_at', type: Types::DATETIME_IMMUTABLE,  options: ['default' => 'CURRENT_TIMESTAMP'])]
     protected ?\DateTimeImmutable $updatedAt;
 
-    #[ORM\ManyToOne(targetEntity: UserInterface::class)]
-    #[ORM\JoinColumn(name: 'owner_id', referencedColumnName: 'id', nullable: false)]
+//    #[ORM\ManyToOne(targetEntity: UserInterface::class)]
+//    #[ORM\JoinColumn(name: 'owner_id', referencedColumnName: 'id', nullable: false)]
     protected UserInterface $owner;
 
-    #[ORM\ManyToOne(targetEntity: UserInterface::class)]
-    #[ORM\JoinColumn(name: 'relation_id', referencedColumnName: 'id', nullable: false)]
+//    #[ORM\ManyToOne(targetEntity: UserInterface::class)]
+//    #[ORM\JoinColumn(name: 'relation_id', referencedColumnName: 'id', nullable: false)]
     protected UserInterface $receiver;
 
-    #[ORM\Column(name: 'confirmed', type: Types::STRING, nullable: false)]
+//    #[ORM\Column(name: 'confirmed', type: Types::STRING, nullable: false)]
     protected string $confirmed = 'No';
 
     public function setComment(int $comment): self

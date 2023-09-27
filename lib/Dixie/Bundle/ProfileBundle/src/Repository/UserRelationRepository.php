@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Talav\ProfileBundle\Repository;
 
+use Talav\Component\Resource\Repository\RepositoryInterface;
+use Talav\Component\Resource\Repository\RepositoryPaginatorTrait;
 use Talav\Component\User\Model\UserInterface;
 use Talav\ProfileBundle\Entity\UserRelation;
 use Doctrine\ORM\EntityRepository;
@@ -13,8 +15,10 @@ use Pagerfanta\Pagerfanta;
 /**
  * FamilyAndFriendRepository.
  */
-class UserRelationRepository extends EntityRepository
+class UserRelationRepository extends EntityRepository implements RepositoryInterface
 {
+	use RepositoryPaginatorTrait;
+
     public function getRelationsCount(UserInterface $member): int
     {
         $qb = $this->createQueryBuilder('r');
@@ -90,10 +94,10 @@ class UserRelationRepository extends EntityRepository
 
     public function getRelations(UserInterface $member, int $page, int $itemsPerPage): Pagerfanta
     {
-        $qb = $this->createQueryBuilder('r')
-            ->leftJoin('r.receiver', 'm')
-            ->where('r.confirmed = :confirmed')
-            ->andWhere('r.owner = :member')
+        $qb = $this->createQueryBuilder('ur')
+            ->leftJoin('ur.receiver', 'm')
+            ->where('ur.confirmed = :confirmed')
+            ->andWhere('ur.owner = :member')
             ->setParameter('member', $member)
             ->setParameter(':confirmed', 'Yes')
             ->orderBy('m.username', 'ASC')

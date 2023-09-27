@@ -24,7 +24,7 @@
                     <hr>
                     <footer class="u-flex u-flex-row u-justify-between">
                         <button class="o-button" data-micromodal-close>{{ 'profile.relation.delete.no'|trans|capitalize }}</button>
-                        <a href="{{ url('user_relation_delete_relation', {'username': relation.receiver.username|slug }) }}" class="o-button">{{ 'profile.relation.delete.yes'|trans|capitalize }}</a>
+                        <a href="{{ url('user_profile_user_relation_delete', {'username': relation.receiver.username }) }}" class="o-button">{{ 'profile.relation.delete.yes'|trans|capitalize }}</a>
                     </footer>
                 </div>
             </div>
@@ -38,4 +38,4 @@
 {%- endblock %}
 
 {% block modal_id 'modalDelete' %}
-{% block form_action path('user_relation_edit_relation', {'username': member.username|slug}) %}
+{% block form_action path('user_profile_user_relation_edit', {'username': member.username}) %}

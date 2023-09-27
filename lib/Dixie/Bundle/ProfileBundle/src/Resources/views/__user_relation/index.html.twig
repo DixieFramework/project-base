@@ -1,11 +1,97 @@
 {% extends '@TalavUser/frontend/profile/layout.html.twig' %}
 {% trans_default_domain 'TalavProfileBundle' %}
 {% block page_content %}
+    {# <h1>Vos relations</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Utilisateur</th>
+            <th>Statut</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user_relation in user_relations %}
+            <tr>
+                {% if user_relation.status == 'accepted' %}
+                    {% if app.user == user_relation.sender %}
+                        <td>{{ user_relation.sender.username }}</td>
+                    {% else %}
+                        <td>{{ user_relation.recipient.username }}</td>
+                    {% endif %}
+                    <td>Ami</td>
+                {% elseif user_relation.status == 'blocked' %}
+                    <td>{{ user_relation.recipient.username }}</td>
+                    <td>Bloquer</td>
+                {% endif %}
+
+                <td>
+                    {{ include('settings/user_relation/_delete_form.html.twig') }}
+                    {% if user_relation.status == 'accepted' %}
+                        <form method="post" action="{{ path('user_relation_block', {'user_slug' : user_relation.recipient.slug }) }}" onsubmit="return confirm('Etes vous sur de vouloir bloquer cet utilisateur ?');">
+                            <button class="btn text-red-500 background-transparent font-bold uppercase px-3 py-1 text-xs outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">Bloquer</button>
+                        </form>
+                        <form method="post" action="{{ path('user_relation_delete', {'user_slug' : user_relation.recipient.slug }) }}" onsubmit="return confirm('Etes vous sur de vouloir supprimer cet utilisateur ?');">
+                            <button class="btn text-red-500 background-transparent font-bold uppercase px-3 py-1 text-xs outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">Supprimer</button>
+                        </form>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Vous n'avez aucune relation</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table> #}
+    <h1 class="text-5xl text-left font-normal leading-normal mx-10 mt-20 mb-2 text-indigo-500">Vos relations</h1>
+    {% if app.session.flashbag.has('success') %}
+        <div class="bg-green-100 border border-green-400 text-green-700 text-center px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">Succes !</strong>
+            <span class="block sm:inline">{{ app.session.flashbag.get('success')|first }}</span>
+            <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+	        </span>
+        </div>
+    {% endif %}
+    {% if app.session.flashbag.has('pending') %}
+        <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 text-center px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">En attente : </strong>
+            <span class="block sm:inline">{{ app.session.flashbag.get('pending')|first }}</span>
+            <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+	        </span>
+        </div>
+    {% endif %}
+    {% if app.session.flashbag.has('notice') %}
+        <div class="bg-blue-100 border border-blue-400 text-blue-700 text-center px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">Information : </strong>
+            <span class="block sm:inline">{{ app.session.flashbag.get('notice')|first }}</span>
+            <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+	        </span>
+        </div>
+    {% endif %}
+    {% if app.session.flashbag.has('error') %}
+        <div class="bg-red-100 border border-red-400 text-red-700 text-center px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">Erreur ! </strong>
+            <span class="block sm:inline">{{ app.session.flashbag.get('error')|first }}</span>
+            <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+			</span>
+        </div>
+    {% endif %}
+    {% if app.session.flashbag.has('blocked') %}
+        <div class="bg-red-100 border border-red-400 text-red-700 text-center px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">Bloqué ! </strong>
+            <span class="block sm:inline">{{ app.session.flashbag.get('error')|first }}</span>
+            <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+			</span>
+        </div>
+    {% endif %}
+
     <table class="table-fixed min-w-1/2 divide-y divide-gray-200 mx-16">
         <thead class="bg-gray-100 w-1/2">
         <tr>
             <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercas">
-                User
+                Utilisateur
             </th>
             <th scope="col" class="p-4 text-center text-xs font-medium text-gray-500 uppercase">
                 Status
@@ -15,19 +101,18 @@
             </th>
         </tr>
         </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
+        <tbody class="divide-y divide-gray-200">
         {% for user_relation in user_relations %}
             <tr class="hover:bg-gray-100">
             {% if user_relation %}
                 {% if user_relation.status == 'accepted' %}
                     {% if app.user == user_relation.sender %}
-                        <td class="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0zz">
-{#                            {% if user_relation.recipient.image == null %}#}
-{#                                <img class="h-10 w-10 rounded-full" src="{{ asset('/images/profil/playerz.png') }}" width="64" height="auto" alt="{{ user_relation.recipient.image }}" alt="user image">#}
-{#                            {% else %}#}
-{#                                <img class="h-10 w-10 rounded-full" src=" {{ vich_uploader_asset(user, 'image') }}" width="640" height="auto" alt="user image">#}
-{#                            {% endif %}#}
-                            Image
+                        <td class="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0">
+                            {% if user_relation.recipient.avatar == null %}
+                                <img class="h-10 w-10 rounded-full" src="{{ asset('images/avatar.png') }}" width="64" height="auto" alt="{{ user_relation.recipient.avatar }}" alt="user image">
+                            {% else %}
+                                <img class="h-10 w-10 rounded-full" src=" {{ vich_uploader_asset(user, 'image') }}" width="640" height="auto" alt="user image">
+                            {% endif %}
                         <td class="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0">
                             <div class="text-sm font-normal text-gray-500">
                                 <div class="text-base font-semibold text-gray-900">
@@ -54,7 +139,7 @@
                         </td>
                         </td>
                     {% endif %}
-                    <td class="text-left">Friend</td>
+                    <td class="text-left">Ami</td>
                 {% elseif user_relation.status == 'blocked' %}
                     <td class="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0">
                         {% if user_relation.recipient.image == null %}
@@ -71,18 +156,18 @@
                         </div>
                     </td>
                     </td>
-                    <td class="text-left">Bloqué</td>
+                    <td class="text-left">Blocked</td>
                 {% endif %}
 
                 <td class="p-4 whitespace-nowrap space-x-2 my-5">
                     {{ include('@TalavProfile/user_relation/_delete_form.html.twig') }}
                     {% if user_relation.status == 'accepted' %}
-                    <form method="post" action="{{ path('user_profile_relation_block', {'user_slug' : user_relation.recipient|slug }) }}" onsubmit="return confirm('Etes vous sur de vouloir bloquer cet utilisateur ?');">
+                    <form method="post" action="{{ path('user_profile_relation_block', {'user_slug' : user_relation.recipient.username|slug }) }}" onsubmit="return confirm('Etes vous sur de vouloir bloquer cet utilisateur ?');">
                         <button class="text-red-600 background-transparent font-bold uppercase px-3 py-1 text-xs outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-full" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
                             </svg>
-                            Bloquer
+                            Block
                         </button>
                         {% endif %}
                 </td>
