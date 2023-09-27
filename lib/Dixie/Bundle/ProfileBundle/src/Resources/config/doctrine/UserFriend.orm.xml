@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Talav\ProfileBundle\Entity\Friend" repository-class="Talav\ProfileBundle\Repository\FriendRepository" table="user_friend">
+  <mapped-superclass name="Talav\ProfileBundle\Entity\UserFriend" repository-class="Talav\ProfileBundle\Repository\UserFriendRepository" table="user_friend">
 
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
 
     <many-to-one field="user" target-entity="Talav\Component\User\Model\UserInterface" inversed-by="friendRequests">
-      <join-column nullable="false" />
+      <join-column referenced-column-name="id" nullable="false" />
     </many-to-one>
 
     <many-to-one field="friend" target-entity="Talav\Component\User\Model\UserInterface" inversed-by="acceptedFriendRequests">
-      <join-column nullable="false" />
+      <join-column referenced-column-name="id" nullable="false" />
     </many-to-one>
 
     <field name="status" length="255">
@@ -20,8 +20,8 @@
       </options>
     </field>
 
-    <field name="createdAt" column="created_at" type="datetime_immutable" column-definition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP"/>
-    <field name="updatedAt" column="updated_at" type="datetime_immutable" column-definition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP"/>
+    <field name="createdAt" column="created_at" type="datetime" column-definition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP"/>
+    <field name="updatedAt" column="updated_at" type="datetime" column-definition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP" nullable="true"/>
 
-  </entity>
+  </mapped-superclass>
 </doctrine-mapping>

@@ -18,6 +18,7 @@ use Talav\PermissionBundle\Entity\RoleInterface;
 use Talav\PermissionBundle\Traits\HasRoles;
 use Talav\ProfileBundle\Entity\Friend;
 use Talav\ProfileBundle\Entity\ProfileInterface;
+use Talav\ProfileBundle\Entity\UserFriend;
 use Talav\ProfileBundle\Entity\UserMetadata;
 use Talav\ProfileBundle\Entity\UserProfileRelation;
 use Talav\ProfileBundle\Entity\UserRelation;
@@ -41,10 +42,10 @@ class User extends AbstractUser implements UserInterface
     #[ORM\JoinColumn(name: 'media_id')]
     protected ?MediaInterface $avatar = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Friend::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserFriend::class, cascade: ['persist', 'remove'])]
     private Collection $friendRequests;
 
-    #[ORM\OneToMany(mappedBy: 'friend', targetEntity: Friend::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(mappedBy: 'friend', targetEntity: UserFriend::class, cascade: ['persist', 'remove'])]
     private Collection $acceptedFriendRequests;
 
 	#[ORM\OneToMany(targetEntity: UserRelation::class, mappedBy: 'owner')]
@@ -52,6 +53,9 @@ class User extends AbstractUser implements UserInterface
 
 	#[ORM\OneToMany(targetEntity: UserRelation::class, mappedBy: 'receiver')]
     protected $receivedUserRelations;
+
+//    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?\DateTime $lastActivityAt = null;
 
     #[ORM\OneToMany(targetEntity: UserMetadata::class, mappedBy: 'user', orphanRemoval: true, cascade: ['persist'])]
     protected Collection $metadata;
@@ -140,7 +144,7 @@ class User extends AbstractUser implements UserInterface
     }
 
     /**
-     * @return Collection<int, Friend>
+     * @return Collection<int, UserFriend>
      */
     public function getFriends(): Collection
     {
@@ -150,7 +154,7 @@ class User extends AbstractUser implements UserInterface
         ));
     }
 
-    public function addFriend(Friend $friend): self
+    public function addFriend(UserFriend $friend): self
     {
         if (!$this->friendRequests->contains($friend)) {
             $this->friendRequests[] = $friend;
@@ -160,7 +164,7 @@ class User extends AbstractUser implements UserInterface
         return $this;
     }
 
-    public function removeFriend(Friend $friend): self
+    public function removeFriend(UserFriend $friend): self
     {
         if ($this->friendRequests->removeElement($friend)) {
             // set the owning side to null (unless already changed)
@@ -242,6 +246,18 @@ class User extends AbstractUser implements UserInterface
 
 		return $this;
 	}
+
+    public function setLastActivityAt(?\DateTime $lastActivityAt): self
+    {
+        $this->lastActivityAt = $lastActivityAt;
+
+        return $this;
+    }
+
+    public function getLastActivityAt(): ?\DateTime
+    {
+        return $this->lastActivityAt;
+    }
 
     public function getMetadata(string $key): ?UserMetadata
     {

@@ -9,7 +9,9 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Talav\ProfileBundle\Entity\Profile;
+use Talav\ProfileBundle\Entity\UserFriend;
 use Talav\ProfileBundle\Entity\UserRelation;
+use Talav\ProfileBundle\Repository\UserFriendRepository;
 use Talav\ProfileBundle\Repository\UserRelationRepository;
 
 /**
@@ -67,6 +69,18 @@ class Configuration implements ConfigurationInterface
                                     ->children()
                                         ->scalarNode('model')->defaultValue(UserRelation::class)->end()
                                         ->scalarNode('repository')->defaultValue(UserRelationRepository::class)->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('user_friend')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(UserFriend::class)->end()
+                                        ->scalarNode('repository')->defaultValue(UserFriendRepository::class)->end()
                                     ->end()
                                 ->end()
                             ->end()

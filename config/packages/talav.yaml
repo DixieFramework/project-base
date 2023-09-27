@@ -40,6 +40,9 @@ talav_profile:
         user_relation:
             classes:
                 model: Groshy\Entity\UserRelation
+        user_friend:
+            classes:
+                model: Groshy\Entity\UserFriend
 
 talav_settings:
     resources:

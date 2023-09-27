@@ -47,6 +47,8 @@
             </cascade>
         </one-to-one>
 
+        <field name="lastActivityAt" column="last_activity_at" type="datetime" column-definition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP"/>
+
         <one-to-many field="metadata" target-entity="Talav\ProfileBundle\Entity\UserMetadata" mapped-by="user" orphan-removal="true">
             <cascade>
                 <cascade-persist />

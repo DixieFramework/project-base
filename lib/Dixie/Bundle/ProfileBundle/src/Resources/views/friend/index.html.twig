@@ -1,0 +1,60 @@
+{% extends '@TalavUser/frontend/profile/layout.html.twig' %}
+
+{% block title %}Друзья {{ user.username }}{% endblock %}
+{#{% block breadcrumbs %}#}
+{#    {{ wapinet_breadcrumbs({#}
+{#        1: {'uri': path('wapinet_users'), 'title': 'Пользователи'},#}
+{#        2: {'uri': path('wapinet_user_profile', {'username': user.username}), 'title': user.username}#}
+{#    }) }}#}
+{#{% endblock %}#}
+
+{% block page_content %}
+<div class="card mb-3">
+    <!-- Card header START -->
+    <div class="card-header border-bottom-1 pb-0">
+        <h5 class="card-title h6">{{ 'talav.profile.friend.title'|trans }}</h5>
+    </div>
+    <!-- Card header END -->
+
+    <!-- Card body START -->
+    <div class="card-body">
+
+        {% for friend in pagerfanta %}
+            <a href="{{ path('user_profile_show', {'username': friend.friend.username|slug}) }}">
+                <img src="{% if friend.friend.avatar %}{{ media_thumb_reference(friend.friend.avatar, 'square_small') }}{% else %}{{ asset('images/avatar.png') }}{% endif %}" alt="{{ friend }}" height="32" width="32" class="image-preview" />
+{#                {% if friend.friend.isOnline %}#}
+{#                    <span class="avatar-online avatar-online-list"></span>#}
+{#                {% endif %}#}
+                <h2>{{ friend.friend.username }}</h2>
+            </a>
+        {% else %}
+            <div class="alert alert-info" role="alert">
+                You do not have any friends yet.
+            </div>
+        {% endfor %}
+
+    </div>
+    <!-- Card body END -->
+</div>
+
+{#    <ul data-role="listview" data-inset="true">#}
+{#        {% for friend in pagerfanta %}#}
+{#            <li>#}
+{#                <a href="{{ path('wapinet_user_profile', {'username': friend}) }}">#}
+{#                    <img src="{{ media_thumb_reference(friend.friend.avatar, 'square_small') }}" alt="{{ friend }}" class="image-preview" />#}
+{#                    {% if friend.friend.isOnline %}#}
+{#                        <span class="avatar-online avatar-online-list"></span>#}
+{#                    {% endif %}#}
+{#                    <h2>{{ friend }}</h2>#}
+{#                </a>#}
+{#            </li>#}
+{#        {% else %}#}
+{#            <li>Друзей нет</li>#}
+{#        {% endfor %}#}
+{#    </ul>#}
+
+    <div class="pagerfanta">
+        {{ pagerfanta(pagerfanta) }}
+    </div>
+
+{% endblock page_content %}

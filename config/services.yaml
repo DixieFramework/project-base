@@ -19,6 +19,8 @@ parameters:
     app_owner_city:     Montévraz
     app_description:    Talav Demo App.
 
+    app_paginate_maxperpage: 10
+
     app_secret:         '%env(string:APP_SECRET)%'
     app_mode:           '%env(string:APP_MODE)%'
 
