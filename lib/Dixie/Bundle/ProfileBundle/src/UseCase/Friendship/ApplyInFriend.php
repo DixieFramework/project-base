@@ -1,8 +1,10 @@
 <?php
 
-namespace App\UseCase\Friendship;
+declare(strict_types=1);
 
-use App\Entity\Friend;
+namespace Talav\ProfileBundle\UseCase\Friendship;
+
+use Talav\ProfileBundle\Entity\Friend;
 use App\Entity\User;
 use App\Enum\SubscriptionPermissionEnum;
 use App\Exception\Http\EntityExistException;

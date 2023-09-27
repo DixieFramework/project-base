@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Talav\UserBundle\Entity;
 
-use Doctrine\Common\Collections\{Collection, ArrayCollection};
+use Doctrine\Common\Collections\
+{Collection, ArrayCollection, Criteria};
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -15,10 +16,12 @@ use Talav\CoreBundle\Entity\Traits\HasRelations;
 use Talav\PermissionBundle\Entity\Role;
 use Talav\PermissionBundle\Entity\RoleInterface;
 use Talav\PermissionBundle\Traits\HasRoles;
+use Talav\ProfileBundle\Entity\Friend;
 use Talav\ProfileBundle\Entity\ProfileInterface;
 use Talav\ProfileBundle\Entity\UserMetadata;
 use Talav\ProfileBundle\Entity\UserProfileRelation;
 use Talav\ProfileBundle\Entity\UserRelation;
+use Talav\ProfileBundle\Enum\FriendStatus;
 use Talav\UserBundle\Enum\UserFlagKey;
 use Talav\UserBundle\Model\UserInterface;
 
@@ -175,7 +178,7 @@ class User extends AbstractUser implements UserInterface
 
         $criteria->orWhere(Criteria::expr()->eq('user', $user));
         $criteria->orWhere(Criteria::expr()->eq('friend', $user));
-        $criteria->andWhere(Criteria::expr()->eq('status', FriendStatusEnum::CONFIRMED->name));
+        $criteria->andWhere(Criteria::expr()->eq('status', FriendStatus::CONFIRMED->name));
 
         return 1 === $this->getFriends()->matching($criteria)->count();
     }
