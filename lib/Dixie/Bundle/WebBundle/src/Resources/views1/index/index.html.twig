@@ -1,0 +1,58 @@
+{% extends '@TalavWeb/layouts/full.html.twig' %}
+
+{% block meta_title "Le compagnon de vos sorties et soirées en France" %}
+{% block meta_description 'Le compagnon pour vos sorties. Choisissez votre ville et découvrez les événements du moment !' %}
+{% block breadcrumb_widget '' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-9">
+            ddd
+        </div>
+        <div class="col-md-3">
+ddd
+        </div>
+    </div>
+
+    <section class="full_wrapper">
+        <div class="fade-black-transp"></div>
+        <div class="wrapper">
+            <h1>Hello, and welcome!</h1>
+            <div class="card no-margin-form search_container">
+                <div class="card-body">
+                    <p class="mb-0">Hello friend. This is the card body.</p>
+{#                    {{ form_start(autocomplete_form, { 'attr': {'class': 'form-city-picker m-0'} }) }}#}
+{#                    {{ form_errors(autocomplete_form) }}#}
+
+{#                    {{ form_row(autocomplete_form.shortcut, {'label': 'Je veux sortir', 'attr': {'data-from': autocomplete_form.from.vars.id, 'data-to': autocomplete_form.to.vars.id}, 'icon_prepend': 'calendar-alt'}) }}#}
+{#                    {{ form_row(autocomplete_form.from) }}#}
+{#                    {{ form_row(autocomplete_form.to) }}#}
+{#                    {{ form_row(autocomplete_form.name, {'label': 'À', 'icon_prepend': 'location-dot'}) }}#}
+{#                    <div class="text-center">#}
+{#                        <button class="btn btn-primary btn-raised choose-city-action" type="submit" disabled>#}
+{#                            C'est parti#}
+{#                        </button>#}
+{#                    </div>#}
+{#                    {{ form_rest(autocomplete_form) }}#}
+{#                    {{ form_end(autocomplete_form) }}#}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block css %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block head_js %}
+    <script>
+        var AppConfig = {
+            "apiCityURL": "{{ url('talav_web_index') }}?q=%QUERY"
+        };
+    </script>
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}

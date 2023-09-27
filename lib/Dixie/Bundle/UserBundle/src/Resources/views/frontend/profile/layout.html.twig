@@ -9,8 +9,8 @@
                     <!-- Avatar and content -->
                     <div class="text-center mb-3">
                         <!-- Avatar -->
-                        <div class="avatar avatar-xl mb-2">
-                            <img class="avatar-img rounded-circle border border-2 border-white" src="{{ asset('images/albums/01.jpg') }}" alt="">
+                        <div class="avatar-1 avatar-xl mb-2">
+                            <img class="avatar-img rounded-circle border border-2 border-white" src="{{ asset('images/albums/01.jpg') }}" height="100" weight="100" alt="">
                         </div>
                         <h6 class="mb-0">Jacqueline Miller</h6>
                         <a href="#" class="text-reset text-primary-hover small">hello@gmail.com</a>
@@ -84,5 +84,5 @@
 
 {% block stylesheets %}
 {{ parent() }}
-{{- asset_css('css/theme.min.css') }}
+{#{{- asset_css('css/theme.min.css') }}#}
 {% endblock %}

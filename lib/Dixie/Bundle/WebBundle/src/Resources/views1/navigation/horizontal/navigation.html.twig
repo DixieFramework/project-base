@@ -47,14 +47,14 @@
         </div>
 
         {% if is_remembered %}
-        <div class="navbar-nav dropdown d-block order-lg-3 ms-4">
-            <button role="button" class="d-flex nav-link p-0 align-items-center justify-content-center" data-bs-toggle="dropdown">
+        <div class="nav dropdown d-block order-lg-3 ms-4">
+            <a href="#" class="d-flex nav-link p-0 align-items-center justify-content-center" data-bs-toggle="dropdown">
                 <img src="{% if app.user.avatar %}{{ media_thumb_reference(app.user.avatar, 'square_small') }}{% else %}{{ asset('lol.png') }}{% endif %}" class="rounded-circle" width="35" alt="Avatar">
                 <div class="d-none d-sm-block ps-2 mb-1">
 {#                    <div class="fs-xs lh-1 opacity-60">Hello,</div>#}
-                    <div class="nav-link dropdown-toggle">{{ app.user.username }}</div>
+                    <div class="fs-sm dropdown-toggle">{{ app.user.username }}</div>
                 </div>
-            </button>
+            </a>
             <ul class="dropdown-menu dropdown-menu-end my-1" style="width: 14rem;">
                 <li>
                     <a href="#" class="dropdown-item d-flex align-items-center">
