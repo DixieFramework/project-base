@@ -43,6 +43,12 @@ talav_profile:
         user_friend:
             classes:
                 model: Groshy\Entity\UserFriend
+        friendship:
+            classes:
+                model: Groshy\Entity\Friendship
+        friendship_request:
+            classes:
+                model: Groshy\Entity\FriendshipRequest
 
 talav_settings:
     resources:

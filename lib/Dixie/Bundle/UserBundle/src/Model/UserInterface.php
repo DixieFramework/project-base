@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Talav\UserBundle\Model;
 
 use Talav\Component\User\Model\UserInterface as BaseUser;
-use Talav\ProfileBundle\Entity\ProfileInterface;
+use Talav\ProfileBundle\Model\ProfileInterface;
 use Talav\ProfileBundle\Entity\UserMetadata;
 
 interface UserInterface extends BaseUser

@@ -1,0 +1,182 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Talav\ProfileBundle\Controller;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Routing\Requirement\Requirement;
+use Talav\Component\Resource\Manager\ManagerInterface;
+use Talav\Component\Resource\Repository\RepositoryInterface;
+use Talav\Component\User\Model\UserInterface;
+use Talav\ProfileBundle\Entity\Friendship;
+use Talav\ProfileBundle\Entity\FriendshipRequest;
+use Talav\ProfileBundle\Model\ProfileInterface;
+use Talav\WebBundle\Form\Type\SearchFormType;
+use Talav\ProfileBundle\Repository\FriendshipRepository;
+use Talav\ProfileBundle\Repository\FriendshipRequestRepository;
+use Talav\ProfileBundle\Repository\ProfileRepository;
+use Talav\WebBundle\Service\SearchService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+class FriendshipController extends AbstractController
+{
+	private RepositoryInterface $profileRepository;
+	private FriendshipRepository $friendshipRepository;
+	private FriendshipRequestRepository $friendshipRequestRepository;
+
+    public function __construct(
+	    private readonly ManagerInterface            $profileManager,
+	    private readonly ManagerInterface            $friendshipManager,
+	    private readonly ManagerInterface            $friendshipRequestManager,
+//
+//        private readonly ProfileRepository           $profileRepository,
+//        private readonly FriendshipRequestRepository $friendshipRequestRepository,
+//        private readonly FriendshipRepository        $friendshipRepository,
+//        private readonly SearchService               $searchService
+    )
+    {
+	    $this->profileRepository = $profileManager->getRepository();
+	    $this->friendshipRepository = $friendshipManager->getRepository();
+	    $this->friendshipRequestRepository = $friendshipRequestManager->getRepository();
+    }
+
+    #[Route('friends/{username}', name: 'friends_index', requirements: ['username' => Requirement::ASCII_SLUG], methods: ['GET', 'POST'])]
+    #[ParamConverter('user', class: \Symfony\Component\Security\Core\User\UserInterface::class, options: ['mapping' => ['username' => 'username']])]
+    public function index(Request $request, \Symfony\Component\Security\Core\User\UserInterface $user): Response
+    {
+        /** @var UserInterface $loggedInUser */
+        $loggedInUser = $this->getUser();
+
+        $profile = $user->getProfile();
+        if ($profile/* && $profile->getPrivacySettings()->isFriendListViewAllowed($loggedInUser->getProfile())*/) {
+            $profileSearchForm = $this->createForm(SearchFormType::class);
+            $profileSearchForm->handleRequest($request);
+
+            $profileSearchResult = null;
+            if ($profileSearchForm->isSubmitted() && $profileSearchForm->isValid()) {
+                $profileSearchResult = $this->searchService->searchProfiles(
+                    $profileSearchForm->get('search_string')->getData()
+                );
+            }
+
+            return $this->render('@TalavProfile/friendship/index.html.twig', [
+                'profile' => $profile,
+                'searchForm' => $profileSearchForm->createView(),
+                'profileSearchResult' => $profileSearchResult
+            ]);
+        }
+
+        throw $this->createNotFoundException();
+    }
+
+    #[Route('friendship-request/create/{profileId}', name: 'friendship_request_create', methods: ['POST'])]
+    public function createRequest(int $profileId): Response
+    {
+        /** @var UserInterface $user */
+        $user = $this->getUser();
+
+        $requesterProfile = $this->profileRepository->find($user->getProfile()->getId());
+        $requesteeProfile = $this->profileRepository->find($profileId);
+
+        if ($requesterProfile && $requesteeProfile &&
+            !$this->getFriendshipRequestIfExists($user->getProfile()->getId(), $profileId)) {
+            $friendshipRequest = new FriendshipRequest();
+            $friendshipRequest->setRequester($requesterProfile);
+            $friendshipRequest->setRequestee($requesteeProfile);
+
+            $this->friendshipRequestRepository->save($friendshipRequest, true);
+
+            return new JsonResponse();
+        }
+
+        throw $this->createNotFoundException();
+    }
+
+    #[Route('friendship-request/delete/{profileId}', name: 'friendship_request_delete', methods: ['DELETE'])]
+    public function deleteRequest(int $profileId): Response
+    {
+        /** @var UserInterface $user */
+        $user = $this->getUser();
+
+        $request = $this->getFriendshipRequestIfExists($user->getProfile()->getId(), $profileId);
+
+        if ($request) {
+            $this->friendshipRequestRepository->remove($request, true);
+
+            return new JsonResponse();
+        }
+
+        throw $this->createNotFoundException();
+    }
+
+    #[Route('friendship/create/{profileId}', name: 'friendship_create', methods: ['POST'])]
+    public function createFriendship(int $profileId): Response
+    {
+        /** @var UserInterface $user */
+        $user = $this->getUser();
+
+        $friendProfile = $this->profileRepository->find($profileId);
+
+        $friendshipRequest = $this->getFriendshipRequestIfExists($user->getProfile()->getId(), $profileId);
+
+        if ($user->getProfile() && $friendProfile && $friendshipRequest) {
+
+            $friendshipObjectForFirstUser = new Friendship();
+            $friendshipObjectForFirstUser->setProfile($user->getProfile());
+            $friendshipObjectForFirstUser->setFriend($friendProfile);
+
+            $friendshipObjectForSecondUser = new Friendship();
+            $friendshipObjectForSecondUser->setProfile($friendProfile);
+            $friendshipObjectForSecondUser->setFriend($user->getProfile());
+
+            $this->friendshipRepository->save($friendshipObjectForFirstUser);
+            $this->friendshipRepository->save($friendshipObjectForSecondUser);
+
+            $this->friendshipRequestRepository->remove($friendshipRequest, true);
+
+            return new JsonResponse(['username' => $friendProfile->getUsername()]);
+        }
+
+        throw $this->createNotFoundException();
+    }
+
+    #[Route('friendship/delete/{profileId}', name: 'friendship_delete', methods: ['DELETE'])]
+    public function deleteFriendship(int $profileId): Response
+    {
+        /** @var UserInterface $user */
+        $user = $this->getUser();
+
+        $friendshipObjects = $this->friendshipRepository->findBy([
+            'profile' => [$user->getProfile()->getId(), $profileId],
+            'friend' => [$user->getProfile()->getId(), $profileId]
+        ]);
+
+
+        foreach ($friendshipObjects as $friendship) {
+            $this->friendshipRepository->remove($friendship, true);
+        }
+
+        return new JsonResponse(['username' => $this->profileRepository->find($profileId)->getUsername()]);
+    }
+
+    /**
+     * Get friendship request made by $firstProfileId to $secondProfileId or vice versa.
+     * Return null if such request does not exist.
+     *
+     * @param int $firstProfileId
+     * @param int $secondProfileId
+     * @return FriendshipRequest|null
+     */
+    protected function getFriendshipRequestIfExists(int $firstProfileId, int $secondProfileId): ?FriendshipRequest
+    {
+        return $this->friendshipRequestRepository->findOneBy([
+            'requestee' => [$firstProfileId, $secondProfileId],
+            'requester' => [$firstProfileId, $secondProfileId]
+        ]);
+    }
+}

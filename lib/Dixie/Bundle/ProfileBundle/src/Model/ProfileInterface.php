@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Talav\ProfileBundle\Entity;
+namespace Talav\ProfileBundle\Model;
 
 use Talav\Component\Resource\Model\ResourceInterface;
 use Talav\Component\User\Model\UserInterface;
 
 interface ProfileInterface extends ResourceInterface
 {
+
     public function getFirstName(): ?string;
 
     public function setFirstName(?string $firstName): void;

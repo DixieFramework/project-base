@@ -12,9 +12,9 @@ use Talav\ProfileBundle\Entity\Profile as BaseProfile;
 #[ORM\Table(name: 'user_profile')]
 class Profile extends BaseProfile
 {
-    #[ORM\Id]
-    #[ORM\Column(type: 'uuid', unique: true)]
-    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
-    #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
-    protected mixed $id = null;
+//    #[ORM\Id]
+//    #[ORM\Column(type: 'uuid', unique: true)]
+//    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+//    #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
+//    protected mixed $id = null;
 }

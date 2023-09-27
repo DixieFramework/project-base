@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <mapped-superclass name="Talav\ProfileBundle\Entity\Friendship" repository-class="Talav\ProfileBundle\Repository\FriendshipRepository" table="friendship">
+
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+
+    <many-to-one field="profile" target-entity="Talav\ProfileBundle\Model\ProfileInterface" inversed-by="friendships">
+      <join-column referenced-column-name="id" nullable="false" />
+    </many-to-one>
+
+    <many-to-one field="friend" target-entity="Talav\ProfileBundle\Model\ProfileInterface">
+      <join-column referenced-column-name="id" nullable="false" />
+    </many-to-one>
+
+    <field name="createdAt" column="created_at" type="datetime" column-definition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP"/>
+    <field name="updatedAt" column="updated_at" type="datetime" column-definition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP" nullable="true"/>
+
+  </mapped-superclass>
+</doctrine-mapping>

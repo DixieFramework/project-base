@@ -1,0 +1,54 @@
+{% extends '@TalavUser/frontend/profile/layout.html.twig' %}
+
+{% block title %}Друзья {{ user.username }}{% endblock %}
+{#{% block breadcrumbs %}#}
+{#    {{ wapinet_breadcrumbs({#}
+{#        1: {'uri': path('wapinet_users'), 'title': 'Пользователи'},#}
+{#        2: {'uri': path('wapinet_user_profile', {'username': user.username}), 'title': user.username}#}
+{#    }) }}#}
+{#{% endblock %}#}
+
+{% block page_content %}
+    <div class="card mb-3">
+        <!-- Card header START -->
+        <div class="card-header border-bottom-1 pb-0">
+            <h5 class="card-title h6">{{ 'talav.profile.friend.title'|trans }}</h5>
+        </div>
+        <!-- Card header END -->
+
+        <!-- Card body START -->
+        <div class="card-body">
+
+            <ul class="nav nav-tabs nav-justified mb-3">
+                <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tab-2-1">My Friends</a></li>
+                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-2-2">Incoming Requests</a></li>
+                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-2-3">Outgoing Requests</a></li>
+                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-2-4">Search Friends</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane show active" id="tab-2-1">
+                    We have a strong foundation built on legacy and emerging technologies, including excellent track record of on-time deliveries. We are emerging as one of the most promising private talent sourcing and management firms in the world. The real challenge before companies in today's world is to make their products and services appealing to everyone.
+                </div>
+                <div class="tab-pane" id="tab-2-2">
+                    <h1>Incoming</h1>
+                    {% for request in profile.getRequestsMadeToProfile() %}
+
+                    {% endfor %}
+                </div>
+                <div class="tab-pane" id="tab-2-3">
+                    Social an innovative Internet marketing solutions company that offers comprehensive web development, SMO services, SEO strategies and various other types of Internet marketing related services. With us at your side, you will find the IT solution to achieve your strategic and financial goals.
+                </div>
+                <div class="tab-pane" id="tab-2-4">
+                    Social an innovative Internet marketing solutions company that offers comprehensive web development, SMO services, SEO strategies and various other types of Internet marketing related services. With us at your side, you will find the IT solution to achieve your strategic and financial goals.
+                </div>
+            </div>
+
+        </div>
+        <!-- Card body END -->
+    </div>
+
+    <div class="pagerfanta">
+        {#        {{ pagerfanta(pagerfanta) }}#}
+    </div>
+
+{% endblock page_content %}

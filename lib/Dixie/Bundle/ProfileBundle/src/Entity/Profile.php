@@ -11,6 +11,7 @@ use Talav\Component\Resource\Model\ResourceTrait;
 use Talav\Component\Resource\Model\Timestampable;
 use Talav\Component\User\Model\UserInterface;
 use Talav\ProfileBundle\Enum\Gender;
+use Talav\ProfileBundle\Model\ProfileInterface;
 
 class Profile implements ProfileInterface
 {
@@ -23,7 +24,14 @@ class Profile implements ProfileInterface
 
 //    #[ORM\Column(type: 'string', enumType: Gender::class)]
     protected Gender $gender;
+
     protected UserInterface $user;
+
+	protected Collection $requester;
+
+	protected Collection $requestee;
+
+	protected Collection $friendships;
 
     /**
      * @var ArrayCollection
@@ -32,6 +40,9 @@ class Profile implements ProfileInterface
 
     public function __construct()
     {
+	    $this->requester = new ArrayCollection();
+	    $this->requestee = new ArrayCollection();
+	    $this->friendships = new ArrayCollection();
         $this->relationships = new ArrayCollection();
     }
 
@@ -87,6 +98,94 @@ class Profile implements ProfileInterface
 
         return $this;
     }
+
+	/**
+	 * @return Collection<int, FriendshipRequest>
+	 */
+	public function getRequestsMadeByProfile(): Collection
+	{
+		return $this->requester;
+	}
+
+	public function addRequester(FriendshipRequest $requester): self
+	{
+		if (!$this->requester->contains($requester)) {
+			$this->requester->add($requester);
+			$requester->setRequester($this);
+		}
+
+		return $this;
+	}
+
+	public function removeRequester(FriendshipRequest $requester): self
+	{
+		if ($this->requester->removeElement($requester)) {
+			if ($requester->getRequester() === $this) {
+				$requester->setRequester(null);
+			}
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @return Collection<int, FriendshipRequest>
+	 */
+	public function getRequestsMadeToProfile(): Collection
+	{
+		return $this->requestee;
+	}
+
+	public function addRequestee(FriendshipRequest $requestee): self
+	{
+		if (!$this->requestee->contains($requestee)) {
+			$this->requestee->add($requestee);
+			$requestee->setRequestee($this);
+		}
+
+		return $this;
+	}
+
+	public function removeRequestee(FriendshipRequest $requestee): self
+	{
+		if ($this->requestee->removeElement($requestee)) {
+			// set the owning side to null (unless already changed)
+			if ($requestee->getRequestee() === $this) {
+				$requestee->setRequestee(null);
+			}
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @return Collection<int, Friendship>
+	 */
+	public function getFriendships(): Collection
+	{
+		return $this->friendships;
+	}
+
+	public function addFriendship(Friendship $friendship): self
+	{
+		if (!$this->friendships->contains($friendship)) {
+			$this->friendships->add($friendship);
+			$friendship->setProfile($this);
+		}
+
+		return $this;
+	}
+
+	public function removeFriendship(Friendship $friendship): self
+	{
+		if ($this->friendships->removeElement($friendship)) {
+			if ($friendship->getProfile() === $this) {
+				$friendship->setProfile(null);
+			}
+		}
+
+		return $this;
+	}
 
     public function getRelationships(): Collection
     {

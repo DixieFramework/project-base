@@ -17,7 +17,7 @@ use Talav\PermissionBundle\Entity\Role;
 use Talav\PermissionBundle\Entity\RoleInterface;
 use Talav\PermissionBundle\Traits\HasRoles;
 use Talav\ProfileBundle\Entity\Friend;
-use Talav\ProfileBundle\Entity\ProfileInterface;
+use Talav\ProfileBundle\Model\ProfileInterface;
 use Talav\ProfileBundle\Entity\UserFriend;
 use Talav\ProfileBundle\Entity\UserMetadata;
 use Talav\ProfileBundle\Entity\UserProfileRelation;

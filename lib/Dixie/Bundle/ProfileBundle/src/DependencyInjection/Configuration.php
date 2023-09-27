@@ -8,9 +8,13 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Talav\ProfileBundle\Entity\Friendship;
+use Talav\ProfileBundle\Entity\FriendshipRequest;
 use Talav\ProfileBundle\Entity\Profile;
 use Talav\ProfileBundle\Entity\UserFriend;
 use Talav\ProfileBundle\Entity\UserRelation;
+use Talav\ProfileBundle\Repository\FriendshipRepository;
+use Talav\ProfileBundle\Repository\FriendshipRequestRepository;
 use Talav\ProfileBundle\Repository\UserFriendRepository;
 use Talav\ProfileBundle\Repository\UserRelationRepository;
 
@@ -81,6 +85,30 @@ class Configuration implements ConfigurationInterface
                                     ->children()
                                         ->scalarNode('model')->defaultValue(UserFriend::class)->end()
                                         ->scalarNode('repository')->defaultValue(UserFriendRepository::class)->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('friendship')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(Friendship::class)->end()
+                                        ->scalarNode('repository')->defaultValue(FriendshipRepository::class)->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('friendship_request')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(FriendshipRequest::class)->end()
+                                        ->scalarNode('repository')->defaultValue(FriendshipRequestRepository::class)->end()
                                     ->end()
                                 ->end()
                             ->end()

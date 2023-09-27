@@ -14,7 +14,7 @@ services:
         resource: '../../*'
         exclude:
             - '../../DependencyInjection/'
-            - '../../Entity/'
+#            - '../../Entity/'
             - '../../Migrations'
             - '../../Repository/'
             - '../../Tests/'

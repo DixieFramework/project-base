@@ -1,49 +1,77 @@
 parameters:
-  talav_user.display_captcha: false
+    talav_user.display_captcha: false
 
 services:
-  _defaults:
-    autowire: true
-    autoconfigure: true
-    public: false
-    bind:
-      $formLoginAuthenticator: '@security.authenticator.form_login.main'
-  Talav\UserBundle\:
-    resource: '../../*'
-    exclude: '../../{DependencyInjection,Entity,Event,Migrations,Tests,vendor,Controller,EventSubscriber}'
-  Talav\UserBundle\Controller\:
-    resource: '../../Controller'
-    tags: ['controller.service_arguments']
-  Talav\UserBundle\Controller\Frontend\ResettingController:
-    arguments:
-      $retryTtl: '%talav_user.resetting.retry_ttl%'
-      $tokenTtl: '%talav_user.resetting.token_ttl%'
-  Talav\UserBundle\Controller\Frontend\RegistrationController:
-    arguments:
-      $parameters:
-        form_type: '%talav_user.registration.form_type%'
-        form_model: '%talav_user.registration.form_model%'
-        form_validation_groups: '%talav_user.registration.form_validation_groups%'
-  Talav\UserBundle\EventSubscriber\:
-    resource: '../../EventSubscriber'
-    tags: ['kernel.event_subscriber']
-  Talav\UserBundle\Command\CreateUserCommand:
-    tags:
-      - { name: 'console.command', command: 'talav:user:create' }
-  talav.user.provider.oath:
-    class: Talav\UserBundle\Provider\TalavUserProvider
-    arguments:
-      - '@app.manager.user'
-      - '@app.manager.user_oauth'
-    public: true
-  Talav\Component\User\Message\CommandHandler\:
-    resource: '%kernel.project_dir%/vendor/talav/user/src/Message/CommandHandler/*'
-  Talav\Component\User\Mapper\Configurator\:
-    resource: '%kernel.project_dir%/vendor/talav/user/src/Mapper/Configurator/*'
+    # default configuration for services in *this* file
+    _defaults:
+        # automatically injects dependencies in your services
+        autowire: true
+        # automatically registers your services as commands, event subscribers, etc.
+        autoconfigure: true
+        # this means you cannot fetch services directly from the container via $container->get()
+        # if you need to do this, you can override this setting on individual services
+        public: false
+        bind:
+            $formLoginAuthenticator: '@security.authenticator.form_login.main'
 
-  Talav\UserBundle\EventListener\InjectRoleHierarchyListener:
-    class: Talav\UserBundle\EventListener\InjectRoleHierarchyListener
-    arguments: [ '@service_container' ]
-    tags:
-      - { name: 'doctrine.event_listener', event: 'postLoad' }
-      - { name: 'doctrine.event_listener', event: 'preLoad' }
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    Talav\UserBundle\:
+        resource: '../../*'
+        exclude:
+            - '../../DependencyInjection/'
+            - '../../Entity/'
+            - '../../Event'
+            - '../../Migrations'
+            - '../../Tests/'
+            - '../../vendor/'
+            - '../../Controller/'
+            - '../../EventSubscriber/'
+
+    # ---------------------------------------------------------
+    # Register all controllers of UserBundle as services
+    # ---------------------------------------------------------
+    Talav\UserBundle\Controller\:
+        resource: '../../Controller'
+        public: true
+        tags: [ 'controller.service_arguments' ]
+
+    Talav\UserBundle\Controller\Frontend\ResettingController:
+        arguments:
+            $retryTtl: '%talav_user.resetting.retry_ttl%'
+            $tokenTtl: '%talav_user.resetting.token_ttl%'
+
+    Talav\UserBundle\Controller\Frontend\RegistrationController:
+        arguments:
+            $parameters:
+                form_type: '%talav_user.registration.form_type%'
+                form_model: '%talav_user.registration.form_model%'
+                form_validation_groups: '%talav_user.registration.form_validation_groups%'
+
+    Talav\UserBundle\EventSubscriber\:
+        resource: '../../EventSubscriber'
+        tags: [ 'kernel.event_subscriber' ]
+
+    Talav\UserBundle\Command\CreateUserCommand:
+        tags:
+            - { name: 'console.command', command: 'talav:user:create' }
+
+    talav.user.provider.oath:
+        class: Talav\UserBundle\Provider\TalavUserProvider
+        arguments:
+            - '@app.manager.user'
+            - '@app.manager.user_oauth'
+        public: true
+
+    Talav\Component\User\Message\CommandHandler\:
+        resource: '%kernel.project_dir%/vendor/talav/user/src/Message/CommandHandler/*'
+
+    Talav\Component\User\Mapper\Configurator\:
+        resource: '%kernel.project_dir%/vendor/talav/user/src/Mapper/Configurator/*'
+
+    Talav\UserBundle\EventListener\InjectRoleHierarchyListener:
+        class: Talav\UserBundle\EventListener\InjectRoleHierarchyListener
+        arguments: [ '@service_container' ]
+        tags:
+            - { name: 'doctrine.event_listener', event: 'postLoad' }
+            - { name: 'doctrine.event_listener', event: 'preLoad' }
