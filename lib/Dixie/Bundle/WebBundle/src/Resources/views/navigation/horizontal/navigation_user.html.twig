@@ -16,6 +16,8 @@
         <li>{{ dropdownItem(path('user_profile_edit'), 'profile.edit.title', 'user-gear fa-fw me-2', 'TalavUserBundle') }}</li>
         <li>{{ dropdownItem(path('user_profile_change_password'), 'profile.change_password.title', 'unlock fa-fw me-2', 'TalavUserBundle') }}</li>
         <li>{{ dropdownSeparator() }}</li>
+        <li>{{ dropdownItem(path('user_relation_relations', {'username': app.user.username|slug}), 'profile.friends.title', 'unlock fa-fw me-2', 'TalavProfileBundle') }}</li>
+        <li>{{ dropdownSeparator() }}</li>
         <li>{{ dropdownItem(path('talav_user_logout'), 'index.logout', 'sign-out-alt fa-fw me-2', 'TalavWebBundle') }}</li>
 {#        <li>{{ dropdownItem(path('user_parameters'), 'user.parameters.title', 'user-gear') }}</li>#}
 {#        {% if is_previous_admin -%}#}

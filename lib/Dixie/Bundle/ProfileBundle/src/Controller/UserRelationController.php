@@ -172,9 +172,6 @@ class UserRelationController extends AbstractController
 		]);
 	}
 
-	/**
-	 * @Route("/delete/{username}", name="delete_relation")
-	 */
 	#[Route(path: '/delete/{username}', name: 'delete_relation', requirements: ['username' => Requirement::ASCII_SLUG])]
 	#[ParamConverter('member', class: UserInterface::class, options: ['mapping' => ['username' => 'username']])]
 	public function remove(User $member, EntityManagerInterface $entityManager): Response
@@ -190,7 +187,7 @@ class UserRelationController extends AbstractController
 
 		$relation = $relationRepository->findRelationBetween($loggedInMember, $member);
 		if (null === $relation) {
-			return $this->redirectToRoute('user_relation_relations', ['username' => $member->getUsername()]);
+			return $this->redirectToRoute('user_relation_relations', ['username' => $this->slugger->slug($member->getUsername())]);
 		}
 
 		$entityManager->remove($relation);
@@ -198,7 +195,7 @@ class UserRelationController extends AbstractController
 
 		$this->infoTrans('flash.relation.removed');
 
-		return $this->redirectToRoute('user_relation_relations', ['username' => $member->getUsername()]);
+		return $this->redirectToRoute('user_relation_relations', ['username' => $this->slugger->slug($member->getUsername())]);
 	}
 
 	/**

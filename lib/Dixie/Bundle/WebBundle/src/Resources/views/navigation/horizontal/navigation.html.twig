@@ -69,6 +69,13 @@
                     </a>
                 </li>
                 <li class="dropdown-divider"></li>
+                <li>
+                    <a href="{{ path('user_relation_relations', {'username': app.user.username|slug}) }}" class="dropdown-item d-flex align-items-center">
+                        <i class="fas fa-user-friends fs-base opacity-60 fa-fw me-2"></i>
+                        Friends
+                    </a>
+                </li>
+                <li class="dropdown-divider"></li>
                                 <li>
                                     <a class="dropdown-item d-flex align-items-center" href="#">
                                         <i class="fas fa-sign-out fs-base opacity-60 fa-fw me-2"></i>

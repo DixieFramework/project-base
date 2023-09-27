@@ -1,11 +1,22 @@
 {#{% import 'macros.twig' as macros %}#}
 {% set owned_relations = relation.owner == app.user %}
 <!-- Connections Item -->
+
+{#<div class="d-md-flex justify-content-between align-items-center bd-highlight mb-3">#}
+{#    <h6 class="mb-0"><a href="#!">{{ relation.receiver.username }}</a></h6>#}
+{#    <div class="small mb-0">Friend</div>#}
+{#    <!-- Button -->#}
+{#    <div>#}
+{#        <button class="btn btn-danger btn-sm mb-0 me-2"> Remove </button>#}
+{#        <a href="{{ path('user_relation_edit_relation', {username: relation.receiver.username|slug}) }}" class="btn btn-primary btn-sm mb-0">Edit</a>#}
+{#    </div>#}
+{#</div>#}
+
 {#<div class="d-md-flex align-items-center mb-4">#}
 <div class="d-md-flex justify-content-between align-items-center mb-4">
     <!-- Avatar -->
     <div class="avatar me-3 mb-3 mb-md-0">
-        <a href="#!"> <img class="avatar-img rounded-circle" src="assets/images/avatar/02.jpg" alt=""> </a>
+        <a href="#!"><img class="avatar-img rounded-circle" src="{% if relation.receiver.avatar %}{{ media_thumb_reference(relation.receiver.avatar, 'square_small') }}{% else %}{{ asset('images/avatar.png') }}{% endif %}" width="28" height="28" alt=""></a>
     </div>
     <!-- Info -->
     <div class="w-100">
@@ -14,26 +25,50 @@
 {#            <p class="small ms-sm-2 mb-0">{{ relation.updatedAt|format_date('medium') }}</p>#}
         </div>
         <!-- Connections START -->
-        <p class="small mb-0"><strong>Last Updated:</strong> {{ relation.updatedAt|format_date('medium') }}</p>
+        <p class="small mb-0"><strong>Friends since:</strong> {{ relation.updatedAt|format_date('medium') }}</p>
         <!-- Connections END -->
     </div>
     <!-- Button -->
     <div class="ms-md-auto d-flex">
-        <button class="btn btn-danger btn-sm mb-0 me-2"> Remove </button>
+        <button class="btn btn-danger btn-sm mb-0 me-2" data-bs-toggle="modal" data-bs-target="#deleteRelationModal{{ relation.id }}">Remove</button>
         <a href="{{ path('user_relation_edit_relation', {username: relation.receiver.username|slug}) }}" class="btn btn-primary btn-sm mb-0">Edit</a>
     </div>
 </div>
 
-
-
-<div class="{% if owned_relations %}relations-card{% else %}relations-card-other{% endif %}">
-{#    <div class="relation-avatar"><div class="o-avatar o-avatar--m">{{ macros.roundedavatarstack(relation.receiver.username, 48) }}</div></div>#}
-    <div class="relation-relation js-read-more u-break-words">{{ relation.receiver.username }} {{ relation.commentText|purify }}</div>
-    <div class="relation-updated"><span class="u-text-12">{{ relation.updatedAt|format_date('medium') }}</span></div>
-
-    {% if owned_relations %}<div class="relation-actions">
-        <a href="{{ path('user_relation_edit_relation', {username: relation.receiver.username|slug}) }}" class="o-button"><i class="fa fa-fw fa-edit"></i></a>
-        <button class="o-button" data-micromodal-trigger="relation-delete-{{ relation.id }}" data-bs-target="#modalDelete" data-bs-toggle="modal"  data-bs-dismiss="modal"><i class="fa fa-fw fa-trash-alt"></i></button>
+<div class="modal fade" id="deleteRelationModal{{ relation.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="md-modal-container">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmation</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-0">Are you sure that you want to remove the relationship with {{ relation.receiver.username }}?</p>
+                </div>
+                <div class="modal-footer">
+                    <form class="md-modal-item" method="post" action="{{ url('user_relation_delete_relation', {'username': relation.receiver.username|slug }) }}">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ relation.id) }}">
+                        <button type="submit" class="btn btn-primary btn-sm">Delete</button>
+                    </form>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
     </div>
-    {% endif %}
 </div>
+
+{#<div class="{% if owned_relations %}relations-card{% else %}relations-card-other{% endif %}">#}
+{#    <div class="relation-avatar"><div class="o-avatar o-avatar--m">{{ macros.roundedavatarstack(relation.receiver.username, 48) }}</div></div>#}
+{#    <div class="relation-relation js-read-more u-break-words">{{ relation.receiver.username }} {{ relation.commentText|purify }}</div>#}
+{#    <div class="relation-updated"><span class="u-text-12">{{ relation.updatedAt|format_date('medium') }}</span></div>#}
+
+{#    {% if owned_relations %}<div class="relation-actions">#}
+{#        <a href="{{ path('user_relation_edit_relation', {username: relation.receiver.username|slug}) }}" class="o-button"><i class="fa fa-fw fa-edit"></i></a>#}
+{#        <button class="o-button" data-micromodal-trigger="relation-delete-{{ relation.id }}" data-bs-target="#modalDelete" data-bs-toggle="modal"  data-bs-dismiss="modal"><i class="fa fa-fw fa-trash-alt"></i></button>#}
+{#    </div>#}
+{#    {% endif %}#}
+{#</div>#}

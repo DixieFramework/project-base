@@ -38,6 +38,12 @@ class User extends AbstractUser implements UserInterface
     #[ORM\JoinColumn(name: 'media_id')]
     protected ?MediaInterface $avatar = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Friend::class, cascade: ['persist', 'remove'])]
+    private Collection $friendRequests;
+
+    #[ORM\OneToMany(mappedBy: 'friend', targetEntity: Friend::class, cascade: ['persist', 'remove'])]
+    private Collection $acceptedFriendRequests;
+
 	#[ORM\OneToMany(targetEntity: UserRelation::class, mappedBy: 'owner')]
     protected $sendedUserRelations;
 
@@ -76,6 +82,9 @@ class User extends AbstractUser implements UserInterface
     public function __construct()
     {
         parent::__construct();
+
+        $this->friendRequests = new ArrayCollection();
+        $this->acceptedFriendRequests = new ArrayCollection();
 
 	    $this->sendedUserRelations = new ArrayCollection();
 	    $this->receivedUserRelations = new ArrayCollection();
@@ -125,6 +134,50 @@ class User extends AbstractUser implements UserInterface
     public function getAvatarDescription(): ?string
     {
         return $this->getAvatarName();
+    }
+
+    /**
+     * @return Collection<int, Friend>
+     */
+    public function getFriends(): Collection
+    {
+        return new ArrayCollection(array_merge(
+            $this->friendRequests->toArray(),
+            $this->acceptedFriendRequests->toArray()
+        ));
+    }
+
+    public function addFriend(Friend $friend): self
+    {
+        if (!$this->friendRequests->contains($friend)) {
+            $this->friendRequests[] = $friend;
+            $friend->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFriend(Friend $friend): self
+    {
+        if ($this->friendRequests->removeElement($friend)) {
+            // set the owning side to null (unless already changed)
+            if ($friend->getUser() === $this) {
+                $friend->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isFriend(self $user): bool
+    {
+        $criteria = Criteria::create();
+
+        $criteria->orWhere(Criteria::expr()->eq('user', $user));
+        $criteria->orWhere(Criteria::expr()->eq('friend', $user));
+        $criteria->andWhere(Criteria::expr()->eq('status', FriendStatusEnum::CONFIRMED->name));
+
+        return 1 === $this->getFriends()->matching($criteria)->count();
     }
 
 	/**
