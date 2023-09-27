@@ -47,6 +47,7 @@ class ImageType extends AbstractType
                 'attr' => ['max_length' => 255],
             ]
         );
+
         $builder->add(
             'path',
             TextType::class,

@@ -1,11 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends '@TalavWeb/layouts/default.html.twig' %}
 
 {% block title %}
     Utwórz obrazek
 {% endblock %}
 
 {% block body %}
-    <h1>Utwórz obrazek</h1>
+    <h1>Upload Photo</h1>
     {{ form_start(form) }}
     {{ form_widget(form) }}
     <div class="form-group row float-sm-right">

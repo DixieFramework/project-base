@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Talav\GalleryBundle\Entity;
 
+use Talav\Component\Media\Model\MediaInterface;
 use Talav\Component\Resource\Model\ResourceInterface;
 use Talav\GalleryBundle\Repository\ImageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -35,6 +36,10 @@ class Image implements ResourceInterface
     #[ORM\Column(type: Types::STRING)]
     #[Assert\Url]
     private string $path;
+
+//	#[ORM\OneToOne(targetEntity: "Talav\Component\Media\Model\MediaInterface", cascade: ['persist'])]
+//	#[ORM\JoinColumn(name: 'media_id')]
+//	protected ?MediaInterface $image = null;
 
     #[ORM\ManyToOne(targetEntity: Gallery::class, inversedBy: 'images')]
     #[ORM\JoinColumn(nullable: false)]
@@ -135,6 +140,16 @@ class Image implements ResourceInterface
 
         return $this;
     }
+
+//	public function getImage(): ?MediaInterface
+//	{
+//		return $this->image;
+//	}
+//
+//	public function setImage(?MediaInterface $image): void
+//	{
+//		$this->image = $image;
+//	}
 
     /**
      * Getter for gallery.
