@@ -8,3 +8,5 @@ talav:
                 comment: Comment
             add_submit_text: Add
             edit_submit_text: Edit
+        friends:
+            title: Friends

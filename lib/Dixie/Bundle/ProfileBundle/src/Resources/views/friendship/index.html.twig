@@ -9,8 +9,57 @@
 {#{% endblock %}#}
 
 {% block page_content %}
+{#    <h1 class="h2 text-center text-sm-start mb-4">Property offers</h1>#}
+{#    <!-- Nav tabs + Sorting-->#}
+{#    <div class="d-flex flex-column flex-sm-row align-items-center justify-content-between mb-4">#}
+{#        <ul class="nav nav-tabs flex-nowrap mb-sm-0" role="tablist">#}
+{#            <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tab-2-1">My Friends</a></li>#}
+{#            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-2-2">Incoming Requests</a></li>#}
+{#            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-2-3">Outgoing Requests</a></li>#}
+{#            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-2-4">Search Friends</a></li>#}
+{#        </ul>#}
+{#        <div class="d-flex align-items-center ms-sm-4">#}
+{#            <label class="fs-sm me-2 pe-1 text-nowrap" for="sortby"><i class="fi-arrows-sort text-muted mt-n1 me-2"></i>Sort by:</label>#}
+{#            <select class="form-select form-select-sm" id="sortby">#}
+{#                <option>Newest</option>#}
+{#                <option>Popularity</option>#}
+{#                <option>Low - High Price</option>#}
+{#                <option>High - Low Price</option>#}
+{#                <option>High rating</option>#}
+{#                <option>Average Rating</option>#}
+{#            </select>#}
+{#        </div>#}
+{#    </div>#}
 
-    <ul class="nav nav-tabs nav-justified mb-3">
+
+    <!-- Author list title START -->
+{#    <div class="row g-4 pb-4">#}
+{#        <div class="col-12">#}
+{#            <div class="d-sm-flex justify-content-between align-items-center">#}
+{#                <h1 class="mb-sm-0 h2">Galleries</h1>#}
+{#                {% if is_granted('GALLERY_CREATE') %}#}
+{#                    <a href="{{ url('talav_gallery_create') }}" class="btn btn-sm btn-primary mb-0"><i class="fas fa-plus fa-fw">&nbsp;</i>{{ 'talav.gallery.create.link'|trans }}</a>#}
+{#                {% endif %}#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+    <!-- Author list title START -->
+
+        <!-- Title -->
+        <div class="row">
+            <div class="col-12 mb-4 mb-sm-5">
+                <div class="d-sm-flex justify-content-between align-items-center">
+                    <h1 class="h3 mb-2 mb-sm-0">Dashboard</h1>
+                    {% if is_granted('GALLERY_CREATE') %}
+                        <div class="d-grid"><a href="{{ url('talav_gallery_create') }}"
+                                               class="btn btn-sm btn-outline-primary mb-0"><i class="fas fa-plus fa-fw">&nbsp;</i>{{ 'talav.gallery.create.link'|trans }}
+                            </a></div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    <ul class="nav nav-tabs nav-justified mb-4">
         <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tab-2-1">My Friends</a></li>
         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-2-2">Incoming Requests</a></li>
         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-2-3">Outgoing Requests</a></li>
@@ -31,8 +80,8 @@
                 <!-- Info -->
                 <div class="w-100">
                     <div class="d-sm-flex align-items-start">
-                        <h6 class="mb-0"><a href="#!">Lori Ferguson </a></h6>
-                        <p class="small ms-sm-2 mb-0">Full Stack Web Developer</p>
+                        <h6 class="mb-0"><a href="#!">{{ friendship.friend.user.username }}</a></h6>
+                        <p class="small ms-sm-2 mb-0">{{ friendship.updatedAt|format_date('medium') }}</p>
                     </div>
                     <!-- Connections START -->
                     <ul class="avatar-group mt-1 list-unstyled align-items-sm-center">
@@ -45,40 +94,70 @@
                 <!-- Button -->
                 <div class="ms-md-auto d-flex">
                     <button class="btn btn-danger btn-sm mb-0 me-2"> Remove </button>
-                    <button class="btn btn-primary btn-sm mb-0"> Message </button>
+                    <a href="{{ path('api_position_investments_create_collection', {username: friendship.friend.user.username|slug}) }}" class="btn btn-primary btn-sm mb-0">Edit</a>
                 </div>
             </div>
             {% endfor %}
 
-            <div class="single-item-countable d-flex friend-item align-items-center justify-content-between mb-3">
-                <div class="d-flex align-items-center w-100">
-                    <!-- Avatar -->
-                    <div class="avatar">
-                        <a href="https://demo.creativeitem.com/sociopro/user/view/profile/2"><img class="avatar-img rounded-circle user_image_show_on_modal" src="/sociopro/public/storage/userimage/optimized/wdTG9u4p1z7ZCqDglQmer2LYAUKo6vBMbsk80yhI.jpg" alt="" height="40" width="40"></a>
-                    </div>
-                    <div class="avatar-info ms-2">
-                        <h6 class="mb-1"><a href="https://demo.creativeitem.com/sociopro/user/view/profile/2">Rebeka Jordan</a></h6>
-                        <div class="activity-time small-text text-muted"> 0 Mutual Friends</div>
-                    </div>
-                </div>
-                <div class="post-controls dropdown dotted">
-                    <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="javascript:void(0)" onclick="ajaxAction('https://demo.creativeitem.com/sociopro/user/account/follow/2')">Follow</a> </li>
-                        <li> <a class="dropdown-item" href="javascript:void(0)" onclick="confirmAction('https://demo.creativeitem.com/sociopro/user/unfriend/2', true)">Unfriend</a> </li>
-                    </ul>
-                </div>
-            </div>
+{#            <div class="single-item-countable d-flex friend-item align-items-center justify-content-between mb-3">#}
+{#                <div class="d-flex align-items-center w-100">#}
+{#                    <!-- Avatar -->#}
+{#                    <div class="avatar">#}
+{#                        <a href="https://demo.creativeitem.com/sociopro/user/view/profile/2"><img class="avatar-img rounded-circle user_image_show_on_modal" src="/sociopro/public/storage/userimage/optimized/wdTG9u4p1z7ZCqDglQmer2LYAUKo6vBMbsk80yhI.jpg" alt="" height="40" width="40"></a>#}
+{#                    </div>#}
+{#                    <div class="avatar-info ms-2">#}
+{#                        <h6 class="mb-1"><a href="https://demo.creativeitem.com/sociopro/user/view/profile/2">Rebeka Jordan</a></h6>#}
+{#                        <div class="activity-time small-text text-muted"> 0 Mutual Friends</div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="post-controls dropdown dotted">#}
+{#                    <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">#}
+{#                    </a>#}
+{#                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">#}
+{#                        <li><a class="dropdown-item" href="javascript:void(0)" onclick="ajaxAction('https://demo.creativeitem.com/sociopro/user/account/follow/2')">Follow</a> </li>#}
+{#                        <li> <a class="dropdown-item" href="javascript:void(0)" onclick="confirmAction('https://demo.creativeitem.com/sociopro/user/unfriend/2', true)">Unfriend</a> </li>#}
+{#                    </ul>#}
+{#                </div>#}
+{#            </div>#}
 
             {% for friendship in profile.friendships %}
 
             {% endfor %}
         </div>
         <div class="tab-pane" id="tab-2-2">
-            <h1>Incoming</h1>
+            <div class="bg-primary rounded p-3 d-none d-lg-block">
+                <div class="row row-cols-7 g-4">
+                    <div class="col"><h6 class="mb-0">{{ 'Profile Username' }}</h6></div>
+                    <div class="col"><h6 class="mb-0">{{ 'Date' }}</h6></div>
+                    <div class="col"><h6 class="mb-0">{{ 'Actions' }}</h6></div>
+                </div>
+            </div>
             {% for request in profile.requestsMadeToProfile %}
+                <div class="row row-cols-xl-7 align-items-lg-center border-bottom g-4 px-2 py-4">
+                    <!-- Data item -->
+                    <div class="col">
+                        <small class="d-block d-lg-none">Booked by:</small>
+                        <div class="d-flex align-items-center">
+                            <!-- Avatar -->
+                            <div class="avatar avatar-xs flex-shrink-0">
+                                <img class="avatar-img rounded-circle" src="{{ asset('images/avatar.png') }}" height="28" width="28" alt="avatar">
+                            </div>
+                            <!-- Info -->
+                            <div class="ms-2">
+                                <h6 class="mb-0 fw-light"><a href="{{ path('user_profile_view', {'username': request.requester.user.username|slug}) }}">{{ request.requester.user.username }}</a></h6>
+                            </div>
+                        </div>
+                    </div>
 
+                    <!-- Data item -->
+                    <div class="col">
+                        <small class="d-block d-lg-none">Booking date:</small>
+                        <h6 class="mb-0 fw-normal">02 Dec 2022</h6>
+                    </div>
+
+                    <!-- Data item -->
+                    <div class="col"><a href="admin-guest-detail.html" class="btn btn-danger btn-sm mb-0 me-2">Dismiss</a><a href="admin-guest-detail.html" class="btn btn-success btn-sm mb-0">Accept</a></div>
+                </div>
             {% endfor %}
         </div>
         <div class="tab-pane" id="tab-2-3">
