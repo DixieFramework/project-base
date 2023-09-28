@@ -1,9 +1,9 @@
 {% extends '@TalavUser/frontend/profile/layout.html.twig' %}
 
 {% block page_content %}
-    {% if true is same as true %}
+    {% if user.username is same as app.user.username %}
         Your own profile
     {% else %}
-        {{ member.Username }}'s profile
+        {{ user.username }}'s profile
     {% endif %}
 {% endblock %}
