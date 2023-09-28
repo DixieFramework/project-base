@@ -6,6 +6,7 @@ namespace Talav\ProfileBundle\Entity;
 
 use Talav\Component\Resource\Model\ResourceInterface;
 use Talav\Component\Resource\Model\ResourceTrait;
+use Talav\ProfileBundle\Model\ProfileInterface;
 use Talav\ProfileBundle\Repository\FriendshipRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -20,11 +21,11 @@ class Friendship implements ResourceInterface
 
 //    #[ORM\ManyToOne(inversedBy: 'friendships')]
 //    #[ORM\JoinColumn(nullable: false)]
-    protected ?Profile $profile = null;
+    protected ?ProfileInterface $profile = null;
 
 //    #[ORM\ManyToOne]
 //    #[ORM\JoinColumn(nullable: false)]
-	protected ?Profile $friend = null;
+	protected ?ProfileInterface $friend = null;
 
 	protected ?\DateTime $createdAt = null;
 
@@ -35,24 +36,24 @@ class Friendship implements ResourceInterface
 //        return $this->id;
 //    }
 
-    public function getProfile(): ?Profile
+    public function getProfile(): ?ProfileInterface
     {
         return $this->profile;
     }
 
-    public function setProfile(?Profile $profile): self
+    public function setProfile(?ProfileInterface $profile): self
     {
         $this->profile = $profile;
 
         return $this;
     }
 
-    public function getFriend(): ?Profile
+    public function getFriend(): ?ProfileInterface
     {
         return $this->friend;
     }
 
-    public function setFriend(?Profile $friend): self
+    public function setFriend(?ProfileInterface $friend): self
     {
         $this->friend = $friend;
 

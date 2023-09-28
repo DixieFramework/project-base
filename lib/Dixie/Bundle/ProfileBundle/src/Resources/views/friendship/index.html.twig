@@ -18,19 +18,80 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane show active" id="tab-2-1">
-            We have a strong foundation built on legacy and emerging technologies, including excellent track record of on-time deliveries. We are emerging as one of the most promising private talent sourcing and management firms in the world. The real challenge before companies in today's world is to make their products and services appealing to everyone.
+            {% if (profile.id != app.user.profile.id) %}
+                <div class="text-2xl text-center m-4">{{ 'Friends of ' }} {{ profile.user.username }}</div>
+            {% endif %}
+
+            {% for friendship in  profile.friendships %}
+            <div class="d-md-flex align-items-center mb-4">
+                <!-- Avatar -->
+                <div class="avatar me-3 mb-3 mb-md-0">
+                    <a href="#!"><img class="avatar-img rounded-circle" src="{% if app.user.avatar %}{{ media_thumb_reference(app.user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar.png') }}{% endif %}" width="28" height="28" alt=""></a>
+                </div>
+                <!-- Info -->
+                <div class="w-100">
+                    <div class="d-sm-flex align-items-start">
+                        <h6 class="mb-0"><a href="#!">Lori Ferguson </a></h6>
+                        <p class="small ms-sm-2 mb-0">Full Stack Web Developer</p>
+                    </div>
+                    <!-- Connections START -->
+                    <ul class="avatar-group mt-1 list-unstyled align-items-sm-center">
+                        <li class="small">
+                            Bryan Knight and Billy Vasquez shared connections
+                        </li>
+                    </ul>
+                    <!-- Connections END -->
+                </div>
+                <!-- Button -->
+                <div class="ms-md-auto d-flex">
+                    <button class="btn btn-danger btn-sm mb-0 me-2"> Remove </button>
+                    <button class="btn btn-primary btn-sm mb-0"> Message </button>
+                </div>
+            </div>
+            {% endfor %}
+
+            <div class="single-item-countable d-flex friend-item align-items-center justify-content-between mb-3">
+                <div class="d-flex align-items-center w-100">
+                    <!-- Avatar -->
+                    <div class="avatar">
+                        <a href="https://demo.creativeitem.com/sociopro/user/view/profile/2"><img class="avatar-img rounded-circle user_image_show_on_modal" src="/sociopro/public/storage/userimage/optimized/wdTG9u4p1z7ZCqDglQmer2LYAUKo6vBMbsk80yhI.jpg" alt="" height="40" width="40"></a>
+                    </div>
+                    <div class="avatar-info ms-2">
+                        <h6 class="mb-1"><a href="https://demo.creativeitem.com/sociopro/user/view/profile/2">Rebeka Jordan</a></h6>
+                        <div class="activity-time small-text text-muted"> 0 Mutual Friends</div>
+                    </div>
+                </div>
+                <div class="post-controls dropdown dotted">
+                    <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="javascript:void(0)" onclick="ajaxAction('https://demo.creativeitem.com/sociopro/user/account/follow/2')">Follow</a> </li>
+                        <li> <a class="dropdown-item" href="javascript:void(0)" onclick="confirmAction('https://demo.creativeitem.com/sociopro/user/unfriend/2', true)">Unfriend</a> </li>
+                    </ul>
+                </div>
+            </div>
+
+            {% for friendship in profile.friendships %}
+
+            {% endfor %}
         </div>
         <div class="tab-pane" id="tab-2-2">
             <h1>Incoming</h1>
-            {% for request in profile.getRequestsMadeToProfile() %}
+            {% for request in profile.requestsMadeToProfile %}
 
             {% endfor %}
         </div>
         <div class="tab-pane" id="tab-2-3">
+            {% for request in profile.requestsMadeByProfile %}
+
+            {% endfor %}
+
             Social an innovative Internet marketing solutions company that offers comprehensive web development, SMO services, SEO strategies and various other types of Internet marketing related services. With us at your side, you will find the IT solution to achieve your strategic and financial goals.
         </div>
         <div class="tab-pane" id="tab-2-4">
-            Social an innovative Internet marketing solutions company that offers comprehensive web development, SMO services, SEO strategies and various other types of Internet marketing related services. With us at your side, you will find the IT solution to achieve your strategic and financial goals.
+            {{ form_start(searchForm) }}
+            {{ form_widget(searchForm) }}
+            {{ form_end(searchForm) }}
         </div>
     </div>
 

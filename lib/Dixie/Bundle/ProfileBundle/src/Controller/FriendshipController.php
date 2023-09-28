@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Talav\ProfileBundle\Controller;
 
+use Groshy\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Routing\Requirement\Requirement;
 use Talav\Component\Resource\Manager\ManagerInterface;
 use Talav\Component\Resource\Repository\RepositoryInterface;
@@ -74,17 +76,18 @@ class FriendshipController extends AbstractController
         throw $this->createNotFoundException();
     }
 
-    #[Route('friendship-request/create/{profileId}', name: 'friendship_request_create', methods: ['POST'])]
-    public function createRequest(int $profileId): Response
+    #[Route('friendship-request/create/{username}', name: 'friendship_request_create', requirements: ['username' => Requirement::ASCII_SLUG], methods: ['POST', 'GET'])]
+    #[ParamConverter('user', class: User::class, options: ['mapping' => ['username' => 'username']])]
+    public function createRequest(User $user): Response
     {
-        /** @var UserInterface $user */
-        $user = $this->getUser();
+        /** @var UserInterface $loggedInUser */
+        $loggedInUser = $this->getUser();
 
-        $requesterProfile = $this->profileRepository->find($user->getProfile()->getId());
-        $requesteeProfile = $this->profileRepository->find($profileId);
+        $requesterProfile = $this->profileRepository->find($loggedInUser->getProfile()->getId());
+        $requesteeProfile = $user->getProfile();//$this->profileRepository->find($profileId);
 
         if ($requesterProfile && $requesteeProfile &&
-            !$this->getFriendshipRequestIfExists($user->getProfile()->getId(), $profileId)) {
+            !$this->getFriendshipRequestIfExists($loggedInUser->getProfile()->getId(), $user->getProfile()->getId())) {
             $friendshipRequest = new FriendshipRequest();
             $friendshipRequest->setRequester($requesterProfile);
             $friendshipRequest->setRequestee($requesteeProfile);
@@ -114,38 +117,40 @@ class FriendshipController extends AbstractController
         throw $this->createNotFoundException();
     }
 
-    #[Route('friendship/create/{profileId}', name: 'friendship_create', methods: ['POST'])]
-    public function createFriendship(int $profileId): Response
+    #[Route('friendship/create/{username}', name: 'friendship_create', requirements: ['username' => Requirement::ASCII_SLUG], methods: ['POST', 'GET'])]
+    #[ParamConverter('user', class: User::class, options: ['mapping' => ['username' => 'username']])]
+    public function createFriendship(User $user): Response
     {
-        /** @var UserInterface $user */
-        $user = $this->getUser();
+        /** @var UserInterface $loggedInUser */
+        $loggedInUser = $this->getUser();
 
-        $friendProfile = $this->profileRepository->find($profileId);
+        $friendProfile = $user->getProfile();//$this->profileRepository->find($user);
 
-        $friendshipRequest = $this->getFriendshipRequestIfExists($user->getProfile()->getId(), $profileId);
+        $friendshipRequest = $this->getFriendshipRequestIfExists($loggedInUser->getProfile()->getId(), $user->getProfile()->getId());
 
-        if ($user->getProfile() && $friendProfile && $friendshipRequest) {
+        if ($loggedInUser->getProfile() && $friendProfile && $friendshipRequest) {
 
             $friendshipObjectForFirstUser = new Friendship();
-            $friendshipObjectForFirstUser->setProfile($user->getProfile());
+            $friendshipObjectForFirstUser->setProfile($loggedInUser->getProfile());
             $friendshipObjectForFirstUser->setFriend($friendProfile);
 
             $friendshipObjectForSecondUser = new Friendship();
             $friendshipObjectForSecondUser->setProfile($friendProfile);
-            $friendshipObjectForSecondUser->setFriend($user->getProfile());
+            $friendshipObjectForSecondUser->setFriend($loggedInUser->getProfile());
 
             $this->friendshipRepository->save($friendshipObjectForFirstUser);
             $this->friendshipRepository->save($friendshipObjectForSecondUser);
 
             $this->friendshipRequestRepository->remove($friendshipRequest, true);
 
-            return new JsonResponse(['username' => $friendProfile->getUsername()]);
+            return new JsonResponse(['username' => $friendProfile->getUser()->getUsername()]);
         }
 
         throw $this->createNotFoundException();
     }
 
-    #[Route('friendship/delete/{profileId}', name: 'friendship_delete', methods: ['DELETE'])]
+    #[Route('friendship/delete/{username}', name: 'friendship_delete', requirements: ['username' => Requirement::ASCII_SLUG], methods: ['DELETE'])]
+    #[ParamConverter('user', class: User::class, options: ['mapping' => ['username' => 'username']])]
     public function deleteFriendship(int $profileId): Response
     {
         /** @var UserInterface $user */

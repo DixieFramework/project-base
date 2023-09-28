@@ -18,6 +18,7 @@ use Talav\Component\Resource\Manager\ManagerInterface;
 use Talav\Component\User\Model\UserInterface;
 use Talav\CoreBundle\Controller\AbstractController;
 use Talav\CoreBundle\Interfaces\RoleInterface;
+use Talav\CoreBundle\Utils\StringUtils;
 use Talav\ProfileBundle\Entity\UserRelation;
 use Talav\ProfileBundle\Form\Type\UserRelationType;
 use Talav\ProfileBundle\Repository\UserRelationRepository;
@@ -32,7 +33,7 @@ class UserRelationController extends AbstractController
 	 */
 	private const RELATIONS_PER_PAGE = 25;
 
-	public function __construct(private readonly SluggerInterface $slugger) { }
+	public function __construct() { }
 
 	#[Route('/', name: 'index', methods: ['GET'])]
     public function indexAction(Request $request): Response
@@ -179,7 +180,7 @@ class UserRelationController extends AbstractController
 		/** @var UserInterface $loggedInMember */
 		$loggedInMember = $this->getUser();
 		if ($member === $loggedInMember) {
-			return $this->redirectToRoute('members_profile', ['username' => $loggedInMember->getusername()]);
+			return $this->redirectToRoute('members_profile', ['username' => StringUtils::slug($loggedInMember->getusername())]);
 		}
 
 		/** @var UserRelationRepository $relationRepository */
@@ -187,7 +188,7 @@ class UserRelationController extends AbstractController
 
 		$relation = $relationRepository->findRelationBetween($loggedInMember, $member);
 		if (null === $relation) {
-			return $this->redirectToRoute('user_relation_relations', ['username' => $this->slugger->slug($member->getUsername())]);
+			return $this->redirectToRoute('user_relation_relations', ['username' => StringUtils::slug($member->getUsername())]);
 		}
 
 		$entityManager->remove($relation);
@@ -195,7 +196,7 @@ class UserRelationController extends AbstractController
 
 		$this->infoTrans('flash.relation.removed');
 
-		return $this->redirectToRoute('user_relation_relations', ['username' => $this->slugger->slug($member->getUsername())]);
+		return $this->redirectToRoute('user_relation_relations', ['username' => StringUtils::slug($member->getUsername())]);
 	}
 
 	/**
@@ -208,7 +209,7 @@ class UserRelationController extends AbstractController
 		/** @var UserInterface $loggedInMember */
 		$loggedInMember = $this->getUser();
 		if ($member === $loggedInMember) {
-			return $this->redirectToRoute('members_profile', ['username' => $loggedInMember->getusername()]);
+			return $this->redirectToRoute('members_profile', ['username' => StringUtils::slug($loggedInMember->getusername())]);
 		}
 
 		/** @var UserRelationRepository $relationRepository */
@@ -216,7 +217,7 @@ class UserRelationController extends AbstractController
 
 		$relation = $relationRepository->findUnconfirmedRelationBetween($member, $loggedInMember);
 		if (null === $relation) {
-			return $this->redirectToRoute('user_relation_relations', ['username' => $member->getUsername()]);
+			return $this->redirectToRoute('user_relation_relations', ['username' => StringUtils::slug($member->getUsername())]);
 		}
 
 		$relation->setConfirmed('Yes');
@@ -224,7 +225,7 @@ class UserRelationController extends AbstractController
 
 		$this->infoTrans('flash.relation.confirmed');
 
-		return $this->redirectToRoute('user_relation_relations', ['username' => $this->slugger->slug($member->getUsername())]);
+		return $this->redirectToRoute('user_relation_relations', ['username' => StringUtils::slug($member->getUsername())]);
 	}
 
 	/**
@@ -235,14 +236,14 @@ class UserRelationController extends AbstractController
 		/** @var UserInterface $loggedInMember */
 		$loggedInMember = $this->getUser();
 		if ($member === $loggedInMember) {
-			return $this->redirectToRoute('members_profile', ['username' => $loggedInMember->getusername()]);
+			return $this->redirectToRoute('members_profile', ['username' => StringUtils::slug($loggedInMember->getusername())]);
 		}
 
 		/** @var UserRelationRepository $relationRepository */
 		$relationRepository = $this->entityManager->getRepository(UserRelation::class);
 		$relation = $relationRepository->findUnconfirmedRelationBetween($member, $loggedInMember);
 		if (null === $relation) {
-			return $this->redirectToRoute('relations', ['username' => $member->getUsername()]);
+			return $this->redirectToRoute('relations', ['username' => StringUtils::slug($member->getUsername())]);
 		}
 
 		$entityManager->remove($relation);
@@ -250,7 +251,7 @@ class UserRelationController extends AbstractController
 
 		$this->infoTrans('flash.relation.dismissed');
 
-		return $this->redirectToRoute('relations', ['username' => $member->getUsername()]);
+		return $this->redirectToRoute('relations', ['username' => StringUtils::slug($member->getUsername())]);
 	}
 
 	/**

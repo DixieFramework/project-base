@@ -11,8 +11,8 @@ class Template extends DefaultTemplate
     protected function getDefaultOptions(): array
     {
         return [
-            'prev_message' => 'Пред.',
-            'next_message' => 'След.',
+            'prev_message' => 'Prev',
+            'next_message' => 'Next',
             'dots_message' => '...',
             'active_suffix' => '',
             'css_active_class' => 'page-current pagination__item--current-page',

@@ -85,6 +85,15 @@ services:
     Groshy\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+    pagerfanta.view.default:
+        class: Talav\WebBundle\Pagerfanta\View
+        tags:
+            - { name: pagerfanta.view, alias: default }
+
     Groshy\Menu\SidebarMenuBuilder:
         tags:
             - { name: knp_menu.menu_builder, method: createAssetSidebarMenu, alias: asset_sidebar_menu }

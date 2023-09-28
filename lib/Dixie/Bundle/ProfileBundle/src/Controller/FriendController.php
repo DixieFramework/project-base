@@ -15,6 +15,7 @@ use Talav\Component\User\Manager\UserManagerInterface;
 use Talav\Component\User\Model\UserInterface;
 use Talav\CoreBundle\Controller\AbstractController;
 use Talav\CoreBundle\Interfaces\RoleInterface;
+use Talav\CoreBundle\Utils\StringUtils;
 use Talav\ProfileBundle\Repository\UserFriendRepository;
 use Talav\WebBundle\Service\PaginationService;
 
@@ -79,7 +80,7 @@ class FriendController extends AbstractController
 
         $messageBus->dispatch(new FriendAddMessage($user->getId(), $friend->getId()));
 
-        return $this->redirectToRoute('wapinet_user_profile', ['username' => $friend->getUsername()]);
+        return $this->redirectToRoute('wapinet_user_profile', ['username' => StringUtils::slug($friend->getUsername())]);
     }
 
     #[Route(path: '/friends/delete/{username}', name: 'wapinet_user_friends_delete', requirements: ['username' => '.+'])]
