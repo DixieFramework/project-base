@@ -4,7 +4,8 @@
 <li class="nav-item dropdown">
     <button class="nav-link dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
         {% apply spaceless %}
-            {% set image = media_thumb(app.user.avatar, 'square_small', {'class': 'avatar rounded-circle me-2', 'width': '28', 'height': '28'}) %}
+{#            {% set image = media_thumb(app.user.avatar, 'square_small', {'class': 'avatar rounded-circle me-2', 'width': '28', 'height': '28'}) %}#}
+            {% set image =  app.user.avatar ? media_thumb(app.user.avatar, 'square_small', {'class': 'avatar rounded-circle me-2', 'width': '28', 'height': '28'}) : asset('images/avatar.png') %}
             {% if image %}
                 {{ image|raw }}&nbsp;{{ app.user.userIdentifier }}
             {% else -%}
