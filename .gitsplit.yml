@@ -1,0 +1,24 @@
+cache_url: 'file://cache'
+project_url: 'https://@github.com/DixieFramework/project-base.git'
+origins:
+    - ^master$
+    - ^\d+\.\d+$
+    - ^\d+\.\d+\.\d+$
+splits:
+    - { prefix: lib/Dixie/Bundle/AvatarBundle, target: 'https://${GH_TOKEN}@github.com/DixieFramework/AvatarBundle.git' }
+    - { prefix: lib/Dixie/Bundle/BundleGeneratorBundle, target: 'https://${GH_TOKEN}@github.com/DixieFramework/BundleGeneratorBundle.git' }
+    - { prefix: lib/Dixie/Bundle/CoreBundle, target: 'https://${GH_TOKEN}@github.com/DixieFramework/CoreBundle.git' }
+    - { prefix: lib/Dixie/Bundle/GalleryBundle, target: 'https://${GH_TOKEN}@github.com/DixieFramework/GalleryBundle.git' }
+    - { prefix: lib/Dixie/Component/Media, target: 'https://${GH_TOKEN}@github.com/DixieFramework/Media.git' }
+    - { prefix: lib/Dixie/Bundle/MediaBundle, target: 'https://${GH_TOKEN}@github.com/DixieFramework/MediaBundle.git' }
+    - { prefix: lib/Dixie/Bundle/PermissionBundle, target: 'https://${GH_TOKEN}@github.com/DixieFramework/PermissionBundle.git' }
+    - { prefix: lib/Dixie/Bundle/ProfileBundle, target: 'https://${GH_TOKEN}@github.com/DixieFramework/ProfileBundle.git' }
+    - { prefix: lib/Dixie/Component/Registry, target: 'https://${GH_TOKEN}@github.com/DixieFramework/Registry.git' }
+    - { prefix: lib/Dixie/Component/Resource, target: 'https://${GH_TOKEN}@github.com/DixieFramework/Resource.git' }
+    - { prefix: lib/Dixie/Bundle/ResourceBundle, target: 'https://${GH_TOKEN}@github.com/DixieFramework/ResourceBundle.git' }
+    - { prefix: lib/Dixie/Bundle/SettingsBundle, target: 'https://${GH_TOKEN}@github.com/DixieFramework/SettingsBundle.git' }
+    - { prefix: lib/Dixie/Bundle/StripeBundle, target: 'https://${GH_TOKEN}@github.com/DixieFramework/StripeBundle.git' }
+    - { prefix: lib/Dixie/Component/Subscription, target: 'https://${GH_TOKEN}@github.com/DixieFramework/Subscription.git' }
+    - { prefix: lib/Dixie/Component/User, target: 'https://${GH_TOKEN}@github.com/DixieFramework/User.git' }
+    - { prefix: lib/Dixie/Bundle/UserBundle, target: 'https://${GH_TOKEN}@github.com/DixieFramework/UserBundle.git' }
+    - { prefix: lib/Dixie/Bundle/WebBundle, target: 'https://${GH_TOKEN}@github.com/DixieFramework/WebBundle.git' }

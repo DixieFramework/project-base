@@ -37,8 +37,8 @@ $config = [
     'splits' => [],
 ];
 
-$config['splits'] = array_merge($config['splits'], $find($root.'/src/lib/Dixie/Bundle'));
-$config['splits'] = array_merge($config['splits'], $find($root.'/src/lib/Dixie/Component'));
+$config['splits'] = array_merge($config['splits'], $find($root.'/lib/Dixie/Bundle'));
+$config['splits'] = array_merge($config['splits'], $find($root.'/lib/Dixie/Component'));
 
 usort($config['splits'], static fn(array $a, array $b): int => basename($a['prefix']) <=> basename($b['prefix']));
 
