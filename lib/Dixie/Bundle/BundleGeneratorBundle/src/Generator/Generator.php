@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Talav\BundleGeneratorBundle\Generator;
 
 use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Filesystem\Filesystem;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -17,6 +18,8 @@ class Generator
 {
     private $skeletonDirs;
     private static $output;
+
+    public function __construct(protected readonly Filesystem $filesystem) { }
 
     /**
      * Sets an array of directories to look for templates.
