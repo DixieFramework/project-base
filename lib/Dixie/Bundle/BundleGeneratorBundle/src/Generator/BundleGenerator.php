@@ -46,30 +46,31 @@ class BundleGenerator extends BaseBundleGenerator
             'php_min'           => Kernel::PHP_MINIMUM_VERSION
         ];
 
-        $routingFilename = $bundle->getRoutingConfigurationFilename() ?: 'routing.yml';
-        $routingTarget = $dir . '/config/talav/' . $routingFilename;
+//        $routingFilename = $bundle->getRoutingConfigurationFilename() ?: 'routing.yml';
+//        $routingTarget = $dir . '/config/talav/' . $routingFilename;
+//
+//        // create routing file for default annotation
+//        if ($bundle->getConfigurationFormat() == 'annotation') {
+//            self::mkdir(dirname($routingTarget));
+//            self::dump($routingTarget, '');
+//
+//            $routing = new RoutingManipulator($routingTarget);
+//            $routing->addResource($bundle->getName(), 'annotation');
+//        } else {
+//            // update routing file created by default implementation
+//            $this->renderFile(
+//                sprintf('bundle/%s.twig', $routingFilename),
+//                $dir.'/config/talav/'.$routingFilename, $parameters
+//            );
+//        }
 
-        // create routing file for default annotation
-        if ($bundle->getConfigurationFormat() == 'annotation') {
-            self::mkdir(dirname($routingTarget));
-            self::dump($routingTarget, '');
+//        $this->renderFile(
+//            'js/pimcore/startup.js.twig',
+//            $dir . '/public/js/pimcore/startup.js',
+//            $parameters
+//        );
 
-            $routing = new RoutingManipulator($routingTarget);
-            $routing->addResource($bundle->getName(), 'annotation');
-        } else {
-            // update routing file created by default implementation
-            $this->renderFile(
-                sprintf('bundle/%s.twig', $routingFilename),
-                $dir.'/config/talav/'.$routingFilename, $parameters
-            );
-        }
-
-        $this->renderFile(
-            'js/pimcore/startup.js.twig',
-            $dir . '/public/js/pimcore/startup.js',
-            $parameters
-        );
-
+        $this->renderFile('bundle/talav_routing.yml.twig', $dir.'/Resources/config/talav/routing.yml', $parameters);
         $this->renderFile('bundle/composer.json.twig', $dir.'/composer.json', $parameters);
     }
 
