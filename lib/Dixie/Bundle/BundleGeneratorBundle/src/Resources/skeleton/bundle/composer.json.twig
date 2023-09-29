@@ -1,6 +1,5 @@
 {
     "name": "{{ vendor|lower }}/{{ bundle_short_name|lower }}-bundle",
-    "version": "1.0.0",
     "description": "{{ bundle_name }} description",
     "type": "symfony-bundle",
     "license": "MIT",
@@ -13,7 +12,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "{{ namespace_double }}\\": ""
+            "{{ namespace_double }}\\": "src/"
         }
     },
     "require": {
@@ -27,7 +26,7 @@
             "symfony/thanks": false
         },
         "sort-packages": true
-    }
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "1.0.x-dev"
