@@ -1,5 +1,0 @@
-talav_image:
-    resource: "@TalavImageBundle/src/Controller/"
-    type:     annotation
-    prefix:   /
-

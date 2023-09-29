@@ -53,16 +53,12 @@ class BaseBundleGenerator extends Generator
 
         // render the services.yaml/xml file
         $servicesFilename = $bundle->getServicesConfigurationFilename();
-        $this->renderFile(
-            sprintf('bundle/%s.twig', $servicesFilename),
-            $dir.'/config/'.$servicesFilename, $parameters
-        );
+        $this->renderFile(sprintf('bundle/%s.twig', $servicesFilename), $dir.'/config/'.$servicesFilename, $parameters);
+        $this->renderFile(sprintf('bundle/%s.twig', $servicesFilename), $dir.'/src/Resources/config/'.$servicesFilename, $parameters);
 
         if ($routingFilename = $bundle->getRoutingConfigurationFilename()) {
-            $this->renderFile(
-                sprintf('bundle/%s.twig', $routingFilename),
-                $dir.'/config/pimcore/'.$routingFilename, $parameters
-            );
+//            $this->renderFile(sprintf('bundle/talav_%s.twig', $routingFilename), $dir.'/config/talav/'.$routingFilename, $parameters);
+            $this->renderFile(sprintf('bundle/talav_%s.twig', $routingFilename), $dir.'/src/Resources/config/talav/'.$routingFilename, $parameters);
         }
     }
 }

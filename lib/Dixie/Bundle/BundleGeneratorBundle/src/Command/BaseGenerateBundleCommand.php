@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Talav\BundleGeneratorBundle\Command;
 
+use Symfony\Component\Filesystem\Filesystem;
 use Talav\BundleGeneratorBundle\Generator\BundleGenerator;
 use Talav\BundleGeneratorBundle\Model\Bundle;
 use Symfony\Component\Console\Input\InputInterface;
@@ -371,6 +372,6 @@ EOF
 
     protected function createGenerator()
     {
-        return new BundleGenerator();
+        return new BundleGenerator(new Filesystem());
     }
 }
