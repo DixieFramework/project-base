@@ -69,7 +69,7 @@ class BundleGenerator extends BaseBundleGenerator
 //            $dir . '/public/js/pimcore/startup.js',
 //            $parameters
 //        );
-
+        $this->renderFile('bundle/LICENSE-'.$bundle->getLicense().'.twig', $dir.'/LICENSE.md', $parameters);
         $this->renderFile('bundle/talav_routing.yml.twig', $dir.'/Resources/config/talav/routing.yml', $parameters);
         $this->renderFile('bundle/composer.json.twig', $dir.'/composer.json', $parameters);
     }

@@ -23,15 +23,19 @@ class BaseBundle
 
     private $isShared;
 
+    private string $license;
+
     private $testsDirectory;
 
-    public function __construct($namespace, $name, $targetDirectory, $configurationFormat, $isShared)
+
+    public function __construct($namespace, $name, $targetDirectory, $configurationFormat, $isShared, string $license = 'MIT')
     {
         $this->namespace = $namespace;
         $this->name = $name;
         $this->targetDirectory = $targetDirectory;
         $this->configurationFormat = $configurationFormat;
         $this->isShared = $isShared;
+        $this->license = $license;
         $this->testsDirectory = $this->getTargetDirectory().'/tests';
     }
 
@@ -140,6 +144,14 @@ class BaseBundle
         return $this->namespace.'\\'.$this->name;
     }
 
+    /**
+     * @return string
+     */
+    public function getLicense(): string
+    {
+        return $this->license;
+    }
+
     public function setTestsDirectory($testsDirectory)
     {
         $this->testsDirectory = $testsDirectory;
@@ -149,4 +161,5 @@ class BaseBundle
     {
         return $this->testsDirectory;
     }
+
 }
