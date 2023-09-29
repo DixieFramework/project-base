@@ -414,6 +414,11 @@ $btn-scroll-top-dark-mode-color:            $white !default;
 $btn-scroll-top-dark-mode-hover-color:      $white !default;
 
 
+// Allows for customizing button radius independently from global border radius
+$btn-border-radius:           $border-radius !default;
+$btn-border-radius-sm:        $border-radius-sm !default;
+$btn-border-radius-lg:        $border-radius-lg !default;
+
 // Forms
 
 $form-text-font-size:                       $font-size-xs !default;

@@ -59,14 +59,14 @@
             </div>
         </div>
 
-    <ul class="nav nav-tabs nav-justified mb-4">
-        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-2-1" href="#tab-2-1" id="tab1">My Friends</a></li>
-        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-2-2" href="#tab-2-2" id="tab2">Incoming Requests</a></li>
-        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-2-3" href="#tab-2-3" id="tab3">Outgoing Requests</a></li>
-        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-2-4" href="#tab-2-4" id="tab4">Search Friends</a></li>
+    <ul class="nav nav-tabs nav-justified mb-4" id="friendship-tabs">
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab1" href="#tab1" id="tab-link-1">My Friends</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab2" href="#tab2" id="tab-link-2">Incoming Requests</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab3" href="#tab3" id="tab-link-3">Outgoing Requests</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab4" href="#tab4" id="tab-link-4">Search Friends</a></li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane show active" id="tab-2-1">
+        <div class="tab-pane show active" id="tab1">
             {% if (profile.id != app.user.profile.id) %}
                 <div class="text-2xl text-center m-4">{{ 'Friends of ' }} {{ profile.user.username }}</div>
             {% endif %}
@@ -124,7 +124,7 @@
 
             {% endfor %}
         </div>
-        <div class="tab-pane" id="tab-2-2">
+        <div class="tab-pane" id="tab2">
             <div class="bg-body-secondary rounded p-3 d-none d-lg-block">
                 <div class="row row-cols-3 g-4">
                     <div class="col"><h6 class="fw-medium mb-0">{{ 'User' }}</h6></div>
@@ -167,7 +167,7 @@
             </div>
             {% endfor %}
         </div>
-        <div class="tab-pane" id="tab-2-3">
+        <div class="tab-pane" id="tab3">
             <div class="bg-body-secondary rounded p-3 d-none d-lg-block">
                 <div class="row row-cols-3 g-4">
                     <div class="col"><h6 class="fw-medium mb-0">{{ 'User' }}</h6></div>
@@ -209,7 +209,7 @@
                 </div>
             {% endfor %}
         </div>
-        <div class="tab-pane" id="tab-2-4">
+        <div class="tab-pane" id="tab4">
             {{ form_start(searchForm) }}
             {{ form_widget(searchForm) }}
             {{ form_end(searchForm) }}
@@ -219,21 +219,10 @@
     <div class="pagerfanta">
         {#        {{ pagerfanta(pagerfanta) }}#}
     </div>
+
     <script type="text/javascript">
 	    (function ($) {
-			$('a[data-bs-toggle="tab"]').on('show.bs.tab', function (e) {
-				var url = $(this).attr("href"); // the remote url for content
-				var target = $(this).data("bs-target"); // the target pane
-				var tab = $(this); // this tab
-
-				// ajax load from data-url
-				$(target).load(url,function(result){
-					tab.tab('show');
-				});
-			});
-
-			// initially activate the first tab..
-			$('#tab1').tab('show');
+            $('#tab-link-1').tab('show');
 		});
     </script>
 {% endblock page_content %}

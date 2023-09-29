@@ -19,6 +19,13 @@ final class TalavPermissionExtension extends AbstractResourceExtension
 
         $config = $this->processConfiguration(new Configuration(), $configs);
 
+        if (isset($config['permissions'])) {
+            $container
+                ->getDefinition('talav_permission.security.config_permission_loader')
+                ->replaceArgument(0, $config['permissions'] ?? []);
+        }
+
+
         $this->registerResources('app', $config['resources'], $container);
     }
 }

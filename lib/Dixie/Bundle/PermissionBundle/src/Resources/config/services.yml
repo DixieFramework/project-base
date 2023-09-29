@@ -11,6 +11,30 @@ services:
     # SECURITY & VOTER
     # ================================================================================
 
+    # LEGACY-AUTH START
+    talav_permission.security.authorization_checker:
+        class: Talav\PermissionBundle\Security\AuthorizationCheckerInterface
+
+    talav_permission.security.permission_storage:
+        class: Talav\PermissionBundle\Security\PermissionStorage
+
+    Talav\PermissionBundle\Security\PermissionLoaderInterface: '@talav_permission.security.config_permission_loader'
+    Talav\PermissionBundle\Security\PermissionStorageInterface: '@talav_permission.security.permission_storage'
+
+    talav_permission.security.config_permission_loader:
+        class: Talav\PermissionBundle\Security\ConfigPermissionLoader
+        arguments:
+            - []
+#            - 'rolesPermissions'
+
+    Talav\PermissionBundle\Security\AuthorizationCheckerInterface: '@talav_permission.security.authorization_checker'
+
+    talav_permission.security.voter.role_permission:
+        class: Talav\PermissionBundle\Security\Voter\RolePermissionVoter
+        tags: ['security.voter']
+
+    # LEGACY-AUTH END
+
     Talav\PermissionBundle\Voter\AccessVoter:
         arguments: [ '@app.repository.permission' ]
         tags:
