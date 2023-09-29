@@ -1,0 +1,43 @@
+{
+    "name": "talav/image-bundle",
+    "description": "Symfony bundle providing image management functionality.",
+    "keywords": ["symfony", "bundle", "image", "media", "php"],
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Talav",
+            "email": "support@talav.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Talav\\ImageBundle\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=8.1.14"
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "symfony/flex": true,
+            "symfony/runtime": true,
+            "symfony/thanks": false
+        },
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../*/*"
+        }
+    ]
+}

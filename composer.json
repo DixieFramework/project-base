@@ -239,6 +239,13 @@
                 "symlink": true
             },
             "url": "lib/Dixie/Bundle/AvatarBundle"
+        },
+        {
+            "type": "path",
+            "options": {
+                "symlink": true
+            },
+            "url": "lib/Dixie/Bundle/ImageBundle"
         }
     ]
 }
