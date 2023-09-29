@@ -1,8 +1,9 @@
 {# horizontal toolbar #}
 {% from '@TalavWeb/macros/_icons.html.twig' import icon, navItem %}
 {# horizontal navigation #}
-{% set display_style = sidebar_hide ? 'flex' : 'none' %}
-<nav id="navigation"class="navbar navbar-horizontal navbar-expand-lg bg-body-tertiary border-bottom ps-2" style="display: {{ display_style }}">
+{%- set navbar_class = navbar_class|default('mb-4') -%}
+{%- set display_style = sidebar_hide ? 'flex' : 'none' -%}
+<nav id="navigation" class="navbar navbar-horizontal navbar-expand-lg bg-body-tertiary border-bottom ps-2 {{ navbar_class }}" style="display: {{ display_style }}">
     <div class="container">
         <button class="btn btn-outline-secondary rounded-circle show-sidebar py-0 px-2 mt-0" title="{{ 'index.sidebar_show'|trans }}">
             <i class="fa-solid fa-angle-right"></i>

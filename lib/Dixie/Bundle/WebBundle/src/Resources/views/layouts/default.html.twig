@@ -1,5 +1,5 @@
 {% extends '@TalavWeb/base.html.twig' %}
-
+{#{%- set container_class = container_class|default('container') -%}#}
 {% block layout %}
     {% include '@TalavWeb/layouts/_flash-messages.html.twig' %}
     {% block layout_header '' %}

@@ -16,6 +16,13 @@
                 {% if is_granted('GALLERY_CREATE') %}
                 <a href="{{ url('talav_gallery_create') }}" class="btn btn-sm btn-primary mb-0"><i class="fas fa-plus fa-fw">&nbsp;</i>{{ 'talav.gallery.create.link'|trans }}</a>
                 {% endif %}
+
+                <div class="d-block d-flex gap-2 flex-wrap">
+                    {% if is_granted('GALLERY_CREATE') %}
+                    <a href="{{ url('talav_gallery_create') }}" class="btn btn-sm btn-primary mb-0"><i class="fas fa-plus fa-fw"></i>{{ 'talav.gallery.create.link'|trans }}</a>
+                    <a href="{{ url('talav_gallery_create') }}" class="btn btn-sm btn-primary mb-0"><i class="fas fa-plus fa-fw"></i>{{ 'talav.gallery.create.link'|trans }}</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
@@ -57,12 +64,12 @@
                             </div>
                             <!-- Dropdown START -->
                             <div class="dropdown ms-auto">
-                                <a href="{{ url('talav_gallery_preview', {'id': gallery.id}) }}" class="icon-sm bg-light text-secondary rounded-circle" id="photoActionEdit17" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a href="{{ url('talav_gallery_preview', {'id': gallery.id}) }}" class="btn bg-body-secondary btn-round mb-0" id="galleryActionEdit{{ gallery.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fas fa-ellipsis"></i>
                                 </a>
 
                                 <!-- Dropdown menu -->
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="photoActionEdit17">
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="galleryActionEdit{{ gallery.id }}">
                                     {% if is_granted('GALLERY_VIEW', gallery) %}
                                     <li><a class="dropdown-item" href="{{ url('talav_gallery_preview', {'id': gallery.id}) }}"><i class="bi bi-download fa-fw pe-1"></i>View</a></li>
                                     {% endif %}
