@@ -60,10 +60,10 @@
         </div>
 
     <ul class="nav nav-tabs nav-justified mb-4">
-        <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tab-2-1">My Friends</a></li>
-        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-2-2">Incoming Requests</a></li>
-        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-2-3">Outgoing Requests</a></li>
-        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-2-4">Search Friends</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-2-1" href="#tab-2-1" id="tab1">My Friends</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-2-2" href="#tab-2-2" id="tab2">Incoming Requests</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-2-3" href="#tab-2-3" id="tab3">Outgoing Requests</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-2-4" href="#tab-2-4" id="tab4">Search Friends</a></li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane show active" id="tab-2-1">
@@ -126,14 +126,14 @@
         </div>
         <div class="tab-pane" id="tab-2-2">
             <div class="bg-body-secondary rounded p-3 d-none d-lg-block">
-                <div class="row row-cols-7 g-4">
-                    <div class="col"><h6 class="fw-medium mb-0">{{ 'Username' }}</h6></div>
+                <div class="row row-cols-3 g-4">
+                    <div class="col"><h6 class="fw-medium mb-0">{{ 'User' }}</h6></div>
                     <div class="col"><h6 class="fw-medium mb-0">{{ 'Date' }}</h6></div>
-                    <div class="col"><h6 class="fw-medium mb-0">{{ 'Actions' }}</h6></div>
+                    <div class="col"><h6 class="fw-medium mb-0">{{ 'Action' }}</h6></div>
                 </div>
             </div>
             {% for request in profile.requestsMadeToProfile %}
-                <div class="row row-cols-xl-7 align-items-lg-center border-bottom g-4 px-2 py-4">
+                <div class="row row-cols-xl-3 align-items-lg-center border-bottom g-4 px-2 py-4">
                     <!-- Data item -->
                     <div class="col">
                         <small class="d-block d-lg-none">Booked by:</small>
@@ -156,16 +156,58 @@
                     </div>
 
                     <!-- Data item -->
-                    <div class="col"><a href="admin-guest-detail.html" class="btn btn-danger btn-sm mb-0 me-2">Dismiss</a><a href="admin-guest-detail.html" class="btn btn-success btn-sm mb-0">Accept</a></div>
+                    <div class="col">
+                        <a href="admin-guest-detail.html" class="btn btn-danger btn-sm mb-0 me-2">Dismiss</a>
+                        <a href="admin-guest-detail.html" class="btn btn-success btn-sm mb-0">Accept</a>
+                    </div>
                 </div>
+            {% else %}
+            <div class="row row-cols-xl-1 align-items-lg-center border-bottom g-4 px-2 py-4">
+                <div class="col text-center">No records found.</div>
+            </div>
             {% endfor %}
         </div>
         <div class="tab-pane" id="tab-2-3">
+            <div class="bg-body-secondary rounded p-3 d-none d-lg-block">
+                <div class="row row-cols-3 g-4">
+                    <div class="col"><h6 class="fw-medium mb-0">{{ 'User' }}</h6></div>
+                    <div class="col"><h6 class="fw-medium mb-0">{{ 'Date' }}</h6></div>
+                    <div class="col"><h6 class="fw-medium mb-0">{{ 'Action' }}</h6></div>
+                </div>
+            </div>
             {% for request in profile.requestsMadeByProfile %}
+                <div class="row row-cols-xl-3 align-items-lg-center border-bottom g-4 px-2 py-4">
+                    <!-- Data item -->
+                    <div class="col">
+                        <small class="d-block d-lg-none">Recipient:</small>
+                        <div class="d-flex align-items-center">
+                            <!-- Avatar -->
+                            <div class="avatar avatar-xs flex-shrink-0">
+                                <img class="avatar-img rounded-circle" src="{% if request.requestee.user.avatar %}{{ media_thumb_reference(request.requestee.user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar.png') }}{% endif %}" height="28" width="28" alt="avatar">
+                            </div>
+                            <!-- Info -->
+                            <div class="ms-2">
+                                <h6 class="mb-0 fw-light"><a href="{{ path('user_profile_view', {'username': request.requestee.user.username|slug}) }}">{{ request.requestee.user.username }}</a></h6>
+                            </div>
+                        </div>
+                    </div>
 
+                    <!-- Data item -->
+                    <div class="col">
+                        <small class="d-block d-lg-none">Requested date:</small>
+                        <h6 class="mb-0 fw-light">02 Dec 2022</h6>
+                    </div>
+
+                    <!-- Data item -->
+                    <div class="col">
+                        <a href="{{ path('friendship_request_delete', {'profileId': request.requestee.user.profile.id}) }}" class="btn btn-danger btn-sm mb-0" onclick="deleteFriendshipRequest({{ profile.id }})">{{ 'common.button_cancel'|trans({}, 'TalavWebBundle') }}</a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="row row-cols-xl-1 align-items-lg-center border-bottom g-4 px-2 py-4">
+                    <div class="col text-center">No records found.</div>
+                </div>
             {% endfor %}
-
-            Social an innovative Internet marketing solutions company that offers comprehensive web development, SMO services, SEO strategies and various other types of Internet marketing related services. With us at your side, you will find the IT solution to achieve your strategic and financial goals.
         </div>
         <div class="tab-pane" id="tab-2-4">
             {{ form_start(searchForm) }}
@@ -177,5 +219,26 @@
     <div class="pagerfanta">
         {#        {{ pagerfanta(pagerfanta) }}#}
     </div>
+    <script type="text/javascript">
+	    (function ($) {
+			$('a[data-bs-toggle="tab"]').on('show.bs.tab', function (e) {
+				var url = $(this).attr("href"); // the remote url for content
+				var target = $(this).data("bs-target"); // the target pane
+				var tab = $(this); // this tab
 
+				// ajax load from data-url
+				$(target).load(url,function(result){
+					tab.tab('show');
+				});
+			});
+
+			// initially activate the first tab..
+			$('#tab1').tab('show');
+		});
+    </script>
 {% endblock page_content %}
+
+{% block javascripts %}
+{{ parent() }}
+
+{% endblock %}

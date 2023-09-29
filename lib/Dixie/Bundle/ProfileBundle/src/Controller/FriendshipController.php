@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Requirement\Requirement;
 use Talav\Component\Resource\Manager\ManagerInterface;
 use Talav\Component\Resource\Repository\RepositoryInterface;
 use Talav\Component\User\Model\UserInterface;
+use Talav\CoreBundle\Utils\StringUtils;
 use Talav\ProfileBundle\Entity\Friendship;
 use Talav\ProfileBundle\Entity\FriendshipRequest;
 use Talav\ProfileBundle\Model\ProfileInterface;
@@ -47,7 +48,7 @@ class FriendshipController extends AbstractController
 	    $this->friendshipRequestRepository = $friendshipRequestManager->getRepository();
     }
 
-    #[Route('friends/{username}', name: 'friends_index', requirements: ['username' => Requirement::ASCII_SLUG], methods: ['GET', 'POST'])]
+    #[Route('friends/{username}', name: 'friendship_index', requirements: ['username' => Requirement::ASCII_SLUG], methods: ['GET', 'POST'])]
     #[ParamConverter('user', class: \Symfony\Component\Security\Core\User\UserInterface::class, options: ['mapping' => ['username' => 'username']])]
     public function index(Request $request, \Symfony\Component\Security\Core\User\UserInterface $user): Response
     {
@@ -100,18 +101,22 @@ class FriendshipController extends AbstractController
         throw $this->createNotFoundException();
     }
 
-    #[Route('friendship-request/delete/{profileId}', name: 'friendship_request_delete', methods: ['DELETE'])]
-    public function deleteRequest(int $profileId): Response
+    #[Route('friendship-request/delete/{profileId}', name: 'friendship_request_delete', methods: ['DELETE', 'GET'])]
+    public function deleteRequest(Request $request, int $profileId): Response
     {
         /** @var UserInterface $user */
         $user = $this->getUser();
 
-        $request = $this->getFriendshipRequestIfExists($user->getProfile()->getId(), $profileId);
+        $friendshipRequest = $this->getFriendshipRequestIfExists($user->getProfile()->getId(), $profileId);
 
-        if ($request) {
-            $this->friendshipRequestRepository->remove($request, true);
+        if ($friendshipRequest) {
+            $this->friendshipRequestRepository->remove($friendshipRequest, true);
 
-            return new JsonResponse();
+	        if ($request->isXmlHttpRequest()) {
+		        return $this->json(['status' => 'ok']);
+	        } else {
+		        return $this->redirectToRoute('friendship_index', ['username' => StringUtils::slug($user->getUsername())]);
+	        }
         }
 
         throw $this->createNotFoundException();

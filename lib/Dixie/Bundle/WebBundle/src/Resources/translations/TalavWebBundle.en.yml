@@ -30,15 +30,17 @@ about:
 
 common:
     actions: Actions
+    button_accept: Accept
     button_add: Add
     button_back: Back
     button_back_list: Back To List
     button_browse: Browse
     button_cancel: Cancel
-    button_clone: Créer une copie
+    button_clone: Create Copy
     button_close: Close
     button_copy: Copy
     button_delete: Delete
+    button_dismiss: Dismiss
     button_edit: Edit
     button_export: Exporter
     button_export_pdf: Exporter au format PDF
