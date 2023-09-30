@@ -39,6 +39,7 @@ common:
     button_clone: Create Copy
     button_close: Close
     button_copy: Copy
+    button_create: Create
     button_delete: Delete
     button_dismiss: Dismiss
     button_edit: Edit
@@ -56,7 +57,9 @@ common:
     button_refresh: Refresh
     button_search: Search
     button_show: Show
+    button_submit: Submit
     button_table: Mode tabulaire
+    button_upload: Upload
     clone_description: '%description% - Copie'
     count: 'Nombre d''éléments : %count%'
     add_success: L'objet <b>%name%</b> a été ajouté avec succès.
