@@ -1,7 +1,6 @@
 {% extends '@TalavWeb/cards/card_edit.html.twig' %}
 {% trans_default_domain 'TalavUserBundle' %}
 {# parameters #}
-{%- set navbar_class = 'mb-n4' -%}
 {%- set title = 'profile.edit.title' -%}
 {%- set title_icon = 'user-gear fa-fw me-2' -%}
 {%- set title_domain = 'TalavUserBundle' -%}
@@ -9,6 +8,7 @@
 {%- set form_attr = form_attr|default({})|merge({
                 'data-check-name': url('ajax_check_user_name'),
                 'data-check-email': url('ajax_check_user_email')}) -%}
+{% block container_class 'container mt-n4' %}
 {%- block card_container_class ' col-xl-7 col-lg-8 col-md-7 order-md-1 mb-5' -%}
 {%- block card_sidebar_class ' col-lg-4 col-md-5 offset-xl-1 order-md-2 mb-5' -%}
 {% block card_sidebar %}
