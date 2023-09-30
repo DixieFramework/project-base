@@ -30,20 +30,20 @@ class FriendshipRepository extends ResourceRepository
         }
     }
 
-    public function getRelationsCount(UserInterface $member): int
+    public function getFriendshipCount(UserInterface $user): int
     {
-        $qb = $this->createQueryBuilder('r');
+        $qb = $this->createQueryBuilder('f');
 
         return
             (int) $qb
-                ->select('count(r.id)')
-                ->where('r.confirmed = :confirmed')
+                ->select('count(f.id)')
+//                ->where('r.confirmed = :confirmed')
                 ->andWhere(
-                    $qb->expr()->eq('r.owner', ':member'),
+                    $qb->expr()->eq('f.profile', ':profile'),
                 )
-                ->setParameter(':member', $member)
-                ->setParameter(':confirmed', 'Yes')
-                ->orderBy('r.updated', 'ASC')
+                ->setParameter(':profile', $user->getProfile())
+//                ->setParameter(':confirmed', 'Yes')
+                ->orderBy('f.updatedAt', 'ASC')
                 ->getQuery()
                 ->getSingleScalarResult()
             ;

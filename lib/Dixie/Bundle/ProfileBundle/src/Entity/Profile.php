@@ -187,6 +187,57 @@ class Profile implements ProfileInterface
 		return $this;
 	}
 
+	/**
+	 * Check if profile with id = $friendId is a friend of current user
+	 *
+	 * @param int $friendId
+	 * @return bool
+	 */
+	public function isFriend(int $friendId): bool
+	{
+		$friendships = $this->getFriendships()->filter(
+			function ($friendship) use ($friendId) {
+				return $friendship->getFriend()->getId() == $friendId;
+			}
+		);
+
+		return (bool)$friendships->count();
+	}
+
+	/**
+	 * Check if current user has incoming friendship request from profile with id = $profileId
+	 *
+	 * @param int $profileId
+	 * @return bool
+	 */
+	public function hasIncomingRequest(int $profileId): bool
+	{
+		return (bool)$this->getRequestsMadeToProfile()
+			->filter(
+				function ($request) use ($profileId) {
+					/** @var FriendshipRequest $request */
+					return $request->getRequester()->getId() == $profileId;
+				}
+			)->count();
+	}
+
+	/**
+	 * Check if current user has outgoing friendship request to profile with id = $profileId
+	 *
+	 * @param int $profileId
+	 * @return bool
+	 */
+	public function hasOutgoingRequest(int $profileId): bool
+	{
+		return (bool)$this->getRequestsMadeByProfile()
+			->filter(
+				function ($request) use ($profileId) {
+					/** @var FriendshipRequest $request */
+					return $request->getRequestee()->getId() == $profileId;
+				}
+			)->count();
+	}
+
     public function getRelationships(): Collection
     {
         return $this->relationships;

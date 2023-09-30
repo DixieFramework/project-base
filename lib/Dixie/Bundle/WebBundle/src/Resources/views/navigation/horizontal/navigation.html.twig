@@ -62,7 +62,7 @@
                 <li>{{ dropdownItem(path('user_profile_edit'), 'profile.edit.title', 'user-gear fa-fw me-2', 'TalavUserBundle') }}</li>
                 <li>{{ dropdownItem(path('user_profile_change_password'), 'profile.change_password.title', 'unlock fa-fw me-2', 'TalavUserBundle') }}</li>
                 <li class="dropdown-divider"></li>
-                <li>{{ dropdownItem(path('friendship_index', {'username': app.user.username|slug}), 'talav.profile.friends.title', 'user-friends fa-fw me-2', 'TalavProfileBundle') }}</li>
+                <li>{{ dropdownItem(path('profile_friendship_index', {'username': app.user.username|slug}), 'talav.profile.friends.title', 'user-friends fa-fw me-2', 'TalavProfileBundle') }}</li>
                 <li class="dropdown-divider"></li>
                 <li>{{ dropdownItem(path('talav_user_logout'), 'index.logout', 'sign-out-alt fa-fw me-2', 'TalavWebBundle') }}</li>
             </ul>

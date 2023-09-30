@@ -41,4 +41,5 @@ return [
     Oneup\FlysystemBundle\OneupFlysystemBundle::class => ['all' => true],
     Talav\MediaBundle\TalavMediaBundle::class => ['all' => true],
     Talav\AvatarBundle\TalavAvatarBundle::class => ['all' => true],
+    Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
 ];

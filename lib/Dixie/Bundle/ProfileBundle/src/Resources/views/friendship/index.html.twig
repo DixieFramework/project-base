@@ -106,7 +106,7 @@
 
                     <!-- Data item -->
                     <div class="col">
-                        <a href="{{ path('friendship_delete', {'username': friendship.friend.user.username}) }}" class="btn btn-danger btn-sm mb-0 me-2">Unfriend</a>
+                        <a href="{{ path('profile_friendship_delete', {'username': friendship.friend.user.username}) }}" class="btn btn-danger btn-sm mb-0 me-2">Unfriend</a>
                     </div>
                 </div>
             {% else %}
@@ -216,7 +216,7 @@
 
                     <!-- Data item -->
                     <div class="col">
-                        <a href="{{ path('friendship_request_delete', {'profileId': request.requestee.user.profile.id}) }}" class="btn btn-danger btn-sm mb-0" onclick="deleteFriendshipRequest({{ profile.id }})">{{ 'common.button_cancel'|trans({}, 'TalavWebBundle') }}</a>
+                        <a href="{{ path('profile_friendship_request_delete', {'profileId': request.requestee.user.profile.id}) }}" class="btn btn-danger btn-sm mb-0" onclick="deleteFriendshipRequest({{ profile.id }})">{{ 'common.button_cancel'|trans({}, 'TalavWebBundle') }}</a>
                     </div>
                 </div>
             {% else %}

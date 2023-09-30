@@ -7,10 +7,13 @@ namespace Talav\ProfileBundle\Controller;
 use Groshy\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Requirement\Requirement;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Talav\Component\Resource\Manager\ManagerInterface;
 use Talav\Component\Resource\Repository\RepositoryInterface;
 use Talav\Component\User\Model\UserInterface;
+use Talav\CoreBundle\Interfaces\RoleInterface;
 use Talav\CoreBundle\Utils\StringUtils;
 use Talav\ProfileBundle\Entity\Friendship;
 use Talav\ProfileBundle\Entity\FriendshipRequest;
@@ -26,6 +29,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[AsController]
+#[Route(path: '/profile', name: 'profile_')]
+#[IsGranted(RoleInterface::ROLE_USER)]
 class FriendshipController extends AbstractController
 {
 	private RepositoryInterface $profileRepository;
@@ -48,7 +54,7 @@ class FriendshipController extends AbstractController
 	    $this->friendshipRequestRepository = $friendshipRequestManager->getRepository();
     }
 
-    #[Route('friends/{username}', name: 'friendship_index', requirements: ['username' => Requirement::ASCII_SLUG], methods: ['GET', 'POST'])]
+    #[Route('/friendship/{username}', name: 'friendship_index', requirements: ['username' => Requirement::ASCII_SLUG], methods: ['GET', 'POST'])]
     #[ParamConverter('user', class: User::class, options: ['mapping' => ['username' => 'username']])]
     public function index(Request $request, User $user): Response
     {
@@ -78,7 +84,7 @@ class FriendshipController extends AbstractController
         throw $this->createNotFoundException();
     }
 
-    #[Route('friendship-request/create/{username}', name: 'friendship_request_create', requirements: ['username' => Requirement::ASCII_SLUG], methods: ['POST', 'GET'])]
+    #[Route('/friendship-request/create/{username}', name: 'friendship_request_create', requirements: ['username' => Requirement::ASCII_SLUG], methods: ['POST', 'GET'])]
     #[ParamConverter('user', class: User::class, options: ['mapping' => ['username' => 'username']])]
     public function createRequest(User $user): Response
     {
@@ -102,7 +108,7 @@ class FriendshipController extends AbstractController
         throw $this->createNotFoundException();
     }
 
-    #[Route('friendship-request/delete/{profileId}', name: 'friendship_request_delete', methods: ['DELETE', 'GET'])]
+    #[Route('/friendship-request/delete/{profileId}', name: 'friendship_request_delete', methods: ['DELETE', 'GET'])]
     public function deleteRequest(Request $request, int $profileId): Response
     {
         /** @var UserInterface $user */
@@ -123,7 +129,7 @@ class FriendshipController extends AbstractController
         throw $this->createNotFoundException();
     }
 
-    #[Route('friendship/create/{username}', name: 'friendship_create', requirements: ['username' => Requirement::ASCII_SLUG], methods: ['POST', 'GET'])]
+    #[Route('/friendship/create/{username}', name: 'friendship_create', requirements: ['username' => Requirement::ASCII_SLUG], methods: ['POST', 'GET'])]
     #[ParamConverter('user', class: User::class, options: ['mapping' => ['username' => 'username']])]
     public function createFriendship(User $user): Response
     {
@@ -155,16 +161,16 @@ class FriendshipController extends AbstractController
         throw $this->createNotFoundException();
     }
 
-    #[Route('friendship/delete/{username}', name: 'friendship_delete', requirements: ['username' => Requirement::ASCII_SLUG], methods: ['DELETE'])]
+    #[Route('/friendship/delete/{username}', name: 'friendship_delete', requirements: ['username' => Requirement::ASCII_SLUG], methods: ['DELETE'])]
     #[ParamConverter('user', class: User::class, options: ['mapping' => ['username' => 'username']])]
-    public function deleteFriendship(int $profileId): Response
+    public function deleteFriendship(User $user): Response
     {
-        /** @var UserInterface $user */
-        $user = $this->getUser();
+        /** @var UserInterface $loggedInUser */
+        $loggedInUser = $this->getUser();
 
         $friendshipObjects = $this->friendshipRepository->findBy([
-            'profile' => [$user->getProfile()->getId(), $profileId],
-            'friend' => [$user->getProfile()->getId(), $profileId]
+            'profile' => [$loggedInUser->getProfile()->getId(), $user->getProfile()->getId()],
+            'friend' => [$loggedInUser->getProfile()->getId(), $user->getProfile()->getId()]
         ]);
 
 
@@ -172,7 +178,7 @@ class FriendshipController extends AbstractController
             $this->friendshipRepository->remove($friendship, true);
         }
 
-        return new JsonResponse(['username' => $this->profileRepository->find($profileId)->getUsername()]);
+        return new JsonResponse(['username' => $this->profileRepository->find($user->getProfile()->getId())->getUsername()]);
     }
 
     /**

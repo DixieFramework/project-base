@@ -1,0 +1,27 @@
+<aside{{ attributes.defaults({class: 'user__follow', 'data-controller': 'subs'}) }}>
+    <div><i class="fa-solid fa-users"></i> {{ get_friendship_count(user) }}</div>
+    {% if not app.user or app.user is not same as user %}
+        <form action="{{ path('profile_' ~ (is_user_friend(user) ? 'friendship_delete' : 'friendship_request_create'), {username: user.username}) }}"
+              name="user_follow"
+              method="post">
+            <button type="submit"
+                    class="{{ html_classes('btn btn__secondary', {'active': is_user_friend(user)}) }}"
+                    data-action="subs#send">
+                {{ is_user_friend(user) ? 'unfollow'|trans : 'follow'|trans }}
+            </button>
+            <input type="hidden" name="token" value="{{ csrf_token('follow') }}">
+        </form>
+        {% if false %}
+        <form action="{{ path('user_' ~ (is_user_blocked(user) ? 'unblock' : 'block'), {username: user.username}) }}"
+              name="user_block"
+              method="post">
+            <button type="submit"
+                    class="{{ html_classes('btn btn__secondary', {'active danger': is_user_blocked(user)}) }}"
+                    data-action="subs#send">
+                <i class="fa-solid fa-ban"></i>
+            </button>
+            <input type="hidden" name="token" value="{{ csrf_token('block') }}">
+        </form>
+            {% endif %}
+    {% endif %}
+</aside>

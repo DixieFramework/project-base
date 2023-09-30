@@ -48,6 +48,7 @@
         "symfony/string": "6.3.*",
         "symfony/translation": "6.3.*",
         "symfony/twig-bundle": "6.3.*",
+        "symfony/ux-twig-component": "^2.7",
         "symfony/validator": "6.3.*",
         "symfony/web-link": "6.3.*",
         "symfony/webapp-meta": "^1.0",
@@ -64,6 +65,7 @@
         "talav/user-bundle": "@dev",
         "talav/web-bundle": "@dev",
         "twig/extra-bundle": "^3.0",
+        "twig/html-extra": "^3.5",
         "twig/string-extra": "^3.7",
         "twig/twig": "^2.12|^3.0",
         "xemlock/htmlpurifier-html5": "^0.1.10"
