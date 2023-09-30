@@ -1,6 +1,7 @@
 # Put parameters here that don't need to change on each machine where the application is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    kbin_storage_url: '%env(KBIN_STORAGE_URL)%'
 
 services:
     # default configuration for services in *only in this* file
@@ -11,6 +12,9 @@ services:
         autoconfigure: true
         # Makes service default to public
         public: false
+        bind:
+            $storageUrl: '%kbin_storage_url%'
+#            $publicDir: '%kernel.project_dir%/public'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

@@ -29,14 +29,14 @@ class Gallery implements ResourceInterface
     #[Assert\NotBlank]
     protected string $name;
 
-    #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'images')]
-    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: UserInterface::class)]
+    #[ORM\JoinColumn(nullable: false)]
     protected UserInterface $user;
 
     /**
-     * @var Collection<Image>
+     * @var Collection<GalleryImage>
      */
-    #[ORM\OneToMany(mappedBy: 'gallery', targetEntity: Image::class, cascade: ['remove'])]
+    #[ORM\OneToMany(mappedBy: 'gallery', targetEntity: GalleryImage::class, cascade: ['remove'])]
     protected Collection $images;
 
     /**
@@ -108,7 +108,7 @@ class Gallery implements ResourceInterface
     /**
      * Getter for images.
      *
-     * @return Collection<Image> Images collection
+     * @return Collection<GalleryImage> Images collection
      */
     public function getImages(): Collection
     {
@@ -118,11 +118,11 @@ class Gallery implements ResourceInterface
     /**
      * Add image to collection.
      *
-     * @param Image $image Image entity
+     * @param GalleryImage $image Image entity
      *
      * @return $this Gallery entity
      */
-    public function addImage(Image $image): self
+    public function addImage(GalleryImage $image): self
     {
         $this->images->add($image);
 

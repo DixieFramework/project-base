@@ -7,21 +7,59 @@
 {% endblock %}
 
 {% block body %}
+    <style>
+        .position-absolute {
+            position: absolute!important;
+        }
+    </style>
+
     <!-- Title -->
     <div class="row">
         <div class="col-12 mb-4 mb-sm-5">
             <div class="d-sm-flex justify-content-between align-items-center">
                 <h1 class="h3 mb-2 mb-sm-0">{{ gallery.name }}</h1>
                 <div class="d-flex justify-content-end">
-                {% if is_granted('GALLERY_EDIT', gallery) %}
-                    <a href="{{ url('talav_gallery_edit', {'id': gallery.id}) }}" class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit fa-fw">&nbsp;</i>{{ 'talav.gallery.edit.link'|trans }}</a>
-                {% endif %}
-                {% if is_granted('IMAGE_CREATE') %}
-                    <a href="{{ url('talav_gallery_image_create', {'id': gallery.id}) }}" class="btn btn-sm btn-outline-primary mb-0"><i class="fas fa-plus fa-fw">&nbsp;</i>{{ 'talav.gallery.image.create.link'|trans }}</a>
-                {% endif %}
+                    {% if is_granted('GALLERY_EDIT', gallery) %}
+                        <a href="{{ url('talav_gallery_edit', {'id': gallery.id}) }}" class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit fa-fw">&nbsp;</i>{{ 'talav.gallery.edit.link'|trans }}</a>
+                    {% endif %}
+                    {% if is_granted('IMAGE_CREATE') %}
+                        <a href="{{ url('talav_gallery_image_create', {'id': gallery.id}) }}" class="btn btn-sm btn-outline-primary mb-0"><i class="fas fa-plus fa-fw">&nbsp;</i>{{ 'talav.gallery.image.create.link'|trans }}</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="row g-3">
+
+        {% for image in galleryImages %}
+        <!-- Photo item START -->
+        <div class="col-6 col-lg-2 position-relative">
+            <div class="position-absolute bottom-0 end-0">
+                <!-- Dropdown START -->
+                <div class="dropdown mb-2 me-3">
+                    <a href="#" class="icon-sm bg-primary text-white rounded-circle" id="photoActionEdit" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-pencil"></i>
+                    </a>
+                    <!-- Dropdown menu -->
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="photoActionEdit">
+                        <li><a class="dropdown-item" href="#"> <i class="bi bi-tag fa-fw pe-1"></i> Remove Tag</a></li>
+                        <li><a class="dropdown-item" href="#"> <i class="bi bi-download fa-fw pe-1"></i> Download </a></li>
+                        <li><a class="dropdown-item" href="#"> <i class="bi bi-person fa-fw pe-1"></i> Make Profile Picture</a></li>
+                        <li><a class="dropdown-item" href="#"> <i class="bi bi-person-bounding-box fa-fw pe-1"></i> Make Cover Photo</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#"> <i class="bi bi-flag fa-fw pe-1"></i> Report photo</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Dropdown END -->
+            <a href="{{ asset(image.image.filePath) |imagine_filter('gallery_thumb') }}" data-gallery="image-popup" data-glightbox="description: .custom-desc2; descPosition: left;">
+                <img class="rounded img-fluid" src="{{ asset(image.image.filePath) |imagine_filter('gallery_thumb') }}" alt="">
+            </a>
+        </div>
+        <!-- Photo item END -->
+        {% endfor %}
     </div>
 
     <div class="row">
@@ -38,7 +76,7 @@
             <div class="image_preview">
                 <h3>{{ image.title }}</h3>
                 <p>{{ image.description }}</p>
-                <img width="100%" src="{{ image.path }}" alt="{{ image.title }}"/>
+                <img width="100%" src="{{ asset(image.image.filePath) |imagine_filter('gallery_thumb') }}" alt="{{ image.title }}"/>
                 {% if is_granted('IMAGE_DELETE', image) %}
                     <a href="{{ url('talav_gallery_image_delete', {'id': image.id}) }}">Usuń obrazek</a>
                 {% endif %}

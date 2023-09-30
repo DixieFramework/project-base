@@ -6,7 +6,7 @@ namespace Talav\GalleryBundle\Repository;
 
 use Doctrine\Common\Collections\Criteria;
 use Talav\GalleryBundle\Entity\Comment;
-use Talav\GalleryBundle\Entity\Image;
+use Talav\GalleryBundle\Entity\GalleryImage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -50,11 +50,11 @@ class CommentRepository extends ServiceEntityRepository
     /**
      * Query all records by image.
      *
-     * @param Image $image Image entity
+     * @param GalleryImage $image Image entity
      *
      * @return QueryBuilder Query builder
      */
-    public function queryByImage(Image $image): QueryBuilder
+    public function queryByImage(GalleryImage $image): QueryBuilder
     {
         return $this->queryAll()
             ->select('partial comment.{id, email, nick, text}')
@@ -62,7 +62,7 @@ class CommentRepository extends ServiceEntityRepository
             ->setParameter('imageId', $image->getId());
     }
 
-    public function findAllByImageQueryBuilder(Image $event): QueryBuilder
+    public function findAllByImageQueryBuilder(GalleryImage $event): QueryBuilder
     {
         return $this
             ->createQueryBuilder('c')

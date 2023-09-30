@@ -7,8 +7,8 @@ namespace Talav\GalleryBundle\Controller;
 use Talav\Component\Resource\Manager\ManagerInterface;
 use Talav\CoreBundle\Controller\AbstractController;
 use Talav\GalleryBundle\Entity\Gallery;
-use Talav\GalleryBundle\Entity\Image;
-use Talav\GalleryBundle\Form\Type\ImageType;
+use Talav\GalleryBundle\Entity\GalleryImage;
+use Talav\GalleryBundle\Form\Type\GalleryImageType;
 use Talav\GalleryBundle\Voter\ImageVoter;
 use Talav\GalleryBundle\Service\ImageServiceInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -16,15 +16,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Talav\GalleryBundle\Repository\ImageRepository;
+use Talav\GalleryBundle\Repository\GalleryImageRepository;
 
 /**
  * Class ImagesController.
  */
 #[Route('/gallery/image', name: 'talav_gallery_image_')]
-class ImageController extends AbstractController
+class GalleryImageController extends AbstractController
 {
-    private ImageRepository $imageRepository;
+    private GalleryImageRepository $imageRepository;
 
 
     /**
@@ -51,13 +51,13 @@ class ImageController extends AbstractController
     {
         $this->denyAccessUnlessGranted(ImageVoter::CREATE);
 
-        $image = new Image();
+        $image = new GalleryImage();
         $image->setGallery($gallery);
-        $form = $this->createForm(ImageType::class, $image);
+        $form = $this->createForm(GalleryImageType::class, $image);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->imageRepository->save($image);
+            $this->imageRepository->save($image, true);
 
             $redirectTo = $this->generateUrl('talav_gallery_preview', ['id' => $gallery->getId()]);
 
@@ -74,13 +74,13 @@ class ImageController extends AbstractController
     /**
      * Delete action.
      *
-     * @param Request $request HTTP request
-     * @param Image   $image   Image entity
+     * @param Request      $request HTTP request
+     * @param GalleryImage $image   Image entity
      *
      * @return Response HTTP response
      */
     #[Route('/delete/{id}', name: 'delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
-    public function delete(Request $request, Image $image): Response
+    public function delete(Request $request, GalleryImage $image): Response
     {
         $this->denyAccessUnlessGranted(ImageVoter::DELETE, $image);
 

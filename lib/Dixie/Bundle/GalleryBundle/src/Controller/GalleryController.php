@@ -14,7 +14,7 @@ use Talav\CoreBundle\Interfaces\RoleInterface;
 use Talav\GalleryBundle\Entity\Gallery;
 use Talav\GalleryBundle\Form\Type\GalleryType;
 use Talav\GalleryBundle\Repository\GalleryRepository;
-use Talav\GalleryBundle\Repository\ImageRepository;
+use Talav\GalleryBundle\Repository\GalleryImageRepository;
 use Talav\GalleryBundle\Voter\GalleryVoter;
 use Talav\GalleryBundle\Service\GalleryServiceInterface;
 use Talav\GalleryBundle\Service\ImageServiceInterface;
@@ -45,7 +45,7 @@ class GalleryController extends AbstractController
 
     private GalleryRepository $galleryRepository;
 
-    private ImageRepository $imageRepository;
+    private GalleryImageRepository $imageRepository;
 
     /**
      * Constructor.

@@ -6,7 +6,7 @@ namespace Talav\GalleryBundle\Controller;
 
 use Talav\CoreBundle\Controller\AbstractController;
 use Talav\GalleryBundle\Entity\Comment;
-use Talav\GalleryBundle\Entity\Image;
+use Talav\GalleryBundle\Entity\GalleryImage;
 use Talav\GalleryBundle\Form\Type\CommentType;
 use Talav\GalleryBundle\Repository\CommentRepository;
 use Talav\GalleryBundle\Voter\CommentVoter;
@@ -42,8 +42,8 @@ class CommentController extends AbstractController
     /**
      * Create action.
      *
-     * @param Request $request HTTP request
-     * @param Image   $image   Image entity
+     * @param Request      $request HTTP request
+     * @param GalleryImage $image   Image entity
      *
      * @return Response HTTP response
      */
@@ -53,7 +53,7 @@ class CommentController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: 'GET|POST',
     )]
-    public function create(Request $request, Image $image): Response
+    public function create(Request $request, GalleryImage $image): Response
     {
         $this->denyAccessUnlessGranted(CommentVoter::CREATE);
 
@@ -82,8 +82,8 @@ class CommentController extends AbstractController
     /**
      * List action.
      *
-     * @param Request $request HTTP request
-     * @param Image   $image   Image entity
+     * @param Request      $request HTTP request
+     * @param GalleryImage $image   Image entity
      *
      * @return Response HTTP response
      */
@@ -94,7 +94,7 @@ class CommentController extends AbstractController
 //        methods: 'GET',
 //    )]
     #[Route(path: '/{id<%patterns.id%>}/{page<%patterns.page%>}', name: 'list', methods: ['GET'])]
-    public function list(Request $request, Image $image, int $page = 1): Response
+    public function list(Request $request, GalleryImage $image, int $page = 1): Response
     {
         $this->denyAccessUnlessGranted(CommentVoter::LIST);
 

@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 
 #[Entity(repositoryClass: ImageRepository::class)]
-#[Table('image_image')]
+#[Table('image')]
 #[UniqueConstraint(name: 'images_file_name_idx', columns: ['file_name'])]
 #[UniqueConstraint(name: 'images_sha256_idx', columns: ['sha256'])]
 class Image

@@ -34,6 +34,7 @@ return [
     Talav\WebBundle\TalavWebBundle::class => ['all' => true],
     SymfonyCasts\Bundle\VerifyEmail\SymfonyCastsVerifyEmailBundle::class => ['all' => true],
     SymfonyCasts\Bundle\ResetPassword\SymfonyCastsResetPasswordBundle::class => ['all' => true],
+    Talav\ImageBundle\TalavImageBundle::class => ['all' => true],
     Talav\ProfileBundle\TalavProfileBundle::class => ['all' => true],
     Talav\GalleryBundle\TalavGalleryBundle::class => ['all' => true],
     Talav\SettingsBundle\TalavSettingsBundle::class => ['all' => true],
@@ -43,5 +44,4 @@ return [
     Talav\AvatarBundle\TalavAvatarBundle::class => ['all' => true],
     Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
     Liip\ImagineBundle\LiipImagineBundle::class => ['all' => true],
-    Talav\ImageBundle\TalavImageBundle::class => ['all' => true],
 ];

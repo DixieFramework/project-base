@@ -8,9 +8,4 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class TalavImageBundle extends Bundle
 {
-    public function getPath(): string
-    {
-        return \dirname(__DIR__);
-    }
-
 }

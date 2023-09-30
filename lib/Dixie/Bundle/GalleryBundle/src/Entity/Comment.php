@@ -33,9 +33,9 @@ class Comment
     #[ORM\Column(type: Types::STRING, length: 1024)]
     private string $text;
 
-    #[ORM\ManyToOne(targetEntity: Image::class, inversedBy: 'comments')]
+    #[ORM\ManyToOne(targetEntity: GalleryImage::class, inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
-    private Image $image;
+    private GalleryImage $image;
 
     #[ORM\Column(type: 'datetime', name: 'created_at', columnDefinition: 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP')]
     private ?\DateTimeInterface $createdAt = null;
@@ -86,9 +86,9 @@ class Comment
     /**
      * Getter for image.
      *
-     * @return Image Image
+     * @return GalleryImage Image
      */
-    public function getImage(): Image
+    public function getImage(): GalleryImage
     {
         return $this->image;
     }
@@ -128,9 +128,9 @@ class Comment
     /**
      * Setter for image.
      *
-     * @param Image $image Image entity
+     * @param GalleryImage $image Image entity
      */
-    public function setImage(Image $image): void
+    public function setImage(GalleryImage $image): void
     {
         $this->image = $image;
     }

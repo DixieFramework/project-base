@@ -2,3 +2,35 @@
 liip_imagine:
     # valid drivers options include "gd" or "gmagick" or "imagick"
     driver: "gd"
+
+    filter_sets:
+        gallery_thumb:
+            quality: 90
+            filters:
+                thumbnail: { size: [ 200, 200 ], mode: fixed }
+        avatar_thumb:
+            quality: 90
+            filters:
+                thumbnail: { size: [ 100, 100 ], mode: fixed }
+
+    loaders:
+        local_images:
+            flysystem:
+                filesystem_service: League\Flysystem\FilesystemOperator
+
+    data_loader: local_images
+
+    resolvers:
+        gallery_thumb:
+            flysystem:
+                filesystem_service: oneup_flysystem.public_uploads_filesystem_filesystem
+                root_url:           '%uploads_base_url%'
+                cache_prefix:       media/cache
+                visibility:         public
+
+        avatar_thumb:
+            flysystem:
+                filesystem_service: oneup_flysystem.public_uploads_filesystem_filesystem
+                root_url: '%uploads_base_url%'
+                cache_prefix: media/cache
+                visibility: public

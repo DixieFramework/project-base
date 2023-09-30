@@ -6,10 +6,12 @@
 
 {% block body %}
     <h1>Upload Photo</h1>
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+    {{ form_widget(form.title) }}
+    {{ form_widget(form.description) }}
+    {{ form_widget(form.image) }}
     <div class="form-group row float-sm-right">
-        <input type="submit" name="submit" value="Zapisz" class="btn btn-primary"/>
+        <button name="submit" value="Zapisz" class="btn btn-primary"></button>
     </div>
     {{ form_end(form) }}
 {% endblock %}

@@ -6,7 +6,8 @@ namespace Talav\GalleryBundle\Entity;
 
 use Talav\Component\Media\Model\MediaInterface;
 use Talav\Component\Resource\Model\ResourceInterface;
-use Talav\GalleryBundle\Repository\ImageRepository;
+use Talav\GalleryBundle\Repository\GalleryImageRepository;
+use Talav\ImageBundle\Entity\Image;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -16,9 +17,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class Image entity.
  */
-#[ORM\Entity(repositoryClass: ImageRepository::class)]
+#[ORM\Entity(repositoryClass: GalleryImageRepository::class)]
 #[ORM\Table(name: 'gallery_image')]
-class Image implements ResourceInterface
+class GalleryImage implements ResourceInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -33,9 +34,9 @@ class Image implements ResourceInterface
     #[Assert\NotBlank]
     private string $description;
 
-    #[ORM\Column(type: Types::STRING)]
-    #[Assert\Url]
-    private string $path;
+	#[ORM\ManyToOne(targetEntity: Image::class, cascade: ['persist'])]
+	#[ORM\JoinColumn(nullable: true)]
+	public ?Image $image = null;
 
 //	#[ORM\OneToOne(targetEntity: "Talav\Component\Media\Model\MediaInterface", cascade: ['persist'])]
 //	#[ORM\JoinColumn(name: 'media_id')]
@@ -113,30 +114,6 @@ class Image implements ResourceInterface
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Getter for path.
-     *
-     * @return string Path to image
-     */
-    public function getPath(): string
-    {
-        return $this->path;
-    }
-
-    /**
-     * Setter for path.
-     *
-     * @param string $path Path to image
-     *
-     * @return $this Image entity
-     */
-    public function setPath(string $path): self
-    {
-        $this->path = $path;
 
         return $this;
     }

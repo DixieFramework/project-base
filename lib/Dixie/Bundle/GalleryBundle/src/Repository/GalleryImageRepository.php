@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityRepository;
 use Talav\Component\Resource\Repository\ResourceRepository;
 use Talav\Component\User\Model\UserInterface;
 use Talav\GalleryBundle\Entity\Gallery;
-use Talav\GalleryBundle\Entity\Image;
+use Talav\GalleryBundle\Entity\GalleryImage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -17,15 +17,15 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * Class ImageRepository.
  *
- * @extends ServiceEntityRepository<Image>
+ * @extends ServiceEntityRepository<GalleryImage>
  *
- * @method Image|null find($id, $lockMode = null, $lockVersion = null)
- * @method Image|null findOneBy(array $criteria, array $orderBy = null)
- * @method Image[]    findAll()
- * @method Image[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method GalleryImage|null find($id, $lockMode = null, $lockVersion = null)
+ * @method GalleryImage|null findOneBy(array $criteria, array $orderBy = null)
+ * @method GalleryImage[]    findAll()
+ * @method GalleryImage[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 //class ImageRepository extends ServiceEntityRepository
-class ImageRepository extends ResourceRepository
+class GalleryImageRepository extends ResourceRepository
 {
     public const PAGINATOR_ITEMS_PER_PAGE = 5;
 
@@ -92,10 +92,10 @@ class ImageRepository extends ResourceRepository
     /**
      * Save image.
      *
-     * @param Image $entity Image entity
-     * @param bool  $flush  If perform flush
+     * @param GalleryImage $entity Image entity
+     * @param bool         $flush  If perform flush
      */
-    public function save(Image $entity, bool $flush = false): void
+    public function save(GalleryImage $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -107,10 +107,10 @@ class ImageRepository extends ResourceRepository
     /**
      * Delete image.
      *
-     * @param Image $entity Image entity
-     * @param bool  $flush  If perform flush
+     * @param GalleryImage $entity Image entity
+     * @param bool         $flush  If perform flush
      */
-    public function delete(Image $entity, bool $flush = false): void
+    public function delete(GalleryImage $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
