@@ -1567,3 +1567,19 @@ span.bottom-border-gradient {
         height: 11rem;
     }
 }
+
+/*// General / Global*/
+
+.page-title-overlap {
+    padding-bottom: 6.375rem
+}
+
+.page-title-overlap+* {
+    margin-top: -4.875rem
+}
+
+@media(max-width: 767.98px) {
+    .page-title-overlap {
+        padding-bottom:5.5rem
+    }
+}
