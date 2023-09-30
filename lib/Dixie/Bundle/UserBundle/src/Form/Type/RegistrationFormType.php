@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Talav\CoreBundle\Validator\LettersAndNumbers;
 use Talav\UserBundle\Validator\Constraints\RegisteredUser;
 
@@ -24,7 +26,20 @@ final class RegistrationFormType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'label' => 'talav.form.email',
-                'translation_domain' => 'TalavUserBundle'
+                'translation_domain' => 'TalavUserBundle',
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^[a-zA-Z0-9!#$%&\'*+\/=?^_` {|}~;."-]+@[a-zA-Z0-9!#$%&\'*+\/=?^_` {|}~;."-]+\.[a-zA-Z0-9]+$/',
+                        'message' => 'This value is not a valid email address',
+                    ]),
+                    new Length([
+                        'max' => 160,
+                        'maxMessage' => 'Email address is too long. It should have {{ limit }} character or less',
+                    ]),
+                    new NotBlank([
+                        'message' => 'Email address should not be blank',
+                    ]),
+                ],
             ]);
 
         $builder
@@ -66,7 +81,27 @@ final class RegistrationFormType extends AbstractType
                 'second_options' => ['label' => 'talav.form.password_confirmation'],
                 'invalid_message' => 'talav.password.mismatch',
             ])
+
+//            ->add('plainPassword', PasswordType::class, [
+//                // instead of being set onto the object directly,
+//                // this is read and encoded in the controller
+//                'mapped' => false,
+//                'attr' => ['autocomplete' => 'new-password'],
+//                'constraints' => [
+//                    new NotBlank([
+//                        'message' => 'Please enter a password',
+//                    ]),
+//                    new Length([
+//                        'min' => 6,
+//                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+//                        // max length allowed by Symfony for security reasons
+//                        'max' => 4096,
+//                    ]),
+//                ],
+//            ])
         ;
+
+
     }
 
     /**

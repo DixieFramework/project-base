@@ -30,16 +30,21 @@
 {#    {{ form_widget(form.birthday.year) }}#}
 {% endblock %}
 {% block stylesheets %}
-{{ asset_css('css/fileinput.css') }}
+    {{ asset_css('css/simple_editor.css') }}
+    {{ asset_css('css/fileinput.css') }}
 {% endblock %}
 {% block javascripts -%}
 {% if app.debug %}
 {{ parent() }}
 {{ asset_js('js/plugins/plugin-input-file.js') }}
-{{ asset_js('js/extensions/file-input-extensions.js') }}
+{{ asset_js('js/extensions/simple-editor-extension.js') }}
+    {{ asset_js('js/application/user_comment.js') }}
+    {{ asset_js('js/extensions/file-input-extensions.js') }}
 {{ asset_js('js/extensions/password-extensions.js') }}
 {{ asset_js('js/application/user_profile.js') }}
 {% else %}
 {{ asset_js('js/user_profile.js') }}
+    {{ asset_js('js/user_comment.js') }}
+
 {% endif %}
 {%- endblock %}

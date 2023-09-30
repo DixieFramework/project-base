@@ -4,8 +4,10 @@ declare(strict_types = 1);
 
 namespace Talav\ProfileBundle\Form\Extension;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Talav\CoreBundle\Form\Type\SimpleEditorType;
 use Talav\ProfileBundle\Enum\Gender;
 use Talav\ProfileBundle\Validator\Constraints\AgeVerification;
 use Talav\CoreBundle\Form\User\ProfileEditType;
@@ -20,6 +22,16 @@ use Symfony\Component\Validator\Constraints;
 class ProfileEditTypeExtension extends AbstractTypeExtension implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
+
+    /**
+     * @var string
+     */
+    protected const PATTERN_FIRST_NAME = '/^[^:\/<>]+$/';
+
+    /**
+     * @var string
+     */
+    protected const PATTERN_LAST_NAME = '/^[^:\/<>]+$/';
 
     /**
      * CustomerProfileTypeExtension constructor.
@@ -74,7 +86,6 @@ class ProfileEditTypeExtension extends AbstractTypeExtension implements Containe
             ])
             ->add('gender', EnumType::class, [
                 'class' => Gender::class,
-                'required' => true,
                 'property_path' => 'profile.gender',
                 'label' => 'label.gender',
                 'translation_domain' => 'enums',
@@ -84,14 +95,23 @@ class ProfileEditTypeExtension extends AbstractTypeExtension implements Containe
                 ],
                 'choice_label' => function(Gender $gender) {
                     return $this->translator->trans('gender.' . $gender->value, [], 'enums');
-                },
-                'constraints' => [
-                    new Constraints\Choice([
-                        'message' => 'birthday.required',
-                        'callback' => Gender::list()
-                    ])
-                ]
+                }
             ])
+//            ->add('gender', ChoiceType::class, [
+//                'property_path' => 'profile.gender',
+//                'label' => 'ria.profile.fields.gender.label',
+//                'translation_domain' => 'enums',
+//                'expanded' => true,
+//                'label_attr' => ['class' => 'radio-custom'],
+//                'choice_label' => function(Gender $gender) {
+//                    return $this->translator->trans('gender.' . $gender->value, [], 'enums');
+//                },
+//                'constraints' => [
+//                    new Constraints\NotBlank([
+//                        'message' => 'gender.required.message'
+//                    ])
+//                ]
+//            ])
         ;
 
         $builder->remove('birthday');
@@ -100,7 +120,7 @@ class ProfileEditTypeExtension extends AbstractTypeExtension implements Containe
             ->add('birthday', BirthdayType::class, [
                 'label' => 'talav.profile.label.birthdate',
                 'translation_domain' => 'TalavProfileBundle',
-                'widget' => 'single_text',
+//                'widget' => 'single_text',
                 'required' => true,
                 'years' => range(date('Y') - 100, date('Y') - 18),
                 'property_path' => 'profile.birthdate',
@@ -109,11 +129,21 @@ class ProfileEditTypeExtension extends AbstractTypeExtension implements Containe
                         'groups' => ['talav']
                     ]),
                     new AgeVerification([
-                        'age' => 18,//$this->container->getParameter('age_verification.minimal_age'),
+                        'age' => $this->container->getParameter('registration.age_verification.minimal_age'),
                         'groups' => ['talav']
                     ]),
                 ]
-            ]);
+            ])
+
+            ->add('bio', SimpleEditorType::class, [
+                'property_path' => 'profile.bio',
+                'label' => 'talav.profile.label.bio',
+                'translation_domain' => 'TalavProfileBundle',
+                'attr' => [
+                    'minLength' => 10
+                ]
+            ])
+        ;
     }
 
     /**
@@ -122,5 +152,33 @@ class ProfileEditTypeExtension extends AbstractTypeExtension implements Containe
     public static function getExtendedTypes(): iterable
     {
         return [ProfileEditType::class];
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    protected function createNotBlankConstraint(): Constraints\NotBlank
+    {
+        return new Constraints\NotBlank();
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createFirstNameRegexConstraint(): Constraints\Regex
+    {
+        return new Constraints\Regex([
+            'pattern' => static::PATTERN_FIRST_NAME,
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createLastNameRegexConstraint(): Constraints\Regex
+    {
+        return new Constraints\Regex([
+            'pattern' => static::PATTERN_LAST_NAME,
+        ]);
     }
 }

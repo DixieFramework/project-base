@@ -1,3 +1,6 @@
+parameters:
+    registration.age_verification.minimal_age: 18
+
 services:
     # default configuration for services in *only in this* file
     _defaults:

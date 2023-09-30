@@ -27,6 +27,8 @@ class Profile implements ProfileInterface
 
     protected ?\DateTimeInterface $birthdate = null;
 
+    protected ?string $bio = null;
+
     protected UserInterface $user;
 
 	protected Collection $requester;
@@ -95,6 +97,22 @@ class Profile implements ProfileInterface
     public function setBirthdate(?\DateTimeInterface $birthdate): void
     {
         $this->birthdate = $birthdate;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getBio(): ?string
+    {
+        return $this->bio;
+    }
+
+    /**
+     * @param string|null $bio
+     */
+    public function setBio(?string $bio): void
+    {
+        $this->bio = $bio;
     }
 
     /**
