@@ -1,0 +1,27 @@
+<div class="row row-cols-xl-3 align-items-lg-center border-bottom g-4 px-2 py-4">
+    <!-- Data item -->
+    <div class="col">
+        <small class="d-block d-lg-none">Recipient:</small>
+        <div class="d-flex align-items-center">
+            <!-- Avatar -->
+            <div class="avatar avatar-xs flex-shrink-0">
+                <img class="avatar-img rounded-circle" src="{% if request.requestee.user.avatar %}{{ media_thumb_reference(request.requestee.user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar.png') }}{% endif %}" height="28" width="28" alt="avatar">
+            </div>
+            <!-- Info -->
+            <div class="ms-2">
+                <h6 class="mb-0 fw-light"><a href="{{ path('user_profile_view', {'username': request.requestee.user.username|slug}) }}">{{ request.requestee.user.username }}</a></h6>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data item -->
+    <div class="col">
+        <small class="d-block d-lg-none">Requested date:</small>
+        <h6 class="mb-0 fw-light">{{ request.updatedAt|format_date('medium') }}</h6>
+    </div>
+
+    <!-- Data item -->
+    <div class="col">
+        <a href="{{ path('profile_friendship_request_delete', {'profileId': request.requestee.user.profile.id}) }}" class="btn btn-danger btn-sm mb-0" onclick="deleteFriendshipRequest({{ profile.id }})">{{ 'common.button_cancel'|trans({}, 'TalavWebBundle') }}</a>
+    </div>
+</div>

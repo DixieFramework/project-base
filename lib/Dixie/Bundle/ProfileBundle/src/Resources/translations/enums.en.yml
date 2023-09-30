@@ -1,0 +1,70 @@
+select: bitte auswählen
+
+label:
+  gender: Gender
+  scope: Bereich
+  priority: Priorität
+  usertype: User Type
+  empty: Keine
+  reason: Grund
+
+help:
+  priority: 'Mitteilungen der Prioritäten "Wichtig" und "Notfall" werden stets über allen anderen Mitteilungen angezeigt. Die Priorität "Wichtig" hebt die Mitteilung gelb hervor. Mitteilungen der Priorität "Notfall" werden rot hervorgehoben und können nicht ausgeblendet werden.'
+
+gender:
+  male: Male
+  female: Female
+  x: Undefined
+
+ics_access_token_type:
+  calendar: Terminplan-Synchronisation
+  exams: Klausurplan-Synchronisation
+  timetable: Stundenplan-Synchronisation
+
+message_scope:
+  dashboard: Dashboard
+  substitutions: Vertretungsplan
+  exams: Klausurplan
+  appointments: Terminplan
+  login: Anmeldeseite
+  timetable: Stundenplan
+  messages: Mitteilungen
+  lists: Listen
+
+message_priority:
+  emergency: Notfall
+  important: Wichtig
+  normal: Normal
+
+user_type:
+  teacher: Lehrkräfte
+  student: Lernende
+  parent: Eltern
+  intern: Praktikanten
+  staff: Employee
+  user: User
+
+absence_reason:
+  exam: Klausur
+  other: Anderer Grund
+
+study_group_type:
+  grade: Klasse
+  course: Kurs
+
+display_target_user_type:
+  students: Lernende
+  teachers: Lehrkräfte
+
+sick_reason:
+  quarantine: Quarantäne
+  sick: Erkrankung
+
+grade_teacher_type:
+  primary: Primäre Klassenleitung
+  substitute: Vertretendende Klassenleitung
+
+student_id_format:
+  firstname_lastname: Vorname, Nachname
+  lastname_firstname: Nachname, Vorname
+  lastname_firstname_birthday: Nachname, Vorname, Geburtstag

@@ -45,7 +45,7 @@
 {%- endblock %}
 {# end container #}
 {% block end_card_container -%}
-    {% block end_form -%}{{ form_end(form) }}{%- endblock %}
+    {% block end_form -%}{{ form_end(form, {'render_rest': false}) }}{%- endblock %}
     {{ parent() }}
 {%- endblock %}
 {# javascript #}

@@ -1,5 +1,6 @@
 {% extends '@TalavUser/frontend/profile/layout.html.twig' %}
 {%- set status_bar = true    -%}
+{% block container_class 'container mt-n4' %}
 
 {% block title %}Друзья {{ user.username }}{% endblock %}
 {#{% block breadcrumbs %}#}
@@ -70,10 +71,6 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane show active" id="tab1">
-{#            {% if (profile.id != app.user.profile.id) %}#}
-{#                <div class="text-2xl text-center m-4">{{ 'Friends of ' }} {{ profile.user.username }}</div>#}
-{#            {% endif %}#}
-
             <div class="bg-body-secondary rounded p-3 d-none d-lg-block">
                 <div class="row row-cols-3 g-4">
                     <div class="col"><h6 class="fw-medium mb-0">{{ 'User' }}</h6></div>
@@ -81,63 +78,12 @@
                     <div class="col"><h6 class="fw-medium mb-0">{{ 'Action' }}</h6></div>
                 </div>
             </div>
-            {% for friendship in  profile.friendships %}
-                <div class="row row-cols-xl-3 align-items-lg-center border-bottom g-4 px-2 py-4">
-                    <!-- Data item -->
-                    <div class="col">
-                        <small class="d-block d-lg-none">Friend:</small>
-                        <div class="d-flex align-items-center">
-                            <!-- Avatar -->
-                            <div class="avatar avatar-xs flex-shrink-0">
-                                <img class="avatar-img rounded-circle" src="{% if friendship.friend.user.avatar %}{{ media_thumb_reference(friendship.friend.user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar.png') }}{% endif %}" height="28" width="28" alt="avatar">
-                            </div>
-                            <!-- Info -->
-                            <div class="ms-2">
-                                <h6 class="mb-0 fw-light"><a href="{{ path('user_profile_view', {'username': friendship.friend.user.username|slug}) }}">{{ friendship.friend.user.username }}</a></h6>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Data item -->
-                    <div class="col">
-                        <small class="d-block d-lg-none">Friends since:</small>
-                        <h6 class="mb-0 fw-normal">{{ friendship.updatedAt|format_date('medium') }}</h6>
-                    </div>
-
-                    <!-- Data item -->
-                    <div class="col">
-                        <a href="{{ path('profile_friendship_delete', {'username': friendship.friend.user.username}) }}" class="btn btn-danger btn-sm mb-0 me-2">Unfriend</a>
-                    </div>
-                </div>
+            {% for friendship in  user.profile.friendships %}
+                {% include '@TalavProfile/friendship/_friendship.html.twig' with {friendship: friendship} %}
             {% else %}
                 <div class="row row-cols-xl-1 align-items-lg-center border-bottom g-4 px-2 py-4">
                     <div class="col text-center">No records found.</div>
                 </div>
-            {% endfor %}
-
-{#            <div class="single-item-countable d-flex friend-item align-items-center justify-content-between mb-3">#}
-{#                <div class="d-flex align-items-center w-100">#}
-{#                    <!-- Avatar -->#}
-{#                    <div class="avatar">#}
-{#                        <a href="https://demo.creativeitem.com/sociopro/user/view/profile/2"><img class="avatar-img rounded-circle user_image_show_on_modal" src="/sociopro/public/storage/userimage/optimized/wdTG9u4p1z7ZCqDglQmer2LYAUKo6vBMbsk80yhI.jpg" alt="" height="40" width="40"></a>#}
-{#                    </div>#}
-{#                    <div class="avatar-info ms-2">#}
-{#                        <h6 class="mb-1"><a href="https://demo.creativeitem.com/sociopro/user/view/profile/2">Rebeka Jordan</a></h6>#}
-{#                        <div class="activity-time small-text text-muted"> 0 Mutual Friends</div>#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="post-controls dropdown dotted">#}
-{#                    <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">#}
-{#                    </a>#}
-{#                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">#}
-{#                        <li><a class="dropdown-item" href="javascript:void(0)" onclick="ajaxAction('https://demo.creativeitem.com/sociopro/user/account/follow/2')">Follow</a> </li>#}
-{#                        <li> <a class="dropdown-item" href="javascript:void(0)" onclick="confirmAction('https://demo.creativeitem.com/sociopro/user/unfriend/2', true)">Unfriend</a> </li>#}
-{#                    </ul>#}
-{#                </div>#}
-{#            </div>#}
-
-            {% for friendship in profile.friendships %}
-
             {% endfor %}
         </div>
         <div class="tab-pane" id="tab2">
@@ -148,35 +94,8 @@
                     <div class="col"><h6 class="fw-medium mb-0">{{ 'Action' }}</h6></div>
                 </div>
             </div>
-            {% for request in profile.requestsMadeToProfile %}
-                <div class="row row-cols-xl-3 align-items-lg-center border-bottom g-4 px-2 py-4">
-                    <!-- Data item -->
-                    <div class="col">
-                        <small class="d-block d-lg-none">Sender:</small>
-                        <div class="d-flex align-items-center">
-                            <!-- Avatar -->
-                            <div class="avatar avatar-xs flex-shrink-0">
-                                <img class="avatar-img rounded-circle" src="{{ asset('images/avatar.png') }}" height="28" width="28" alt="avatar">
-                            </div>
-                            <!-- Info -->
-                            <div class="ms-2">
-                                <h6 class="mb-0 fw-light"><a href="{{ path('user_profile_view', {'username': request.requester.user.username|slug}) }}">{{ request.requester.user.username }}</a></h6>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Data item -->
-                    <div class="col">
-                        <small class="d-block d-lg-none">Requested date:</small>
-                        <h6 class="mb-0 fw-normal">{{ request.updatedAt|format_date('medium') }}</h6>
-                    </div>
-
-                    <!-- Data item -->
-                    <div class="col">
-                        <a href="admin-guest-detail.html" class="btn btn-danger btn-sm mb-0 me-2">Dismiss</a>
-                        <a href="admin-guest-detail.html" class="btn btn-success btn-sm mb-0">Accept</a>
-                    </div>
-                </div>
+            {% for request in user.profile.requestsMadeToProfile %}
+                {% include '@TalavProfile/friendship/_incoming.html.twig' with {request: request} %}
             {% else %}
             <div class="row row-cols-xl-1 align-items-lg-center border-bottom g-4 px-2 py-4">
                 <div class="col text-center">No records found.</div>
@@ -191,34 +110,8 @@
                     <div class="col"><h6 class="fw-medium mb-0">{{ 'Action' }}</h6></div>
                 </div>
             </div>
-            {% for request in profile.requestsMadeByProfile %}
-                <div class="row row-cols-xl-3 align-items-lg-center border-bottom g-4 px-2 py-4">
-                    <!-- Data item -->
-                    <div class="col">
-                        <small class="d-block d-lg-none">Recipient:</small>
-                        <div class="d-flex align-items-center">
-                            <!-- Avatar -->
-                            <div class="avatar avatar-xs flex-shrink-0">
-                                <img class="avatar-img rounded-circle" src="{% if request.requestee.user.avatar %}{{ media_thumb_reference(request.requestee.user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar.png') }}{% endif %}" height="28" width="28" alt="avatar">
-                            </div>
-                            <!-- Info -->
-                            <div class="ms-2">
-                                <h6 class="mb-0 fw-light"><a href="{{ path('user_profile_view', {'username': request.requestee.user.username|slug}) }}">{{ request.requestee.user.username }}</a></h6>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Data item -->
-                    <div class="col">
-                        <small class="d-block d-lg-none">Requested date:</small>
-                        <h6 class="mb-0 fw-light">{{ request.updatedAt|format_date('medium') }}</h6>
-                    </div>
-
-                    <!-- Data item -->
-                    <div class="col">
-                        <a href="{{ path('profile_friendship_request_delete', {'profileId': request.requestee.user.profile.id}) }}" class="btn btn-danger btn-sm mb-0" onclick="deleteFriendshipRequest({{ profile.id }})">{{ 'common.button_cancel'|trans({}, 'TalavWebBundle') }}</a>
-                    </div>
-                </div>
+            {% for request in user.profile.requestsMadeByProfile %}
+                {% include '@TalavProfile/friendship/_outgoing.html.twig' with {request: request} %}
             {% else %}
                 <div class="row row-cols-xl-1 align-items-lg-center border-bottom g-4 px-2 py-4">
                     <div class="col text-center">No records found.</div>

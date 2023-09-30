@@ -7,7 +7,5 @@
         Your own profile
     {% else %}
         {{ user.username }}'s profile
-
-        {{ component('user_friend', {'user':user}) }}
     {% endif %}
 {% endblock %}

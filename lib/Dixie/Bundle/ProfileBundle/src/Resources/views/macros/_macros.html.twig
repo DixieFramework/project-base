@@ -1,0 +1,25 @@
+{% macro profile_info_link(user) %}
+    {% from '@TalavUser/macros/_macros.html.twig' import user_link %}
+
+    {{ user_link(user) }}
+    <span class="fw-light ms-1">
+        {%- if user.profile.gender is constant('Talav\\ProfileBundle\\Enum\\Gender::Male') -%}
+            M
+        {%- elseif user.profile.gender is constant('Talav\\ProfileBundle\\Enum\\Gender::Female') -%}
+            F
+        {%- else -%}
+            N
+        {%- endif -%}
+        {{ ageYear(user.profile.birthdate) }}
+    </span>
+{% endmacro profile_info_link %}
+
+{% macro profile_gender(profile) %}
+    {%- if profile.gender is constant('Talav\\ProfileBundle\\Enum\\Gender::Male') -%}
+        <i class="fas fa-mars fa-fw" title="male"></i>
+    {%- elseif profile.gender is constant('Talav\\ProfileBundle\\Enum\\Gender::Female') -%}
+        <i class="fas fa-venus fa-fw" title="female"></i>
+    {%- else -%}
+        <i class="fas fa-intersex fa-fw" title="other"></i>
+    {%- endif -%}
+{% endmacro profile_gender %}

@@ -7,6 +7,7 @@ namespace Talav\UserBundle\Entity;
 use Doctrine\Common\Collections\
 {Collection, ArrayCollection, Criteria};
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Talav\Component\Media\Model\MediaInterface;
@@ -26,6 +27,10 @@ use Talav\ProfileBundle\Enum\FriendStatus;
 use Talav\UserBundle\Enum\UserFlagKey;
 use Talav\UserBundle\Model\UserInterface;
 
+#[ORM\UniqueConstraint(name: 'unique_user_email', columns: ['email'])]
+#[ORM\UniqueConstraint(name: 'unique_user_username', columns: ['username'])]
+#[UniqueEntity(fields: ['email'], message: 'email.already_used')]
+#[UniqueEntity(fields: ['username'], message: 'username.already_used')]
 class User extends AbstractUser implements UserInterface
 {
     use ResourceTrait;

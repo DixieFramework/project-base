@@ -17,6 +17,17 @@
 {% block card_body %}
 {#{{ media_thumb(app.user.avatar, 'small') }}#}
 {{ parent() }}
+{#    {{ form_row(form.username) }}#}
+{#    {{ form_row(form.email) }}#}
+{#    {{ form_row(form.currentPassword) }}#}
+{#    {{ form_row(form.firstName) }}#}
+{#    {{ form_row(form.lastName) }}#}
+{#    {{ form_row(form.gender) }}#}
+{#    {{ form_widget(form.birthday) }}#}
+
+{#    {{ form_widget(form.birthday.day) }}#}
+{#    {{ form_widget(form.birthday.month) }}#}
+{#    {{ form_widget(form.birthday.year) }}#}
 {% endblock %}
 {% block stylesheets %}
 {{ asset_css('css/fileinput.css') }}

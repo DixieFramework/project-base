@@ -1,0 +1,24 @@
+{##
+ # - flag (string): one of App\Entidty\UserFlags constants
+ # - class (string): Additional classes
+#}
+{%- macro user_link(user, options) -%}
+    <a href="{{ path('user_profile_view', { username: user.username|slug }) }}" class="{{ options.class ?? 'fw-light' }}">
+        {{- (options.prefix ?? false) ? '/u/' -}}
+        {{- user.username -}}
+    </a>
+    {%- with { flag: _self.user_flag(options.flag ?? constant('Talav\\UserBundle\\Constant\\UserFlagConstants::FLAG_NONE')) } -%}
+        {{ (flag ? ' '~flag)|raw }}
+    {%- endwith -%}
+{%- endmacro user_link -%}
+
+{% macro user_flag(flag) %}
+    {%- if flag is constant('Talav\\UserBundle\\Constant\\UserFlagConstants::FLAG_NONE') -%}
+    {%- elseif flag is constant('Talav\\UserBundle\\Constant\\UserFlagConstants::FLAG_ADMIN') -%}
+        <small class="fg-red text-sm user-flag ">{{ 'user.user_flag.admin'|trans({}, 'TalavUserBundle') }}</small>
+    {%- elseif flag is constant('Talav\\UserBundle\\Constant\\UserFlagConstants::FLAG_MODERATOR') -%}
+        <small class="fg-green text-sm user-flag">{{ 'user.user_flag.moderator'|trans({}, 'TalavUserBundle') }}</small>
+    {%- else -%}
+        <small class="fg-grey text-sm user-flag">{{ flag|trans({}, 'TalavUserBundle') }}</small>
+    {%- endif -%}
+{% endmacro user_flag %}

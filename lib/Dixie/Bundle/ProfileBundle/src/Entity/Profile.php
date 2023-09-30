@@ -25,6 +25,8 @@ class Profile implements ProfileInterface
 //    #[ORM\Column(type: 'string', enumType: Gender::class)]
     protected Gender $gender;
 
+    protected ?\DateTimeInterface $birthdate = null;
+
     protected UserInterface $user;
 
 	protected Collection $requester;
@@ -80,6 +82,22 @@ class Profile implements ProfileInterface
     }
 
     /**
+     * @return ?\DateTimeInterface
+     */
+    public function getBirthdate(): ?\DateTimeInterface
+    {
+        return $this->birthdate;
+    }
+
+    /**
+     * @param ?\DateTimeInterface $birthdate
+     */
+    public function setBirthdate(?\DateTimeInterface $birthdate): void
+    {
+        $this->birthdate = $birthdate;
+    }
+
+    /**
      * @return UserInterface
      */
     public function getUser(): UserInterface
@@ -94,6 +112,16 @@ class Profile implements ProfileInterface
      */
     public function setUser(UserInterface $user): ProfileInterface
     {
+        // unset the owning side of the relation if necessary
+        if ($user === null && $this->user !== null) {
+            $this->user->setProfile(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($user !== null && $user->getProfile() !== $this) {
+            $user->setProfile($this);
+        }
+
         $this->user = $user;
 
         return $this;

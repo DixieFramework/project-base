@@ -1,5 +1,16 @@
 talav:
     profile:
+        fields:
+            firstName: First Name
+            lastName: Last Name
+            gender: Gender
+            birthday: Birthday
+            birthdate:
+                day: Day
+                month: Month
+                year: Year
+        label:
+            birthdate: Birthdate
         relations:
             title: My Relations
             no_relations: No relations were found.
@@ -9,10 +20,13 @@ talav:
             add_submit_text: Add
             edit_submit_text: Edit
         friends:
-            title: Friends
+            add_friend: Add Friend
+            delete_friend: Delete Friend
             search:
                 fields:
                     term: Query
                 place_holder: Type a username...
                 query: username
                 title: Search Friends
+            title: Friends
+        enums:

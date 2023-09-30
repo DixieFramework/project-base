@@ -74,7 +74,8 @@ class FriendshipController extends AbstractController
             }
 
             return $this->render('@TalavProfile/friendship/index.html.twig', [
-                'profile' => $profile,
+                'user' => $user,
+//                'profile' => $profile,
                 'selfProfile' => $user->getId()->equals($loggedInUser->getId()),
                 'searchForm' => $profileSearchForm->createView(),
                 'profileSearchResult' => $profileSearchResult
@@ -108,13 +109,14 @@ class FriendshipController extends AbstractController
         throw $this->createNotFoundException();
     }
 
-    #[Route('/friendship-request/delete/{profileId}', name: 'friendship_request_delete', methods: ['DELETE', 'GET'])]
-    public function deleteRequest(Request $request, int $profileId): Response
+    #[Route('/friendship-request/delete/{username}', name: 'friendship_request_delete', requirements: ['username' => Requirement::ASCII_SLUG], methods: ['DELETE', 'GET', 'POST'])]
+    #[ParamConverter('user', class: User::class, options: ['mapping' => ['username' => 'username']])]
+    public function deleteRequest(Request $request, User $user): Response
     {
-        /** @var UserInterface $user */
-        $user = $this->getUser();
+        /** @var UserInterface $loggedInUser */
+        $loggedInUser = $this->getUser();
 
-        $friendshipRequest = $this->getFriendshipRequestIfExists($user->getProfile()->getId(), $profileId);
+        $friendshipRequest = $this->getFriendshipRequestIfExists($loggedInUser->getProfile()->getId(), $user->getProfile()->getId());
 
         if ($friendshipRequest) {
             $this->friendshipRequestRepository->remove($friendshipRequest, true);
@@ -122,7 +124,7 @@ class FriendshipController extends AbstractController
 	        if ($request->isXmlHttpRequest()) {
 		        return $this->json(['status' => 'ok']);
 	        } else {
-		        return $this->redirectToRoute('friendship_index', ['username' => StringUtils::slug($user->getUsername())]);
+		        return $this->redirectToRoute('profile_friendship_index', ['username' => StringUtils::slug($loggedInUser->getUsername())]);
 	        }
         }
 
@@ -131,7 +133,7 @@ class FriendshipController extends AbstractController
 
     #[Route('/friendship/create/{username}', name: 'friendship_create', requirements: ['username' => Requirement::ASCII_SLUG], methods: ['POST', 'GET'])]
     #[ParamConverter('user', class: User::class, options: ['mapping' => ['username' => 'username']])]
-    public function createFriendship(User $user): Response
+    public function createFriendship(Request $request, User $user): Response
     {
         /** @var UserInterface $loggedInUser */
         $loggedInUser = $this->getUser();
@@ -155,15 +157,20 @@ class FriendshipController extends AbstractController
 
             $this->friendshipRequestRepository->remove($friendshipRequest, true);
 
-            return new JsonResponse(['username' => $friendProfile->getUser()->getUsername()]);
+            if ($request->isXmlHttpRequest()) {
+                return $this->json(['username' => $friendProfile->getUser()->getUsername()]);
+            } else {
+                return $this->redirectToRoute('profile_friendship_index', ['username' => StringUtils::slug($loggedInUser->getUsername())]);
+            }
+//            return new JsonResponse(['username' => $friendProfile->getUser()->getUsername()]);
         }
 
         throw $this->createNotFoundException();
     }
 
-    #[Route('/friendship/delete/{username}', name: 'friendship_delete', requirements: ['username' => Requirement::ASCII_SLUG], methods: ['DELETE'])]
+    #[Route('/friendship/delete/{username}', name: 'friendship_delete', requirements: ['username' => Requirement::ASCII_SLUG], methods: ['DELETE', 'GET', 'POST'])]
     #[ParamConverter('user', class: User::class, options: ['mapping' => ['username' => 'username']])]
-    public function deleteFriendship(User $user): Response
+    public function deleteFriendship(Request $request, User $user): Response
     {
         /** @var UserInterface $loggedInUser */
         $loggedInUser = $this->getUser();
@@ -178,7 +185,12 @@ class FriendshipController extends AbstractController
             $this->friendshipRepository->remove($friendship, true);
         }
 
-        return new JsonResponse(['username' => $this->profileRepository->find($user->getProfile()->getId())->getUsername()]);
+        if ($request->isXmlHttpRequest()) {
+            return $this->json(['username' => $this->profileRepository->find($user->getProfile()->getId())->getUser()->getUsername()]);
+        } else {
+            return $this->redirectToRoute('profile_friendship_index', ['username' => StringUtils::slug($loggedInUser->getUsername())]);
+        }
+//        return new JsonResponse(['username' => $this->profileRepository->find($user->getProfile()->getId())->getUser()->getUsername()]);
     }
 
     /**

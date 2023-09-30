@@ -130,7 +130,9 @@ class ProfileController extends AbstractController
             $user = $currentUser;
         }
 
-        return $this->render('@TalavUser/frontend/profile/profile_view.html.twig', ['user' => $user]);
+        return $this->render('@TalavUser/frontend/profile/profile_view.html.twig', [
+            'user' => $user
+        ]);
 
 
         dd($user);

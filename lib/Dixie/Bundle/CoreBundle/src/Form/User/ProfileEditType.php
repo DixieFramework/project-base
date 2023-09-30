@@ -69,6 +69,7 @@ class ProfileEditType extends AbstractEntityType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
+            'data_class' => \Talav\UserBundle\Entity\User::class,
             'translation_domain' => 'TalavUserBundle'
         ]);
     }

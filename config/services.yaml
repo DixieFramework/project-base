@@ -82,12 +82,16 @@ services:
     Groshy\Api\Action\:
         resource: '../src/Api/Action'
         tags: ['controller.service_arguments']
+
     Groshy\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    Symfony\Component\DependencyInjection\ContainerInterface:
+        alias: 'service_container'
 
     pagerfanta.view.default:
         class: Talav\WebBundle\Pagerfanta\View
