@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace Groshy\DataFixtures;
 
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Groshy\Entity\Profile;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Talav\Component\Resource\Manager\ManagerInterface;
 use Talav\Component\User\Manager\UserManagerInterface;
 use Talav\Component\User\Message\Command\CreateUserCommand;
 use Talav\Component\User\Message\Dto\CreateUserDto;
+use Talav\ProfileBundle\Enum\Gender;
 
 final class UserFixtures extends BaseFixture implements OrderedFixtureInterface
 {
@@ -22,6 +25,7 @@ final class UserFixtures extends BaseFixture implements OrderedFixtureInterface
 	public function __construct(
         private readonly MessageBusInterface  $messageBus,
         private readonly UserManagerInterface $userManager,
+		private readonly ManagerInterface     $profileManager,
 		private readonly SluggerInterface     $slugger
 	) {
     }
@@ -67,6 +71,18 @@ final class UserFixtures extends BaseFixture implements OrderedFixtureInterface
                 $this->userManager->updateCanonicalFields($newUser);
                 $this->userManager->updatePassword($newUser);
 
+				if (!$newUser->getProfile()) {
+					/** @var Profile $profile */
+					$profile = $this->profileManager->create();
+					$profile->setFirstName('John');
+					$profile->setLastName('Doe');
+					$profile->setGender(Gender::X);
+					$profile->setBirthdate(\DateTime::createFromFormat('j-M-Y', '01-Jan-1970'));
+
+					$newUser->setProfile($profile);
+
+				}
+
                 $this->userManager->update($newUser);
             }
 
@@ -100,6 +116,17 @@ final class UserFixtures extends BaseFixture implements OrderedFixtureInterface
 					$userAdmin->setPlainPassword($rootPassword);
 					$this->userManager->updateCanonicalFields($userAdmin);
 					$this->userManager->updatePassword($userAdmin);
+
+					if (!$userAdmin->getProfile()) {
+						/** @var Profile $profile */
+						$profile = $this->profileManager->create();
+						$profile->setFirstName('John');
+						$profile->setLastName('Doe');
+						$profile->setGender(Gender::X);
+						$profile->setBirthdate(\DateTime::createFromFormat('j-M-Y', '01-Jan-1970'));
+
+						$userAdmin->setProfile($profile);
+					}
 
 					$this->userManager->update($userAdmin);
 				}
