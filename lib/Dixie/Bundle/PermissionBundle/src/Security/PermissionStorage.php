@@ -30,6 +30,9 @@ class PermissionStorage implements PermissionStorageInterface
             return $this->permissionLoader->loadByRole($roleName);
         }, $token->getRoleNames());
 
+		$permissions = array_merge(...$permissions);
+
+		return $permissions;
         return array_values(array_unique(array_merge(...$permissions)));
     }
 }

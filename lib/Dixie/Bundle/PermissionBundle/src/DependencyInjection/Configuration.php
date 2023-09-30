@@ -33,6 +33,12 @@ final class Configuration implements ConfigurationInterface
 
         $this->addResourceSection($treeBuilder->getRootNode());
 
+		$rootNode
+			->children()
+				->append($this->getPermissionsNode())
+			->end()
+		->end();
+
         return $treeBuilder;
     }
 
@@ -73,5 +79,55 @@ final class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
         ;
+    }
+
+	private function getPermissionsNode(): ArrayNodeDefinition
+    {
+        $builder = new TreeBuilder('permissions');
+        /** @var ArrayNodeDefinition $node */
+        $node = $builder->getRootNode();
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('sets')
+                    ->requiresAtLeastOneElement()
+                    ->useAttributeAsKey('key')
+                    ->arrayPrototype()
+                        ->useAttributeAsKey('key')
+                        ->isRequired()
+                        ->scalarPrototype()->end()
+                        ->defaultValue([])
+                    ->end()
+                ->end()
+                ->arrayNode('maps')
+                    ->requiresAtLeastOneElement()
+                    ->useAttributeAsKey('key')
+                    ->arrayPrototype()
+                        ->useAttributeAsKey('key')
+                        ->isRequired()
+                        ->scalarPrototype()->end()
+                        ->defaultValue([])
+                    ->end()
+                ->end()
+                ->arrayNode('roles')
+                    ->requiresAtLeastOneElement()
+                    ->useAttributeAsKey('key')
+                    ->arrayPrototype()
+                        ->isRequired()
+                        ->scalarPrototype()->end()
+                        ->defaultValue([])
+                    ->end()
+                    ->defaultValue([
+                        'ROLE_USER' => [],
+                        'ROLE_TEAMLEAD' => [],
+                        'ROLE_ADMIN' => [],
+                        'ROLE_SUPER_ADMIN' => [],
+                    ])
+                ->end()
+            ->end()
+        ;
+
+        return $node;
     }
 }

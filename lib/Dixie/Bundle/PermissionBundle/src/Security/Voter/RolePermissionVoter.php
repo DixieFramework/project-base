@@ -25,6 +25,6 @@ class RolePermissionVoter extends Voter implements VoterInterface
 
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
-        return in_array($attribute, $this->permissionStorage->getPermissions(), true);
+        return array_key_exists($attribute, $this->permissionStorage->getPermissions());
     }
 }
