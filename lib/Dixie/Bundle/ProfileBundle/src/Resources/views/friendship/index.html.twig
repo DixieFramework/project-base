@@ -1,4 +1,5 @@
 {% extends '@TalavUser/frontend/profile/layout.html.twig' %}
+{%- set status_bar = true    -%}
 
 {% block title %}Друзья {{ user.username }}{% endblock %}
 {#{% block breadcrumbs %}#}
@@ -50,53 +51,68 @@
             <div class="col-12 mb-4 mb-sm-5">
                 <div class="d-sm-flex justify-content-between align-items-center">
                     <h1 class="h3 mb-2 mb-sm-0">Friends</h1>
-                    {% if is_granted('GALLERY_CREATE') %}
-                        <div class="d-grid">
-                            <a href="{{ url('talav_gallery_create') }}" class="btn btn-sm btn-outline-primary mb-0"><i class="fas fa-plus fa-fw">&nbsp;</i>{{ 'talav.gallery.create.link'|trans }}</a>
-                        </div>
-                    {% endif %}
+{#                    {% if is_granted('GALLERY_CREATE') %}#}
+{#                        <div class="d-grid">#}
+{#                            <a href="{{ url('talav_gallery_create') }}" class="btn btn-sm btn-outline-primary mb-0"><i class="fas fa-plus fa-fw">&nbsp;</i>{{ 'talav.gallery.create.link'|trans }}</a>#}
+{#                        </div>#}
+{#                    {% endif %}#}
                 </div>
             </div>
         </div>
 
     <ul class="nav nav-tabs nav-justified mb-4" id="friendship-tabs">
-        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab1" href="#tab1" id="tab-link-1">My Friends</a></li>
-        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab2" href="#tab2" id="tab-link-2">Incoming Requests</a></li>
-        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab3" href="#tab3" id="tab-link-3">Outgoing Requests</a></li>
+        <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab1" href="#tab1" id="tab-link-1">Friends</a></li>
+        {% if selfProfile %}
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab2" href="#tab2" id="tab-link-2">Incoming Requests</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab3" href="#tab3" id="tab-link-3">Outgoing Requests</a></li>
+        {% endif %}
         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab4" href="#tab4" id="tab-link-4">Search Friends</a></li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane show active" id="tab1">
-            {% if (profile.id != app.user.profile.id) %}
-                <div class="text-2xl text-center m-4">{{ 'Friends of ' }} {{ profile.user.username }}</div>
-            {% endif %}
+{#            {% if (profile.id != app.user.profile.id) %}#}
+{#                <div class="text-2xl text-center m-4">{{ 'Friends of ' }} {{ profile.user.username }}</div>#}
+{#            {% endif %}#}
 
-            {% for friendship in  profile.friendships %}
-            <div class="d-md-flex align-items-center mb-4">
-                <!-- Avatar -->
-                <div class="avatar me-3 mb-3 mb-md-0">
-                    <a href="#!"><img class="avatar-img rounded-circle" src="{% if app.user.avatar %}{{ media_thumb_reference(app.user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar.png') }}{% endif %}" width="28" height="28" alt=""></a>
-                </div>
-                <!-- Info -->
-                <div class="w-100">
-                    <div class="d-sm-flex align-items-start">
-                        <h6 class="mb-0"><a href="#!">{{ friendship.friend.user.username }}</a></h6>
-                        <p class="small ms-sm-2 mb-0">{{ friendship.updatedAt|format_date('medium') }}</p>
-                    </div>
-                    <!-- Connections START -->
-                    <ul class="avatar-group mt-1 list-unstyled align-items-sm-center">
-                        <li class="small">
-                            Bryan Knight and Billy Vasquez shared connections
-                        </li>
-                    </ul>
-                    <!-- Connections END -->
-                </div>
-                <!-- Button -->
-                <div class="ms-md-auto d-flex">
-                    <button class="btn btn-danger btn-sm mb-0 me-2"> Remove </button>
-                    <a href="{{ path('api_position_investments_create_collection', {username: friendship.friend.user.username|slug}) }}" class="btn btn-primary btn-sm mb-0">Edit</a>
+            <div class="bg-body-secondary rounded p-3 d-none d-lg-block">
+                <div class="row row-cols-3 g-4">
+                    <div class="col"><h6 class="fw-medium mb-0">{{ 'User' }}</h6></div>
+                    <div class="col"><h6 class="fw-medium mb-0">{{ 'Date' }}</h6></div>
+                    <div class="col"><h6 class="fw-medium mb-0">{{ 'Action' }}</h6></div>
                 </div>
             </div>
+            {% for friendship in  profile.friendships %}
+                <div class="row row-cols-xl-3 align-items-lg-center border-bottom g-4 px-2 py-4">
+                    <!-- Data item -->
+                    <div class="col">
+                        <small class="d-block d-lg-none">Friend:</small>
+                        <div class="d-flex align-items-center">
+                            <!-- Avatar -->
+                            <div class="avatar avatar-xs flex-shrink-0">
+                                <img class="avatar-img rounded-circle" src="{% if friendship.friend.user.avatar %}{{ media_thumb_reference(friendship.friend.user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar.png') }}{% endif %}" height="28" width="28" alt="avatar">
+                            </div>
+                            <!-- Info -->
+                            <div class="ms-2">
+                                <h6 class="mb-0 fw-light"><a href="{{ path('user_profile_view', {'username': friendship.friend.user.username|slug}) }}">{{ friendship.friend.user.username }}</a></h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data item -->
+                    <div class="col">
+                        <small class="d-block d-lg-none">Friends since:</small>
+                        <h6 class="mb-0 fw-normal">{{ friendship.updatedAt|format_date('medium') }}</h6>
+                    </div>
+
+                    <!-- Data item -->
+                    <div class="col">
+                        <a href="{{ path('friendship_delete', {'username': friendship.friend.user.username}) }}" class="btn btn-danger btn-sm mb-0 me-2">Unfriend</a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="row row-cols-xl-1 align-items-lg-center border-bottom g-4 px-2 py-4">
+                    <div class="col text-center">No records found.</div>
+                </div>
             {% endfor %}
 
 {#            <div class="single-item-countable d-flex friend-item align-items-center justify-content-between mb-3">#}
@@ -136,7 +152,7 @@
                 <div class="row row-cols-xl-3 align-items-lg-center border-bottom g-4 px-2 py-4">
                     <!-- Data item -->
                     <div class="col">
-                        <small class="d-block d-lg-none">Booked by:</small>
+                        <small class="d-block d-lg-none">Sender:</small>
                         <div class="d-flex align-items-center">
                             <!-- Avatar -->
                             <div class="avatar avatar-xs flex-shrink-0">
@@ -151,8 +167,8 @@
 
                     <!-- Data item -->
                     <div class="col">
-                        <small class="d-block d-lg-none">Booking date:</small>
-                        <h6 class="mb-0 fw-normal">02 Dec 2022</h6>
+                        <small class="d-block d-lg-none">Requested date:</small>
+                        <h6 class="mb-0 fw-normal">{{ request.updatedAt|format_date('medium') }}</h6>
                     </div>
 
                     <!-- Data item -->
@@ -195,7 +211,7 @@
                     <!-- Data item -->
                     <div class="col">
                         <small class="d-block d-lg-none">Requested date:</small>
-                        <h6 class="mb-0 fw-light">02 Dec 2022</h6>
+                        <h6 class="mb-0 fw-light">{{ request.updatedAt|format_date('medium') }}</h6>
                     </div>
 
                     <!-- Data item -->
@@ -222,7 +238,7 @@
 
     <script type="text/javascript">
 	    (function ($) {
-            $('#tab-link-1').tab('show');
+            // $('#tab-link-1').tab('show');
 		});
     </script>
 {% endblock page_content %}

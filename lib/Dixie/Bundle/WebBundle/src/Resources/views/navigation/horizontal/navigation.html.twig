@@ -1,5 +1,7 @@
 {# horizontal toolbar #}
-{% from '@TalavWeb/macros/_icons.html.twig' import icon, navItem %}
+{% from '@TalavWeb/macros/_icons.html.twig' import icon, dropdownSeparator, dropdownItem, navItem %}
+{# user menu #}
+{#{% from '@TalavWeb/macros/_icons.html.twig' import icon, dropdownSeparator, dropdownItem %}#}
 {# horizontal navigation #}
 {%- set navbar_class = navbar_class|default('mb-4') -%}
 {%- set display_style = sidebar_hide ? 'flex' : 'none' -%}
@@ -57,83 +59,12 @@
                 </div>
             </button>
             <ul class="dropdown-menu dropdown-menu-end my-1" style="width: 14rem;">
-                <li>
-                    <a href="#" class="dropdown-item d-flex align-items-center">
-                        <i class="fas fa-edit fs-base opacity-60 fa-fw me-2"></i>
-                        Edit Profile
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="dropdown-item d-flex align-items-center">
-                        <i class="fas fa-lock fs-base opacity-60 fa-fw me-2"></i>
-                        Change Password
-                    </a>
-                </li>
+                <li>{{ dropdownItem(path('user_profile_edit'), 'profile.edit.title', 'user-gear fa-fw me-2', 'TalavUserBundle') }}</li>
+                <li>{{ dropdownItem(path('user_profile_change_password'), 'profile.change_password.title', 'unlock fa-fw me-2', 'TalavUserBundle') }}</li>
                 <li class="dropdown-divider"></li>
-                <li>
-                    <a href="{{ path('user_relation_relations', {'username': app.user.username|slug}) }}" class="dropdown-item d-flex align-items-center">
-                        <i class="fas fa-user-friends fs-base opacity-60 fa-fw me-2"></i>
-                        Friends
-                    </a>
-                </li>
+                <li>{{ dropdownItem(path('friendship_index', {'username': app.user.username|slug}), 'talav.profile.friends.title', 'user-friends fa-fw me-2', 'TalavProfileBundle') }}</li>
                 <li class="dropdown-divider"></li>
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        <i class="fas fa-sign-out fs-base opacity-60 fa-fw me-2"></i>
-                                        Sign out
-                                    </a>
-                                </li>
-{#                <li>#}
-{#                    <a href="#" class="dropdown-item d-flex align-items-center">#}
-{#                        <i class="bx bx-shopping-bag fs-base opacity-60 me-2"></i>#}
-{#                        Orders#}
-{#                        <span class="bg-success rounded-circle mt-n2 ms-1" style="width: 5px; height: 5px;"></span>#}
-{#                        <span class="ms-auto fs-xs text-muted">2</span>#}
-{#                    </a>#}
-{#                </li>#}
-{#                <li>#}
-{#                    <a href="#" class="dropdown-item d-flex align-items-center">#}
-{#                        <i class="bx bx-dollar fs-base opacity-60 me-2"></i>#}
-{#                        Sales#}
-{#                        <span class="ms-auto fs-xs text-muted">$735.00</span>#}
-{#                    </a>#}
-{#                </li>#}
-{#                <li>#}
-{#                    <a href="#" class="dropdown-item d-flex align-items-center">#}
-{#                        <i class="bx bx-chat fs-base opacity-60 me-2"></i>#}
-{#                        Messages#}
-{#                        <span class="bg-success rounded-circle mt-n2 ms-1" style="width: 5px; height: 5px;"></span>#}
-{#                        <span class="ms-auto fs-xs text-muted">1</span>#}
-{#                    </a>#}
-{#                </li>#}
-{#                <li>#}
-{#                    <a href="#" class="dropdown-item d-flex align-items-center">#}
-{#                        <i class="bx bx-group fs-base opacity-60 me-2"></i>#}
-{#                        Followers#}
-{#                        <span class="ms-auto fs-xs text-muted">146</span>#}
-{#                    </a>#}
-{#                </li>#}
-{#                <li>#}
-{#                    <a href="#" class="dropdown-item d-flex align-items-center">#}
-{#                        <i class="bx bx-star fs-base opacity-60 me-2"></i>#}
-{#                        Reviews#}
-{#                        <span class="ms-auto fs-xs text-muted">15</span>#}
-{#                    </a>#}
-{#                </li>#}
-{#                <li>#}
-{#                    <a class="dropdown-item d-flex align-items-center" href="#">#}
-{#                        <i class="bx bx-heart fs-base opacity-60 me-2"></i>#}
-{#                        Favorites#}
-{#                        <span class="ms-auto fs-xs text-muted">6</span>#}
-{#                    </a>#}
-{#                </li>#}
-{#                <li class="dropdown-divider"></li>#}
-{#                <li>#}
-{#                    <a class="dropdown-item d-flex align-items-center" href="#">#}
-{#                        <i class="bx bx-log-out fs-base opacity-60 me-2"></i>#}
-{#                        Sign out#}
-{#                    </a>#}
-{#                </li>#}
+                <li>{{ dropdownItem(path('talav_user_logout'), 'index.logout', 'sign-out-alt fa-fw me-2', 'TalavWebBundle') }}</li>
             </ul>
         </div>
         {% endif %}

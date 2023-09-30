@@ -49,8 +49,8 @@ class FriendshipController extends AbstractController
     }
 
     #[Route('friends/{username}', name: 'friendship_index', requirements: ['username' => Requirement::ASCII_SLUG], methods: ['GET', 'POST'])]
-    #[ParamConverter('user', class: \Symfony\Component\Security\Core\User\UserInterface::class, options: ['mapping' => ['username' => 'username']])]
-    public function index(Request $request, \Symfony\Component\Security\Core\User\UserInterface $user): Response
+    #[ParamConverter('user', class: User::class, options: ['mapping' => ['username' => 'username']])]
+    public function index(Request $request, User $user): Response
     {
         /** @var UserInterface $loggedInUser */
         $loggedInUser = $this->getUser();
@@ -69,6 +69,7 @@ class FriendshipController extends AbstractController
 
             return $this->render('@TalavProfile/friendship/index.html.twig', [
                 'profile' => $profile,
+                'selfProfile' => $user->getId()->equals($loggedInUser->getId()),
                 'searchForm' => $profileSearchForm->createView(),
                 'profileSearchResult' => $profileSearchResult
             ]);

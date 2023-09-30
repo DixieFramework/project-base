@@ -14,8 +14,11 @@ class SearchFormType extends AbstractType
     {
         $builder
             ->add('search_string', TextType::class, [
-				'label' => 'label.search_term',
+				'label' => 'search.fields.query',
                 'required' => true,
+                'attr' => [
+                    'placeholder' => 'search.placeholder'
+                ]
             ])
 	        ->add('submit', SubmitType::class, [
                 'label' => 'Search',
@@ -26,7 +29,7 @@ class SearchFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-			
+			'translation_domain' => 'TalavWebBundle'
         ]);
     }
 }

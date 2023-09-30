@@ -95,6 +95,13 @@ common:
     data_changed: Données modifiées
     api_documentation: Documentation (API)
 
+environment:
+    dev: Development
+    local: Local
+    prod: Production
+    test: Test
+    switch: Switch mode to %name%
+
 index:
     change_password: Modifier le mot de passe
     disabled: <b>%username%</b>, you can't access this site because your profile has been disabled.<br><br>Please ask your supervisor to grant you the necessary permissions or the site administrator to reactivate your account.
@@ -105,15 +112,32 @@ index:
     galleries: Galleries
     title: Home
     title_help: Go to homepage
-    toggle_navigation: Basculer la navigation horizontal
-    sidebar_show: Afficher la barre latérale
-    sidebar_hide: Masquer la barre latérale
-    menu_show: Développer le menu
-    menu_hide: Réduire le menu
+    toggle_navigation: Toggle navigation horizontal
+    sidebar_show: Show sidebar
+    sidebar_hide: Hide sidebar
+    menu_show: Expand menu
+    menu_hide: Collapse menu
 
 footer:
-    about_title: Afficher les informations à propos de l'application
-    breadcrumb_title: Accéder à la page %title%
+    about_title: Show information about the application
+    breadcrumb_title: Go to page %title%
     copyright: Copyright © %year% %owner%
-    copyright_title: Afficher le site du concepteur de l'application
-    environment_title: Environnement d'exécution de l'application
+    copyright_title: View app developer site
+    environment_title: Application execution environment
+
+search:
+    title: Search
+    clear: Clear search criteria
+    empty: No matching objects.
+    entity: Object
+    all_entities: All objects
+    entity_help: Show results for selected object
+    fields:
+        content: Content
+        entity: Object
+        field: Field
+        query: Search Term
+    minimum: Enter at least 2 characters.
+    placeholder: Type something to search for...
+    link: Show search page
+    search: Start searching

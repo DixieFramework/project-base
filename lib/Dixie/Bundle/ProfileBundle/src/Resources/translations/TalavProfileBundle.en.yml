@@ -10,3 +10,9 @@ talav:
             edit_submit_text: Edit
         friends:
             title: Friends
+            search:
+                fields:
+                    term: Query
+                place_holder: Type a username...
+                query: username
+                title: Search Friends
