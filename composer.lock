@@ -12395,7 +12395,7 @@
             "dist": {
                 "type": "path",
                 "url": "lib/Dixie/Bundle/ImageBundle",
-                "reference": "7bbbd43ef9d1246ca1b32fdef1f18dc5fb60e7d8"
+                "reference": "1b75a506059745d8f7bebb62a961c8a8f37eea48"
             },
             "require": {
                 "ext-fileinfo": "*",
@@ -12403,6 +12403,7 @@
                 "ext-intl": "*",
                 "kornrunner/blurhash": "^1.2",
                 "liip/imagine-bundle": "^2.0",
+                "oneup/flysystem-bundle": "dev-allow_compatibility_with_flysysytem3#684c77ebe3507462f9129d39e1ff75cf89d37b2e",
                 "php": ">=8.1.14"
             },
             "type": "symfony-bundle",

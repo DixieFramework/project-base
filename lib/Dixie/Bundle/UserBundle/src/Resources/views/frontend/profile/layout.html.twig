@@ -720,7 +720,10 @@
                             <p class="mb-0">Member since: {{ user.createdAt|format_date('medium') }}</p>
                         </div>
                     </div>
-{{ is_friend(user) }}
+
+                    {{ component('user_inline', {'user':user}) }}
+
+{{ get_user_friendship_status(user) }}
                     {{ component('user_friend', {'user':user, 'class': 'hstack gap-4 flex-wrap align-items-center mb-3'}) }}
 
                     <hr class="my-4">
