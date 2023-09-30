@@ -11,7 +11,7 @@
                     <div class="d-flex align-items-center mb-3">
                         <!-- Avatar -->
                         <div class="avatar avatar-xl me-2 flex-shrink-0">
-                            <img class="avatar-img rounded-circle border border-2 border-white" src="{{ asset('images/albums/01.jpg') }}" alt="avatar">
+                            <img class="avatar-img rounded-circle border border-2 border-white" src="{% if user.avatar %}{{ media_thumb_reference(user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar.png') }}{% endif %}" alt="avatar">
                         </div>
                         <!-- Info -->
                         <div class="ms-2">
@@ -22,6 +22,7 @@
 
                     {{ component('user_friend', {'user':user, 'class': 'hstack gap-4 flex-wrap align-items-center mb-3'}) }}
 
+                    <hr class="my-4">
 {#                    <div class="hstack gap-4 flex-wrap align-items-center">#}
 {#                        <!-- Button -->#}
 {#                        <a href="#" class="btn btn-primary-soft mb-0">Discover Now</a>#}
