@@ -42,4 +42,6 @@ return [
     Talav\MediaBundle\TalavMediaBundle::class => ['all' => true],
     Talav\AvatarBundle\TalavAvatarBundle::class => ['all' => true],
     Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
+    Liip\ImagineBundle\LiipImagineBundle::class => ['all' => true],
+    Talav\ImageBundle\TalavImageBundle::class => ['all' => true],
 ];

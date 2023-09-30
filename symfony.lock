@@ -214,6 +214,19 @@
     "laminas/laminas-code": {
         "version": "4.5.1"
     },
+    "liip/imagine-bundle": {
+        "version": "2.12",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.8",
+            "ref": "d1227d002b70d1a1f941d91845fcd7ac7fbfc929"
+        },
+        "files": [
+            "config/packages/liip_imagine.yaml",
+            "config/routes/liip_imagine.yaml"
+        ]
+    },
     "mark-gerarts/auto-mapper-plus": {
         "version": "1.3.12"
     },
@@ -895,6 +908,9 @@
         "version": "1.0.0"
     },
     "talav/gallery-bundle": {
+        "version": "dev-main"
+    },
+    "talav/image-bundle": {
         "version": "dev-main"
     },
     "talav/media-bundle": {

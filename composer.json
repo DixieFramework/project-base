@@ -58,6 +58,7 @@
         "talav/bundle-generator-bundle": "@dev",
         "talav/core-bundle": "@dev",
         "talav/gallery-bundle": "@dev",
+        "talav/image-bundle": "@dev",
         "talav/media-bundle": "@dev",
         "talav/permission-bundle": "@dev",
         "talav/profile-bundle": "@dev",

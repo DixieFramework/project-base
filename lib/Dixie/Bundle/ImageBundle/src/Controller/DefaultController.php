@@ -6,10 +6,15 @@ namespace Talav\ImageBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Talav\CoreBundle\Controller\AbstractController;
+use Talav\CoreBundle\Interfaces\RoleInterface;
 
-class DefaultController extends Abstractontroller
+#[AsController]
+#[Route(path: 'image', name: 'image_')]
+class DefaultController extends AbstractController
 {
     /**
      * @Route("/talav_image")
