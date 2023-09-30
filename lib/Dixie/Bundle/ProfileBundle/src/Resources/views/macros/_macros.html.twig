@@ -1,25 +1,37 @@
-{% macro profile_info_link(user) %}
+{%- macro profile_info_link(user) -%}
     {% from '@TalavUser/macros/_macros.html.twig' import user_link %}
 
     {{ user_link(user) }}
     <span class="fw-light ms-1">
-        {%- if user.profile.gender is constant('Talav\\ProfileBundle\\Enum\\Gender::Male') -%}
-            M
-        {%- elseif user.profile.gender is constant('Talav\\ProfileBundle\\Enum\\Gender::Female') -%}
-            F
-        {%- else -%}
-            N
-        {%- endif -%}
+    {%- if user.profile.gender is constant('Talav\\ProfileBundle\\Enum\\Gender::Male') -%}
+        M
+    {%- elseif user.profile.gender is constant('Talav\\ProfileBundle\\Enum\\Gender::Female') -%}
+        F
+    {%- else -%}
+        N
+    {%- endif -%}
         {{ ageYear(user.profile.birthdate) }}
     </span>
-{% endmacro profile_info_link %}
+{%- endmacro profile_info_link %}
 
-{% macro profile_gender(profile) %}
-    {%- if profile.gender is constant('Talav\\ProfileBundle\\Enum\\Gender::Male') -%}
-        <i class="fas fa-mars fa-fw" title="male"></i>
-    {%- elseif profile.gender is constant('Talav\\ProfileBundle\\Enum\\Gender::Female') -%}
-        <i class="fas fa-venus fa-fw" title="female"></i>
-    {%- else -%}
-        <i class="fas fa-intersex fa-fw" title="other"></i>
-    {%- endif -%}
-{% endmacro profile_gender %}
+{%- macro get_gender_label(profile) -%}
+    {% if profile and profile.gender is not null %}
+        {%- if profile.gender is constant('Talav\\ProfileBundle\\Enum\\Gender::Male') -%}
+            {{ 'gender.male'|trans({},'enums') }}
+        {%- elseif profile.gender is constant('Talav\\ProfileBundle\\Enum\\Gender::Female') -%}
+            {{ 'gender.female'|trans({},'enums') }}
+        {%- else -%}
+            {{ 'gender.x'|trans({},'enums') }}
+        {%- endif -%}
+    {% endif %}
+{%- endmacro -%}
+
+{%- macro profile_gender_identifier(profile, options) -%}
+    {% import _self as macros %}
+
+    {%- set text = text|default(macros.get_gender_label(profile)) -%}
+
+    <span class="{{ options.class ?? 'fw-light' }}">
+        {{ text }}
+    </span>
+{%- endmacro profile_gender_identifier -%}

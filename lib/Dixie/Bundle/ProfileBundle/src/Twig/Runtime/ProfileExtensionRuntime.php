@@ -22,7 +22,8 @@ class ProfileExtensionRuntime implements RuntimeExtensionInterface
         private readonly CacheInterface $cache,
 //        private readonly MentionManager $mentionManager,
 		private readonly UserManagerInterface $userManager,
-	    private readonly ManagerInterface $friendshipManager,
+        private readonly ManagerInterface $friendshipManager,
+        private readonly ManagerInterface $friendshipRequestManager,
     ) {
     }
 
@@ -34,6 +35,25 @@ class ProfileExtensionRuntime implements RuntimeExtensionInterface
 
 		return $this->friendshipManager->getRepository()->getFriendshipCount($user);
 	}
+
+    public function getUserFriendshipStatus(User $user)
+    {
+        if (!$this->security->getUser()) {
+            return false;
+        }
+
+        if ($this->security->getUser()->getProfile()->isFriend($user->getProfile()->getId())) {
+            $result = 'friend';
+        } else if ($this->security->getUser()->getProfile()->hasOutgoingRequest($user->getProfile()->getId())) {
+            $result = 'outgoing';
+        } else if ($this->security->getUser()->getProfile()->hasIncomingRequest($user->getProfile()->getId())) {
+            $result = 'incoming';
+        } else {
+            $result = 'no';
+        }
+
+        return $result;
+    }
 
 	public function isFriend(User $user)
 	{

@@ -15,7 +15,8 @@ class ProfileExtension extends AbstractExtension
     {
         return [
 	        new TwigFunction('get_friendship_count', [ProfileExtensionRuntime::class, 'getFriendshipCount']),
-	        new TwigFunction('is_user_friend', [ProfileExtensionRuntime::class, 'isFriend']),
+            new TwigFunction('get_user_friendship_status', [ProfileExtensionRuntime::class, 'getUserFriendshipStatus']),
+            new TwigFunction('is_user_friend', [ProfileExtensionRuntime::class, 'isFriend']),
             new TwigFunction('is_user_blocked', [ProfileExtensionRuntime::class, 'isBlocked']),
             new TwigFunction('get_reputation_total', [ProfileExtensionRuntime::class, 'getReputationTotal']),
         ];

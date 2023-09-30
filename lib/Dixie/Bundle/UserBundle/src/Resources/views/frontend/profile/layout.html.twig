@@ -1,6 +1,6 @@
 {% extends '@TalavUser/frontend/profile/base.html.twig' %}
 {% from '@TalavUser/macros/_macros.html.twig' import user_link %}
-{% from '@TalavProfile/macros/_macros.html.twig' import profile_gender, profile_info_link %}
+{% from '@TalavProfile/macros/_macros.html.twig' import profile_gender_identifier, profile_info_link %}
 {% block talav_profile_content %}
     {% if false %}
             <!-- Page Title-->
@@ -28,7 +28,7 @@
             <div class="mt-lg-2">
                 <!-- Avatar -->
                 <img class="rounded-circle border border-3 d-lg-block d-none"
-                     style="background: #fff url('{% if user.avatar %}{{ media_thumb_reference(user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar/male.png') }}{% endif %}') center center; background-size: cover;"
+                     style="background: url({% if user.avatar %}{{ media_thumb_reference(user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar/male.png') }}{% endif %}) #ffffff no-repeat center center / cover;"
                      width="140" height="140" alt="" style="border-color: #ffffff !important;">
 
                 <div class="d-xl-none d-flex align-items-center justify-content-center">
@@ -701,7 +701,6 @@
         </section>
     {% endif %}
 
-
     <div class="row">
         <!-- Sidebar-->
         <aside class="col-lg-4 pe-xl-4">
@@ -711,16 +710,17 @@
                     <div class="d-flex align-items-center mb-3">
                         <!-- Avatar -->
                         <div class="avatar avatar-xl me-2 flex-shrink-0">
-                            <img class="avatar-img rounded-circle border border-2 border-white" src="{% if user.avatar %}{{ media_thumb_reference(user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar.png') }}{% endif %}" alt="avatar">
+                            <div class="avatar-img rounded-circle border border-2 border-secondary" style="background: url({% if user.avatar %}{{ media_thumb_reference(user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar/male.png') }}{% endif %}) #ffffff no-repeat center center / cover"></div>
+{#                            <img class="avatar-img rounded-circle border border-2 border-white" src="{% if user.avatar %}{{ media_thumb_reference(user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar/male.png') }}{% endif %}" alt="avatar">#}
                         </div>
 
                         <!-- Info -->
                         <div class="ms-2">
-                            <h5 class="mb-1">{{ profile_gender(user.profile) }} {{ profile_info_link(user) }}</h5>
+                            <h5 class="mb-1">{{ profile_info_link(user) }}</h5>
                             <p class="mb-0">Member since: {{ user.createdAt|format_date('medium') }}</p>
                         </div>
                     </div>
-
+{{ is_friend(user) }}
                     {{ component('user_friend', {'user':user, 'class': 'hstack gap-4 flex-wrap align-items-center mb-3'}) }}
 
                     <hr class="my-4">

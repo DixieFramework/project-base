@@ -22,6 +22,6 @@
 
     <!-- Data item -->
     <div class="col">
-        <a href="{{ path('profile_friendship_request_delete', {'profileId': request.requestee.user.profile.id}) }}" class="btn btn-danger btn-sm mb-0" onclick="deleteFriendshipRequest({{ profile.id }})">{{ 'common.button_cancel'|trans({}, 'TalavWebBundle') }}</a>
+        <a href="{{ path('profile_friendship_request_delete', {'username': request.requestee.user.username|slug }) }}" class="btn btn-danger btn-sm mb-0" onclick="deleteFriendshipRequest({{ request.requestee.user.profile.id }})">{{ 'common.button_cancel'|trans({}, 'TalavWebBundle') }}</a>
     </div>
 </div>
