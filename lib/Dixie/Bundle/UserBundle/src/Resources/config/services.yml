@@ -83,3 +83,5 @@ services:
     Talav\UserBundle\EventListener\RedirectUserListener:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    Symfony\Component\Workflow\WorkflowInterface: '@state_machine.abstract'

@@ -4,13 +4,19 @@ declare(strict_types=1);
 
 namespace Talav\UserBundle\Controller;
 
+use Groshy\Entity\Profile;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Talav\Component\Resource\Manager\ManagerInterface;
 use Talav\Component\User\Manager\UserManagerInterface;
 use Talav\Component\User\Model\UserInterface;
 use Talav\Component\User\Repository\UserRepositoryInterface;
 use Talav\CoreBundle\Controller\AbstractController;
 use Talav\CoreBundle\Enums\Importance;
+use Talav\CoreBundle\Form\User\ProfileEditType;
 use Talav\CoreBundle\Form\User\UserRegistrationType;
+use Talav\CoreBundle\Form\User\UserType;
 use Talav\CoreBundle\Mime\RegistrationEmail;
 use Talav\CoreBundle\Service\EmailVerifier;
 use Talav\CoreBundle\Service\UserExceptionService;
@@ -22,8 +28,12 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use Symfony\Component\Workflow\WorkflowInterface;
+use Talav\UserBundle\Enum\RegistrationWorkflowEnum;
 use Talav\UserBundle\Event\GetResponseRegistrationEvent;
 use Talav\UserBundle\Event\TalavUserEvents;
+use Talav\UserBundle\Form\Type\Workflow\RegistrationFormType;
+use Talav\UserBundle\Security\UserFormAuthenticator;
 
 /**
  * Controller to register a new user.
@@ -40,8 +50,81 @@ class RegistrationController extends AbstractController
         private readonly EmailVerifier              $verifier,
         private readonly UserRepositoryInterface    $userRepository,
         private readonly UserManagerInterface       $userManager,
-        private readonly UserExceptionService       $service
+        private readonly ManagerInterface           $profileManager,
+        private readonly UserExceptionService       $service,
+
+        private readonly WorkflowInterface $registrationStateMachine,
+
     ) {
+    }
+
+    #[Route('/sign-up', name: 'register_step_one')]
+    public function stepOne(Request $request, UserPasswordHasherInterface $userPasswordHasher): ?Response
+    {
+        $session = $request->getSession();
+        if ($session->has('user_data')) {
+            $session->remove('user_data');
+        }
+
+        $user = $this->userManager->create();
+        if ($this->registrationStateMachine->can($user, RegistrationWorkflowEnum::TRANSITION_TO_COMPLETE->value)) {
+            return $this->redirectToRoute('register_step_two');
+        }
+
+        $userForm = $this->createForm(RegistrationFormType::class, $user);
+        $userForm->handleRequest($request);
+
+        if ($userForm->isSubmitted() && $userForm->isValid()) {
+            $this->registrationStateMachine->apply($user, RegistrationWorkflowEnum::TRANSITION_TO_PAYMENT_FORM->value);
+
+            $user->setPassword($userPasswordHasher->hashPassword($user, $userForm->get('plainPassword')->getData()));
+            $session->set('user_data', $user);
+
+            return $this->redirectToRoute('register_step_two');
+        }
+
+        return $this->render('@TalavUser/registration/register.html.twig', [
+            'user' => $user,
+            'form' => $userForm,
+        ]);
+    }
+
+    #[Route('/register/step-two', name: 'register_step_two')]
+    public function stepTwo(
+        Request $request,
+        UserAuthenticatorInterface $userAuthenticator,
+        UserFormAuthenticator $authenticator,
+        WorkflowInterface $registrationStateMachine,
+    ): ?Response {
+//        $session = $request->getSession();
+//        /** @var UserInterface $user */
+//        $user = $session->get('user_data');
+//
+//        if (! $user instanceof UserInterface) {
+//            return $this->redirectToRoute('register_step_one');
+//        }
+
+        $card = new Profile();
+
+        $cardForm = $this->createForm(ProfileEditType::class, $card);
+        $cardForm->handleRequest($request);
+
+        if ($cardForm->isSubmitted() && $cardForm->isValid()) {
+            // send card details to stripe API
+            dump($card);
+
+            // persist user details
+            $registrationStateMachine->apply($user, RegistrationWorkflowEnum::TRANSITION_TO_COMPLETE->value);
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+
+            return $userAuthenticator->authenticateUser($user, $authenticator, $request);
+        }
+
+        return $this->render('@TalavUser/registration/new_payment.html.twig', [
+            'user' => $user,
+            'cardForm' => $cardForm,
+        ]);
     }
 
     /**

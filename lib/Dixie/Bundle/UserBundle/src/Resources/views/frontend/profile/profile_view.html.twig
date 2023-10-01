@@ -1,27 +1,82 @@
-{% extends '@TalavUser/frontend/profile/layout.html.twig' %}
+{% extends '@TalavUser/frontend/profile/base.html.twig' %}
 
 {#{% block container_class 'mt-n4' %}#}
-{% block container_class 'container mt-n4' %}
+{% block container_class 'container' %}
+{%- block titre '' -%}
 
-{% block page_content %}
-    <div class="row g-4 pb-4">
-        <div class="col-12">
-            <div class="d-sm-flex justify-content-between align-items-center">
-                <h1 class="mb-sm-0 h2">Profile</h1>
-                <div class="d-block d-flex gap-2 flex-wrap">
-                    {% if is_granted('GALLERY_CREATE') %}
-                        <a href="{{ url('talav_gallery_create') }}" class="btn btn-sm btn-primary mb-0"><i class="fas fa-plus fa-fw"></i>{{ 'Message'|trans }}</a>
-                    {% endif %}
-                </div>
+{% block layout_header %}
+    <!-- Page Title-->
+    <div class="page-title-overlap bg-green pt-4 mt-n4" style="background: #81b254">
+        <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+            <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
+                        <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>Home</a></li>
+                        <li class="breadcrumb-item text-nowrap"><a href="home-nft.html">Marketplace</a>
+                        </li>
+                        <li class="breadcrumb-item text-nowrap active" aria-current="page">Vendor Page</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
+                <h1 class="h3 text-light mb-0">Vendor Page</h1>
             </div>
         </div>
     </div>
+{% endblock layout_header %}
 
+{% block talav_profile_content %}
+    <div class="">
+        <div class="avatar avatar-xxl">
+            <div class="avatar-img rounded-circle border border-2 border-white" style="background: url({% if app.user.avatar %}{{ media_thumb_reference(app.user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar/male.png') }}{% endif %}) #ffffff no-repeat center center / cover"></div>
+        </div>
+        <div class="d-lg-none d-flex align-items-center justify-content-center">
+            <img class="rounded-circle me-2" src="img/nft/vendor/avatar-sm.png" width="36" alt="Avatar">
+            <h6 class="mb-0 text-light">Robert Fox</h6>
+        </div>
+    </div>
 
-    <h2 class="h4">Paragraph Title</h2>
-    {% if user.username is same as app.user.username %}
-        Your own profile
-    {% else %}
-        {{ user.username }}'s profile
-    {% endif %}
+{#    <div class="row g-4 pb-4">#}
+{#        <div class="col-12">#}
+{#            <div class="d-sm-flex justify-content-between align-items-center">#}
+{#                <h1 class="mb-sm-0 h2">Profile</h1>#}
+{#                <div class="d-block d-flex gap-2 flex-wrap">#}
+{#                    {% if is_granted('GALLERY_CREATE') %}#}
+{#                        <a href="{{ url('talav_gallery_create') }}" class="btn btn-sm btn-primary mb-0"><i class="fas fa-plus fa-fw"></i>{{ 'Message'|trans }}</a>#}
+{#                    {% endif %}#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+
+    <div class="row">
+        <aside class="col-lg-3">
+            <div class="mb-4 pb-2">
+                <h3 class="mb-2 fs-lg fw-normal text-body">Robert Fox</h3>
+                <h2 class="h4 mb-3">@foxnet_creator</h2><span class="d-inline-block mb-3 fs-sm text-muted">Joined July 2021</span><a class="d-block mb-4 text-decoration-none" href="#"><span class="text-body">8508550793340827...</span><i class="ci-copy ms-2 ps-1 fs-sm text-accent" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Copy" data-bs-original-title="Copy"></i></a>
+                <div class="d-flex align-items-center flex-wrap text-nowrap mb-4 fs-sm">
+                    <div class="mb-2 me-sm-3 me-2 text-muted"><span class="fw-medium text-body">766</span> followers</div>
+                    <div class="mb-2 me-sm-3 me-2 ps-sm-3 ps-2 border-start text-muted"><span class="fw-medium text-body">2K</span> following</div>
+                </div>
+                <!-- Follow-->
+                <div class="d-flex flex-lg-row flex-column">
+                    <button class="btn btn-accent">Follow</button>
+                </div>
+            </div>
+        </aside>
+
+        <div class="col-lg-9">
+            <h2 class="h4">Bio</h2>
+
+            <div class="border p-2" style="min-height: 200px;">
+                <span>{{ user.profile.bio|purify }}</span>
+            </div>
+
+            {% if user.username is same as app.user.username %}
+                Your own profile
+            {% else %}
+                {{ user.username }}'s profile
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

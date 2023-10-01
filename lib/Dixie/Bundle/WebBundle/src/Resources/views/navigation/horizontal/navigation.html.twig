@@ -37,7 +37,7 @@
             </ul>
             <ul class="navbar-nav">
 {#                {% if is_granted_data and show_navigation_search ?? false -%}#}
-                    {{ include('@TalavWeb/navigation/horizontal/navigation_search.html.twig') }}
+{#                    {{ include('@TalavWeb/navigation/horizontal/navigation_search.html.twig') }}#}
 {#                {% endif %}#}
                 {{ include('@TalavWeb/navigation/horizontal/navigation_theme.html.twig') }}
                 {% if is_remembered -%}
@@ -59,6 +59,7 @@
                 </div>
             </button>
             <ul class="dropdown-menu dropdown-menu-end my-1" style="width: 14rem;">
+                <li>{{ dropdownItem(path('user_profile_view', {'username': app.user.username|slug}), 'profile.view.title', 'user fa-fw me-2', 'TalavUserBundle') }}</li>
                 <li>{{ dropdownItem(path('user_profile_edit'), 'profile.edit.title', 'user-gear fa-fw me-2', 'TalavUserBundle') }}</li>
                 <li>{{ dropdownItem(path('user_profile_change_password'), 'profile.change_password.title', 'unlock fa-fw me-2', 'TalavUserBundle') }}</li>
                 <li class="dropdown-divider"></li>

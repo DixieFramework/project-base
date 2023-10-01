@@ -64,5 +64,8 @@
     };
 
     // validation
-    $('#edit-form').initValidator(options);
+    $('#edit-form').initValidator({
+        simpleEditor: true,
+        focus: false
+    });
 }(jQuery));

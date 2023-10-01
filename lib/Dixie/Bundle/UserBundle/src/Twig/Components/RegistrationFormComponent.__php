@@ -1,0 +1,24 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Talav\UserBundle\Twig\Components;
+
+use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
+use Talav\UserBundle\Form\Type\Workflow\RegistrationFormType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
+
+#[AsTwigComponent('registration_form')]
+class RegistrationFormComponent extends AbstractController
+{
+    use DefaultActionTrait;
+    use ComponentWithFormTrait;
+
+    public User $user;
+
+    protected function instantiateForm(): FormInterface
+    {
+        return $this->createForm(RegistrationFormType::class);
+    }
+}

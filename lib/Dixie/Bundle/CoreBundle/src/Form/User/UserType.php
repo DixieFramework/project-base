@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Talav\CoreBundle\Form\User;
 
-use Talav\CoreBundle\Entity\User;
+use Talav\UserBundle\Entity\User;
 use Talav\CoreBundle\Form\AbstractEntityType;
 use Talav\CoreBundle\Form\FormHelper;
 use Talav\CoreBundle\Utils\FormatUtils;
@@ -39,8 +39,8 @@ class UserType extends AbstractEntityType
         $helper->field('plainPassword')
             ->addRepeatPasswordType();
 
-        $helper->field('role')
-            ->add(RoleChoiceType::class);
+//        $helper->field('role')
+//            ->add(RoleChoiceType::class);
 
         $helper->field('enabled')
             ->addTrueFalseType('common.value_enabled', 'common.value_disabled');
@@ -51,9 +51,9 @@ class UserType extends AbstractEntityType
             ->widgetClass('text-center')
             ->addPlainType(true);
 
-        $helper->field('imageFile')
-            ->updateOption('maxsize', '10mi')
-            ->addVichImageType();
+//        $helper->field('imageFile')
+//            ->updateOption('maxsize', '10mi')
+//            ->addVichImageType();
 
         $helper->listenerPreSetData($this->onPreSetData(...));
     }
@@ -78,7 +78,9 @@ class UserType extends AbstractEntityType
         /** @var User $user */
         $user = $event->getData();
         $form = $event->getForm();
-        if ($user->isNew()) {
+        //if ($user->isNew())
+        if (true)
+        {
             $form->remove('lastLogin');
         } else {
             $form->remove('plainPassword');

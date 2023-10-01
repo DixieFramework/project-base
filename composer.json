@@ -53,6 +53,7 @@
         "symfony/web-link": "6.3.*",
         "symfony/webapp-meta": "^1.0",
         "symfony/webpack-encore-bundle": "^1.14",
+        "symfony/workflow": "6.3.*",
         "symfony/yaml": "6.3.*",
         "talav/avatar-bundle": "@dev",
         "talav/bundle-generator-bundle": "@dev",

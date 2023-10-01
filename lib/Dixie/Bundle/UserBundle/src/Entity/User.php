@@ -74,6 +74,9 @@ class User extends AbstractUser implements UserInterface
 //    #[ORM\Column(type: 'json', nullable: false)]
     protected array $flags;
 
+    #[ORM\Column(nullable: true)]
+    private null|string $state = null;
+
     /** ------------ (non mapped) ------------ */
 	#[
 		Assert\Length(
@@ -451,7 +454,6 @@ class User extends AbstractUser implements UserInterface
 
 		return $this;
 	}
-
     public function setSendCreationEmail(bool $send): UserInterface
     {
         $this->sendCreationEmail = $send;
@@ -462,5 +464,15 @@ class User extends AbstractUser implements UserInterface
     public function getSendCreationEmail(): bool
     {
         return $this->sendCreationEmail;
+    }
+
+    public function getState(): null|string
+    {
+        return $this->state;
+    }
+
+    public function setState(string $state): void
+    {
+        $this->state = $state;
     }
 }

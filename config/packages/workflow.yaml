@@ -1,0 +1,20 @@
+framework:
+    workflows:
+        registration:
+            type: state_machine
+            audit_trail:
+                enabled: true
+            marking_store:
+                type: method
+                property: state
+            supports:
+                - Groshy\Entity\User
+            initial_marking: personal_information
+            places: ['personal_information', 'payment_information', 'complete']
+            transitions:
+                to_payment:
+                    from: 'personal_information'
+                    to: 'payment_information'
+                to_complete:
+                    from: 'payment_information'
+                    to: 'complete'

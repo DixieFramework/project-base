@@ -121,6 +121,12 @@ _______     __  _   _ _____ _____ _    _ _______
         {{ include('@TalavWeb/navigation/horizontal/navigation.html.twig') }}
     {%- endblock %}
 
+    {% if block('header') is defined %}
+        {{ block('header') }}
+    {% endif %}
+
+    {% block layout %}{% endblock layout %}
+
     {# container #}
     <div role="main" class="{% block container_class 'container' %}">
         {% block body -%}{%- endblock %}

@@ -707,6 +707,16 @@
         <aside class="col-lg-4 pe-xl-4">
             <div class="h-100 border-end p-4">
                 <div class="p-2">
+                    <div class="text-center mb-3">
+                        <!-- Avatar -->
+                        <div class="avatar avatar-xxl mb-3">
+                            <div class="avatar-img rounded-circle border border-2 border-white" style="background: url({% if user.avatar %}{{ media_thumb_reference(user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar/male.png') }}{% endif %}) #ffffff no-repeat center center / cover"></div>
+                        </div>
+                        <h6 class="fw-light mb-0">Jacqueline Miller</h6>
+                        <a href="#" class="text-reset text-primary-hover small">hello@gmail.com</a>
+                        <hr>
+                    </div>
+
                     <!-- Avatar and info -->
                     <div class="d-flex align-items-center mb-3">
                         <!-- Avatar -->

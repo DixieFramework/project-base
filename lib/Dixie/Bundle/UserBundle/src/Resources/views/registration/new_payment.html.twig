@@ -1,0 +1,189 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Payment{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center g-4 mt-3">
+            <div class="col-md-4">
+                <div class="card bg-white p-2 rounded mb-3 position-relative">
+
+                    <div class="card-body">
+                        <div class="lead">
+                            It's time to do socializing on online differently! Collaborate, learn, create and achieve
+                            your goals in real life with your friends and community.
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="accordion accordion-flush" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed fw-bold" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false"
+                                        aria-controls="collapseOne">
+                                    <span class="mdi mdi-checkbox-marked-circle-outline fs-3 text-primary me-2"></span>
+                                    €4 per month
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                 data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    We use a subscription model for many reasons. We offer 1 month free trial / €4 per
+                                    month after
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed fw-bold" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false"
+                                        aria-controls="collapseOne">
+                                    <span class="mdi mdi-checkbox-marked-circle-outline fs-3 text-primary me-2"></span>
+                                    No adverts! This one is big!
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                 data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    This means we don't want you constantly on our platform looking at ads, like most
+                                    other platforms, because we don't have an ad model. No eyeball algorithms, don't
+                                    waste your life staring at screens, do something real.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed fw-bold" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false"
+                                        aria-controls="collapseOne">
+                                    <span class="mdi mdi-checkbox-marked-circle-outline fs-3 text-primary me-2"></span>
+                                    Take back control of your attention!
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse " aria-labelledby="headingOne"
+                                 data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    No endless, pointless updates, we will only contact you when it's important. We
+                                    promote your flow state and use AI to gradually increase your attention span and
+                                    focus to
+                                    achieve your goals
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed fw-bold" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false"
+                                        aria-controls="collapseOne">
+                                    <span class="mdi mdi-checkbox-marked-circle-outline fs-3 text-primary me-2"></span>
+                                    Social Learning
+                                </button>
+                            </h2>
+                            <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                 data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    Optimised for learning and self development with Spotlight and Starlight goals and
+                                    even join forces with others who want to achieve the same goal.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed fw-bold" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false"
+                                        aria-controls="collapseOne">
+                                    <span class="mdi mdi-checkbox-marked-circle-outline fs-3 text-primary me-2"></span>
+                                    Simple!
+                                </button>
+                            </h2>
+                            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                 data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    Simple! no endless hidden settings
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed fw-bold" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false"
+                                        aria-controls="collapseOne">
+                                    <span class="mdi mdi-checkbox-marked-circle-outline fs-3 text-primary me-2"></span>
+                                    Open Source Code
+                                </button>
+                            </h2>
+                            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                 data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    No secret algorithms! No surveillance capitalism! No creeping, spying or selling of
+                                    your private data. don't believe us, check the code.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-grey">
+                        <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link">
+                                    <div class="mdi mdi-check text-success fs-3 me-2"></div>
+                                    <div>Personal Information</div>
+                                </a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active"
+                                        id="pills-profile-tab" data-bs-toggle="pill"
+                                        data-bs-target="#payment-information" type="button" role="tab"
+                                        aria-controls="pills-profile" aria-selected="false">
+                                    <div class="mdi mdi-numeric-2 fs-3 me-2"></div>
+                                    <div> Payment details</div>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <h5>{{ 'add-payment-method'|trans }}</h5>
+                        {{ form_widget(cardForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-secondary text-white row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 mt-5 border-top">
+        <div class="col mb-3">
+            <a href="{{ path('register_step_one') }}"
+               class="d-flex mx-3 align-items-center mb-3 link-dark text-decoration-none">
+                <img class="img-fluid" alt="logo" src="{{ asset('images/townpoint-logo-white-with-text.png') }}"/>
+            </a>
+            <p class="text-white text-center">© {{ 'now'|date('Y') }}</p>
+        </div>
+
+        <div class="col"></div>
+        <div class="col"></div>
+
+        <div class="col mb-3">
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0">Goals</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0">Market</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0">Events</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0">Groups</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0"></a></li>
+            </ul>
+        </div>
+
+        <div class="col mb-3">
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0">Privacy</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0">Terms & conditions</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0">Contact</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0">About us</a></li>
+            </ul>
+        </div>
+    </footer>
+{% endblock %}
