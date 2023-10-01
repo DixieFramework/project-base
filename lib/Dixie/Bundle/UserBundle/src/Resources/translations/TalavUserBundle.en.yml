@@ -17,6 +17,9 @@ talav:
   registration:
     layout:
       register: Register
+    check_email: Please, check your e-mail for a confirmation link. We have sent the link to you at "%email%".
+    email:
+      subject: Welcome! Confirm your e-mail address.
     confirmed: 'Congrats %username%, your account is now activated.'
     submit: Register
     flash:

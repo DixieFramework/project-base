@@ -52,6 +52,10 @@ interface UserInterface extends SymfonyUserInterface, PasswordAuthenticatedUserI
 
     public function setLastLogin(?DateTimeInterface $time): void;
 
+    public function getConfirmationToken(): ?string;
+
+    public function setConfirmationToken(?string $confirmationToken): self;
+
     /**
      * Never use this to check if this user has access to anything!
      *

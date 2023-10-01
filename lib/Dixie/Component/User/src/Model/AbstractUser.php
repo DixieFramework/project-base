@@ -42,6 +42,9 @@ abstract class AbstractUser implements UserInterface
 
     protected ?DateTimeInterface $passwordRequestedAt = null;
 
+    protected ?string $confirmationToken = null;
+
+    protected bool $verified = false;
     protected iterable $arrRoles = [];
 
     protected ?string $email = null;
@@ -156,6 +159,34 @@ abstract class AbstractUser implements UserInterface
         $threshold->sub($ttl);
 
         return $threshold <= $this->passwordRequestedAt;
+    }
+
+    public function getConfirmationToken(): ?string
+    {
+        return $this->confirmationToken;
+    }
+
+    public function setConfirmationToken(?string $confirmationToken): self
+    {
+        $this->confirmationToken = $confirmationToken;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVerified(): bool
+    {
+        return $this->verified;
+    }
+
+    /**
+     * @param bool $verified
+     */
+    public function setVerified(bool $verified): void
+    {
+        $this->verified = $verified;
     }
 
     public function getRoles(): array

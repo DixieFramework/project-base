@@ -31,7 +31,17 @@ interface UserManagerInterface extends ManagerInterface
     public function findUserByUsernameOrEmail(string $usernameOrEmail): ?UserInterface;
 
     /**
+     * Finds a user by its confirmation token.
+     */
+    public function findUserByConfirmationToken(string $confirmationToken): ?UserInterface;
+
+    /**
      * Updates the canonical username and email fields for a user.
      */
     public function updateCanonicalFields(UserInterface $user): void;
+
+    /**
+     * Updates the confirmation token for a user.
+     */
+    public function updateConfirmationToken(UserInterface $user): void;
 }

@@ -1,0 +1,7 @@
+{% extends "@TalavUser/layout.html.twig" %}
+
+{% trans_default_domain 'TalavUserBundle' %}
+
+{% block nucleos_user_content %}
+    <p>{{ 'talav.registration.check_email'|trans({'%email%': user.email}) }}</p>
+{% endblock nucleos_user_content %}

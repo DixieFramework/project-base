@@ -9,6 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Talav\Component\User\Canonicalizer\CanonicalizerInterface;
 use Talav\Component\User\Util\PasswordUpdaterInterface;
+use Talav\Component\User\Util\TokenGeneratorInterface;
 use Talav\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
 use Talav\UserBundle\EventSubscriber\WelcomeEmailSubscriber;
 use Talav\UserBundle\Mailer\UserMailer;
@@ -28,13 +29,15 @@ class TalavUserExtension extends AbstractResourceExtension
         $container->autowire(UserMailerInterface::class, $config['mailer']['class']);
         $container->autowire(CanonicalizerInterface::class, $config['canonicalizer']['class']);
         $container->autowire(PasswordUpdaterInterface::class, $config['password_updater']['class']);
+        $container->autowire(TokenGeneratorInterface::class, $config['token_generator']['class']);
 
         if (UserMailer::class == $config['mailer']['class']) {
             $definition = $container->getDefinition(UserMailerInterface::class);
-            $definition->setArgument(4, [
+            $definition->setArgument(5, [
                 'email' => $config['email']['from']['email'],
                 'name' => $config['email']['from']['name'],
             ]);
+            $container->setParameter('talav_user.mailer.parameters', $config['email']['from']);
         }
 
         // WelcomeEmailSubscriber is registered by default, remove it if config does not require confirmation email

@@ -12,6 +12,7 @@ use Talav\Component\User\Manager\UserManager;
 use Talav\Component\User\Manager\UserOAuthManager;
 use Talav\Component\User\Repository\UserRepository;
 use Talav\Component\User\Util\PasswordUpdater;
+use Talav\Component\User\Util\TokenGenerator;
 use Talav\UserBundle\Entity\User;
 use Talav\UserBundle\Entity\UserOAuth;
 use Talav\UserBundle\Form\Model\RegistrationFormModel;
@@ -54,6 +55,12 @@ final class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('class')->defaultValue(PasswordUpdater::class)->end()
+                    ->end()
+                ->end()
+                ->arrayNode('token_generator')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('class')->defaultValue(TokenGenerator::class)->end()
                     ->end()
                 ->end()
                 ->arrayNode('resetting')

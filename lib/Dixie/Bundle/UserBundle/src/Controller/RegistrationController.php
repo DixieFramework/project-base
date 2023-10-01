@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Groshy\Entity\Profile;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Talav\Component\Resource\Manager\ManagerInterface;
@@ -47,14 +48,15 @@ use Talav\UserBundle\Security\UserFormAuthenticator;
  * Controller to register a new user.
  */
 #[AsController]
-#[Route(path: '/register')]
+#[Route(path: '/register', name: 'talav_user_registration_')]
 class RegistrationController extends AbstractController
 {
-    private const ROUTE_REGISTER = 'talav_user_register';//'user_register';
+    private const ROUTE_REGISTER = 'register';//'user_register';
     private const ROUTE_VERIFY = 'user_verify';
 
     public function __construct(
         private readonly EventDispatcherInterface   $eventDispatcher,
+        private readonly RouterInterface            $router,
         private readonly EmailVerifier              $verifier,
         private readonly UserRepositoryInterface    $userRepository,
         private readonly UserManagerInterface       $userManager,
@@ -170,6 +172,34 @@ class RegistrationController extends AbstractController
 
 		return $response;
 	}
+
+    #[Route('/check-email', name: 'check_email')]
+    public function checkEmail(Request $request): Response
+    {
+        $session = $request->getSession();
+        $email   = $session->get('talav_user_send_confirmation_email/email', '');
+
+        if ('' === $email) {
+            return new RedirectResponse($this->router->generate('talav_user_register'));
+        }
+
+        $session->remove('talav_user_send_confirmation_email/email');
+        $user = $this->userManager->findUserByEmail($email);
+
+        if (null === $user) {
+            return new RedirectResponse($this->router->generate('talav_user_login'));
+        }
+
+        $this->render('@TalavUser/registration/check_email.html.twig', [
+            'user' => $user
+        ]);
+
+        return new Response(
+            $this->twig->render('@TalavUser/registration/check_email.html.twig', [
+                'user' => $user,
+            ])
+        );
+    }
 
     /**
      * Display and process form to register a new user.

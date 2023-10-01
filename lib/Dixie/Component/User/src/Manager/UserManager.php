@@ -54,6 +54,12 @@ class UserManager extends ResourceManager implements UserManagerInterface
         return $this->findUserByUsername($usernameOrEmail);
     }
 
+    public function findUserByConfirmationToken(string $confirmationToken): ?UserInterface
+    {
+        /** @noinspection PhpUndefinedMethodInspection */
+        return $this->getTypedRepository()->findOneByConfirmationToken($confirmationToken);
+    }
+
     public function updateCanonicalFields(UserInterface $user): void
     {
         // enforce non empty username
@@ -62,6 +68,13 @@ class UserManager extends ResourceManager implements UserManagerInterface
         }
         $user->setEmailCanonical($this->canonicalizer->canonicalize($user->getEmail()));
         $user->setUsernameCanonical($this->canonicalizer->canonicalize($user->getUsername()));
+    }
+
+    public function updateConfirmationToken(UserInterface $user): void
+    {
+        $token = sha1(uniqid($user->getSalt()));
+        $user->setConfirmationToken($token);
+        $this->update($user, true);
     }
 
 	/**

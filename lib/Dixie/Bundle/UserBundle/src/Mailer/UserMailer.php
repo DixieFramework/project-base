@@ -6,6 +6,7 @@ namespace Talav\UserBundle\Mailer;
 
 use InvalidArgumentException;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
@@ -14,6 +15,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Talav\Component\User\Model\UserInterface;
 use Talav\ProfileBundle\Entity\UserRelation;
+use Talav\UserBundle\Mailer\Mail\RegistrationMail;
 use Twig\Environment;
 
 class UserMailer implements UserMailerInterface
@@ -37,7 +39,7 @@ class UserMailer implements UserMailerInterface
         UrlGeneratorInterface $router,
         Environment $twig,
         protected readonly TranslatorInterface $translator,
-        array $parameters
+        #[Autowire('%talav_user.mailer.parameters%')] array $parameters
     ) {
         $this->mailer = $mailer;
         $this->router = $router;
@@ -74,6 +76,26 @@ class UserMailer implements UserMailerInterface
      */
     public function sendConfirmationEmailMessage(UserInterface $user): void
     {
+        $url = $this->router->generate('talav_user_registration_confirm', [
+            'token' => $user->getConfirmationToken(),
+        ], UrlGeneratorInterface::ABSOLUTE_URL);
+
+        $mail = (new RegistrationMail())
+            ->to(new Address($user->getEmail()))
+            ->subject($this->translator->trans('talav.registration.email.subject', [
+                '%username%' => $user->getUsername(),
+            ], 'TalavUserBundle'))
+            ->setUser($user)
+            ->setConfirmationUrl($url)
+        ;
+
+        if (null !== $this->parameters['email']) {
+            $mail->from(Address::create($this->parameters['email']));
+        }
+
+        $this->mailer->send($mail);
+
+
         $template = $this->parameters['template']['confirmation'];
         $url = $this->router->generate(
             'fos_user_registration_confirm',
