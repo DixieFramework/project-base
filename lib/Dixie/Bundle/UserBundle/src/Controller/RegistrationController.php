@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Talav\UserBundle\Controller;
 
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Talav\Component\User\Manager\UserManagerInterface;
 use Talav\Component\User\Model\UserInterface;
 use Talav\Component\User\Repository\UserRepositoryInterface;
@@ -21,6 +22,8 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use Talav\UserBundle\Event\GetResponseRegistrationEvent;
+use Talav\UserBundle\Event\TalavUserEvents;
 
 /**
  * Controller to register a new user.
@@ -33,10 +36,11 @@ class RegistrationController extends AbstractController
     private const ROUTE_VERIFY = 'user_verify';
 
     public function __construct(
-        private readonly EmailVerifier           $verifier,
-        private readonly UserRepositoryInterface $userRepository,
-        private readonly UserManagerInterface    $userManager,
-        private readonly UserExceptionService    $service
+        private readonly EventDispatcherInterface   $eventDispatcher,
+        private readonly EmailVerifier              $verifier,
+        private readonly UserRepositoryInterface    $userRepository,
+        private readonly UserManagerInterface       $userManager,
+        private readonly UserExceptionService       $service
     ) {
     }
 
@@ -48,6 +52,14 @@ class RegistrationController extends AbstractController
     {
         $user = $this->userManager->create();
         $user->setPassword('fake');
+
+        $event = new GetResponseRegistrationEvent($user, $request);
+        $this->eventDispatcher->dispatch($event, TalavUserEvents::REGISTRATION_INITIALIZE);
+
+        if (null !== $event->getResponse()) {
+            return $event->getResponse();
+        }
+
         $form = $this->createForm(UserRegistrationType::class, $user);
         if ($this->handleRequestForm($request, $form)) {
             $this->userManager->update($user, true);

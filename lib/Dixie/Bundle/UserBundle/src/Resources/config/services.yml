@@ -75,3 +75,11 @@ services:
         tags:
             - { name: 'doctrine.event_listener', event: 'postLoad' }
             - { name: 'doctrine.event_listener', event: 'preLoad' }
+
+    Talav\UserBundle\EventListener\LoginRedirectListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: checkLogin }
+
+    Talav\UserBundle\EventListener\RedirectUserListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

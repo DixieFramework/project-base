@@ -41,77 +41,42 @@
                     <a href="#" class="icon-sm bg-primary text-white rounded-circle" id="photoActionEdit" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fas fa-pencil"></i>
                     </a>
+
                     <!-- Dropdown menu -->
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="photoActionEdit">
-                        <li><a class="dropdown-item" href="#"> <i class="bi bi-tag fa-fw pe-1"></i> Remove Tag</a></li>
-                        <li><a class="dropdown-item" href="#"> <i class="bi bi-download fa-fw pe-1"></i> Download </a></li>
-                        <li><a class="dropdown-item" href="#"> <i class="bi bi-person fa-fw pe-1"></i> Make Profile Picture</a></li>
-                        <li><a class="dropdown-item" href="#"> <i class="bi bi-person-bounding-box fa-fw pe-1"></i> Make Cover Photo</a></li>
+                        {% if is_granted('IMAGE_DELETE', image) %}
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-remove fa-fw pe-1"></i>Delete</a></li>
+                        {% endif %}
+                        {% if is_granted('COMMENT_LIST', image) %}
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-comment fa-fw pe-1"></i>View Comments</a></li>
+                        {% endif %}
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#"> <i class="bi bi-flag fa-fw pe-1"></i> Report photo</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-flag fa-fw pe-1"></i>Report photo</a></li>
                     </ul>
                 </div>
             </div>
 
             <!-- Dropdown END -->
             <a href="{{ asset(image.image.filePath) |imagine_filter('gallery_thumb') }}" data-gallery="image-popup" data-glightbox="description: .custom-desc2; descPosition: left;">
-                <img class="rounded img-fluid" src="{{ asset(image.image.filePath) |imagine_filter('gallery_thumb') }}" alt="">
+                <img class="rounded img-fluid" src="{{ asset(image.image.filePath) |imagine_filter('gallery_thumb') }}" alt="{{ image.title }}">
             </a>
+
+            <div class="position-absolute top-0 bg-opacity-25">
+                ssss
+            </div>
         </div>
         <!-- Photo item END -->
+        {% else %}
+            <div class="alert alert-primary" role="alert">
+                {{ 'talav.gallery.message.empty_list'|trans }}
+            </div>
         {% endfor %}
     </div>
 
     <div class="row">
-    <div class="col-md-8">
-
-    {% if galleryImages is defined and galleryImages|length > 0 %}
-
-        <div class="navigation text-center">
-            {{ pagerfanta(galleryImages) }}
-{#            {{ knp_pagination_render(imagesPagination) }}#}
-        </div>
-
-        {% for image in galleryImages %}
-            <div class="image_preview">
-                <h3>{{ image.title }}</h3>
-                <p>{{ image.description }}</p>
-                <img width="100%" src="{{ asset(image.image.filePath) |imagine_filter('gallery_thumb') }}" alt="{{ image.title }}"/>
-                {% if is_granted('IMAGE_DELETE', image) %}
-                    <a href="{{ url('talav_gallery_image_delete', {'id': image.id}) }}">Usuń obrazek</a>
-                {% endif %}
-                {% if is_granted('COMMENT_LIST', image) %}
-                    <a href="{{ url('talav_gallery_comment_list', {'id': image.id}) }}">Komentarze</a>
-                {% endif %}
-{#                {% for comment in image.comments %}#}
-{#                    <div style="border: 1px solid black; margin: 0.5em; padding: 0.5em;">#}
-{#                        <h6>Nick: {{ comment.nick }}({{ comment.email }})</h6>#}
-{#                        <hr/>#}
-{#                        Comment:#}
-{#                        <p>{{ comment.text }}</p>#}
-{#                        {% if is_granted('COMMENT_DELETE', comment) %}#}
-{#                            <hr/>#}
-{#                            <a href="{{ url('comment_delete', {'id': comment.id}) }}">Usuń komentarz</a>#}
-{#                        {% endif %}#}
-{#                    </div>#}
-{#                {% endfor %}#}
-            </div>
-        {% endfor %}
-
-        <div class="navigation text-center">
+        <div class="col-12">
             {{ pagerfanta(galleryImages) }}
         </div>
-    {% else %}
-        <div class="alert alert-primary" role="alert">
-            {{ 'talav.gallery.message.empty_list'|trans }}
-        </div>
-    {% endif %}
-
-    <a href="{{ url('talav_gallery_index') }}" class="btn btn-secondary">{{ 'talav.gallery.index.link'|trans }}</a>
-
     </div>
-    <div class="col-md-4">
-        ccc
-    </div>
-</div>
+
 {% endblock %}

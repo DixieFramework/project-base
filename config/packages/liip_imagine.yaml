@@ -12,6 +12,10 @@ liip_imagine:
             quality: 90
             filters:
                 thumbnail: { size: [ 100, 100 ], mode: fixed }
+        user_cover:
+            quality: 90
+            filters:
+                thumbnail: { size: [ 1500, 500 ], mode: fixed }
 
     loaders:
         local_images:

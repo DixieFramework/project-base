@@ -380,7 +380,28 @@ class User extends AbstractUser implements UserInterface
     }
 
     /**
-     * Setzt eine Userflag. Wenn nicht vorhanden, wird sie neu generiert.
+     * Add arbitrary UserFlag.
+     *
+     * @param string $key
+     * @param bool   $value
+     */
+    public function addFlag($key, $value)
+    {
+        $this->setFlagValue($key, $value);
+    }
+
+    /**
+     * Return arbitrary UserFlag.
+     *
+     * @param string $key
+     */
+    public function getFlag($key): bool
+    {
+        return $this->getFlagValue($key);
+    }
+
+    /**
+     * Sets a user flag. If not present, it will be regenerated.
      *
      * @param string $flagKey
      * @param mixed  $flagValue

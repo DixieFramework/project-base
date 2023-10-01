@@ -1,0 +1,35 @@
+{% extends '@TalavWeb/layouts/default.html.twig' %}
+
+{% block title 'View Photo' %}
+
+{% block body %}
+<!-- Card feed item START -->
+<div class="card">
+
+    <!-- Card header START -->
+    <div class="card-header pb-0">
+        <h3 class="card-title h6">Title: </h3>
+    </div>
+    <!-- Card header START -->
+
+    {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+
+    <!-- Card body START -->
+    <div class="card-body">
+        <img src="{{ asset(image.image.filePath) }}" class="rounded-3 position-relative" alt="">
+    </div>
+    <!-- Card body END -->
+
+    <!-- Card Footer START -->
+    <div class="card-footer border-top-1 d-flex justify-content-between align-items-center p-3">
+        <input name="submit" type="submit" value="{{ 'common.button_create'|trans({}, 'TalavWebBundle') }}" class="btn btn-primary"/>
+    </div>
+    <!-- Card Footer END -->
+
+    {{ form_end(form) }}
+
+</div>
+    <!-- Card feed item END -->
+
+    </div>
+{% endblock %}

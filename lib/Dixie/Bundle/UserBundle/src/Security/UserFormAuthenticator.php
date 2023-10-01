@@ -154,6 +154,13 @@ class UserFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        $user = $token->getUser();
+
+        if ($this->userNeedsProfileCompletion($user)) {
+            $request->getSession()->getFlashBag()->add('info', 'Please complete your profile.');
+            return new RedirectResponse($this->urlGenerator->generate('user_profile_edit'));
+        }
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
@@ -212,5 +219,10 @@ class UserFormAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         return $response;
+    }
+
+    private function userNeedsProfileCompletion(UserInterface $user): bool
+    {
+        return false === $user->isProfileCompleted() || true === $user->isNewUser();
     }
 }
