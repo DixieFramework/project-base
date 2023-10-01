@@ -10,12 +10,19 @@ use Talav\CoreBundle\Enums\EntityPermission;
 use Talav\CoreBundle\Interfaces\RoleInterface;
 use Talav\CoreBundle\Model\Role;
 use Elao\Enum\FlagBag;
+use Talav\PermissionBundle\Entity\Permission;
+use Talav\PermissionBundle\Repository\PermissionRepositoryInterface;
+use Talav\PermissionBundle\Repository\RoleRepositoryInterface;
 
 /**
  * Service to build roles with default access rights.
  */
 class RoleBuilderService
 {
+    public function __construct(private readonly RoleRepositoryInterface $roleRepository, private readonly PermissionRepositoryInterface $permissionRepository)
+    {
+    }
+
     /**
      * Gets a role with default access rights for the given user.
      */
@@ -91,9 +98,10 @@ class RoleBuilderService
      * @psalm-suppress InvalidReturnType
      * @psalm-suppress InvalidReturnStatement
      */
-    private function getAllPermissions(): FlagBag
+    private function getAllPermissions()//: FlagBag
     {
-        return FlagBag::from(...EntityPermission::sorted());
+        return $this->permissionRepository->findAll();
+        //return FlagBag::from(...EntityPermission::sorted());
     }
 
     /**
@@ -120,15 +128,16 @@ class RoleBuilderService
         return new FlagBag(EntityPermission::class, FlagBag::NONE);
     }
 
-    private function getRoleWithAll(string $roleName): Role
+    private function getRoleWithAll(string $roleName): \Talav\PermissionBundle\Entity\RoleInterface
     {
-        $role = new Role($roleName);
-        $value = $this->getAllPermissions();
-        $entities = EntityName::constants();
-        foreach ($entities as $entity) {
-            $role->$entity = $value;
+        $role = new \Groshy\Entity\Role($roleName);
+        $permissions = $this->getAllPermissions();
+        foreach ($permissions as $permission) {
+            $permEntity = new Permission();
+            $permEntity->setName($permission->getName());
+            $role->addPermission($permEntity);
         }
-
+dd($role);
         return $role;
     }
 }

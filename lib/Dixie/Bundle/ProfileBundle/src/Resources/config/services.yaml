@@ -29,3 +29,12 @@ services:
         resource: '../../Controller'
         public: true
         tags: [ 'controller.service_arguments' ]
+
+    #
+    # Forms
+    #
+    Talav\ProfileBundle\Form\Type\ProfileFormType:
+        arguments:
+            - '\Talav\ProfileBundle\Model\ProfileInterface'
+        tags:
+            - { name: form.type }

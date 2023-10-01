@@ -9,7 +9,7 @@
             {% if image %}
                 {{ image|raw }}&nbsp;{{ app.user.userIdentifier }}
             {% else -%}
-                {{ icon('user fa-lg far') }}&nbsp;{{ app.user.userIdentifier }}
+                {{ icon('user fa-lg far me-2') }}&nbsp;{{ app.user.userIdentifier }}
             {% endif -%}
         {% endapply %}
         {% endif %}

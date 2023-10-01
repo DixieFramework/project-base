@@ -3,9 +3,9 @@
 {# body #}
 {% block body -%}
 <div class="row{% block row_class %} g-4{% endblock %}">
-    {% if block('card_sidebar') is defined %}
+    {% if block('card_sidebar') is defined and block('card_sidebar')|trim is not empty %}
     <div class="col{% block card_sidebar_class %} col-xl-2{% endblock -%}">
-        {% block card_sidebar %}{% endblock card_sidebar %}
+        {{  block('card_sidebar') }}
     </div>
     {% endif %}
 

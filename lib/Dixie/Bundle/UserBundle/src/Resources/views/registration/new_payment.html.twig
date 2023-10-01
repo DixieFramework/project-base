@@ -148,7 +148,12 @@
                     </div>
                     <div class="card-body">
                         <h5>{{ 'add-payment-method'|trans }}</h5>
+                        {{ form_start(cardForm) }}
                         {{ form_widget(cardForm) }}
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-outline-primary">contiune</button>
+                        </div>
+                        {{ form_end(cardForm) }}
                     </div>
                 </div>
             </div>

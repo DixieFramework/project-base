@@ -337,7 +337,8 @@ class User extends AbstractUser implements UserInterface
 		}
 
 		if (is_string($role)) {
-			return in_array($role, array_values(self::$roleHierarchy->getReachableRoleNames($this->getRoles())));
+            return in_array($role, array_values($this->getRoles()));
+//            return in_array($role, array_values(self::$roleHierarchy->getReachableRoleNames($this->getRoles())));
 		}
 
 		if (is_array($role)) {

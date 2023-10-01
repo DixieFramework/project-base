@@ -11,7 +11,7 @@ use Talav\UserBundle\Entity\User;
 
 class InjectRoleHierarchyListener
 {
-    public function __construct(private ContainerInterface $container) {}
+    public function __construct(private ContainerInterface $container) {dd($this);}
 
     #[NoReturn] public function preLoad(LifecycleEventArgs $event)
     {
@@ -19,7 +19,7 @@ class InjectRoleHierarchyListener
     }
 
     #[NoReturn] public function postLoad(LifecycleEventArgs $event)
-    {
+    {dd($this);
         if ($event->getObject() instanceof User && User::$roleHierarchy === null) {
             User::$roleHierarchy = $this->container->get('security.role_hierarchy');
         }

@@ -91,7 +91,7 @@ class ProfileEditTypeExtension extends AbstractTypeExtension implements Containe
                 'translation_domain' => 'enums',
                 'expanded' => true,
                 'label_attr' => [
-                    'class' => 'radio-custom'
+                    'class' => 'radio-inline'
                 ],
                 'choice_label' => function(Gender $gender) {
                     return $this->translator->trans('gender.' . $gender->value, [], 'enums');

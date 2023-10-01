@@ -73,8 +73,8 @@ services:
         class: Talav\UserBundle\EventListener\InjectRoleHierarchyListener
         arguments: [ '@service_container' ]
         tags:
-            - { name: 'doctrine.event_listener', event: 'postLoad' }
-            - { name: 'doctrine.event_listener', event: 'preLoad' }
+            - { name: 'doctrine.orm.entity_listener', event: 'postLoad' }
+            - { name: 'doctrine.orm.entity_listener', event: 'preLoad' }
 
     Talav\UserBundle\EventListener\LoginRedirectListener:
         tags:
@@ -84,4 +84,4 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
-    Symfony\Component\Workflow\WorkflowInterface: '@state_machine.abstract'
+#    Symfony\Component\Workflow\WorkflowInterface: '@state_machine.abstract'
