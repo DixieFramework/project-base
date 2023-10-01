@@ -6,6 +6,11 @@
 (function ($) {
     'use strict';
 
+    // initialize editor
+    $("#bio").initSimpleEditor({
+        focus: true
+    });
+
     // remove pattern attribute
     $('#username').removeAttr('pattern');
 

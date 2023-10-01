@@ -23,6 +23,7 @@ security:
             custom_authenticators:
                 - Talav\UserBundle\Security\UserFormAuthenticator
 #            entry_point: form_login
+            switch_user: true
             form_login:
                 login_path: talav_user_login
                 check_path: talav_user_login
