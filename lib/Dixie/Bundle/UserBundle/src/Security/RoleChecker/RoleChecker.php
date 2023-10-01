@@ -1,11 +1,13 @@
 <?php
 
-namespace UserBundle\Utils\RoleChecker;
+declare(strict_types=1);
+
+namespace Talav\UserBundle\Security\RoleChecker;
 
 use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface;
-use UserBundle\Entity\User;
+use Talav\Component\User\Model\UserInterface;
 
 /**
  * Class RoleChecker
@@ -39,12 +41,12 @@ class RoleChecker implements RoleCheckerInterface
     /**
      * Checks that specified user has necessary role.
      *
-     * @param User                 $user A checked User entity instance.
+     * @param UserInterface                 $user A checked User entity instance.
      * @param string|RoleInterface $role A role name or Role instance.
      *
      * @return boolean
      */
-    public function has(User $user, $role)
+    public function has(UserInterface $user, $role)
     {
         return in_array($role, $this->getUserRole($user), true);
     }
@@ -52,12 +54,12 @@ class RoleChecker implements RoleCheckerInterface
     /**
      * Checks that specified user has given role or lower.
      *
-     * @param User                 $user A checked User entity instance.
+     * @param UserInterface                 $user A checked User entity instance.
      * @param string|RoleInterface $role A role name or Role instance.
      *
      * @return boolean
      */
-    public function hasNotHigherThen(User $user, $role)
+    public function hasNotHigherThen(UserInterface $user, $role)
     {
         $actual = $this->getUserRole($user);
         $actualOrder = max(array_map(function ($role) {
@@ -71,11 +73,11 @@ class RoleChecker implements RoleCheckerInterface
     /**
      * Get reachable roles for specified user.
      *
-     * @param User $user A User entity instance.
+     * @param UserInterface $user A User entity instance.
      *
      * @return array
      */
-    private function getUserRole(User $user)
+    private function getUserRole(UserInterface $user)
     {
         return array_map(function (RoleInterface $role) {
             return $role->getRole();

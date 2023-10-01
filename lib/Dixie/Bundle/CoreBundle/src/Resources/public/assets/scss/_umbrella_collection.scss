@@ -1,0 +1,29 @@
+umbrella-collection {
+  display: block;
+
+  table.table {
+    .collection-label.required:after {
+      content: " *";
+      color: $danger;
+    }
+
+    thead th, thead td {
+      border: 0;
+    }
+
+    .drag-handle {
+      vertical-align: middle;
+    }
+
+    .table-action {
+      vertical-align: middle;
+      text-align: center;
+      width: 50px;
+    }
+  }
+
+  .drag-handle {
+    text-align: center;
+    cursor: move;
+  }
+}

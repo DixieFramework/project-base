@@ -1,6 +1,8 @@
 <?php
 
-namespace AppBundle\DataFixtures;
+declare(strict_types=1);
+
+namespace Groshy\DataFixtures;
 
 use Faker\Factory;
 use Faker\Generator;

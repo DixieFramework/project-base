@@ -1,9 +1,11 @@
 <?php
 
-namespace UserBundle\Utils\RoleChecker;
+declare(strict_types=1);
+
+namespace Talav\UserBundle\Security\RoleChecker;
 
 use Symfony\Component\Security\Core\Role\RoleInterface;
-use UserBundle\Entity\User;
+use Talav\Component\User\Model\UserInterface;
 
 /**
  * Interface RoleCheckerInterface
@@ -17,20 +19,20 @@ interface RoleCheckerInterface
     /**
      * Checks that specified user has necessary role.
      *
-     * @param User                 $user A checked User entity instance.
+     * @param UserInterface                 $user A checked User entity instance.
      * @param string|RoleInterface $role A role name or Role instance.
      *
      * @return boolean
      */
-    public function has(User $user, $role);
+    public function has(UserInterface $user, $role);
 
     /**
      * Checks that specified user has given role or lower.
      *
-     * @param User                 $user A checked User entity instance.
+     * @param UserInterface                 $user A checked User entity instance.
      * @param string|RoleInterface $role A role name or Role instance.
      *
      * @return boolean
      */
-    public function hasNotHigherThen(User $user, $role);
+    public function hasNotHigherThen(UserInterface $user, $role);
 }

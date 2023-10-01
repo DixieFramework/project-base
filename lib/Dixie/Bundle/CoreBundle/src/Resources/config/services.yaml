@@ -35,3 +35,16 @@ services:
     Talav\CoreBundle\Routing\Loader\BundleRoutingLoader:
         tags:
             - { name: routing.loader }
+
+    Talav\CoreBundle\JsResponse\JsResponseBuilder: ~
+
+    Talav\CoreBundle\JsResponse\JsResponseViewListener:
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Talav\CoreBundle\DataTable\DataTableFactory: ~
+    Talav\CoreBundle\DataTable\DataTableRegistry: ~
+    Talav\CoreBundle\DataTable\DataTableRenderer: ~
+    Talav\CoreBundle\DataTable\DataTableConfiguration:
+        arguments:
+            $config: []

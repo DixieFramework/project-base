@@ -79,6 +79,7 @@ _______     __  _   _ _____ _____ _    _ _______
     {{- asset_css('js/vendor/font-awesome/css/all.css') }}
     {{- asset_css('bundles/babdevpagerfanta/css/pagerfanta.css') }}
     {% block stylesheets %}
+        {% include "@TalavWeb/_stylesheets.html.twig" %}
         {{- asset_css('css/style.css') }}
 {#        {{- asset_css('css/theme.css') }}#}
     {% endblock %}
@@ -121,7 +122,9 @@ _______     __  _   _ _____ _____ _    _ _______
     {%- endblock %}
 
     {# container #}
-    <div role="main" class="{% block container_class 'container' %}">
+    <div role="main" class="{% block container_class 'container' %}"><a href="" data-xhr="/js/modal/small" class="btn btn-primary">
+            Small modal
+        </a>
         {% block body -%}{%- endblock %}
     </div>
 
@@ -161,6 +164,8 @@ _______     __  _   _ _____ _____ _    _ _______
 {# java scripts #}
 <noscript>{{ 'common.no_script_support'|trans }}</noscript>
 {% block javascripts %}
+    {% include "@TalavWeb/_scripts.html.twig" %}
+
     {% if app.debug %}
         {{- asset_js('js/vendor/jquery/jquery.js') }}
         {{- asset_js('js/vendor/bootstrap/js/bootstrap.bundle.js') }}
