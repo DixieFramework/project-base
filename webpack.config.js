@@ -14,9 +14,9 @@ Encore
 
     .addAliases({
         umbrella_core: path.join(__dirname, '/lib/Dixie/Bundle/CoreBundle/src/Resources/public/assets/'),
-        umbrella_admin: path.join(__dirname, '/lib/Dixie/Bundle/WebBundle/src/Resources/public/assets/'),
+        umbrella_admin: path.join(__dirname, '/lib/Dixie/Bundle/WebBundle/src/Resources/private/assets/'),
     })
-    .addEntry('admin', './lib/Dixie/Bundle/WebBundle/src/Resources/public/assets/admin.js')
+    .addEntry('admin', './lib/Dixie/Bundle/WebBundle/src/Resources/private/assets/admin.js')
     .enableSassLoader()
 
     .disableSingleRuntimeChunk()

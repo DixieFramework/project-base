@@ -2,10 +2,10 @@
   "entrypoints": {
     "admin": {
       "css": [
-        "/bundles/talavweb/admin.css?66aa95ba6c895aec2dc2"
+        "/bundles/talavweb/admin.css?bba4765cfd3411c63972"
       ],
       "js": [
-        "/bundles/talavweb/admin.js?8d28976ec08461192d93"
+        "/bundles/talavweb/admin.js?171c00374f0a72251506"
       ]
     }
   }

@@ -122,9 +122,7 @@ _______     __  _   _ _____ _____ _    _ _______
     {%- endblock %}
 
     {# container #}
-    <div role="main" class="{% block container_class 'container' %}"><a href="" data-xhr="/js/modal/small" class="btn btn-primary">
-            Small modal
-        </a>
+    <div role="main" class="{% block container_class 'container' %}">
         {% block body -%}{%- endblock %}
     </div>
 
@@ -161,14 +159,14 @@ _______     __  _   _ _____ _____ _    _ _______
 <!-- JS -->
 {{ encore_entry_script_tags('app') }}
 {%- block js -%}{%- endblock -%}
+{{- asset_js('js/vendor/jquery/jquery.js') }}
+{% include "@TalavWeb/_scripts.html.twig" %}
 {# java scripts #}
 <noscript>{{ 'common.no_script_support'|trans }}</noscript>
 {% block javascripts %}
-    {% include "@TalavWeb/_scripts.html.twig" %}
-
     {% if app.debug %}
-        {{- asset_js('js/vendor/jquery/jquery.js') }}
-        {{- asset_js('js/vendor/bootstrap/js/bootstrap.bundle.js') }}
+{#        {{- asset_js('js/vendor/jquery/jquery.js') }}#}
+{#        {{- asset_js('js/vendor/bootstrap/js/bootstrap.bundle.js') }}#}
         {{- asset_js('js/extensions/array-extensions.js') }}
         {{- asset_js('js/extensions/jquery-extensions.js') }}
         {{- asset_js('js/extensions/params-extensions.js') }}
