@@ -6,6 +6,7 @@ namespace Talav\UserBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Groshy\Entity\Profile;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -34,8 +35,11 @@ use Symfony\Component\Workflow\WorkflowInterface;
 use Talav\ProfileBundle\Form\Type\ProfileFormType;
 use Talav\ProfileBundle\Model\ProfileInterface;
 use Talav\UserBundle\Enum\RegistrationWorkflowEnum;
+use Talav\UserBundle\Event\FilterUserResponseEvent;
+use Talav\UserBundle\Event\FormEvent;
 use Talav\UserBundle\Event\GetResponseRegistrationEvent;
 use Talav\UserBundle\Event\TalavUserEvents;
+use Talav\UserBundle\Event\UserFormEvent;
 use Talav\UserBundle\Form\Type\Workflow\RegistrationFormType;
 use Talav\UserBundle\Security\UserFormAuthenticator;
 
@@ -75,16 +79,32 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('register_step_two');
         }
 
+	    $event = new GetResponseRegistrationEvent($user, $request);
+	    $this->eventDispatcher->dispatch($event, TalavUserEvents::REGISTRATION_INITIALIZE);
+
+	    if (null !== $event->getResponse()) {
+		    return $event->getResponse();
+	    }
+
         $userForm = $this->createForm(UserRegistrationType::class, $user);
         $userForm->handleRequest($request);
 
-        if ($userForm->isSubmitted() && $userForm->isValid()) {
-            $this->registrationStateMachine->apply($user, RegistrationWorkflowEnum::TRANSITION_TO_PAYMENT_FORM->value);
+        if ($userForm->isSubmitted()) {
+			if ($userForm->isValid()) {
+				$this->registrationStateMachine->apply($user, RegistrationWorkflowEnum::TRANSITION_TO_PAYMENT_FORM->value);
 
-            $user->setPassword($userPasswordHasher->hashPassword($user, $userForm->get('plainPassword')->getData()));
-            $session->set('user_data', $user);
+				$user->setPassword($userPasswordHasher->hashPassword($user, $userForm->get('plainPassword')->getData()));
+				$session->set('user_data', $user);
 
-            return $this->redirectToRoute('register_step_two');
+				return $this->redirectToRoute('register_step_two');
+			}
+
+	        $event = new FormEvent($userForm, $request);
+	        $this->eventDispatcher->dispatch($event, TalavUserEvents::REGISTRATION_FAILURE);
+
+	        if (null !== $response = $event->getResponse()) {
+		        return $response;
+	        }
         }
 
         return $this->render('@TalavUser/registration/workflow/register_user.html.twig', [
@@ -116,18 +136,14 @@ class RegistrationController extends AbstractController
         $profileForm = $this->createForm(ProfileFormType::class, $profile);
         $profileForm->handleRequest($request);
 
-        if ($profileForm->isSubmitted() && $profileForm->isValid()) {
-            $role = $roleManager->getRepository()->findOneByName('ROLE_USER');
-            $user->sync('roles', new ArrayCollection([$role]));
-            $user->setProfile($profile);
+        if ($profileForm->isSubmitted()) {
+			if ($profileForm->isValid()) {
+				$user->setProfile($profile);
 
+				$registrationStateMachine->apply($user, RegistrationWorkflowEnum::TRANSITION_TO_COMPLETE->value);
 
-            // persist user details
-            $registrationStateMachine->apply($user, RegistrationWorkflowEnum::TRANSITION_TO_COMPLETE->value);
-
-            $this->userManager->update($user, true);
-
-            return $userAuthenticator->authenticateUser($user, $authenticator, $request);
+				return $this->updateUser($request, $user, $profileForm);
+			}
         }
 
         return $this->render('@TalavUser/registration/workflow/register_profile.html.twig', [
@@ -135,6 +151,25 @@ class RegistrationController extends AbstractController
             'form' => $profileForm,
         ]);
     }
+
+	private function updateUser(Request $request, UserInterface $user, FormInterface $form): Response
+	{
+		$event = new UserFormEvent($user, $form, $request);
+		$this->eventDispatcher->dispatch($event, TalavUserEvents::REGISTRATION_SUCCESS);
+
+		$this->userManager->update($user, true);
+
+		if (null === $response = $event->getResponse()) {
+			$response = $this->redirectToHomePage('talav.registration.confirmed', ['%username%' => $user->getUsername()]);
+		}
+
+		$this->eventDispatcher->dispatch(
+			new FilterUserResponseEvent($user, $request, $response),
+			TalavUserEvents::REGISTRATION_COMPLETED
+		);
+
+		return $response;
+	}
 
     /**
      * Display and process form to register a new user.
