@@ -17,6 +17,32 @@ liip_imagine:
             filters:
                 thumbnail: { size: [ 1500, 500 ], mode: fixed }
 
+        gallery_image_filter_full:
+#            data_loader: flysystem_loader
+            filters:
+                downscale:
+                    max: [1500, 1500]
+#            post_processors:
+#                jpegoptim: { strip_all: true, max: 100, progressive: true }
+#                optipng: { strip_all: true, level: 5 }
+
+        gallery_image_filter_medium:
+#            data_loader: flysystem_loader
+            filters:
+                downscale:
+                    max: [500, 500]
+            post_processors:
+                jpegoptim: { strip_all: true, max: 75, progressive: true }
+                optipng: { strip_all: true, level: 5 }
+
+        gallery_image_filter_small:
+#            data_loader: flysystem_loader
+            filters:
+                downscale:
+                    max: [200, 200]
+            post_processors:
+                jpegoptim: { strip_all: true, max: 10, progressive: true }
+                optipng: { strip_all: true, level: 5 }
     loaders:
         local_images:
             flysystem:

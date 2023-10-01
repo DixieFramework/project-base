@@ -57,7 +57,7 @@
             </div>
 
             <!-- Dropdown END -->
-            <a href="{{ asset(image.image.filePath) |imagine_filter('gallery_thumb') }}" data-gallery="image-popup" data-glightbox="description: .custom-desc2; descPosition: left;">
+            <a href="{{ path('talav_gallery_image_view', {'id': image.id}) }}" data-gallery="image-popup" data-glightbox="description: .custom-desc2; descPosition: left;">
                 <img class="rounded img-fluid" src="{{ asset(image.image.filePath) |imagine_filter('gallery_thumb') }}" alt="{{ image.title }}">
             </a>
 

@@ -26,6 +26,10 @@ class GalleryImageController extends AbstractController
 {
     private GalleryImageRepository $imageRepository;
 
+    /**
+     * @var int
+     */
+    private const COMMENTS_PER_PAGE = 25;
 
     /**
      * Constructor.
@@ -101,6 +105,39 @@ class GalleryImageController extends AbstractController
         return $this->render('@TalavGallery/image/delete.html.twig', [
             'form' => $form->createView(),
             'image' => $image,
+        ]);
+    }
+
+    /**
+     * View action.
+     *
+     * @param Request $request HTTP request
+     * @param GalleryImage $galleryImage Gallery entity
+     *
+     * @return Response HTTP response
+     */
+    #[Route('/{id}', name: 'view', requirements: ['id' => '[1-9]\d*'], methods: 'GET')]
+    public function view(Request $request, GalleryImage $galleryImage): Response
+    {
+//        $this->denyAccessUnlessGranted(ImageVoter::VIEW, $galleryImage);
+
+        /** @var UserInterface $user */
+        $user = $this->getUser();
+
+//        $page = (int) $request->query->get('page', 1);
+//        $galleries = $this->createQueryBuilderPaginator(
+//            $this->imageRepository->findAllByGalleryQueryBuilder($gallery),
+//            $page,
+//            self::PHOTO_PER_PAGE
+//        );
+
+//        $page = $request->query->getInt('page', 1);
+//        $imagesPagination = $this->imageService->getPaginatedList($gallery, $page);
+
+        return $this->render('@TalavGallery/image/view.html.twig', [
+            'gallery_image' => $galleryImage,
+//            'galleryImages' => $galleries,
+//            'imagesPagination' => $galleries
         ]);
     }
 }

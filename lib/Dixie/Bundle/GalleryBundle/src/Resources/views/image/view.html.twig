@@ -8,25 +8,66 @@
 
     <!-- Card header START -->
     <div class="card-header pb-0">
-        <h3 class="card-title h6">Title: </h3>
+        <h3 class="card-title h6">Title: {{ gallery_image.title }}</h3>
     </div>
     <!-- Card header START -->
 
-    {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
-
     <!-- Card body START -->
-    <div class="card-body">
-        <img src="{{ asset(image.image.filePath) }}" class="rounded-3 position-relative" alt="">
+    <div class="card-body m-n3">
+
+        <div class="row mx-0">{# align-items-center#}
+            <div class="col-md-8 border-end p-4 p-sm-5 align-items-start text-center">
+                <img src="{{ asset(gallery_image.image.filePath)|imagine_filter('gallery_image_filter_full') }}" class="border border-3 border-secondary" alt="">
+                {#                <h2 class="h3 mb-4 mb-sm-5">Hey there!<br>Welcome back.</h2><img class="d-block mx-auto" src="img/signin-modal/signin.svg" width="344" alt="Illustartion">#}
+{#                <div class="mt-4 mt-sm-5">Don't have an account? <a href="#signup-modal" data-bs-toggle="modal" data-bs-dismiss="modal">Sign up here</a></div>#}
+            </div>
+            <div class="col-md-4 pt-2 pb-4 pb-sm-5 pt-md-5">
+{#                <!-- Nav tabs -->#}
+{#                <ul class="nav nav-tabs nav-fill" role="tablist">#}
+{#                    <li class="nav-item">#}
+{#                        <a href="#home1" class="nav-link active" data-bs-toggle="tab" role="tab">#}
+{#                            <i class="fi-home me-2"></i>#}
+{#                            Actions#}
+{#                        </a>#}
+{#                    </li>#}
+{#                    <li class="nav-item">#}
+{#                        <a href="#profile1" class="nav-link" data-bs-toggle="tab" role="tab">#}
+{#                            <i class="fi-user me-2"></i>#}
+{#                            Info#}
+{#                        </a>#}
+{#                    </li>#}
+{#                </ul>#}
+
+{#                <!-- Tabs content -->#}
+{#                <div class="tab-content">#}
+{#                    <div class="tab-pane fade show active" id="home1" role="tabpanel">#}
+{#                        <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui. Excepteur sint occaecat cupidatat non proident.</p>#}
+{#                    </div>#}
+{#                    <div class="tab-pane fade" id="profile1" role="tabpanel">#}
+{#                        <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente.</p>#}
+{#                    </div>#}
+{#                </div>#}
+
+{#                <ul class="list-unstyled fs-sm mt-3">#}
+{#                    <li class="d-flex justify-content-between mb-3 pb-3 border-bottom"><span class="text-dark fw-medium">Last update</span><span class="text-muted">April 27, 2019</span></li>#}
+{#                    <li class="d-flex justify-content-between mb-3 pb-3 border-bottom"><span class="text-dark fw-medium">Released</span><span class="text-muted">February 13, 2019</span></li>#}
+{#                    <li class="d-flex justify-content-between mb-3 pb-3 border-bottom"><span class="text-dark fw-medium">Category</span><a class="product-meta" href="#">Graphics</a></li>#}
+{#                    <li class="d-flex justify-content-between mb-3 pb-3 border-bottom"><span class="text-dark fw-medium">Compatible with</span><span class="text-muted">Photoshop CS5</span></li>#}
+{#                    <li class="d-flex justify-content-between mb-3 pb-3 border-bottom"><span class="text-dark fw-medium">File type</span><span class="text-muted">PSD, JPG</span></li>#}
+{#                    <li class="d-flex justify-content-between pb-3 border-bottom"><span class="text-dark fw-medium">File size</span><span class="text-muted">56 MB</span></li>#}
+{#                </ul>#}
+            </div>
+        </div>
+
+{#        <img src="{{ asset(gallery_image.image.filePath)|imagine_filter('gallery_image_filter_full') }}" class="" alt="">#}
     </div>
     <!-- Card body END -->
 
     <!-- Card Footer START -->
     <div class="card-footer border-top-1 d-flex justify-content-between align-items-center p-3">
-        <input name="submit" type="submit" value="{{ 'common.button_create'|trans({}, 'TalavWebBundle') }}" class="btn btn-primary"/>
+
     </div>
     <!-- Card Footer END -->
-
-    {{ form_end(form) }}
 
 </div>
     <!-- Card feed item END -->
