@@ -78,7 +78,7 @@ class RegistrationController extends AbstractController
 
         $user = $this->userManager->create();
         if ($this->registrationStateMachine->can($user, RegistrationWorkflowEnum::TRANSITION_TO_COMPLETE->value)) {
-            return $this->redirectToRoute('register_step_two');
+            return $this->redirectToRoute('talav_user_registration_register_step_two');
         }
 
 	    $event = new GetResponseRegistrationEvent($user, $request);
@@ -98,7 +98,7 @@ class RegistrationController extends AbstractController
 				$user->setPassword($userPasswordHasher->hashPassword($user, $userForm->get('plainPassword')->getData()));
 				$session->set('user_data', $user);
 
-				return $this->redirectToRoute('register_step_two');
+				return $this->redirectToRoute('talav_user_registration_register_step_two');
 			}
 
 	        $event = new FormEvent($userForm, $request);
@@ -129,7 +129,7 @@ class RegistrationController extends AbstractController
         $user = $session->get('user_data');
 
         if (! $user instanceof UserInterface) {
-            return $this->redirectToRoute('register_step_one');
+            return $this->redirectToRoute('talav_user_registration_register_step_one');
         }
 
         /** @var ProfileInterface $profile */
@@ -180,7 +180,7 @@ class RegistrationController extends AbstractController
         $email   = $session->get('talav_user_send_confirmation_email/email', '');
 
         if ('' === $email) {
-            return new RedirectResponse($this->router->generate('talav_user_register'));
+            return new RedirectResponse($this->router->generate('talav_user_registration_register'));
         }
 
         $session->remove('talav_user_send_confirmation_email/email');
