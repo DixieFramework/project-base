@@ -169,7 +169,7 @@ class RegistrationController extends AbstractController
 		$this->eventDispatcher->dispatch($event, TalavUserEvents::REGISTRATION_SUCCESS);
 
 		$this->userManager->update($user, true);
-$this->userManager->findUserByUsername($user->getUsername());
+
 		if (null === $response = $event->getResponse()) {
 			$response = $this->redirectToHomePage('talav.registration.confirmed', ['%username%' => $user->getUsername()]);
 		}
