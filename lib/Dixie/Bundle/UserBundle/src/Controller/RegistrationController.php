@@ -7,8 +7,12 @@ namespace Talav\UserBundle\Controller;
 use Doctrine\Common\Collections\ArrayCollection;
 use Groshy\Entity\Profile;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Talav\Component\Resource\Manager\ManagerInterface;
@@ -33,12 +37,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use Symfony\Component\Workflow\WorkflowInterface;
+use Talav\CoreBundle\Traits\SecurityAwareTrait;
 use Talav\ProfileBundle\Form\Type\ProfileFormType;
 use Talav\ProfileBundle\Model\ProfileInterface;
 use Talav\UserBundle\Enum\RegistrationWorkflowEnum;
 use Talav\UserBundle\Event\FilterUserResponseEvent;
 use Talav\UserBundle\Event\FormEvent;
 use Talav\UserBundle\Event\GetResponseRegistrationEvent;
+use Talav\UserBundle\Event\GetResponseUserEvent;
 use Talav\UserBundle\Event\TalavUserEvents;
 use Talav\UserBundle\Event\UserFormEvent;
 use Talav\UserBundle\Form\Type\Workflow\RegistrationFormType;
@@ -51,6 +57,8 @@ use Talav\UserBundle\Security\UserFormAuthenticator;
 #[Route(path: '/register', name: 'talav_user_registration_')]
 class RegistrationController extends AbstractController
 {
+	use SecurityAwareTrait;
+
     private const ROUTE_REGISTER = 'register';//'user_register';
     private const ROUTE_VERIFY = 'user_verify';
 
@@ -58,6 +66,7 @@ class RegistrationController extends AbstractController
         private readonly EventDispatcherInterface   $eventDispatcher,
         private readonly RouterInterface            $router,
         private readonly EmailVerifier              $verifier,
+		private readonly TokenStorageInterface      $tokenStorage,
         private readonly UserRepositoryInterface    $userRepository,
         private readonly UserManagerInterface       $userManager,
         private readonly ManagerInterface           $profileManager,
@@ -160,7 +169,7 @@ class RegistrationController extends AbstractController
 		$this->eventDispatcher->dispatch($event, TalavUserEvents::REGISTRATION_SUCCESS);
 
 		$this->userManager->update($user, true);
-
+$this->userManager->findUserByUsername($user->getUsername());
 		if (null === $response = $event->getResponse()) {
 			$response = $this->redirectToHomePage('talav.registration.confirmed', ['%username%' => $user->getUsername()]);
 		}
@@ -171,6 +180,60 @@ class RegistrationController extends AbstractController
 		);
 
 		return $response;
+	}
+
+	#[Route('/confirm/{token}', name: 'confirm')]
+	public function confirm(Request $request, string $token): Response
+	{
+		$userManager = $this->userManager;
+
+		$user = $userManager->findUserByConfirmationToken($token);
+
+		if (null === $user) {
+			return new RedirectResponse($this->router->generate('talav_user_login'));
+		}
+
+		$user->setConfirmationToken(null);
+		$user->setEnabled(true);
+
+		$event = new GetResponseUserEvent($user, $request);
+		$this->eventDispatcher->dispatch($event, TalavUserEvents::REGISTRATION_CONFIRM);
+
+		$userManager->update($user, true);
+
+		if (null === $response = $event->getResponse()) {
+			$url      = $this->router->generate('talav_user_registration_confirmed');
+			$response = new RedirectResponse($url);
+		}
+
+		$this->eventDispatcher->dispatch(
+			new FilterUserResponseEvent($user, $request, $response),
+			TalavUserEvents::REGISTRATION_CONFIRMED,
+		);
+
+		return $response;
+	}
+
+	#[Route('/confirmed', name: 'confirmed')]
+	public function confirmed(Request $request)
+	{
+		$user = $this->security->getUser();
+
+		if (!$user instanceof UserInterface) {
+			throw new AccessDeniedException('This user does not have access to this section.');
+		}
+
+		return $this->render('@TalavUser/registration/check_email.html.twig', [
+			'user' => $user,
+			'targetUrl' => $this->getTargetUrlFromSession($request->getSession())
+		]);
+
+		return new Response(
+			$this->twig->render('@TalavUser/registration/confirmed.html.twig', [
+				'user'      => $user,
+				'targetUrl' => $this->getTargetUrlFromSession($request->getSession()),
+			])
+		);
 	}
 
     #[Route('/check-email', name: 'check_email')]
@@ -194,12 +257,10 @@ class RegistrationController extends AbstractController
             'user' => $user
         ]);
 
-        return new Response(
-            $this->twig->render('@TalavUser/registration/check_email.html.twig', [
+           return $this->render('@TalavUser/registration/check_email.html.twig', [
                 'user' => $user,
-            ])
-        );
-    }
+            ]);
+	}
 
     /**
      * Display and process form to register a new user.
@@ -260,6 +321,23 @@ class RegistrationController extends AbstractController
 
         return $this->redirectToHomePage('registration.confirmed', ['%username%' => $user->getUserIdentifier()]);
     }
+
+	private function getTargetUrlFromSession(SessionInterface $session): ?string
+	{
+		$token = $this->tokenStorage->getToken();
+
+		if (null === $token || !\is_callable([$token, 'getProviderKey'])) {
+			return null;
+		}
+
+		$key = sprintf('_security.%s.target_path', $token->getProviderKey());
+
+		if ($session->has($key)) {
+			return $session->get($key);
+		}
+
+		return null;
+	}
 
     private function createEmail(UserInterface $user): RegistrationEmail
     {

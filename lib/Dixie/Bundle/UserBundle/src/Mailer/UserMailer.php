@@ -94,24 +94,24 @@ class UserMailer implements UserMailerInterface
         }
 
         $this->mailer->send($mail);
-
-
-        $template = $this->parameters['template']['confirmation'];
-        $url = $this->router->generate(
-            'fos_user_registration_confirm',
-            ['token' => $user->getConfirmationToken()],
-            UrlGeneratorInterface::ABSOLUTE_URL
-        );
-        $context = [
-            'user' => $user,
-            'confirmationUrl' => $url,
-        ];
-        $this->sendMessage(
-            $template,
-            $context,
-            $this->parameters['from_email']['confirmation'],
-            (string) $user->getEmail()
-        );
+//
+//
+//        $template = $this->parameters['template']['confirmation'];
+//        $url = $this->router->generate(
+//            'fos_user_registration_confirm',
+//            ['token' => $user->getConfirmationToken()],
+//            UrlGeneratorInterface::ABSOLUTE_URL
+//        );
+//        $context = [
+//            'user' => $user,
+//            'confirmationUrl' => $url,
+//        ];
+//        $this->sendMessage(
+//            $template,
+//            $context,
+//            $this->parameters['from_email']['confirmation'],
+//            (string) $user->getEmail()
+//        );
     }
 
     /**
