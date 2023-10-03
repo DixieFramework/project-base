@@ -62,12 +62,12 @@
         </div>
 
     <ul class="nav nav-tabs nav-justified mb-4" id="friendship-tabs">
-        <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab1" href="#tab1" id="tab-link-1">Friends</a></li>
-        {% if selfProfile %}
-            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab2" href="#tab2" id="tab-link-2">Incoming Requests</a></li>
-            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab3" href="#tab3" id="tab-link-3">Outgoing Requests</a></li>
-        {% endif %}
-        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab4" href="#tab4" id="tab-link-4">Search Friends</a></li>
+        <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tab1" id="tab-link-1">Friends</a></li>
+{#        {% if selfProfile %}#}
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab2" id="tab-link-2">Incoming Requests</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab3" id="tab-link-3">Outgoing Requests</a></li>
+{#        {% endif %}#}
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab4" id="tab-link-4">Search Friends</a></li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane show active" id="tab1">
@@ -119,9 +119,7 @@
             {% endfor %}
         </div>
         <div class="tab-pane" id="tab4">
-            {{ form_start(searchForm) }}
-            {{ form_widget(searchForm) }}
-            {{ form_end(searchForm) }}
+            {{ form(searchForm) }}
         </div>
     </div>
 
@@ -129,14 +127,18 @@
         {#        {{ pagerfanta(pagerfanta) }}#}
     </div>
 
-    <script type="text/javascript">
-	    (function ($) {
-            // $('#tab-link-1').tab('show');
-		});
-    </script>
+{#    <script type="text/javascript">#}
+{#        // $(document).ready(function () {#}
+{#        //     $('#tab-link-4').tab('show');#}
+{#        // });#}
+{#	    (function (jQuery) {#}
+{#            $('#tab-link-4').tab('show');#}
+{#		});#}
+{#    </script>#}
 {% endblock page_content %}
 
 {% block javascripts %}
 {{ parent() }}
-
+    {{- asset_js('js/application/tab_remember.js') }}
+    {{- asset_js('js/application/register_events.js') }}
 {% endblock %}

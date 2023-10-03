@@ -23,7 +23,7 @@ use Groshy\Controller\Api\TagGroup\CreateTagGroupAction;
 use Ramsey\Uuid\Doctrine\UuidGenerator;
 use Talav\Component\Resource\Model\ResourceInterface;
 use Talav\Component\Resource\Model\ResourceTrait;
-use Talav\Component\Resource\Model\Timestampable;
+use Talav\Component\Resource\Model\TimestampableTrait;
 use Talav\Component\User\Model\CreatedBy;
 use Talav\Component\User\Model\UserInterface;
 
@@ -39,7 +39,7 @@ use Talav\Component\User\Model\UserInterface;
 class TagGroup implements ResourceInterface
 {
     use ResourceTrait;
-    use Timestampable;
+    use TimestampableTrait;
     use CreatedBy;
 
     #[Id]
@@ -56,11 +56,11 @@ class TagGroup implements ResourceInterface
 
     #[Column(name: 'created_at', type: 'datetime', nullable: true)]
     #[GedmoTimestampable(on: 'create')]
-    protected ?DateTime $createdAt = null;
+    protected ?\DateTimeImmutable $createdAt = null;
 
     #[Column(name: 'updated_at', type: 'datetime', nullable: true)]
     #[GedmoTimestampable(on: 'update')]
-    protected ?DateTime $updatedAt = null;
+    protected ?\DateTimeImmutable $updatedAt = null;
 
     #[ManyToOne(targetEntity: UserInterface::class)]
     #[JoinColumn(name: 'created_by', referencedColumnName: 'id')]

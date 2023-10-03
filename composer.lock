@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "51946c3e95fa40f487cf3a93b5f1accf",
+    "content-hash": "50e58b6bf902792899d033a1bae1471a",
     "packages": [
         {
             "name": "api-platform/core",
@@ -12836,16 +12836,10 @@
         {
             "name": "talav/resource",
             "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:DixieFramework/Resource.git",
-                "reference": "31db2b9999a3cf2c1f14cb995d2a9891568c0b26"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DixieFramework/Resource/zipball/31db2b9999a3cf2c1f14cb995d2a9891568c0b26",
-                "reference": "31db2b9999a3cf2c1f14cb995d2a9891568c0b26",
-                "shasum": ""
+                "type": "path",
+                "url": "lib/Dixie/Component/Resource",
+                "reference": "f5e7d9fc6be73bfa7711fab80a2d13ee27609956"
             },
             "require": {
                 "doctrine/common": "^3.2",
@@ -12858,7 +12852,6 @@
                 "symfony/thanks": "^1.2",
                 "webfactory/doctrine-orm-test-infrastructure": "^1.10"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -12891,11 +12884,10 @@
                 "symfony",
                 "user"
             ],
-            "support": {
-                "source": "https://github.com/DixieFramework/Resource/tree/main",
-                "issues": "https://github.com/DixieFramework/Resource/issues"
-            },
-            "time": "2023-09-27T16:20:03+00:00"
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "talav/resource-bundle",
@@ -14698,16 +14690,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.36",
+            "version": "1.10.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "ffa3089511121a672e62969404e4fddc753f9b15"
+                "reference": "058ba07e92f744d4dcf6061ae75283d0c6456f2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/ffa3089511121a672e62969404e4fddc753f9b15",
-                "reference": "ffa3089511121a672e62969404e4fddc753f9b15",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/058ba07e92f744d4dcf6061ae75283d0c6456f2e",
+                "reference": "058ba07e92f744d4dcf6061ae75283d0c6456f2e",
                 "shasum": ""
             },
             "require": {
@@ -14756,7 +14748,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-09-29T14:07:45+00:00"
+            "time": "2023-10-02T16:18:37+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

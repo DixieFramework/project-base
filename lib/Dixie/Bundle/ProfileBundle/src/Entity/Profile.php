@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Talav\Component\Resource\Model\ResourceTrait;
-use Talav\Component\Resource\Model\Timestampable;
+use Talav\Component\Resource\Model\TimestampableTrait;
 use Talav\Component\User\Model\UserInterface;
 use Talav\ProfileBundle\Enum\Gender;
 use Talav\ProfileBundle\Model\ProfileInterface;
@@ -16,7 +16,7 @@ use Talav\ProfileBundle\Model\ProfileInterface;
 class Profile implements ProfileInterface
 {
     use ResourceTrait;
-    use Timestampable;
+    use TimestampableTrait;
 
     protected ?string $firstName = null;
 

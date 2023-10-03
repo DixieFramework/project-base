@@ -44,11 +44,11 @@ class PositionValue implements ResourceInterface
 
     #[Column(name: 'created_at', type: 'datetime')]
     #[GedmoTimestampable(on: 'create')]
-    protected ?DateTime $createdAt = null;
+    protected ?\DateTimeImmutable $createdAt = null;
 
     #[Column(name: 'updated_at', type: 'datetime')]
     #[GedmoTimestampable(on: 'update')]
-    protected ?DateTime $updatedAt = null;
+    protected ?\DateTimeImmutable $updatedAt = null;
 
     public function getValue(): ?int
     {

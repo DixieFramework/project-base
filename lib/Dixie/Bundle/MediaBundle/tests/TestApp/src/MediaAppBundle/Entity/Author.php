@@ -14,14 +14,14 @@ use Doctrine\ORM\Mapping\Table;
 use Talav\Component\Media\Model\MediaInterface;
 use Talav\Component\Resource\Model\ResourceInterface;
 use Talav\Component\Resource\Model\ResourceTrait;
-use Talav\Component\Resource\Model\Timestampable;
+use Talav\Component\Resource\Model\TimestampableTrait;
 
 #[Entity]
 #[Table(name: 'test_author')]
 class Author implements ResourceInterface
 {
     use ResourceTrait;
-    use Timestampable;
+    use TimestampableTrait;
 
     #[Id]
     #[Column(type: 'integer')]

@@ -84,12 +84,12 @@ class Transaction implements ResourceInterface
     #[Column(name: 'created_at', type: 'datetime')]
     #[GedmoTimestampable(on: 'create')]
     #[Groups(['transaction:item:read', 'transaction:collection:read'])]
-    protected ?DateTime $createdAt = null;
+    protected ?\DateTimeImmutable $createdAt = null;
 
     #[Column(name: 'updated_at', type: 'datetime')]
     #[GedmoTimestampable(on: 'update')]
     #[Groups(['transaction:item:read'])]
-    protected ?DateTime $updatedAt = null;
+    protected ?\DateTimeImmutable $updatedAt = null;
 
     public function getValue(): ?int
     {

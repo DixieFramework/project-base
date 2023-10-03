@@ -6,7 +6,7 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 }
 
 Encore
-    .autoProvidejQuery()
+    // .autoProvidejQuery()
 
     .setOutputPath('./lib/Dixie/Bundle/WebBundle/src/Resources/public/')
     .setPublicPath('/bundles/talavweb/')
@@ -25,21 +25,21 @@ Encore
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
 
-    .addAliases({
-        jQuery: 'jquery', // Summernote
-        jquery: path.resolve(__dirname, 'node_modules/jquery/dist/jquery.js'),
-        $: path.resolve(__dirname, 'node_modules/jquery/dist/jquery.js'),
-    })
+    // .addAliases({
+    //     jQuery: 'jquery', // Summernote
+    //     jquery: path.resolve(__dirname, 'node_modules/jquery/dist/jquery.js'),
+    //     $: path.resolve(__dirname, 'node_modules/jquery/dist/jquery.js'),
+    // })
 
     // uncomment if you're having problems with a jQuery plugin
-    // .autoProvidejQuery()
-    .autoProvideVariables({
-        $: 'jquery',
-        jQuery: 'jquery',
-        'window.jQuery': 'jquery',
-        'window.$': 'jquery',
-        Popper: ['popper.js', 'default'],
-    })
+    .autoProvidejQuery()
+    // .autoProvideVariables({
+    //     $: 'jquery',
+    //     jQuery: 'jquery',
+    //     'window.jQuery': 'jquery',
+    //     'window.$': 'jquery',
+    //     Popper: ['popper.js', 'default'],
+    // })
 
     .configureBabelPresetEnv((config) => {
         config.useBuiltIns = 'usage';

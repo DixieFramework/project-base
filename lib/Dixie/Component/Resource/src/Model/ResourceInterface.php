@@ -9,5 +9,6 @@ interface ResourceInterface
     /**
      * Gets resource identifier.
      */
-    public function getId(): mixed;
+    /** @psalm-suppress MissingReturnType */
+    public function getId();
 }

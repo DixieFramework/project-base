@@ -12,14 +12,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Exception;
 use Talav\Component\Resource\Model\ResourceTrait;
-use Talav\Component\Resource\Model\Timestampable;
 use Talav\Component\Resource\Model\TimestampableTrait;
 use function serialize;
 use function unserialize;
 
 abstract class AbstractUser implements UserInterface
 {
-    use Timestampable;
+    use TimestampableTrait;
     use ResourceTrait;
 
     public const DEFAULT_ROLE = 'ROLE_USER';
@@ -54,6 +53,10 @@ abstract class AbstractUser implements UserInterface
     protected ?string $firstName = null;
 
     protected ?string $lastName = null;
+
+    protected ?\DateTimeImmutable $lastLoginAt = null;
+
+    protected ?string $lastLoginIp = null;
 
     public Collection $oauthAccounts;
 
@@ -267,6 +270,33 @@ abstract class AbstractUser implements UserInterface
     public function setLastName(?string $lastName): void
     {
         $this->lastName = $lastName;
+    }
+
+    public function getLastLoginAt(): ?\DateTimeImmutable
+    {
+        return $this->lastLoginAt;
+    }
+
+    public function setLastLoginAt(?\DateTimeInterface $lastLoginAt): self
+    {
+        $this->lastLoginAt = match (true) {
+            null !== $lastLoginAt => \DateTimeImmutable::createFromInterface($lastLoginAt),
+            default => null
+        };
+
+        return $this;
+    }
+
+    public function getLastLoginIp(): ?string
+    {
+        return $this->lastLoginIp;
+    }
+
+    public function setLastLoginIp(?string $lastLoginIp): self
+    {
+        $this->lastLoginIp = $lastLoginIp;
+
+        return $this;
     }
 
     // this method is required by Symfony UserInterface

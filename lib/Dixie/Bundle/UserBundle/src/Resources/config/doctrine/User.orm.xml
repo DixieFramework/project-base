@@ -10,22 +10,31 @@
         <field name="usernameCanonical" column="username_canonical" length="180" unique="true" />
         <field name="email" column="email" type="string" length="180" />
         <field name="emailCanonical" column="email_canonical" type="string" length="180" unique="true" />
-        <field name="enabled" column="enabled" type="boolean" />
+        <field name="enabled" column="is_enabled" type="boolean" />
         <field name="salt" column="salt" type="string" nullable="false" />
         <field name="password" column="password" type="string" />
         <field name="lastLogin" column="last_login" type="datetime" nullable="true" />
         <field name="passwordResetToken" column="password_reset_token" type="string" length="180" unique="true" nullable="true" />
         <field name="passwordRequestedAt" column="password_requested_at" type="datetime" nullable="true" />
         <field name="confirmationToken" column="confirmation_token" type="string" length="180" unique="true" nullable="true" />
-        <field name="verified" column="verified" type="boolean" column-definition="BOOL DEFAULT FALSE"/>
+        <field name="verified" column="is_verified" type="boolean">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
         <field name="arrRoles" column="roles_array" type="array" />
         <field name="firstName" column="first_name" nullable="true" />
         <field name="lastName" column="last_name" nullable="true" />
 
-        <field name="createdAt" column="created_at" type="datetime">
+        <!-- Login History -->
+        <field name="lastLoginAt" column="last_login_at" type="datetime_immutable" nullable="true"/>
+        <field name="lastLoginIp" column="last_login_ip" type="string" nullable="true"/>
+
+        <!-- Timestamp -->
+        <field name="createdAt" column="created_at" type="datetime_immutable">
             <gedmo:timestampable on="create"/>
         </field>
-        <field name="updatedAt" column="updated_at" type="datetime" nullable="true">
+        <field name="updatedAt" column="updated_at" type="datetime_immutable" nullable="true">
             <gedmo:timestampable on="update"/>
         </field>
 

@@ -24,7 +24,7 @@ use Ramsey\Uuid\Doctrine\UuidGenerator;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Talav\Component\Resource\Model\ResourceInterface;
 use Talav\Component\Resource\Model\ResourceTrait;
-use Talav\Component\Resource\Model\Timestampable;
+use Talav\Component\Resource\Model\TimestampableTrait;
 use Talav\Component\User\Model\CreatedBy;
 use Talav\Component\User\Model\UserInterface;
 
@@ -58,7 +58,7 @@ use Talav\Component\User\Model\UserInterface;
 class Sponsor implements ResourceInterface
 {
     use ResourceTrait;
-    use Timestampable;
+    use TimestampableTrait;
     use CreatedBy;
 
     #[Id]
@@ -83,12 +83,12 @@ class Sponsor implements ResourceInterface
     #[Column(name: 'created_at', type: 'datetime')]
     #[GedmoTimestampable(on: 'create')]
     #[Groups(['sponsor:item:read'])]
-    protected ?DateTime $createdAt = null;
+    protected ?\DateTimeImmutable $createdAt = null;
 
     #[Column(name: 'updated_at', type: 'datetime')]
     #[GedmoTimestampable(on: 'update')]
     #[Groups(['sponsor:item:read'])]
-    protected ?DateTime $updatedAt = null;
+    protected ?\DateTimeImmutable $updatedAt = null;
 
     #[ManyToOne(targetEntity: UserInterface::class)]
     #[JoinColumn(name: 'created_by', referencedColumnName: 'id')]

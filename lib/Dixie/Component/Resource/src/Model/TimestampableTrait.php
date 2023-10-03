@@ -4,52 +4,24 @@ declare(strict_types=1);
 
 namespace Talav\Component\Resource\Model;
 
+use DateTimeImmutable;
+use DateTimeInterface;
+
 trait TimestampableTrait
 {
-    /**
-     * @var \DateTime
-     */
-    protected $createdAt;
+    use CreatedAtTrait;
+    use UpdatedAtTrait;
 
-    /**
-     * @var \DateTime
-     */
-    protected $updatedAt;
-
-    public function __construct()
+    public function createDateTime(DateTimeInterface|string|null $date): ?DateTimeImmutable
     {
-        $this->createdAt = new \DateTime();
-    }
+        if (is_string($date)) {
+            $datetime = DateTimeImmutable::createFromFormat('Y-m-d H:i', $date);
 
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
+            return false === $datetime ? null : $datetime;
+        } elseif ($date instanceof DateTimeInterface) {
+            return DateTimeImmutable::createFromInterface($date);
+        }
 
-    /**
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param \DateTime $createdAt
-     */
-    public function setCreatedAt(\DateTime $createdAt)
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
-     * @param \DateTime $updatedAt
-     */
-    public function setUpdatedAt(\DateTime $updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
+        return null;
     }
 }

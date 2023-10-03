@@ -11,13 +11,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Exception;
 use Talav\Component\Resource\Model\ResourceTrait;
-use Talav\Component\Resource\Model\Timestampable;
+use Talav\Component\Resource\Model\TimestampableTrait;
 use Talav\Component\User\Model\UserInterface;
 use Talav\Component\User\Model\UserOAuthInterface;
 
 class User implements UserInterface
 {
-    use Timestampable;
+    use TimestampableTrait;
     use ResourceTrait;
 
     public const DEFAULT_ROLE = 'ROLE_USER';

@@ -6,42 +6,32 @@ namespace Talav\SettingsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Talav\Component\Resource\Model\ResourceTrait;
-use Talav\Component\Resource\Model\Timestampable;
-use Talav\CoreBundle\Doctrine\Entity\Behavior\TimestampableInterface;
-use Talav\CoreBundle\Doctrine\Entity\Behavior\TimestampableTrait;
-use Talav\CoreBundle\Doctrine\Entity\Traits\CreatedAtTrait;
-use Talav\CoreBundle\Doctrine\Entity\Traits\MixedIdTrait;
-use Talav\CoreBundle\Doctrine\Entity\Traits\UpdatedAtTrait;
+use Talav\Component\Resource\Model\TimestampableTrait;
 use Talav\SettingsBundle\Model\SettingsInterface;
 
-#[ORM\MappedSuperclass]
 abstract class Settings implements SettingsInterface
 {
-	use MixedIdTrait;
+	use ResourceTrait;
     use TimestampableTrait;
 
     /**
      * @var string
      */
-    #[ORM\Column(type: 'string')]
     protected $name;
 
     /**
      * @var string
      */
-    #[ORM\Column(type: 'text')]
     protected $scope;
 
     /**
      * @var string
      */
-    #[ORM\Column(type: 'string')]
     protected $value;
 
     /**
      * @var int
      */
-    #[ORM\Column(type: 'integer', nullable: true)]
     protected $owner;
 
     /**
@@ -49,7 +39,6 @@ abstract class Settings implements SettingsInterface
      */
     public function __construct()
     {
-        $this->setCreatedAt();
     }
 
     /**

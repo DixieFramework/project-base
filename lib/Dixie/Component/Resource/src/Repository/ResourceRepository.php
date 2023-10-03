@@ -9,7 +9,9 @@ use Talav\Component\Resource\Model\ResourceInterface;
 
 class ResourceRepository extends BaseEntityRepository implements RepositoryInterface
 {
-    use RepositoryPaginatorTrait;
+    use RepositoryPaginatorTrait {
+//        RepositoryPaginatorTrait::__construct as repositoryPaginatorTraitConstruct;
+    }
 
 	public const ORDER_TYPES = [
 		'ASC', 'DESC'

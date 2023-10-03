@@ -11,4 +11,8 @@ use Talav\SettingsBundle\Entity\Settings as TalavSettings;
 #[ORM\Table(name: 'talav_settings')]
 class Settings extends TalavSettings
 {
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    protected mixed $id = null;
 }

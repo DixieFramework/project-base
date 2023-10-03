@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Talav\SettingsBundle\Model;
 
 use Talav\Component\Resource\Model\ResourceInterface;
-use Talav\CoreBundle\Doctrine\Entity\Behavior\TimestampableInterface;
+use Talav\Component\Resource\Model\TimestampableInterface;
 
 interface SettingsInterface extends ResourceInterface, TimestampableInterface
 {

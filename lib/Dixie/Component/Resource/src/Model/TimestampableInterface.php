@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Talav\Component\Resource\Model;
 
+use DateTimeImmutable;
+use DateTimeInterface;
+
 /**
  * TimestampableInterface should be implemented by classes which needs to be
  * identified as Timestampable.
@@ -13,28 +16,28 @@ interface TimestampableInterface
     /**
      * Gets the created at datetime.
      *
-     * @return \DateTime The DateTime instance
+     * @return ?DateTimeImmutable The DateTime instance
      */
-    public function getCreatedAt();
+    public function getCreatedAt(): ?DateTimeImmutable;
 
     /**
      * Sets the created at datetime.
      *
-     * @param \DateTime $createdAt The DateTime instance
+     * @param DateTimeInterface|string|null $createdAt The DateTime instance
      */
-    public function setCreatedAt(\DateTime $createdAt);
+    public function setCreatedAt(DateTimeInterface|string|null $createdAt): void;
 
     /**
      * Gets the updated at datetime.
      *
-     * @return \DateTime The DateTime instance
+     * @return ?DateTimeImmutable The DateTime instance
      */
-    public function getUpdatedAt();
+    public function getUpdatedAt(): ?DateTimeImmutable;
 
     /**
      * Sets the updated at datetime.
      *
-     * @param \DateTime $updatedAt The DateTime instance
+     * @param DateTimeInterface|string|null $updatedAt The DateTime instance
      */
-    public function setUpdatedAt(\DateTime $updatedAt);
+    public function setUpdatedAt(DateTimeInterface|string|null $updatedAt): void;
 }

@@ -6,12 +6,12 @@ namespace Talav\Component\Media\Model;
 
 use Symfony\Component\HttpFoundation\File\File;
 use Talav\Component\Resource\Model\ResourceTrait;
-use Talav\Component\Resource\Model\Timestampable;
+use Talav\Component\Resource\Model\TimestampableTrait;
 
 class Media implements MediaInterface
 {
     use ResourceTrait;
-    use Timestampable;
+    use TimestampableTrait;
 
     protected ?string $name = null;
 
