@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "50e58b6bf902792899d033a1bae1471a",
+    "content-hash": "634b96e8a358e0b8ba439671c2f96d80",
     "packages": [
         {
             "name": "api-platform/core",
@@ -12735,6 +12735,44 @@
             }
         },
         {
+            "name": "talav/post-bundle",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "lib/Dixie/Bundle/PostBundle",
+                "reference": "7335d614469015a6609707ac1c449b5d994607c3"
+            },
+            "require": {
+                "php": ">=8.1.14"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Talav\\PostBundle\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Name",
+                    "homepage": "http://example.com/",
+                    "email": "example@example.com"
+                }
+            ],
+            "description": "PostBundle description",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "talav/profile-bundle",
             "version": "dev-main",
             "dist": {
@@ -16771,6 +16809,7 @@
         "talav/image-bundle": 20,
         "talav/media-bundle": 20,
         "talav/permission-bundle": 20,
+        "talav/post-bundle": 20,
         "talav/profile-bundle": 20,
         "talav/settings-bundle": 20,
         "talav/user-bundle": 20,

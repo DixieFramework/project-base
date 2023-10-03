@@ -62,6 +62,7 @@
         "talav/image-bundle": "@dev",
         "talav/media-bundle": "@dev",
         "talav/permission-bundle": "@dev",
+        "talav/post-bundle": "@dev",
         "talav/profile-bundle": "@dev",
         "talav/settings-bundle": "@dev",
         "talav/user-bundle": "@dev",
@@ -253,6 +254,13 @@
                 "symlink": true
             },
             "url": "lib/Dixie/Bundle/ImageBundle"
+        },
+        {
+            "type": "path",
+            "options": {
+                "symlink": true
+            },
+            "url": "lib/Dixie/Bundle/PostBundle"
         }
     ]
 }

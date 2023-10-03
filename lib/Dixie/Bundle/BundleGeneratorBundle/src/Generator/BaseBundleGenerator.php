@@ -30,9 +30,15 @@ class BaseBundleGenerator extends Generator
             }
         }
 
+	    $basename = substr($bundle->getName(), 0, -6);
+	    $namespaceParts = explode('\\', $bundle->getNamespace());
+	    $vendorName = $namespaceParts[0];
+	    $bundleName = substr($bundle->getName(), strlen($vendorName), strlen($bundle->getName()));
+
         $parameters = [
             'namespace' => $bundle->getNamespace(),
             'bundle' => $bundle->getName(),
+            'bundle_name' => $bundleName,
             'format' => $bundle->getConfigurationFormat(),
             'bundle_basename' => $bundle->getBasename(),
             'extension_alias' => $bundle->getExtensionAlias(),
