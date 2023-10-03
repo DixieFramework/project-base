@@ -144,3 +144,31 @@ search:
     placeholder: Type something to search for...
     link: Show search page
     search: Start searching
+
+# DATE
+
+Jan: Jan
+Feb: Feb
+Mar: Mar
+Apr: Apr
+May: May
+Jun: Jun
+Jul: Jul
+Aug: Aug
+Sep: Sep
+Oct: Oct
+Nov: Nov
+Dec: Dec
+
+month01: January
+month02: February
+month03: March
+month04: April
+month05: May
+month06: June
+month07: July
+month08: August
+month09: September
+month10: October
+month11: November
+month12: December

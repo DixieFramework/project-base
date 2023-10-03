@@ -22,16 +22,30 @@ use Talav\PostBundle\Form\Type\PostType;
 #[IsGranted(RoleInterface::ROLE_USER)]
 class DefaultController extends AbstractController
 {
+    /**
+     * @var int
+     */
+    final public const COMMENTS_PER_PAGE = 10;
+
     public function __construct(private readonly ManagerInterface $postManager)
     {
 
     }
 
     #[Route('/{page<\d+>?1}', name: 'app_home',  methods: ['GET'])]
-    public function index($page): Response
+    public function index(int $page): Response
     {
-        dd($page);
-//        $this->updateLastActivity();
+        $posts = $this->createQueryBuilderPaginator(
+            $this->postManager->getRepository()->findRecommendations(['status' => true, 'featured' => true]),
+            $page,
+            self::COMMENTS_PER_PAGE
+        );
+
+        return $this->render('@TalavPost/post/recommendations.html.twig', [
+            'posts' => $posts
+        ]);
+
+        //        $this->updateLastActivity();
 //        $gender = ($this->getUser()) ? $this->user()->getProfile()->getGender() : null;
 //
 //        $paginator

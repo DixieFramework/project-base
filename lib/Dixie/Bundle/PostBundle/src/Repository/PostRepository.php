@@ -54,12 +54,14 @@ class PostRepository extends ResourceRepository
         }
 
         $qb->join('p.author','u')
-            ->andWhere('u.closedAccount = false')
+            ->andWhere('u.enabled = false')
         ;
 
         foreach ($orderBy as $key => $value) {
             $qb->orderBy('p.'.$key,$value);
         }
+
+        return $qb;
 
         $qb ->setMaxResults($limit)
             ->setFirstResult($offset);
@@ -128,7 +130,7 @@ class PostRepository extends ResourceRepository
             ->where('p.content LIKE :keyword')
             ->orWhere('p.title LIKE :keyword')
             ->andWhere('p.status = true')
-            ->andWhere('u.closedAccount = false')
+            ->andWhere('u.enabled = false')
             ->setParameter('keyword','%'. $keyword .'%')
         ;
 

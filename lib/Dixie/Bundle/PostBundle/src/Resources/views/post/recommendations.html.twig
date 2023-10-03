@@ -7,15 +7,24 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-8 vstack gap-5">
+
+            {% for post in posts %}
 
             <!-- Card feed item START -->
             <div class="card">
-                <!-- Card header START -->
-                <div class="card-header pb-0">
-                    <h3 class="card-title h5">New Post</h3>
-                </div>
-                <!-- Card header START -->
+
+                {% if post.title %}
+                    {% if view =='show' %}
+                        <!-- Card header START -->
+                        <div class="card-header pb-0">
+                            <h3 class="card-title h5">{{ post.title }}</h3>
+                        </div>
+                        <!-- Card header START -->
+{#                    {% else %}#}
+{#                        {{ postTitle(post) }}#}
+                    {% endif %}
+                {% endif %}
 
                 <!-- Card body START -->
                 <div class="card-body">
@@ -26,9 +35,9 @@
                                 <div class="d-flex align-items-center">
                                     <!-- Avatar -->
                                     <div class="avatar avatar-sm">
-{#                                        <span style="background-image: url('{% if post.author.profile.avatar != 'avatar.jpg' %}{{ vich_uploader_asset(post.author.profile) | imagine_filter('thumbnail') }}{% else %}{{ asset('assets/images/avatar.jpg') | imagine_filter('thumbnail') }}{% endif %}')"></span>#}
                                         <img class="avatar-img rounded-circle border border-1 border-secondary" src="{% if post.author.avatar %}{{ media_thumb_reference(post.author.avatar, 'square_small') }}{% else %}{{ asset('images/avatar.png') }}{% endif %}" alt="avatar">
                                     </div>
+
                                     <!-- Info -->
                                     <div class="ms-2">
                                         <h6 class="mb-0">
@@ -79,57 +88,44 @@
                     {% endif %}
 
                     <div class="bg-body-tertiary p-3 rounded">
-                        <div class="d-flex justify-content-between">
-{#                            <h6 class="mb-1"> <a href="#!"> Frances Guerrero </a> </h6>#}
-{#                            <small class="ms-2">4min</small>#}
-                        </div>
+                        <div class="d-flex justify-content-between"></div>
                         <div class="simple-editor-content small mb-0">
                             {{ post.content | purify | raw }}
                         </div>
-{#                        <p class="">Removed demands expense account in outward tedious do. Particular way thoroughly unaffected projection.</p>#}
                     </div>
 
-                        <ul class="nav nav-stack py-3 small">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#!"><i class="fas fa-thumbs-up pe-1"></i>Liked (56)</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#!"><i class="fas fa-comment pe-1"></i>Comments (12)</a>
-                            </li>
+                    <ul class="nav nav-stack py-3 small">
+                        <li class="nav-item"><a class="nav-link active" href="#!"><i class="fas fa-thumbs-up pe-1"></i>Liked (56)</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!"><i class="fas fa-comment pe-1"></i>Comments (12)</a></li>
 
-                            <!-- Card share action START -->
-                            <li class="nav-item dropdown ms-sm-auto">
-                                <a class="nav-link mb-0" href="#" id="cardShareAction8" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-share pe-1"></i>Share (3)
-                                </a>
-                                <!-- Card share action dropdown menu -->
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardShareAction8">
-                                    <li><a class="dropdown-item" href="#"> <i class="bi bi-envelope fa-fw pe-2"></i>Send via Direct Message</a></li>
-                                    <li><a class="dropdown-item" href="#"> <i class="bi bi-bookmark-check fa-fw pe-2"></i>Bookmark </a></li>
-                                    <li><a class="dropdown-item" href="#"> <i class="bi bi-link fa-fw pe-2"></i>Copy link to post</a></li>
-                                    <li><a class="dropdown-item" href="#"> <i class="bi bi-share fa-fw pe-2"></i>Share post via …</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Share to News Feed</a></li>
-                                </ul>
-                            </li>
-                            <!-- Card share action END -->
-                        </ul>
+                        <!-- Card share action START -->
+                        <li class="nav-item dropdown ms-sm-auto">
+                            <a class="nav-link mb-0" href="#" id="cardShareAction8" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-share pe-1"></i>Share (3)</a>
 
-
-                    {{ render_esi(path('talav_post_comment_app_comment_form', {
-                        'id': post.id,
-                    })) }}
+                            <!-- Card share action dropdown menu -->
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardShareAction8">
+                                <li><a class="dropdown-item" href="#"> <i class="bi bi-envelope fa-fw pe-2"></i>Send via Direct Message</a></li>
+                                <li><a class="dropdown-item" href="#"> <i class="bi bi-bookmark-check fa-fw pe-2"></i>Bookmark </a></li>
+                                <li><a class="dropdown-item" href="#"> <i class="bi bi-link fa-fw pe-2"></i>Copy link to post</a></li>
+                                <li><a class="dropdown-item" href="#"> <i class="bi bi-share fa-fw pe-2"></i>Share post via …</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Share to News Feed</a></li>
+                            </ul>
+                        </li>
+                        <!-- Card share action END -->
+                    </ul>
 
                 </div>
                 <!-- Card body END -->
 
                 <!-- Card Footer START -->
-                                <div class="card-footer">
-                                    ccc
-                                </div>
+                <div class="card-footer">
+                    ccc
+                </div>
                 <!-- Card Footer END -->
             </div>
             <!-- Card feed item END -->
+            {% endfor %}
 
         </div>
         <div class="col-md-4">
@@ -139,22 +135,22 @@
 {% endblock %}
 
 {% block stylesheets %}
-{{ parent() }}
-{{ asset_css('css/simple_editor.css') }}
+    {{ parent() }}
+    {{ asset_css('css/simple_editor.css') }}
 {% endblock %}
 
 {% block javascripts %}
-{% if app.debug %}
-    {{ parent() }}
-    {{- asset_js('js/vendor/jquery-validation/jquery.validate.js') }}
-    {{- asset_js('js/vendor/jquery-validation/additional-methods.js') }}
-    {{- asset_js('js/vendor/jquery-validation/localization/messages_fr.js') }}
-    {{- asset_js('js/extensions/validator-extensions.js') }}
-    {{- asset_js('js/extensions/validator-extensions-fr.js') -}}
-    {{ asset_js('js/extensions/simple-editor-extension.js') }}
-    {{ asset_js('js/application/user_post.js') }}
-{% else %}
-    {{- asset_js('js/core_edit.js') }}
-    {{ asset_js('js/user_comment.js') }}
-{% endif %}
+    {% if app.debug %}
+        {{ parent() }}
+        {{- asset_js('js/vendor/jquery-validation/jquery.validate.js') }}
+        {{- asset_js('js/vendor/jquery-validation/additional-methods.js') }}
+        {{- asset_js('js/vendor/jquery-validation/localization/messages_fr.js') }}
+        {{- asset_js('js/extensions/validator-extensions.js') }}
+        {{- asset_js('js/extensions/validator-extensions-fr.js') -}}
+        {{ asset_js('js/extensions/simple-editor-extension.js') }}
+        {{ asset_js('js/application/user_post.js') }}
+    {% else %}
+        {{- asset_js('js/core_edit.js') }}
+        {{ asset_js('js/user_comment.js') }}
+    {% endif %}
 {% endblock %}
