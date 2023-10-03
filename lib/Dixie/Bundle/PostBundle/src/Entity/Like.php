@@ -7,6 +7,7 @@ namespace Talav\PostBundle\Entity;
 use Talav\PostBundle\Repository\LikeRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Talav\UserBundle\Model\UserInterface;
 
 #[ORM\Entity(repositoryClass: LikeRepository::class)]
 #[ORM\Table(name: '`like`')]
@@ -21,7 +22,7 @@ class Like
     #[ORM\Column(type: 'datetime')]
     private $likedAt;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'likes')]
+    #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'likes')]
     #[ORM\JoinColumn(nullable: false)]
     private $user;
 

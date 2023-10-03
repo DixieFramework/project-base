@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\EventSubscriber;
+namespace Talav\UserBundle\EventListener;
 
 use App\Entity\User;
 use App\Repository\UserRepository;

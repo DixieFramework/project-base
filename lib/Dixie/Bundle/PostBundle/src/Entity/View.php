@@ -6,6 +6,7 @@ namespace Talav\PostBundle\Entity;
 
 use Talav\PostBundle\Repository\ViewRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Talav\UserBundle\Model\UserInterface;
 
 #[ORM\Entity(repositoryClass: ViewRepository::class)]
 class View
@@ -18,12 +19,12 @@ class View
     #[ORM\Column(type: 'datetime')]
     private $viewedAt;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'views')]
+    #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'views')]
     #[ORM\JoinColumn(nullable: false)]
     private $user;
 
-    #[ORM\ManyToOne(targetEntity: Song::class, inversedBy: 'views')]
-    private $song;
+//    #[ORM\ManyToOne(targetEntity: Song::class, inversedBy: 'views')]
+//    private $song;
 
     #[ORM\Column(type: 'integer')]
     private ?int $quantity;

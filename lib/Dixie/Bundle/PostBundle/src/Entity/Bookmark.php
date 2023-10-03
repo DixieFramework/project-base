@@ -7,6 +7,7 @@ namespace Talav\PostBundle\Entity;
 use Talav\PostBundle\Repository\BookmarkRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Talav\UserBundle\Model\UserInterface;
 
 #[ORM\Entity(repositoryClass: BookmarkRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -17,7 +18,7 @@ class Bookmark
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'bookmarks')]
+    #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'bookmarks')]
     #[ORM\JoinColumn(nullable: false)]
     private $user;
 

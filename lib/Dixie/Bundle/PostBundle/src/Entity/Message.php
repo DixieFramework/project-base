@@ -8,6 +8,8 @@ use Talav\PostBundle\Repository\MessageRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
+use Talav\ProfileBundle\Entity\Profile;
+use Talav\UserBundle\Model\UserInterface;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
@@ -19,13 +21,13 @@ class Message
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'sentMessages')]
+    #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'sentMessages')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $sender;
+    private ?UserInterface $sender;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'receivedMessages')]
+    #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'receivedMessages')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $receiver;
+    private ?UserInterface $receiver;
 
     #[ORM\Column(type: 'text', nullable: true)]
     private ?string $content;
@@ -42,8 +44,8 @@ class Message
     #[ORM\Column(type: 'boolean')]
     private ?bool $receiver_deleted;
 
-    #[ORM\ManyToOne(targetEntity: Song::class, inversedBy: 'messages')]
-    private ?Song $song;
+//    #[ORM\ManyToOne(targetEntity: Song::class, inversedBy: 'messages')]
+//    private ?Song $song;
 
     #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'messages')]
     private ?Post $post;

@@ -6,6 +6,7 @@ namespace Talav\PostBundle\Entity;
 
 use Talav\PostBundle\Repository\ReportRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Talav\UserBundle\Model\UserInterface;
 
 #[ORM\Entity(repositoryClass: ReportRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -19,7 +20,7 @@ class Report
     #[ORM\OneToOne(targetEntity: Message::class, cascade: ['persist', 'remove'])]
     private $message;
 
-    #[ORM\OneToOne(targetEntity: User::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: UserInterface::class, cascade: ['persist', 'remove'])]
     private $profile;
 
     #[ORM\OneToOne(inversedBy: 'report', targetEntity: Comment::class, cascade: ['persist', 'remove'])]
@@ -28,11 +29,11 @@ class Report
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $content;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'reports')]
+    #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'reports')]
     #[ORM\JoinColumn(nullable: false)]
     private $sender;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'accusations')]
+    #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'accusations')]
     #[ORM\JoinColumn(nullable: false)]
     private $accused;
 

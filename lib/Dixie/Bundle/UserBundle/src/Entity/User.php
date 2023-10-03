@@ -59,7 +59,7 @@ class User extends AbstractUser implements UserInterface
     protected $receivedUserRelations;
 
 //    #[ORM\Column(type: 'datetime', nullable: true)]
-    protected ?\DateTime $lastActivityAt = null;
+    protected ?\DateTimeImmutable $lastActivityAt = null;
 
     #[ORM\OneToMany(targetEntity: UserMetadata::class, mappedBy: 'user', orphanRemoval: true, cascade: ['persist'])]
     protected Collection $metadata;
@@ -254,14 +254,14 @@ class User extends AbstractUser implements UserInterface
 		return $this;
 	}
 
-    public function setLastActivityAt(?\DateTime $lastActivityAt): self
+    public function setLastActivityAt(?\DateTimeImmutable $lastActivityAt): self
     {
         $this->lastActivityAt = $lastActivityAt;
 
         return $this;
     }
 
-    public function getLastActivityAt(): ?\DateTime
+    public function getLastActivityAt(): ?\DateTimeImmutable
     {
         return $this->lastActivityAt;
     }

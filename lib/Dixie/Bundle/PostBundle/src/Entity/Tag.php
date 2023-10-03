@@ -14,6 +14,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TagRepository::class)]
+#[ORM\Table('talav_tag')]
 #[UniqueEntity('title')]
 #[UniqueEntity('slug')]
 #[Vich\Uploadable]
@@ -33,8 +34,8 @@ class Tag
     #[Assert\Type('string')]
     private $slug;
 
-    #[ORM\ManyToMany(targetEntity: Song::class, mappedBy: 'tags')]
-    private $songs;
+//    #[ORM\ManyToMany(targetEntity: Song::class, mappedBy: 'tags')]
+//    private $songs;
 
     #[ORM\Column(type: 'text', nullable: true)]
     private $description;
