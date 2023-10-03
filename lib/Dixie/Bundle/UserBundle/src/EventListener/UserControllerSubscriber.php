@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use DateTimeZone;
 use Exception;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -19,7 +20,8 @@ use Talav\Component\User\Repository\UserRepositoryInterface;
  * Defines the method that 'listens' to the 'kernel.controller' event, which is
  * triggered whenever a controller is executed in the application.
  */
-class ControllerSubscriber implements EventSubscriberInterface
+#[AsEventListener(event: KernelEvents::CONTROLLER, method: 'registerCurrentController')]
+class UserControllerSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private Security             $security,
@@ -36,7 +38,7 @@ class ControllerSubscriber implements EventSubscriberInterface
     }
 
     public function registerCurrentController(ControllerEvent $event): void
-    {
+    {dd($event);
         // this check is needed because in Symfony a request can perform any
         // number of sub-requests. See
         // https://symfony.com/doc/current/components/http_kernel.html#sub-requests
