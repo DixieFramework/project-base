@@ -6,13 +6,17 @@ namespace Talav\PostBundle\Entity;
 
 use Doctrine\Common\Collections\{ArrayCollection, Collection};
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use JetBrains\PhpStorm\Pure;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Talav\Component\Resource\Model\ResourceInterface;
 use Talav\Component\Resource\Model\ResourceTrait;
 use Talav\Component\User\Model\UserInterface;
+use Talav\CoreBundle\Utils\StringUtils;
 use Talav\PostBundle\Repository\PostRepository;
+use Talav\ProfileBundle\Entity\Like;
+use Talav\ProfileBundle\Entity\LikeInterface;
 use Talav\ProfileBundle\Entity\MessageInterface;
 use Talav\ProfileBundle\Entity\NotificationInterface;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -43,6 +47,7 @@ abstract class Post implements PostInterface
     protected $status;
 
     #[ORM\Column(type: 'string', length: 255)]
+//    #[Gedmo\Slug(fields: ['title', 'code'])]
     protected $slug;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
@@ -57,16 +62,16 @@ abstract class Post implements PostInterface
     protected $author;
 
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class, orphanRemoval: true)]
-    protected $comments;
+    protected Collection $comments;
 
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: Bookmark::class, orphanRemoval: true)]
-    protected $bookmarks;
+    protected Collection $bookmarks;
 
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: NotificationInterface::class, orphanRemoval: true)]
-    protected $notifications;
+    protected Collection $notifications;
 
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'posts')]
-    protected $tags;
+    protected Collection $tags;
 
 //    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Action::class, orphanRemoval: true)]
 //    protected $actions;
@@ -81,13 +86,13 @@ abstract class Post implements PostInterface
     protected $gender;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    protected $title = null;
+    protected ?string $title = null;
 
-    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Like::class, orphanRemoval: true)]
-    protected $likes;
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: LikeInterface::class, orphanRemoval: true)]
+    protected Collection $likes;
 
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: MessageInterface::class)]
-    protected $messages;
+    protected Collection $messages;
 
     #[Pure] public function __construct()
     {
@@ -456,7 +461,7 @@ abstract class Post implements PostInterface
 		return $this->likes;
 	}
 
-	public function addLike(Like $like): self
+	public function addLike(LikeInterface $like): self
 	{
 		if (!$this->likes->contains($like)) {
 			$this->likes[] = $like;
@@ -466,7 +471,7 @@ abstract class Post implements PostInterface
 		return $this;
 	}
 
-	public function removeLike(Like $like): self
+	public function removeLike(LikeInterface $like): self
 	{
 		if ($this->likes->contains($like)) {
 			$this->likes->removeElement($like);
@@ -507,4 +512,14 @@ abstract class Post implements PostInterface
 
 		return $this;
 	}
+
+    public function generateSlug(UserInterface $user): void
+    {
+        if ($this->getTitle()) {
+            $this->setSlug(StringUtils::slug($this->title));
+        } else {
+            $random = sprintf('%s %d', $user->getId(), rand(1,147) . rand(784,1217) * rand(342,635) . chr(rand(97,122)));
+            $this->setSlug(StringUtils::slug($random));
+        }
+    }
 }

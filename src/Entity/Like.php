@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Groshy\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Talav\PostBundle\Entity\Like as BaseLike;
-use Talav\PostBundle\Repository\LikeRepository;
+use Talav\ProfileBundle\Entity\Like as BaseLike;
+use Talav\ProfileBundle\Repository\LikeRepository;
 
 #[ORM\Entity(repositoryClass: LikeRepository::class)]
 #[ORM\Table(name: 'like')]

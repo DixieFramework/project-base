@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Talav\PostBundle\Entity;
+namespace Talav\ProfileBundle\Entity;
 
 use Talav\Component\Resource\Model\ResourceInterface;
 use Talav\Component\Resource\Model\ResourceTrait;
-use Talav\PostBundle\Repository\LikeRepository;
+use Talav\PostBundle\Entity\Comment;
+use Talav\PostBundle\Entity\PostInterface;
+use Talav\ProfileBundle\Repository\LikeRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Talav\UserBundle\Model\UserInterface;
@@ -15,7 +17,7 @@ use Talav\UserBundle\Model\UserInterface;
 //#[ORM\Table(name: 'like')]
 #[ORM\HasLifecycleCallbacks]
 #[ORM\MappedSuperclass]
-abstract class Like implements ResourceInterface
+abstract class Like implements LikeInterface
 {
 	use ResourceTrait;
 

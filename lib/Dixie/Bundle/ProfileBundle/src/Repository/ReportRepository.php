@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Talav\PostBundle\Repository;
+namespace Talav\ProfileBundle\Repository;
 
-use Talav\PostBundle\Entity\Report;
+use Talav\ProfileBundle\Entity\Report;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

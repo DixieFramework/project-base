@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Talav\PostBundle\Entity;
+namespace Talav\ProfileBundle\Entity;
 
-use Talav\PostBundle\Repository\ReportRepository;
+use Talav\Component\Resource\Model\ResourceInterface;
+use Talav\Component\Resource\Model\ResourceTrait;
+use Talav\PostBundle\Entity\Comment;
+use Talav\ProfileBundle\Repository\ReportRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Talav\ProfileBundle\Entity\MessageInterface;
 use Talav\UserBundle\Model\UserInterface;
@@ -12,35 +15,37 @@ use Talav\UserBundle\Model\UserInterface;
 #[ORM\Entity(repositoryClass: ReportRepository::class)]
 #[ORM\Table('report')]
 #[ORM\HasLifecycleCallbacks]
-class Report
+class Report implements ResourceInterface
 {
+    use ResourceTrait;
+    
 	#[ORM\Id]
 	#[ORM\Column(type: 'integer')]
 	#[ORM\GeneratedValue(strategy: 'AUTO')]
-    private $id;
+    protected mixed $id;
 
     #[ORM\OneToOne(targetEntity: MessageInterface::class, cascade: ['persist', 'remove'])]
-    private $message;
+    protected $message;
 
     #[ORM\OneToOne(targetEntity: UserInterface::class, cascade: ['persist', 'remove'])]
-    private $profile;
+    protected $profile;
 
     #[ORM\OneToOne(inversedBy: 'report', targetEntity: Comment::class, cascade: ['persist', 'remove'])]
-    private $comment;
+    protected $comment;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $content;
+    protected $content;
 
     #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'reports')]
     #[ORM\JoinColumn(nullable: false)]
-    private $sender;
+    protected $sender;
 
     #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'accusations')]
     #[ORM\JoinColumn(nullable: false)]
-    private $accused;
+    protected $accused;
 
     #[ORM\Column(type: 'boolean')]
-    private $seen;
+    protected $seen;
 
     #[ORM\PrePersist]
     public function initialize()

@@ -1,0 +1,74 @@
+{% extends '@TalavWeb/layouts/default.html.twig' %}
+
+{%- block titre '' -%}
+{% block title %}
+    Utwórz galerie
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-8">
+
+            <!-- Card feed item START -->
+            <div class="card">
+                <!-- Card header START -->
+                <div class="card-header pb-0">
+                    <h3 class="card-title h5">New Post</h3>
+                </div>
+                <!-- Card header START -->
+
+                <!-- Card body START -->
+                <div class="card-body">
+
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+
+                    <hr class="w-100 border-bottom-1">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <input name="submit" type="submit" value="{{ 'common.button_ok'|trans({}, 'TalavWebBundle') }}" class="btn btn-primary"/>
+                        <a href="{{ url('talav_gallery_index') }}" class="btn btn-secondary">{{ 'common.button_back_list'|trans({}, 'TalavWebBundle') }}</a>
+                    </div>
+                    {{ form_end(form) }}
+
+                </div>
+                <!-- Card body END -->
+
+                <!-- Card Footer START -->
+{#                <div class="card-footer border-0 d-flex justify-content-between align-items-center p-3">#}
+{#                    <input name="submit" type="submit" value="{{ 'common.button_ok'|trans({}, 'TalavWebBundle') }}" class="btn btn-primary"/>#}
+{#                    <a href="{{ url('talav_gallery_index') }}" class="btn btn-secondary">{{ 'common.button_back_list'|trans({}, 'TalavWebBundle') }}</a>#}
+{#                </div>#}
+                {#                <div class="card-footer">#}
+                {#                    ccc#}
+                {#                </div>#}
+                <!-- Card Footer END -->
+            </div>
+            <!-- Card feed item END -->
+
+        </div>
+        <div class="col-md-4">
+            ccc
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+{{ asset_css('css/simple_editor.css') }}
+{% endblock %}
+
+{% block javascripts %}
+{% if app.debug %}
+    {{ parent() }}
+    {{- asset_js('js/vendor/jquery-validation/jquery.validate.js') }}
+    {{- asset_js('js/vendor/jquery-validation/additional-methods.js') }}
+    {{- asset_js('js/vendor/jquery-validation/localization/messages_fr.js') }}
+    {{- asset_js('js/extensions/validator-extensions.js') }}
+    {{- asset_js('js/extensions/validator-extensions-fr.js') -}}
+    {{ asset_js('js/extensions/simple-editor-extension.js') }}
+    {{ asset_js('js/application/user_post.js') }}
+{% else %}
+    {{- asset_js('js/core_edit.js') }}
+    {{ asset_js('js/user_comment.js') }}
+{% endif %}
+{% endblock %}

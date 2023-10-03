@@ -13,6 +13,11 @@ trait ResourceTrait
         return $this->id;
     }
 
+    public function isNew(): bool
+    {
+        return empty($this->id);
+    }
+
     /**
      * Return string representation of entity.
      */
