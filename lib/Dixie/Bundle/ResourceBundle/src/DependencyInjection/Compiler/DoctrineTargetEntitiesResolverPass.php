@@ -31,7 +31,6 @@ final class DoctrineTargetEntitiesResolverPass implements CompilerPassInterface
             return;
         }
         $interfaces = $this->targetEntitiesResolver->resolve($resources);
-        dd($interfaces);
         foreach ($interfaces as $interface => $model) {
             $resolveTargetEntityListener->addMethodCall('addResolveTargetEntity', [$interface, $model, []]);
         }
