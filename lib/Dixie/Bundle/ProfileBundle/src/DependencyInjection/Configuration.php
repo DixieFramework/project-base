@@ -10,11 +10,15 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Talav\ProfileBundle\Entity\Friendship;
 use Talav\ProfileBundle\Entity\FriendshipRequest;
+use Talav\ProfileBundle\Entity\Message;
+use Talav\ProfileBundle\Entity\Notification;
 use Talav\ProfileBundle\Entity\Profile;
 use Talav\ProfileBundle\Entity\UserFriend;
 use Talav\ProfileBundle\Entity\UserRelation;
 use Talav\ProfileBundle\Repository\FriendshipRepository;
 use Talav\ProfileBundle\Repository\FriendshipRequestRepository;
+use Talav\ProfileBundle\Repository\MessageRepository;
+use Talav\ProfileBundle\Repository\NotificationRepository;
 use Talav\ProfileBundle\Repository\UserFriendRepository;
 use Talav\ProfileBundle\Repository\UserRelationRepository;
 
@@ -109,6 +113,30 @@ class Configuration implements ConfigurationInterface
                                     ->children()
                                         ->scalarNode('model')->defaultValue(FriendshipRequest::class)->end()
                                         ->scalarNode('repository')->defaultValue(FriendshipRequestRepository::class)->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('notification')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(Notification::class)->end()
+                                        ->scalarNode('repository')->defaultValue(NotificationRepository::class)->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('message')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(Message::class)->end()
+                                        ->scalarNode('repository')->defaultValue(MessageRepository::class)->end()
                                     ->end()
                                 ->end()
                             ->end()

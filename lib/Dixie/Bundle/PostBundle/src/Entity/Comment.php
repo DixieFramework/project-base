@@ -11,6 +11,7 @@ use Talav\Component\User\Model\UserInterface;
 use Talav\PostBundle\Repository\CommentRepository;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
+#[ORM\Table('comment')]
 #[ORM\HasLifecycleCallbacks]
 class Comment
 {

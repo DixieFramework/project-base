@@ -63,11 +63,11 @@ class Tag implements ResourceInterface
     #[Groups(['tag:item:read', 'tag:collection:read'])]
     protected Color $color;
 
-    #[Column(name: 'created_at', type: 'datetime')]
+    #[Column(name: 'created_at', type: 'datetimetz_immutable')]
     #[GedmoTimestampable(on: 'create')]
     protected ?\DateTimeImmutable $createdAt = null;
 
-    #[Column(name: 'updated_at', type: 'datetime')]
+    #[Column(name: 'updated_at', type: 'datetimetz_immutable')]
     #[GedmoTimestampable(on: 'update')]
     protected ?\DateTimeImmutable $updatedAt = null;
 

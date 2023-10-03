@@ -4,43 +4,38 @@ declare(strict_types=1);
 
 namespace Talav\PostBundle\Entity;
 
+use Talav\Component\Resource\Model\ResourceInterface;
+use Talav\Component\Resource\Model\ResourceTrait;
 use Talav\PostBundle\Repository\LikeRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Talav\UserBundle\Model\UserInterface;
 
-#[ORM\Entity(repositoryClass: LikeRepository::class)]
-#[ORM\Table(name: '`like`')]
+//#[ORM\Entity(repositoryClass: LikeRepository::class)]
+//#[ORM\Table(name: 'like')]
 #[ORM\HasLifecycleCallbacks]
-class Like
+#[ORM\MappedSuperclass]
+abstract class Like implements ResourceInterface
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private $id;
+	use ResourceTrait;
 
     #[ORM\Column(type: 'datetime')]
-    private $likedAt;
+    protected $likedAt;
 
     #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'likes')]
     #[ORM\JoinColumn(nullable: false)]
-    private $user;
+    protected $user;
 
-    #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'likes')]
-    private $post;
+    #[ORM\ManyToOne(targetEntity: PostInterface::class, inversedBy: 'likes')]
+    protected $post;
 
     #[ORM\ManyToOne(targetEntity: Comment::class, inversedBy: 'likes')]
-    private $comment;
+    protected $comment;
 
     #[ORM\PrePersist]
     public function initialize()
     {
         $this->likedAt = new DateTime('now');
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getLikedAt(): ?\DateTimeInterface
@@ -55,24 +50,24 @@ class Like
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getUser(): ?UserInterface
     {
         return $this->user;
     }
 
-    public function setUser(?User $user): self
+    public function setUser(?UserInterface $user): self
     {
         $this->user = $user;
 
         return $this;
     }
 
-    public function getPost(): ?Post
+    public function getPost(): ?PostInterface
     {
         return $this->post;
     }
 
-    public function setPost(?Post $post): self
+    public function setPost(?PostInterface $post): self
     {
         $this->post = $post;
 

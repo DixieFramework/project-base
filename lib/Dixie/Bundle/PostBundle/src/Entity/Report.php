@@ -6,18 +6,20 @@ namespace Talav\PostBundle\Entity;
 
 use Talav\PostBundle\Repository\ReportRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Talav\ProfileBundle\Entity\MessageInterface;
 use Talav\UserBundle\Model\UserInterface;
 
 #[ORM\Entity(repositoryClass: ReportRepository::class)]
+#[ORM\Table('report')]
 #[ORM\HasLifecycleCallbacks]
 class Report
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+	#[ORM\Id]
+	#[ORM\Column(type: 'integer')]
+	#[ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
-    #[ORM\OneToOne(targetEntity: Message::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: MessageInterface::class, cascade: ['persist', 'remove'])]
     private $message;
 
     #[ORM\OneToOne(targetEntity: UserInterface::class, cascade: ['persist', 'remove'])]
@@ -51,24 +53,24 @@ class Report
         return $this->id;
     }
 
-    public function getMessage(): ?Message
+    public function getMessage(): ?MessageInterface
     {
         return $this->message;
     }
 
-    public function setMessage(?Message $message): self
+    public function setMessage(?MessageInterface $message): self
     {
         $this->message = $message;
 
         return $this;
     }
 
-    public function getProfile(): ?User
+    public function getProfile(): ?UserInterface
     {
         return $this->profile;
     }
 
-    public function setProfile(?User $profile): self
+    public function setProfile(?UserInterface $profile): self
     {
         $this->profile = $profile;
 
@@ -99,24 +101,24 @@ class Report
         return $this;
     }
 
-    public function getSender(): ?User
+    public function getSender(): ?UserInterface
     {
         return $this->sender;
     }
 
-    public function setSender(?User $sender): self
+    public function setSender(?UserInterface $sender): self
     {
         $this->sender = $sender;
 
         return $this;
     }
 
-    public function getAccused(): ?User
+    public function getAccused(): ?UserInterface
     {
         return $this->accused;
     }
 
-    public function setAccused(?User $accused): self
+    public function setAccused(?UserInterface $accused): self
     {
         $this->accused = $accused;
 

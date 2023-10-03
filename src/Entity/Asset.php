@@ -60,11 +60,11 @@ class Asset implements ResourceInterface
     #[Gedmo\Slug(fields: ['name'])]
     protected ?string $slug;
 
-    #[Column(name: 'created_at', type: 'datetime')]
+    #[Column(name: 'created_at', type: 'datetimetz_immutable')]
     #[GedmoTimestampable(on: 'create')]
     protected ?\DateTimeImmutable $createdAt = null;
 
-    #[Column(name: 'updated_at', type: 'datetime')]
+    #[Column(name: 'updated_at', type: 'datetimetz_immutable')]
     #[GedmoTimestampable(on: 'update')]
     protected ?\DateTimeImmutable $updatedAt = null;
 

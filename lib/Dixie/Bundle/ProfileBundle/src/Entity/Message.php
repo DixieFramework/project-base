@@ -2,93 +2,93 @@
 
 declare(strict_types=1);
 
-namespace Talav\PostBundle\Entity;
+namespace Talav\ProfileBundle\Entity;
 
-use Talav\PostBundle\Repository\MessageRepository;
+use Talav\Component\Resource\Model\ResourceTrait;
+use Talav\PostBundle\Entity\PostInterface;
+use Talav\ProfileBundle\Repository\MessageRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
-use Talav\ProfileBundle\Entity\Profile;
+use Talav\ProfileBundle\Model\ProfileInterface;
 use Talav\UserBundle\Model\UserInterface;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
+#[ORM\Table('message')]
 #[Vich\Uploadable]
-class Message
+class Message implements MessageInterface
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private $id;
+    use ResourceTrait;
 
     #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'sentMessages')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?UserInterface $sender;
+    protected ?UserInterface $sender;
 
     #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'receivedMessages')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?UserInterface $receiver;
+    protected ?UserInterface $receiver;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    private ?string $content;
+    protected ?string $content;
 
     #[ORM\Column(type: 'datetime')]
-    private ?\DateTimeInterface $sentAt;
+    protected ?\DateTimeInterface $sentAt;
 
     #[ORM\Column(type: 'boolean')]
-    private ?bool $seen;
+    protected ?bool $seen;
 
     #[ORM\Column(type: 'boolean')]
-    private ?bool $sender_deleted;
+    protected ?bool $sender_deleted;
 
     #[ORM\Column(type: 'boolean')]
-    private ?bool $receiver_deleted;
+    protected ?bool $receiver_deleted;
 
 //    #[ORM\ManyToOne(targetEntity: Song::class, inversedBy: 'messages')]
-//    private ?Song $song;
+//    protected ?Song $song;
 
-    #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'messages')]
-    private ?Post $post;
+    #[ORM\ManyToOne(targetEntity: PostInterface::class, inversedBy: 'messages')]
+    protected ?PostInterface $post;
 
-    #[ORM\ManyToOne(targetEntity: Profile::class, inversedBy: 'messages')]
-    private ?Profile $profile;
+    #[ORM\ManyToOne(targetEntity: ProfileInterface::class, inversedBy: 'messages')]
+    protected ?ProfileInterface $profile;
 
-    #[ORM\ManyToOne(targetEntity: Message::class)]
-    private ?Message $replyTo;
+    #[ORM\ManyToOne(targetEntity: MessageInterface::class)]
+    protected ?MessageInterface $replyTo;
 
     #[Vich\UploadableField(mapping: 'message_images', fileNameProperty: 'image')]
     #[Assert\File(mimeTypes: ['image/jpeg','image/png','image/gif'], mimeTypesMessage: 'image.have.to.be.jpg.or.png')]
-    private $imageFile;
+    protected $imageFile;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $image;
+    protected ?string $image;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?\DateTimeInterface $updatedAt;
+    protected ?\DateTimeInterface $updatedAt;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getSender(): ?User
+    public function getSender(): ?UserInterface
     {
         return $this->sender;
     }
 
-    public function setSender(?User $sender): self
+    public function setSender(?UserInterface $sender): self
     {
         $this->sender = $sender;
 
         return $this;
     }
 
-    public function getReceiver(): ?User
+    public function getReceiver(): ?UserInterface
     {
         return $this->receiver;
     }
 
-    public function setReceiver(?User $receiver): self
+    public function setReceiver(?UserInterface $receiver): self
     {
         $this->receiver = $receiver;
 
@@ -155,48 +155,48 @@ class Message
         return $this;
     }
 
-    public function getSong(): ?Song
-    {
-        return $this->song;
-    }
+//    public function getSong(): ?Song
+//    {
+//        return $this->song;
+//    }
+//
+//    public function setSong(?Song $song): self
+//    {
+//        $this->song = $song;
+//
+//        return $this;
+//    }
 
-    public function setSong(?Song $song): self
-    {
-        $this->song = $song;
-
-        return $this;
-    }
-
-    public function getPost(): ?Post
+    public function getPost(): ?PostInterface
     {
         return $this->post;
     }
 
-    public function setPost(?Post $post): self
+    public function setPost(?PostInterface $post): self
     {
         $this->post = $post;
 
         return $this;
     }
 
-    public function getProfile(): ?Profile
+    public function getProfile(): ?ProfileInterface
     {
         return $this->profile;
     }
 
-    public function setProfile(?Profile $profile): self
+    public function setProfile(?ProfileInterface $profile): self
     {
         $this->profile = $profile;
 
         return $this;
     }
 
-    public function getReplyTo(): ?self
+    public function getReplyTo(): ?MessageInterface
     {
         return $this->replyTo;
     }
 
-    public function setReplyTo(?self $replyTo): self
+    public function setReplyTo(?MessageInterface $replyTo): self
     {
         $this->replyTo = $replyTo;
 

@@ -54,11 +54,11 @@ class TagGroup implements ResourceInterface
     #[Column(type: 'integer')]
     protected int $position;
 
-    #[Column(name: 'created_at', type: 'datetime', nullable: true)]
+    #[Column(name: 'created_at', type: 'datetimetz_immutable', nullable: true)]
     #[GedmoTimestampable(on: 'create')]
     protected ?\DateTimeImmutable $createdAt = null;
 
-    #[Column(name: 'updated_at', type: 'datetime', nullable: true)]
+    #[Column(name: 'updated_at', type: 'datetimetz_immutable', nullable: true)]
     #[GedmoTimestampable(on: 'update')]
     protected ?\DateTimeImmutable $updatedAt = null;
 

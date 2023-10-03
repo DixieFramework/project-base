@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Talav\PostBundle\DependencyInjection;
 
+use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Talav\PostBundle\Entity\Post;
+use Talav\PostBundle\Repository\PostRepository;
 
 /**
  * This is the class that validates and merges configuration from your app/config files.
@@ -14,17 +18,109 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
+    final public const ROOT_NODE = 'talav_post';
+
     /**
      * {@inheritdoc}
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('talav_post');
+	    $treeBuilder = new TreeBuilder(static::ROOT_NODE);
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+	    // BC layer for symfony/config 4.1 and older
+	    if (! \method_exists($treeBuilder, 'getRootNode')) {
+		    $rootNode = $treeBuilder->root(static::ROOT_NODE);
+	    } else {
+		    $rootNode = $treeBuilder->getRootNode();
+	    }
+
+        $this->addResourceSection($rootNode);
 
         return $treeBuilder;
+    }
+
+    private function addResourceSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('resources')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('post')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(Post::class)->end()
+                                        ->scalarNode('repository')->defaultValue(PostRepository::class)->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+//                        ->arrayNode('user_relation')
+//                            ->addDefaultsIfNotSet()
+//                            ->children()
+//                                ->arrayNode('classes')
+//                                    ->addDefaultsIfNotSet()
+//                                    ->children()
+//                                        ->scalarNode('model')->defaultValue(UserRelation::class)->end()
+//                                        ->scalarNode('repository')->defaultValue(UserRelationRepository::class)->end()
+//                                    ->end()
+//                                ->end()
+//                            ->end()
+//                        ->end()
+//                        ->arrayNode('user_friend')
+//                            ->addDefaultsIfNotSet()
+//                            ->children()
+//                                ->arrayNode('classes')
+//                                    ->addDefaultsIfNotSet()
+//                                    ->children()
+//                                        ->scalarNode('model')->defaultValue(UserFriend::class)->end()
+//                                        ->scalarNode('repository')->defaultValue(UserFriendRepository::class)->end()
+//                                    ->end()
+//                                ->end()
+//                            ->end()
+//                        ->end()
+//                        ->arrayNode('friendship')
+//                            ->addDefaultsIfNotSet()
+//                            ->children()
+//                                ->arrayNode('classes')
+//                                    ->addDefaultsIfNotSet()
+//                                    ->children()
+//                                        ->scalarNode('model')->defaultValue(Friendship::class)->end()
+//                                        ->scalarNode('repository')->defaultValue(FriendshipRepository::class)->end()
+//                                    ->end()
+//                                ->end()
+//                            ->end()
+//                        ->end()
+//                        ->arrayNode('friendship_request')
+//                            ->addDefaultsIfNotSet()
+//                            ->children()
+//                                ->arrayNode('classes')
+//                                    ->addDefaultsIfNotSet()
+//                                    ->children()
+//                                        ->scalarNode('model')->defaultValue(FriendshipRequest::class)->end()
+//                                        ->scalarNode('repository')->defaultValue(FriendshipRequestRepository::class)->end()
+//                                    ->end()
+//                                ->end()
+//                            ->end()
+//                        ->end()
+//                        ->arrayNode('notification')
+//                            ->addDefaultsIfNotSet()
+//                            ->children()
+//                                ->arrayNode('classes')
+//                                    ->addDefaultsIfNotSet()
+//                                    ->children()
+//                                        ->scalarNode('model')->defaultValue(Notification::class)->end()
+//                                        ->scalarNode('repository')->defaultValue(NotificationRepository::class)->end()
+//                                    ->end()
+//                                ->end()
+//                            ->end()
+//                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
     }
 }

@@ -42,11 +42,11 @@ class PositionValue implements ResourceInterface
     #[JoinColumn(name: 'position_id')]
     protected ?Position $position;
 
-    #[Column(name: 'created_at', type: 'datetime')]
+    #[Column(name: 'created_at', type: 'datetimetz_immutable')]
     #[GedmoTimestampable(on: 'create')]
     protected ?\DateTimeImmutable $createdAt = null;
 
-    #[Column(name: 'updated_at', type: 'datetime')]
+    #[Column(name: 'updated_at', type: 'datetimetz_immutable')]
     #[GedmoTimestampable(on: 'update')]
     protected ?\DateTimeImmutable $updatedAt = null;
 

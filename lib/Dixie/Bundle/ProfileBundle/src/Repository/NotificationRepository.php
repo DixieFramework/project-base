@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Talav\PostBundle\Repository;
+namespace Talav\ProfileBundle\Repository;
 
-use Talav\PostBundle\Entity\Notification;
-use Talav\PostBundle\Entity\Post;
+use Talav\ProfileBundle\Entity\Notification;
+use Talav\PostBundle\Entity\PostInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -48,7 +48,7 @@ class NotificationRepository extends ServiceEntityRepository
         }
     }
 
-    public function findPostNotifications(Post $post)
+    public function findPostNotifications(PostInterface $post)
     {
         return $this->createQueryBuilder('n')
             ->where('n.type = \'post_approved\'')

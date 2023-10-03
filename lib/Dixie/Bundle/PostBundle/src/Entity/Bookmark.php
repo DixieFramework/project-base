@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Talav\UserBundle\Model\UserInterface;
 
 #[ORM\Entity(repositoryClass: BookmarkRepository::class)]
+#[ORM\Table('bookmark')]
 #[ORM\HasLifecycleCallbacks]
 class Bookmark
 {
@@ -22,7 +23,7 @@ class Bookmark
     #[ORM\JoinColumn(nullable: false)]
     private $user;
 
-    #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'bookmarks')]
+    #[ORM\ManyToOne(targetEntity: PostInterface::class, inversedBy: 'bookmarks')]
     #[ORM\JoinColumn(nullable: false)]
     private $post;
 
@@ -40,24 +41,24 @@ class Bookmark
         return $this->id;
     }
 
-    public function getUser(): ?User
+    public function getUser(): ?UserInterface
     {
         return $this->user;
     }
 
-    public function setUser(?User $user): self
+    public function setUser(?UserInterface $user): self
     {
         $this->user = $user;
 
         return $this;
     }
 
-    public function getPost(): ?Post
+    public function getPost(): ?PostInterface
     {
         return $this->post;
     }
 
-    public function setPost(?Post $post): self
+    public function setPost(?PostInterface $post): self
     {
         $this->post = $post;
 

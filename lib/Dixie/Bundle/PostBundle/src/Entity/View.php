@@ -9,11 +9,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Talav\UserBundle\Model\UserInterface;
 
 #[ORM\Entity(repositoryClass: ViewRepository::class)]
+#[ORM\Table('view')]
 class View
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+	#[ORM\Id]
+	#[ORM\Column(type: 'integer')]
+	#[ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
     #[ORM\Column(type: 'datetime')]
@@ -46,29 +47,29 @@ class View
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getUser(): ?UserInterface
     {
         return $this->user;
     }
 
-    public function setUser(?User $user): self
+    public function setUser(?UserInterface $user): self
     {
         $this->user = $user;
 
         return $this;
     }
 
-    public function getSong(): ?Song
-    {
-        return $this->song;
-    }
-
-    public function setSong(?Song $song): self
-    {
-        $this->song = $song;
-
-        return $this;
-    }
+//    public function getSong(): ?Song
+//    {
+//        return $this->song;
+//    }
+//
+//    public function setSong(?Song $song): self
+//    {
+//        $this->song = $song;
+//
+//        return $this;
+//    }
 
     public function getQuantity(): ?int
     {

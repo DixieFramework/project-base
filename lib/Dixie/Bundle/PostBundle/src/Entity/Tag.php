@@ -20,9 +20,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Vich\Uploadable]
 class Tag
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+	#[ORM\Id]
+	#[ORM\Column(type: 'integer')]
+	#[ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
