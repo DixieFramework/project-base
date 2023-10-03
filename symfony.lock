@@ -931,6 +931,9 @@
     "talav/permission-bundle": {
         "version": "dev-main"
     },
+    "talav/post-bundle": {
+        "version": "dev-main"
+    },
     "talav/profile-bundle": {
         "version": "1.0.0"
     },

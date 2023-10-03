@@ -44,4 +44,5 @@ return [
     Talav\AvatarBundle\TalavAvatarBundle::class => ['all' => true],
     Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
     Liip\ImagineBundle\LiipImagineBundle::class => ['all' => true],
+    Talav\PostBundle\TalavPostBundle::class => ['all' => true],
 ];

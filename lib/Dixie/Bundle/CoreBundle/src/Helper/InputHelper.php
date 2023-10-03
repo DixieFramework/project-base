@@ -440,7 +440,7 @@ class InputHelper
                 },
                 $value, -1, $needsScriptDecoding);
 
-            // Special handling for HTML Comment
+            // Special handling for HTML comments
             $value = str_replace(['<!-->', '<!--', '-->'], ['<mcomment></mcomment>', '<mcomment>', '</mcomment>'], $value, $commentCount);
 
             // detect if there is any unicode character in the passed string
@@ -601,7 +601,7 @@ class InputHelper
     private static function minifyCss(string $css): string
     {
         $css = preg_replace('/\s*([:;{}])\s*/', '$1', preg_replace('/\s+/', ' ', $css));
-        // Remove Comment
+        // Remove comments
         $css = preg_replace('/\/\*[^*]*\*+([^\/*][^*]*\*+)*\//', '', $css);
         // Remove whitespace
         $css = preg_replace('/\s+/', ' ', $css);
