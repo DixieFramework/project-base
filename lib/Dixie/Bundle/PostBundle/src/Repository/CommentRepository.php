@@ -4,23 +4,17 @@ declare(strict_types=1);
 
 namespace Talav\PostBundle\Repository;
 
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
+use Talav\Component\Resource\Repository\ResourceRepository;
 use Talav\PostBundle\Entity\Comment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Talav\PostBundle\Entity\PostInterface;
 
-/**
- * @method Comment|null find($id, $lockMode = null, $lockVersion = null)
- * @method Comment|null findOneBy(array $criteria, array $orderBy = null)
- * @method Comment[]    findAll()
- * @method Comment[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
-class CommentRepository extends ServiceEntityRepository
+class CommentRepository extends ResourceRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, Comment::class);
-    }
-
     public function flush(): void
     {
         $this->_em->flush();
@@ -77,6 +71,38 @@ class CommentRepository extends ServiceEntityRepository
             ->setFirstResult($offset);
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function findAllByEventQueryBuilder(PostInterface $post): QueryBuilder
+    {
+        return $this
+            ->createQueryBuilder('c')
+            ->where('c.post = :post AND c.parent IS NULL AND c.status = 1')
+            ->setParameters([':post' => $post])
+            ->orderBy('c.publishedAt', Criteria::DESC)
+            ;
+    }
+
+    /**
+     * @return Comment[]
+     */
+    public function findAllByUser(User $user): array
+    {
+        return $this
+            ->createQueryBuilder('c')
+            ->where('c.user = :user')
+            ->setParameters([':user' => $user->getId()])
+            ->getQuery()
+            ->execute();
+    }
+
+    public function findAllAnswersQueryBuilder(Comment $comment): QueryBuilder
+    {
+        return $this
+            ->createQueryBuilder('c')
+            ->where('c.parent = :parent AND c.approved = true')
+            ->setParameters([':parent' => $comment])
+            ->orderBy('c.publishedAt', Criteria::DESC);
     }
 
     // /**

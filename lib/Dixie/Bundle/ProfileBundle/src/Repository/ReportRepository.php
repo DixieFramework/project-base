@@ -4,23 +4,13 @@ declare(strict_types=1);
 
 namespace Talav\ProfileBundle\Repository;
 
+use Doctrine\ORM\EntityRepository;
 use Talav\ProfileBundle\Entity\Report;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @method Report|null find($id, $lockMode = null, $lockVersion = null)
- * @method Report|null findOneBy(array $criteria, array $orderBy = null)
- * @method Report[]    findAll()
- * @method Report[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
-class ReportRepository extends ServiceEntityRepository
+class ReportRepository extends EntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, Report::class);
-    }
-
     public function flush(): void
     {
         $this->_em->flush();

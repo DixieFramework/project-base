@@ -1,0 +1,35 @@
+{#{% import 'form/macros.html.twig' as macros %}#}
+<div class="comments">
+    {% for comment in comments %}
+        <div class="row comment mb-3">
+            <div class="col col-auto d-flex align-items-center">
+                <!-- Avatar -->
+                <div class="avatar avatar-sm">
+                    <img class="avatar-img rounded-circle border border-1 border-secondary" src="{% if comment.author.avatar %}{{ media_thumb_reference(comment.author.avatar, 'square_small') }}{% else %}{{ asset('images/avatar.png') }}{% endif %}" alt="avatar">
+                </div>
+{#                {{ macros.userThumb(comment.user, 115, 115) }}#}
+            </div>
+            <div class="col">
+                <div class="infos">
+                    <div class="bg-body-tertiary p-3 rounded">
+                        <div class="d-flex justify-content-between">
+                            <h6 class="mb-1"><a href="{{ path('user_profile_view', {'username': comment.author.username}) }}">{{ comment.author.username }}</a></h6>
+                            <small class="ms-2" title="{{ comment.publishedAt|format_datetime('medium', 'medium')|capitalize }}">{{ comment.publishedAt|diff_date }}</small>
+                        </div>
+                        <p class="small mb-0">{{ comment.message|striptags('<i><b>')|nl2br|parse_tags|raw }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    {% if comments.hasNextPage %}
+        {% block load_more %}
+            <div class="load_more" data-url="{{ path('talav_post_comment_app_comment_list',{'id': event.id ,'page': comments.nextPage }) }}">
+                <button type="button" class="btn btn-outline-primary">
+                    Load more...
+                </button>
+            </div>
+        {% endblock %}
+    {% endif %}
+</div>

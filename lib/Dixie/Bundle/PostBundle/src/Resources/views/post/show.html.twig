@@ -20,7 +20,7 @@
                 <!-- Card body START -->
                 <div class="card-body">
 
-                    <ul class="nav nav-divider align-items-center">
+                    <ul class="nav nav-divider d-flex justify-content-between align-items-center">
                         <li class="nav-item">
                             <div class="nav-link">
                                 <div class="d-flex align-items-center">
@@ -76,9 +76,18 @@
                             <img class="card-img" width="100%" src="{{ post_image_link }}" alt="{{ post.slug }}">
                         </div>
 
-                        <div class="simple-editor-content">
+                    {% endif %}
+
+                    <div class="bg-body-tertiary p-3 rounded">
+                        <div class="d-flex justify-content-between">
+{#                            <h6 class="mb-1"> <a href="#!"> Frances Guerrero </a> </h6>#}
+{#                            <small class="ms-2">4min</small>#}
+                        </div>
+                        <div class="simple-editor-content small mb-0">
                             {{ post.content | purify | raw }}
                         </div>
+{#                        <p class="">Removed demands expense account in outward tedious do. Particular way thoroughly unaffected projection.</p>#}
+                    </div>
 
                         <ul class="nav nav-stack py-3 small">
                             <li class="nav-item">
@@ -106,7 +115,10 @@
                             <!-- Card share action END -->
                         </ul>
 
-                    {% endif %}
+
+                    {{ render_esi(path('talav_post_comment_app_comment_form', {
+                        'id': post.id,
+                    })) }}
 
                 </div>
                 <!-- Card body END -->

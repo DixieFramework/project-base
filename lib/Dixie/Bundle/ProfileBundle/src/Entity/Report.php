@@ -12,17 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Talav\ProfileBundle\Entity\MessageInterface;
 use Talav\UserBundle\Model\UserInterface;
 
-#[ORM\Entity(repositoryClass: ReportRepository::class)]
-#[ORM\Table('report')]
+//#[ORM\Entity(repositoryClass: ReportRepository::class)]
+//#[ORM\Table('report')]
 #[ORM\HasLifecycleCallbacks]
-class Report implements ResourceInterface
+class Report implements ReportInterface
 {
     use ResourceTrait;
-    
-	#[ORM\Id]
-	#[ORM\Column(type: 'integer')]
-	#[ORM\GeneratedValue(strategy: 'AUTO')]
-    protected mixed $id;
 
     #[ORM\OneToOne(targetEntity: MessageInterface::class, cascade: ['persist', 'remove'])]
     protected $message;
@@ -51,11 +46,6 @@ class Report implements ResourceInterface
     public function initialize()
     {
         $this->seen = false;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getMessage(): ?MessageInterface

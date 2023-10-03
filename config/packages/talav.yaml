@@ -114,9 +114,9 @@ talav_profile:
         like:
             classes:
                 model: Groshy\Entity\Like
-#        report:
-#            classes:
-#                model: Groshy\Entity\Message
+        report:
+            classes:
+                model: Groshy\Entity\Report
 
 talav_settings:
     resources:
