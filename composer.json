@@ -161,8 +161,11 @@
             "url": "lib/Dixie/Component/Resource"
         },
         {
-            "type": "vcs",
-            "url": "git@github.com:DixieFramework/ResourceBundle.git"
+            "type": "path",
+            "options": {
+                "symlink": true
+            },
+            "url": "lib/Dixie/Bundle/ResourceBundle"
         },
         {
             "type": "path",

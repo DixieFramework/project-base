@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Talav\CoreBundle\Utils\Type;
+namespace Talav\CoreBundle\Utils\Std;
 
 use Contao\CoreBundle\Framework\ContaoFrameworkInterface;
 use DOMDocument;

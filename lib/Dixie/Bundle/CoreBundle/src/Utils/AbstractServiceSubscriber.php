@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Talav\Bundle\CoreBundle\Utils;
+namespace Talav\CoreBundle\Utils;
 
 use Symfony\Component\DependencyInjection\ServiceSubscriberInterface as LegacyServiceSubscriberInterface;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;

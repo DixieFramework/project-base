@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "634b96e8a358e0b8ba439671c2f96d80",
+    "content-hash": "edb1b3ab589b0d787e56ce7a256e308d",
     "packages": [
         {
             "name": "api-platform/core",
@@ -12930,16 +12930,10 @@
         {
             "name": "talav/resource-bundle",
             "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:DixieFramework/ResourceBundle.git",
-                "reference": "160eb3aa9dc987caeb65ba276661474a5ec63214"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DixieFramework/ResourceBundle/zipball/160eb3aa9dc987caeb65ba276661474a5ec63214",
-                "reference": "160eb3aa9dc987caeb65ba276661474a5ec63214",
-                "shasum": ""
+                "type": "path",
+                "url": "lib/Dixie/Bundle/ResourceBundle",
+                "reference": "8b9cd0c5aba54d360957294fd410fdbb8d343e1e"
             },
             "require": {
                 "php": ">=8.1",
@@ -12957,7 +12951,6 @@
                 "symfony/thanks": "^1.2",
                 "symfony/var-dumper": "^6.0"
             },
-            "default-branch": true,
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -12993,11 +12986,10 @@
                 "resource",
                 "symfony"
             ],
-            "support": {
-                "source": "https://github.com/DixieFramework/ResourceBundle/tree/main",
-                "issues": "https://github.com/DixieFramework/ResourceBundle/issues"
-            },
-            "time": "2023-09-13T21:15:55+00:00"
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "talav/settings-bundle",

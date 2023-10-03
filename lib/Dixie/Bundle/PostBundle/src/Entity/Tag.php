@@ -14,7 +14,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TagRepository::class)]
-#[ORM\Table('talav_tag')]
+#[ORM\Table('tag')]
 #[UniqueEntity('title')]
 #[UniqueEntity('slug')]
 #[Vich\Uploadable]

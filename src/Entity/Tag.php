@@ -24,7 +24,7 @@ use Talav\Component\User\Model\CreatedBy;
 use Talav\Component\User\Model\UserInterface;
 
 #[Entity]
-#[Table(name: 'tag')]
+#[Table(name: 'tags')]
 #[ApiResource(
     collectionOperations: [
         'get' => [
