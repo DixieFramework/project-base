@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Talav\UserBundle\Form;
 
-use Application\Authentication\Command\RequestLoginLinkCommand;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Talav\UserBundle\Message\Command\RequestLoginLinkCommand;
 
 final class RequestLoginLinkForm extends AbstractType
 {

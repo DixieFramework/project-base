@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale | default('fr') }}" class="dark">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="{#{ asset(talav_web.application.icon_path) }#}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Connexion{% endblock %} | {#{ talav_web.application.name }#}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+
+    <twig:block name="assets">
+        {{ encore_entry_script_tags('app') }}
+        {{ encore_entry_link_tags('app') }}
+    </twig:block>
+</head>
+<body class="min-h-screen flex items-center">
+    <twig:WebFlashMessage />
+    <div aria-hidden="true" class="fixed right-0 scale-y-[2.5] rotate-45 top-0 w-28 h-96 blur-[5rem] rounded-full bg-[#D6ADFF]/30 dark:bg-[#31ABF0]/20"></div>
+
+    <twig:block name="body">
+        <div class="relative ml-auto container px-12 sm:px-0 mx-auto">
+            <div class="mx-auto h-full md:w-10/12 lg:w-5/12">
+                <div class="m-auto  py-12  sm:p-12 xl:w-10/12 2xl:w-9/12">
+                   <twig:block name="header">
+                       <div class="space-y-4 xl:p-2 2xl:p-6">
+                           <a href="{{ path('homepage') }}">
+                               <img src="{{ asset('images/logo/logo-owner-32x32.png') }}" class="w-full" alt="devscast logo" />
+                           </a>
+                       </div>
+                   </twig:block>
+
+                    <twig:block name="content"></twig:block>
+
+                    <twig:block name="footer">
+                        <div class="border-t mt-12 border-t-bdr pt-12 text-fg">
+                            <div class="space-x-4 text-center text-sm">
+                                <span class="font-light hover:text-fg-heading2">
+                                    &copy; {#{ devscast_dashlite.application.copyrights }#}{{ app_name}} 2019 - {{ 'now' | date('Y') }}
+                                </span>
+                            </div>
+                        </div>
+                    </twig:block>
+                </div>
+            </div>
+        </div>
+    </twig:block>
+</body>
+</html>

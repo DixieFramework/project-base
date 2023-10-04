@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Talav\UserBundle\Controller;
 
-use Application\Authentication\Command\RequestLoginLinkCommand;
+use Talav\CoreBundle\Traits\CommandBusAwareDispatchTrait;
+use Talav\UserBundle\Message\Command\RequestLoginLinkCommand;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
@@ -13,15 +14,12 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Talav\CoreBundle\Controller\AbstractController;
 use Talav\UserBundle\Form\RequestLoginLinkForm;
 
-/**
- * Class LoginLinkController.
- *
- * @author bernard-ng <bernard@devscast.tech>
- */
 #[AsController]
 #[Route('/login/link', name: 'auth_login_link_')]
 final class LoginLinkController extends AbstractController
 {
+	use CommandBusAwareDispatchTrait;
+
     #[Route('/request', name: 'request', methods: ['GET', 'POST'])]
     public function request(Request $request): Response
     {
@@ -36,15 +34,16 @@ final class LoginLinkController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $this->dispatchSync($command);
-                $this->addSuccessFlash(
+                $this->successTrans(
                     id: 'authentication.flashes.login_link_requested_successfully',
                     domain: 'authentication'
                 );
 
-                return $this->redirectSeeOther('auth_login');
+                return $this->redirectSeeOther('talav_user_login');
             } catch (AuthenticationException) {
                 $this->addSomethingWentWrongFlash();
             } catch (\Throwable $e) {
+				dd($e);
                 $this->addSafeMessageExceptionFlash($e);
             }
 
@@ -52,7 +51,7 @@ final class LoginLinkController extends AbstractController
         }
 
         return $this->render(
-            view: '@app/domain/authentication/login_link.html.twig',
+            view: '@TalavUser/login_link/login_link.html.twig',
             parameters: [
                 'form' => $form,
             ],

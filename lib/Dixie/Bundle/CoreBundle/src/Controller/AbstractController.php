@@ -174,6 +174,16 @@ abstract class AbstractController extends BaseController
         return $this->getUser()?->getUserIdentifier();
     }
 
+	protected function redirectSeeOther(string $route, array $params = []): RedirectResponse
+	{
+		return $this->redirectToRoute($route, $params, Response::HTTP_SEE_OTHER);
+	}
+
+	protected function createUnprocessableEntityResponse(): Response
+	{
+		return new Response(status: Response::HTTP_UNPROCESSABLE_ENTITY);
+	}
+
     /**
      * Display a message, if not empty; and redirect to the home page.
      *

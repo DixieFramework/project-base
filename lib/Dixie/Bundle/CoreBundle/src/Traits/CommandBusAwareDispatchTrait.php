@@ -2,17 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Devscast\Bundle\DddBundle\Infrastructure\Symfony\Messenger;
+namespace Talav\CoreBundle\Traits;
 
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 
-/**
- * trait CommandBusAwareDispatchTrait.
- *
- * @author bernard-ng <bernard@devscast.tech>
- */
 trait CommandBusAwareDispatchTrait
 {
     /**

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Talav\WebBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -19,12 +21,34 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('talav_web');
+	    $tree = new TreeBuilder('talav_web');
+	    $root = $tree->getRootNode();
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
 
-        return $treeBuilder;
+	    $this->addApplicationSection($root);
+
+	    return $tree;
+    }
+
+	private function addApplicationSection(ArrayNodeDefinition|NodeDefinition $root): void
+    {
+        $root
+            ->children()
+                ->arrayNode('application')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('name')->defaultValue('Devscast Dashboard')->end()
+                        ->scalarNode('title')->defaultValue('devscast.org')->end()
+                        ->scalarNode('logo_path')->isRequired()->end()
+                        ->scalarNode('icon_path')->isRequired()->end()
+                        ->scalarNode('version')->defaultValue('1.0.0')->end()
+                        ->scalarNode('copyrights')->defaultValue('')->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
     }
 }
