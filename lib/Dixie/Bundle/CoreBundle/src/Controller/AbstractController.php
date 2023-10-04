@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Talav\CoreBundle\Controller;
 
+use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Talav\Component\User\Model\UserInterface;
 use Talav\CoreBundle\Enums\FlashType;
 use Talav\CoreBundle\Form\FormHelper;
@@ -94,7 +98,17 @@ abstract class AbstractController extends BaseController
     public static function getSubscribedServices(): array
     {
         return \array_merge(parent::getSubscribedServices(), [
-            TranslatorInterface::class,
+            'translator' => '?'.TranslatorInterface::class,
+            TranslatorInterface::class => '?'.TranslatorInterface::class,
+            'validator' => '?'.ValidatorInterface::class,
+            ValidatorInterface::class => '?'.ValidatorInterface::class,
+            'kernel' => '?'.KernelInterface::class,
+            KernelInterface::class => '?'.KernelInterface::class,
+            'event_dispatcher' => '?'.EventDispatcherInterface::class,
+            EventDispatcherInterface::class => '?'.EventDispatcherInterface::class,
+            'messenger.default_bus' => '?' . MessageBusInterface::class,
+            MessageBusInterface::class => '?' . MessageBusInterface::class,
+            //'knp_paginator' => '?' . PaginatorInterface::class,
         ]);
     }
 
@@ -110,6 +124,32 @@ abstract class AbstractController extends BaseController
 
         return $this->translator;
     }
+
+    public function getCommandBus(): MessageBusInterface
+    {
+        return $this->container->get('messenger.default_bus');
+    }
+
+    protected function dispatchEvent(object $event): object
+    {
+        return $this->container->get('event_dispatcher')->dispatch($event);
+    }
+
+    protected function getCurrentRequest(): Request
+    {
+        $request = $this->getRequestStack()->getCurrentRequest();
+
+        if (null === $request) {
+            throw new \RuntimeException("unable to get the current request");
+        }
+
+        return $request;
+    }
+
+//    protected function getPaginator(): PaginatorInterface
+//    {
+//        return $this->container->get('knp_paginator');
+//    }
 
     /**
      * Gets the connected user e-mail.

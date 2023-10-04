@@ -108,6 +108,8 @@ profile:
     success: <b>%username%</b>, votre profil a été mis à jour avec succès.
     failure: Impossible de trouver l'utilisateur actuel.
     submit: Submit
+  view:
+      title: Viewing %username%'s Profile
 
 registration:
   agreeTerms:

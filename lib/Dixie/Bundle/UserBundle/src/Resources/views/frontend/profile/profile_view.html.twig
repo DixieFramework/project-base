@@ -1,5 +1,9 @@
 {% extends '@TalavUser/frontend/profile/base.html.twig' %}
-
+{# parameters #}
+{%- set title = 'profile.view.title' -%}
+{%- set title_domain = 'TalavUserBundle' -%}
+{%- set title_icon = 'user' -%}
+{%- set title_parameters = {'%username%': user.username} -%}
 {#{% block container_class 'mt-n4' %}#}
 {% block container_class 'container' %}
 {%- block titre '' -%}

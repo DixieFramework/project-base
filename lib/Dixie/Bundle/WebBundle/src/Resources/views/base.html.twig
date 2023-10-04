@@ -34,7 +34,7 @@ _______     __  _   _ _____ _____ _    _ _______
     <meta http-equiv="Content-Language" content="fr">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{% apply spaceless %}{%- block meta_title -%}{%- endblock -%}{% endapply %} - By Night</title>
+    <title>{% apply spaceless %}{%- block meta_title -%}{{ page_title }}{%- endblock -%}{% endapply %}</title>
     <meta name="title" content="{{- block('meta_title') -}}">
     <meta name="keywords" content="{% block meta_full_keywords %}{% block meta_keywords %}{% endblock %}aujourd'hui,ce,soir,soiree,sortie,concert,spectacle,musique,discotheque,boite,de,nuit{% endblock %}">
     <meta name="description" content="{% block meta_description %}By Night vous fait découvrir tous les événements du moment !{% endblock %}">

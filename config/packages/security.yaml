@@ -24,17 +24,28 @@ security:
                 - Talav\UserBundle\Security\UserFormAuthenticator
 #            entry_point: form_login
             switch_user: true
+
             form_login:
+                post_only: true
                 login_path: talav_user_login
                 check_path: talav_user_login
-                enable_csrf: true
 #                default_target_path: groshy_frontend_dashboard_dashboard
                 default_target_path: home_page
                 username_parameter: talav_type_user_user_login[username]
                 password_parameter: talav_type_user_user_login[password]
+                enable_csrf: true
+                csrf_parameter: _token
+
+            login_link:
+                check_route: authentication_login_link_check
+                signature_properties: [ id, email ]
+                max_uses: 3
+                lifetime: 600
+
             logout:
                 path: talav_user_logout
                 target: talav_user_login
+
             remember_me:
                 secret:   '%kernel.secret%'
                 lifetime: 2592000
