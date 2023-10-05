@@ -59,7 +59,7 @@
                 </div>
             </button>
             <ul class="dropdown-menu dropdown-menu-end my-1" style="width: 14rem;">
-                <li>{{ dropdownItem(path('user_profile_view', {'username': app.user.username|slug}), 'profile.view.title', 'user fa-fw me-2', 'TalavUserBundle') }}</li>
+                <li>{{ dropdownItem(path('user_profile_view', {'id':app.user.profile.id, 'username':app.user.username|slug}), 'profile.view.title', 'user fa-fw me-2', 'TalavUserBundle') }}</li>
                 <li>{{ dropdownItem(path('user_profile_edit'), 'profile.edit.title', 'user-gear fa-fw me-2', 'TalavUserBundle') }}</li>
                 <li>{{ dropdownItem(path('user_profile_change_password'), 'profile.change_password.title', 'unlock fa-fw me-2', 'TalavUserBundle') }}</li>
                 <li class="dropdown-divider"></li>

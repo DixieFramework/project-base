@@ -37,7 +37,7 @@ use Talav\UserBundle\Model\UserInterface;
 //#[UniqueEntity(fields: ['username'], message: 'username.already_used')]
 //#[ORM\EntityListeners([UserEmailEntityListener::class, UserEntityListener::class])]
 #[ORM\MappedSuperclass]
-abstract class User extends AbstractUser implements UserInterface
+abstract class User extends AbstractUser implements UserInterface, \Serializable
 {
     use ResourceTrait;
     use HasRoles, HasRelations;
@@ -496,5 +496,41 @@ abstract class User extends AbstractUser implements UserInterface
     public function setState(string $state): void
     {
         $this->state = $state;
+    }
+
+
+    /**
+     * Serializes the user just with the id, as it is enough.
+     *
+     * @see http://php.net/manual/en/serializable.serialize.php
+     *
+     * @return string The string representation of the object or null
+     */
+    public function serialize(): string
+    {
+        return \serialize(
+            [
+                $this->id,
+                $this->password,
+                $this->salt,
+                $this->username,
+                $this->usernameCanonical,
+                $this->enabled,
+            ]
+        );
+    }
+
+    /**
+     * Constructs the object.
+     *
+     * @see http://php.net/manual/en/serializable.unserialize.php
+     *
+     * @param string $serialized The string representation of the object
+     */
+    public function unserialize($serialized): void
+    {
+        list(
+            $this->id, $this->password, $this->salt, $this->username, $this->usernameCanonical, $this->enabled
+            ) = \unserialize($serialized);
     }
 }

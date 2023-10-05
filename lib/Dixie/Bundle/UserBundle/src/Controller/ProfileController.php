@@ -110,8 +110,9 @@ class ProfileController extends AbstractController
 
 //    #[Route(path: '/view/{username}', name: 'user_profile_show', requirements: ['username' => Requirement::ASCII_SLUG])]
 //    #[ParamConverter('user', class: UserInterface::class, options: ['mapping' => ['username' => 'username']])]
-    #[Route(path: '/view/{username}', name: 'user_profile_view', requirements: ['username' => Requirement::ASCII_SLUG], defaults: ['username' => null])]
-    public function show(string $username = null): Response
+    #[Route(path: '/{id}/{username}', name: 'user_profile_view', requirements: ['username' => Requirement::ASCII_SLUG], defaults: ['username' => null])]
+    #[ParamConverter('user', class: UserInterface::class, options: ['mapping' => ['username' => 'username']])]
+    public function show(int $id, string $username = null): Response
     {
         $currentUser = $this->getUser();
         if (!$currentUser) {
