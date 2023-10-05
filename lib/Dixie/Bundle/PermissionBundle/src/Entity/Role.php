@@ -10,7 +10,7 @@ use Talav\CoreBundle\Entity\Traits\HasRelations;
 use Doctrine\Common\Collections\{Collection, ArrayCollection};
 use Talav\Component\Resource\Model\ResourceTrait;
 
-class RoleInterface implements RoleInterface
+class Role implements RoleInterface
 {
     use ResourceTrait;
     use HasRelations;
