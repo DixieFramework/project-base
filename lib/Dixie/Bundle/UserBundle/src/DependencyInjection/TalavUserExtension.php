@@ -11,18 +11,23 @@ use Talav\Component\User\Canonicalizer\CanonicalizerInterface;
 use Talav\Component\User\Util\PasswordUpdaterInterface;
 use Talav\Component\User\Util\TokenGeneratorInterface;
 use Talav\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
+use Talav\ResourceBundle\DependencyInjection\PrependBundleConfigTrait;
 use Talav\UserBundle\EventSubscriber\WelcomeEmailSubscriber;
 use Talav\UserBundle\Mailer\UserMailer;
 use Talav\UserBundle\Mailer\UserMailerInterface;
 
 class TalavUserExtension extends AbstractResourceExtension
 {
+	use PrependBundleConfigTrait;
+
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        // Load services.
+	    $this->prependBundleConfigFiles($container);
+
+	    // Load services.
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 

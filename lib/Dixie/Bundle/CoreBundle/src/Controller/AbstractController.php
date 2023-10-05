@@ -109,6 +109,7 @@ abstract class AbstractController extends BaseController
             'messenger.default_bus' => '?' . MessageBusInterface::class,
             MessageBusInterface::class => '?' . MessageBusInterface::class,
             //'knp_paginator' => '?' . PaginatorInterface::class,
+	        'logger' => '?'.LoggerInterface::class
         ]);
     }
 
@@ -130,10 +131,15 @@ abstract class AbstractController extends BaseController
         return $this->container->get('messenger.default_bus');
     }
 
-    protected function dispatchEvent(object $event): object
-    {
-        return $this->container->get('event_dispatcher')->dispatch($event);
-    }
+	protected function dispatchEvent(object $event): object
+	{
+		return $this->container->get('event_dispatcher')->dispatch($event);
+	}
+
+	protected function getLogger(): LoggerInterface
+	{
+		return $this->container->get('logger');
+	}
 
     protected function getCurrentRequest(): Request
     {

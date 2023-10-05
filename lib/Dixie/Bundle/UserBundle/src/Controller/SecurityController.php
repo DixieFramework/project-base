@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Talav\Component\User\Manager\UserManagerInterface;
+use Talav\Component\User\ValueObject\Roles;
 use Talav\CoreBundle\Controller\AbstractController;
 use Talav\CoreBundle\Form\User\UserLoginType;
 use Talav\CoreBundle\Interfaces\RoleInterface;
@@ -36,6 +37,9 @@ class SecurityController extends AbstractController
     #[Route(path: '/login', name: 'app_login')]
     public function login(Request $request, #[CurrentUser] ?UserInterface $user, AuthenticationUtils $utils): Response
     {
+//		$edit = $this->userManager->findUserByUsername('user');
+//		$edit->setRoles(['ROLE_USER']);
+//		$this->userManager->update($edit, true);
         if ($user instanceof UserInterface) {
             return $this->redirectToHomePage();
         }

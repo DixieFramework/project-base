@@ -4,13 +4,8 @@ declare(strict_types=1);
 
 namespace Talav\Component\User\Exception;
 
-use Devscast\Bundle\DddBundle\Domain\Exception\SafeMessageException;
+use Talav\Component\Resource\Exception\SafeMessageException;
 
-/**
- * class InvalidResetLoginAttemptsTokenException.
- *
- * @author bernard-ng <bernard@devscast.tech>
- */
 final class InvalidResetLoginAttemptsTokenException extends SafeMessageException
 {
     protected string $messageDomain = 'authentication';
