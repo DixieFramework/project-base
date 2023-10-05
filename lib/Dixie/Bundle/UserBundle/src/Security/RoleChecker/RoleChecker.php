@@ -6,8 +6,8 @@ namespace Talav\UserBundle\Security\RoleChecker;
 
 use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
-use Symfony\Component\Security\Core\Role\RoleInterface;
 use Talav\Component\User\Model\UserInterface;
+use Talav\PermissionBundle\Entity\RoleInterface;
 
 /**
  * Class RoleChecker
@@ -42,7 +42,7 @@ class RoleChecker implements RoleCheckerInterface
      * Checks that specified user has necessary role.
      *
      * @param UserInterface                 $user A checked User entity instance.
-     * @param string|RoleInterface $role A role name or Role instance.
+     * @param string|RoleInterface          $role A role name or Role instance.
      *
      * @return boolean
      */
@@ -82,7 +82,7 @@ class RoleChecker implements RoleCheckerInterface
         return array_map(function (RoleInterface $role) {
             return $role->getRole();
         }, $this->hierarchy->getReachableRoles(array_map(function ($role) {
-            return new Role($role);
+            return new \Talav\PermissionBundle\Entity\Role($role);
         }, $user->getRoles())));
     }
 

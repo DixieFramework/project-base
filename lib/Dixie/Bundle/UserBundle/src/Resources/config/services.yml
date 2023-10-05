@@ -63,6 +63,26 @@ services:
             - '@app.manager.user_oauth'
         public: true
 
+    talav.user.security.user_checker_observer:
+        class: Talav\UserBundle\Security\UserChecker\UserCheckerObserver
+
+    Talav\UserBundle\Security\UserChecker\UserCheckerObserver:
+        alias: 'talav.user.security.user_checker_observer'
+
+    Talav\UserBundle\Security\UserChecker\ConfirmedUserChecker:
+        class: Talav\UserBundle\Security\UserChecker\ConfirmedUserChecker
+        tags:
+            - { name: talav.user.security.user_checker }
+            - { name: container.preload, class: Talav\UserBundle\Security\UserChecker\ConfirmedUserChecker }
+
+    Talav\UserBundle\Security\UserChecker\LoginAttemptsUserChecker:
+        class: Talav\UserBundle\Security\UserChecker\LoginAttemptsUserChecker
+        arguments:
+
+        tags:
+            - { name: talav.user.security.user_checker }
+            - { name: container.preload, class: Talav\UserBundle\Security\UserChecker\ConfirmedUserChecker }
+
     Talav\Component\User\Message\CommandHandler\:
         resource: '%kernel.project_dir%/vendor/talav/user/src/Message/CommandHandler/*'
 

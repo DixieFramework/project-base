@@ -38,6 +38,7 @@ abstract class AbstractUser implements UserInterface
     protected ?DateTimeInterface $lastLogin = null;
 
     protected ?string $loginAttemptsResetToken = null;
+
     protected ?string $passwordResetToken = null;
 
     protected ?DateTimeInterface $passwordRequestedAt = null;
@@ -45,6 +46,7 @@ abstract class AbstractUser implements UserInterface
     protected ?string $confirmationToken = null;
 
     protected bool $verified = false;
+
     protected iterable $arrRoles = [];
 
     protected ?string $email = null;

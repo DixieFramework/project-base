@@ -25,9 +25,9 @@ final class LoginAttemptService
     {
         $this->userLoginAttemptRepository->save(LoginAttempt::createFor($user));
 
-        if (null === $user->getResetLoginAttemptsToken()) {
+        if (null === $user->getLoginAttemptsResetToken()) {
             $token = $this->tokenGenerator->generateToken();
-            $user->setResetLoginAttemptsToken($token);
+            $user->setLoginAttemptsResetToken($token);
             $this->userRepository->save($user);
         }
     }
@@ -36,8 +36,8 @@ final class LoginAttemptService
     {
         $this->userLoginAttemptRepository->deleteAttemptsFor($user);
 
-        if (null !== $user->getResetLoginAttemptsToken()) {
-            $user->setResetLoginAttemptsToken(null);
+        if (null !== $user->getLoginAttemptsResetToken()) {
+            $user->setLoginAttemptsResetToken(null);
             $this->userRepository->save($user);
         }
     }

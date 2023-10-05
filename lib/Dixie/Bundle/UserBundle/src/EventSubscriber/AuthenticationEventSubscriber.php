@@ -9,7 +9,12 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Talav\Component\User\Model\UserInterface;
 use Talav\CoreBundle\Helper\MailerHelper;
+use Talav\UserBundle\Message\Command\RegisterLoginAttemptCommand;
+use Talav\UserBundle\Message\Command\RegisterLoginIpAddressCommand;
+use Talav\UserBundle\Message\Event\BadPasswordSubmittedEvent;
+use Talav\UserBundle\Message\Event\LoginAttemptsLimitReachedEvent;
 use Talav\UserBundle\Message\Event\LoginLinkRequestedEvent;
+use Talav\UserBundle\Message\Event\LoginWithAnotherIpAddressEvent;
 
 final class AuthenticationEventSubscriber implements EventSubscriberInterface
 {
@@ -25,10 +30,10 @@ final class AuthenticationEventSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-//            InteractiveLoginEvent::class => 'onInteractiveLogin',
-//            BadPasswordSubmittedEvent::class => 'onBadPasswordSubmitted',
-//            LoginWithAnotherIpAddressEvent::class => 'onLoginWithAnotherIpAddress',
-//            LoginAttemptsLimitReachedEvent::class => 'onLoginAttemptsLimitReached',
+            InteractiveLoginEvent::class => 'onInteractiveLogin',
+            BadPasswordSubmittedEvent::class => 'onBadPasswordSubmitted',
+            LoginWithAnotherIpAddressEvent::class => 'onLoginWithAnotherIpAddress',
+            LoginAttemptsLimitReachedEvent::class => 'onLoginAttemptsLimitReached',
             LoginLinkRequestedEvent::class => 'onLoginLinkRequested',
 //            ResetPasswordConfirmedEvent::class => 'onResetPasswordConfirmed',
 //            ResetPasswordRequestedEvent::class => 'onResetPasswordRequested',
@@ -40,29 +45,29 @@ final class AuthenticationEventSubscriber implements EventSubscriberInterface
         ];
     }
 
-//    public function onInteractiveLogin(InteractiveLoginEvent $event): void
-//    {
-//        /** @var UserInterface $user */
-//        $user = $event->getAuthenticationToken()->getUser();
-//        $ip = (string) $event->getRequest()->getClientIp();
-//        $this->bus->dispatch(new RegisterLoginIpAddressCommand($user, $ip));
-//    }
-//
-//    public function onBadPasswordSubmitted(BadPasswordSubmittedEvent $event): void
-//    {
-//        $this->bus->dispatch(new RegisterLoginAttemptCommand($event->user));
-//    }
-//
-//    public function onLoginWithAnotherIpAddress(LoginWithAnotherIpAddressEvent $event): void
-//    {
-//        $this->mailer->sendNotificationEmail(
-//            $event,
-//            template: '@app/domain/authentication/mail/login_with_another_ip_address.mail.twig',
-//            subject: 'authentication.mails.subjects.login_with_another_ip_address',
-//            domain: 'authentication'
-//        );
-//    }
-//
+    public function onInteractiveLogin(InteractiveLoginEvent $event): void
+    {
+        /** @var UserInterface $user */
+        $user = $event->getAuthenticationToken()->getUser();
+        $ip = (string) $event->getRequest()->getClientIp();
+        $this->bus->dispatch(new RegisterLoginIpAddressCommand($user, $ip));
+    }
+
+    public function onBadPasswordSubmitted(BadPasswordSubmittedEvent $event): void
+    {
+        $this->bus->dispatch(new RegisterLoginAttemptCommand($event->user));
+    }
+
+    public function onLoginWithAnotherIpAddress(LoginWithAnotherIpAddressEvent $event): void
+    {
+        $this->mailer->sendNotificationEmail(
+            $event,
+            template: '@TalavUser/email/login_with_another_ip_address.mail.twig',
+            subject: 'authentication.mails.subjects.login_with_another_ip_address',
+            domain: 'TalavUserBundle'
+        );
+    }
+
 //    public function onPasswordUpdated(PasswordUpdatedEvent $event): void
 //    {
 //        $this->mailer->sendNotificationEmail(
@@ -83,15 +88,15 @@ final class AuthenticationEventSubscriber implements EventSubscriberInterface
 //        );
 //    }
 //
-//    public function onLoginAttemptsLimitReached(LoginAttemptsLimitReachedEvent $event): void
-//    {
-//        $this->mailer->sendNotificationEmail(
-//            $event,
-//            template: '@app/domain/authentication/mail/login_attempts_limit_reached.mail.twig',
-//            subject: 'authentication.mails.subjects.login_attempts_limit_reached',
-//            domain: 'authentication'
-//        );
-//    }
+    public function onLoginAttemptsLimitReached(LoginAttemptsLimitReachedEvent $event): void
+    {
+        $this->mailer->sendNotificationEmail(
+            $event,
+            template: '@TalavUser/email/login_attempts_limit_reached.mail.twig',
+            subject: 'authentication.mails.subjects.login_attempts_limit_reached',
+            domain: 'TalavUserBundle'
+        );
+    }
 
     public function onLoginLinkRequested(LoginLinkRequestedEvent $event): void
     {

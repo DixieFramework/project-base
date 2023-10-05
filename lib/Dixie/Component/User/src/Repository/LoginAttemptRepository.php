@@ -12,14 +12,14 @@ final class LoginAttemptRepository extends ResourceRepository implements LoginAt
     public function countRecentFor(UserInterface $user): int
     {
         return $this->count([
-            'owner' => $user,
+            'user' => $user,
         ]);
     }
 
     public function deleteAttemptsFor(UserInterface $user): void
     {
         $this->createQueryBuilder('a')
-            ->where('a.owner = :user')
+            ->where('a.user = :user')
             ->setParameter('user', $user)
             ->delete()
             ->getQuery()

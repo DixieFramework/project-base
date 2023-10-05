@@ -30,11 +30,14 @@ use Symfony\Component\Security\Http\HttpUtils;
 use Symfony\Component\Security\Http\ParameterBagUtils;
 use Symfony\Component\Security\Http\SecurityRequestAttributes;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Service\Attribute\Required;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Talav\Component\User\Model\UserInterface;
+use Talav\Component\User\Repository\UserRepositoryInterface;
 use Talav\CoreBundle\Controller\AbstractController;
 use Talav\CoreBundle\Utils\Type;
+use Talav\UserBundle\Message\Event\BadPasswordSubmittedEvent;
 
 class UserFormAuthenticator extends AbstractLoginFormAuthenticator
 {
@@ -45,14 +48,18 @@ class UserFormAuthenticator extends AbstractLoginFormAuthenticator
      */
     private const LOGIN_ROUTE = 'talav_user_login';
 
-    private $options;
+	private ?UserInterface $user = null;
+
+	private $options;
     private $httpKernel;
 
     public function __construct(
         private readonly UrlGeneratorInterface $urlGenerator,
         private readonly TranslatorInterface $translator,
+	    private readonly EventDispatcherInterface $dispatcher,
         private readonly UserAuthenticatorInterface $userAuthenticator,
         private readonly UserProviderInterface $userProvider,
+		private readonly UserRepositoryInterface $userRepository,
         private readonly HttpUtils $httpUtils,
         #[Autowire('%talav_user.login.options%')] array $options
     ) {
@@ -112,7 +119,24 @@ class UserFormAuthenticator extends AbstractLoginFormAuthenticator
 
         $request->getSession()->set(Security::LAST_USERNAME, $username);
 
-        $passport = new Passport(
+	    $passport = new Passport(
+		    userBadge: new UserBadge(
+			    userIdentifier: $username,
+			    userLoader: fn (string $identifier) => $this->userRepository->findByUsernameOrEmail($identifier)
+		    ),
+		    credentials: new PasswordCredentials($password),
+		    badges: [
+			    new CsrfTokenBadge(csrfTokenId: 'authenticate', csrfToken: $csrfToken),
+			    new RememberMeBadge(),
+		    ]
+	    );
+
+	    $this->user = $this->createToken($passport, 'main')->getUser();
+
+		return $passport;
+
+
+	    $passport = new Passport(
             new UserBadge($credentials['username'], $this->userProvider->loadUserByIdentifier(...)),
             new PasswordCredentials($credentials['password']),
             [new RememberMeBadge()]
@@ -126,7 +150,9 @@ class UserFormAuthenticator extends AbstractLoginFormAuthenticator
             $passport->addBadge(new PasswordUpgradeBadge($credentials['password'], $this->userProvider));
         }
 
-        return $passport;
+	    $this->user = $this->createToken($passport, 'main')->getUser();
+
+	    return $passport;
 //        return new Passport(
 //            new UserBadge($username),
 //            new PasswordCredentials($password),
@@ -170,6 +196,10 @@ class UserFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
+	    if ($this->user instanceof UserInterface && $exception instanceof BadCredentialsException) {
+		    $this->dispatcher->dispatch(new BadPasswordSubmittedEvent($this->user));
+	    }
+
         return parent::onAuthenticationFailure($request, $exception);
     }
 

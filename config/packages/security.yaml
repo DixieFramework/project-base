@@ -20,6 +20,7 @@ security:
             provider: user_provider
             pattern: ^/
             entry_point: Talav\UserBundle\Security\UserFormAuthenticator
+            user_checker: Talav\UserBundle\Security\UserChecker\UserCheckerObserver
             custom_authenticators:
                 - Talav\UserBundle\Security\UserFormAuthenticator
 #            entry_point: form_login

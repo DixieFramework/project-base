@@ -12,24 +12,6 @@ use Talav\ProfileBundle\Entity\Friendship;
 
 class FriendshipRepository extends ResourceRepository
 {
-    public function save(Friendship $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
-
-    public function remove(Friendship $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
-
     public function getFriendshipCount(UserInterface $user): int
     {
         $qb = $this->createQueryBuilder('f');

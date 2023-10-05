@@ -16,5 +16,7 @@ trait UserAwareTrait
     public function setUser(?UserInterface $user): self
     {
         $this->user = $user;
+
+		return $this;
     }
 }

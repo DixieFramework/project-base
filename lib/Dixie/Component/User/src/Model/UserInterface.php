@@ -56,6 +56,10 @@ interface UserInterface extends SymfonyUserInterface, PasswordAuthenticatedUserI
 
     public function setConfirmationToken(?string $confirmationToken): self;
 
+	public function isVerified(): bool;
+
+	public function setVerified(bool $verified): void;
+
     /**
      * Never use this to check if this user has access to anything!
      *

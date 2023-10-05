@@ -71,34 +71,4 @@ class CommentRepository extends ServiceEntityRepository
             ->orderBy('c.createdAt', Criteria::DESC)
             ;
     }
-
-    /**
-     * Save comment.
-     *
-     * @param Comment $entity Comment entity
-     * @param bool    $flush  If perform flush
-     */
-    public function save(Comment $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
-
-    /**
-     * Delete comment.
-     *
-     * @param Comment $entity Comment entity
-     * @param bool    $flush  If perform flush
-     */
-    public function delete(Comment $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
 }
