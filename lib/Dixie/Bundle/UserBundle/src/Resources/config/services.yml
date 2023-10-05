@@ -20,7 +20,7 @@ services:
         resource: '../../*'
         exclude:
             - '../../DependencyInjection/'
-            - '../../Entity/'
+#            - '../../Entity/'
             - '../../Event'
             - '../../Migrations'
             - '../../Tests/'
@@ -105,3 +105,19 @@ services:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
 #    Symfony\Component\Workflow\WorkflowInterface: '@state_machine.abstract'
+
+    SymfonyCasts\Bundle\ResetPassword\Persistence\ResetPasswordRequestRepositoryInterface: '@Talav\UserBundle\Repository\ResetPasswordRequestRepository'
+
+    # ================================================================================
+    # REPOSITORIES
+    # ================================================================================
+
+    Talav\UserBundle\Repository\ResetPasswordTokenRepository:
+        class:     Talav\UserBundle\Repository\ResetPasswordTokenRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['Talav\UserBundle\Entity\ResetPasswordToken']
+
+    Talav\UserBundle\Repository\ResetPasswordRequestRepository:
+        class:     Talav\UserBundle\Repository\ResetPasswordRequestRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['Talav\UserBundle\Entity\ResetPasswordRequest']
