@@ -7,7 +7,7 @@ namespace Talav\PermissionBundle\Repository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 use Talav\Component\Resource\Repository\ResourceRepository;
-use Talav\PermissionBundle\Entity\Role;
+use Talav\PermissionBundle\Entity\RoleInterface;
 
 /**
  * Class RoleRepository
@@ -16,7 +16,7 @@ use Talav\PermissionBundle\Entity\Role;
 class RoleRepository extends ResourceRepository implements RoleRepositoryInterface
 {
 	/**
-	 * @return Role[]
+	 * @return RoleInterface[]
 	 */
 	public function findAll()
 	{

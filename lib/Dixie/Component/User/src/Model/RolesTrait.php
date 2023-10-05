@@ -4,80 +4,185 @@ declare(strict_types=1);
 
 namespace Talav\Component\User\Model;
 
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Talav\PermissionBundle\Entity\RoleInterface;
 
 trait RolesTrait
 {
-	/**
-	 * @var string[]
-	 */
-	protected $roles = [];
+    /** @var RoleInterface[] */
+    protected Collection $roles;
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function hasRole($role)
-	{
-		return \in_array(strtoupper($role), $this->getRoles(), true);
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function getRoles(): array
+    {
+        return $this->roles->map(fn (RoleInterface $role): string => $role->getName())->getValues();
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function setRoles(array $roles)
-	{
-		$this->roles = [];
+    /**
+     * {@inheritdoc}
+     */
+    public function getRolesCollection()
+    {
+        return $this->roles;
+    }
 
-		foreach ($roles as $role) {
-			$this->addRole($role);
-		}
+    /**
+     * {@inheritdoc}
+     */
+    public function getRole($roleName)
+    {
+        /** @var RoleInterface $item */
+        foreach ($this->roles as $item) {
+            if ($roleName == $item->getName()) {
+                return $item;
+            }
+        }
 
-		return $this;
-	}
+        return null;
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function addRole($role)
-	{
-		$role = strtoupper($role);
+    /**
+     * {@inheritdoc}
+     */
+    public function hasRole($role)
+    {
+        if ($role instanceof RoleInterface) {
+            $roleName = $role->getName();
+        } elseif (is_string($role)) {
+            $roleName = $role;
+        } else {
+            throw new \InvalidArgumentException(
+                sprintf('$role must be an instance of %s or a string', RoleInterface::class)
+            );
+        }
 
-		if (!\in_array($role, $this->roles, true) && !\in_array($role, ['ROLE_USER', 'ROLE_ORGANIZATION_USER'])) {
-			$this->roles[] = $role;
-		}
+        return (bool) $this->getRole($roleName);
+    }
 
-		return $this;
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function addRole(RoleInterface $role)
+    {
+        if (!$this->hasRole($role)) {
+            $this->roles->add($role);
+        }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function removeRole($role)
-	{
-		if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
-			unset($this->roles[$key]);
-			$this->roles = array_values($this->roles);
-		}
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function removeRole($role)
+    {
+        if ($role instanceof RoleInterface) {
+            $roleObject = $role;
+        } elseif (is_string($role)) {
+            $roleObject = $this->getRole($role);
+        } else {
+            throw new \InvalidArgumentException(
+                sprintf('$role must be an instance of %s or a string', RoleInterface::class)
+            );
+        }
+        if ($roleObject) {
+            $this->roles->removeElement($roleObject);
+        }
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getRoles()
-	{
-		$roles = $this->roles;
+    /**
+     * {@inheritdoc}
+     */
+    public function setRoles($roles)
+    {
+        if (!$roles instanceof Collection && !is_array($roles)) {
+            throw new \InvalidArgumentException(
+                '$roles must be an instance of Doctrine\Common\Collections\Collection or an array'
+            );
+        }
 
-		// we need to make sure to have at least one role
-		if ($this instanceof UserInterface && !\in_array('ROLE_USER', $roles, true)) {
-			$roles[] = 'ROLE_USER';
-		}
+        $this->roles->clear();
 
-		if ($this instanceof OrganizationUserInterface && !\in_array('ROLE_ORGANIZATION_USER', $roles, true)) {
-			$roles[] = 'ROLE_ORGANIZATION_USER';
-		}
+        foreach ($roles as $role) {
+            $this->addRole($role);
+        }
 
-		return $roles;
-	}
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setRolesCollection(Collection $collection)
+    {
+        if (!$collection instanceof Collection) {
+            throw new \InvalidArgumentException(
+                '$collection must be an instance of Doctrine\Common\Collections\Collection'
+            );
+        }
+        $this->roles = $collection;
+
+        return $this;
+    }
+
+    // ---
+
+//    public function hasRole($role)
+//    {
+//        if ($this->findUserRole($role)) {
+//            return true;
+//        }
+//
+//        return false;
+//    }
+//
+//    public function addRole($role)
+//    {
+//        if (!$role instanceof RoleInterface) {
+//            throw new \Exception('addRole takes a Role object as the parameter');
+//        }
+//
+//        if (!$this->hasRole($role->getName())) {
+//            $this->roles[] = $role;
+//        }
+//
+//        return $this;
+//    }
+//
+//    public function removeRole($role)
+//    {
+//        $roleElement = $this->findUserRole($role);
+//        if ($roleElement) {
+//            $this->roles->removeElement($roleElement);
+//        }
+//    }
+//
+//    public function findUserRole($role)
+//    {
+//        /** @var RoleInterface $roleItem */
+//        foreach ($this->getRoles() as $roleItem) {
+//            if ($role == $roleItem->getName()) {
+//                return $roleItem;
+//            }
+//        }
+//
+//        return;
+//    }
+
+    // ---
+
+    /**
+     * Return roles if they exist
+     *
+     * @param array $roles roles
+     *
+     * @return bool
+     */
+    private function hasRoles(array $roles)
+    {
+        return !$this->roles->isEmpty() && !empty(array_intersect($roles, array_map(function ($role) { return $role->getName(); }, $this->roles->toArray())));
+    }
 }

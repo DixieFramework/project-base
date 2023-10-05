@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Talav\PermissionBundle\Traits;
 
 use JetBrains\PhpStorm\Pure;
-use Talav\PermissionBundle\Entity\Role;
+use Talav\PermissionBundle\Entity\RoleInterface;
 
 trait HasRoles
 {

@@ -9,7 +9,7 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Talav\Component\Resource\Manager\ResourceManager;
 use Talav\PermissionBundle\Entity\Permission;
-use Talav\PermissionBundle\Entity\Role;
+use Talav\PermissionBundle\Entity\RoleInterface;
 use Talav\PermissionBundle\Repository\PermissionRepository;
 use Talav\PermissionBundle\Repository\RoleRepository;
 
@@ -55,7 +55,7 @@ final class Configuration implements ConfigurationInterface
                                 ->arrayNode('classes')
                                     ->addDefaultsIfNotSet()
                                     ->children()
-                                        ->scalarNode('model')->defaultValue(Role::class)->end()
+                                        ->scalarNode('model')->defaultValue(RoleInterface::class)->end()
                                         ->scalarNode('repository')->defaultValue(RoleRepository::class)->end()
                                         ->scalarNode('manager')->defaultValue(ResourceManager::class)->end()
                                     ->end()
