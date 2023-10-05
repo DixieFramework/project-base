@@ -83,6 +83,7 @@ _______     __  _   _ _____ _____ _    _ _______
         {{- asset_css('css/style.css') }}
 {#        {{- asset_css('css/theme.css') }}#}
     {% endblock %}
+    {{- asset_css('js/library/BeeflowAjax/css/BeeflowAjax.css') }}
     {# javascript #}
     {{- asset_js('js/application/core-theme.js') }}
 
@@ -165,7 +166,13 @@ _______     __  _   _ _____ _____ _    _ _______
 <!-- JS -->
 {{- asset_js('js/vendor/jquery/jquery.js') }}
 {#{{ encore_entry_script_tags('app') }}#}
+
+
+
 {% include "@TalavWeb/_scripts.html.twig" %}
+{{- asset_js('js/library/BeeflowAjax/js/js-url-2.3.0.min.js') }}
+{{- asset_js('js/library/BeeflowAjax/js/BeeflowAjax.js') }}
+
 {%- block js -%}{%- endblock -%}
 {# java scripts #}
 <noscript>{{ 'common.no_script_support'|trans }}</noscript>

@@ -1,11 +1,10 @@
-{% extends '@TalavWeb/base.html.twig' %}
+{% extends '@TalavWeb/layouts/default.html.twig' %}
 {# parameters #}
 {%- set title = 'index.title' -%}
-
 {%- set enabled = app.user ? app.user.enabled() : false -%}
-
 {#{%- set enabled = app.user and app.user.enabled() -%}#}
 {%- set show_navigation_search = enabled -%}
+{%- block titre  '' -%}
 {# show body #}
 {% block body -%}
     <div class="row">
@@ -30,12 +29,69 @@
                 </ul>
             </div>
 
-            <a href="" data-xhr="{{ path('talav_web_js_smallmodal') }}" class="btn btn-primary">
+            <a href="" data-xhr="{{ path('talav_web_js_smallmodal') }}" class="btn btn-primary" data-spinner="true">
+                Small modal
+            </a>
+
+            <a data-xhr="umbrella.dev/foo/bar" data-confirm="Are you sure ?" href>hehehe</a>
+
+            <a href data-xhr="{{ path('talav_web_js_smallmodal') }}" class="btn btdn-primary" data-spinner="jeejeejegheehe">
+                Launch modal
+            </a>
+
+            <a href="{{ path('talav_web_javascript_alert') }}" class="btn btn-primary ajax-link" data-spinner="true">
+                Small modal
+            </a>
+
+            <a href="{{ path('talav_web_javascript_modal') }}" class="btn btn-primary ajax-link" data-spinner="true">
                 Small modal
             </a>
         </aside>
 
         <div class="col-xl-7 col-lg-8 col-md-7 order-md-1 mb-5">
+
+            {% if enabled %}
+                    {% if false %}
+
+                        <div class="card">
+                            <!-- Card header START -->
+                            <div class="card-header">
+                                <h5 class="card-title h6 mb-0">Upload Avatar</h5>
+                            </div>
+                            <!-- Card header END -->
+
+                            <!-- Card body START -->
+                            <div class="card-body">
+                                body
+                            </div>
+                            <!-- Card body END -->
+
+                            <!-- Card Footer START -->
+                            <div class="card-footer">
+                                footer
+                            </div>
+                            <!-- Card Footer END -->
+                        </div>
+                    {% endif %}
+                    {#                {{- include('@TalavWeb/index/panel_calculation.html.twig') }}#}
+                    {#                {% if user_service.panelState %}#}
+                    {#                    {{ include('index/panel_state.html.twig') }}#}
+                    {#                {% endif %}#}
+                    {#                {% if user_service.panelMonth %}#}
+                    {#                    {{ include('index/panel_month.html.twig') }}#}
+                    {#                {% endif %}#}
+                    {#                {% if user_service.panelCatalog %}#}
+                    {#                    {{ include('index/panel_catalog.html.twig') }}#}
+                    {#                {% endif %}#}
+                    {{ include('@TalavWeb/user/user_switch.html.twig') }}
+            {% elseif (app.user) %}
+                <div class="mb-3 h-50">
+                    {{ include('@TalavWeb/index/panel_disabled.html.twig') }}
+                    {{ include('@TalavWeb/user/user_switch.html.twig') }}
+                </div>
+            {% endif %}
+
+
             <div class="card">
                 <!-- Card header START -->
                 <div class="card-header">
@@ -60,48 +116,41 @@
         </div>
     </div>
 
-    <div class="row">
-        {% if enabled %}
-            <div class="col">
-                {% if false %}
-
-                    <div class="card">
-                        <!-- Card header START -->
-                        <div class="card-header">
-                            <h5 class="card-title h6 mb-0">Upload Avatar</h5>
-                        </div>
-                        <!-- Card header END -->
-
-                        <!-- Card body START -->
-                        <div class="card-body">
-                            body
-                        </div>
-                        <!-- Card body END -->
-
-                        <!-- Card Footer START -->
-                        <div class="card-footer">
-                            footer
-                        </div>
-                        <!-- Card Footer END -->
+    <div class="modal fade" id="modal-sort" role="dialog" aria-labelledby="modal-sort-title" aria-hidden="true" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header cursor-move">
+                    <h1 class="modal-title fs-5" id="modal-sort-title">
+                    </h1>
+                </div>
+                <div class="modal-body px-4">
+                    <div class="mb-3">
+                        <label class="form-label required" for="sort-name">{{ 'list.sort_column'|trans }}</label>
                     </div>
-                {% endif %}
-{#                {{- include('@TalavWeb/index/panel_calculation.html.twig') }}#}
-{#                {% if user_service.panelState %}#}
-{#                    {{ include('index/panel_state.html.twig') }}#}
-{#                {% endif %}#}
-{#                {% if user_service.panelMonth %}#}
-{#                    {{ include('index/panel_month.html.twig') }}#}
-{#                {% endif %}#}
-{#                {% if user_service.panelCatalog %}#}
-{#                    {{ include('index/panel_catalog.html.twig') }}#}
-{#                {% endif %}#}
-                {{ include('@TalavWeb/user/user_switch.html.twig') }}
+                    <div>
+                        <span class="form-label d-block required">{{ 'list.sort_label'|trans }}</span>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="sort-order-asc" name="sort-order" value="asc">
+                            <label class="form-check-label" for="sort-order-asc">
+                                {{- icon('arrow-down-a-z fa-solid fa-fw') -}}
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="sort-order-desc" name="sort-order" value="desc">
+                            <label class="form-check-label" for="sort-order-desc">
+                                {{- icon('arrow-down-z-a fa-solid fa-fw') -}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer align-items-start">
+                    <button type="button" class="btn btn-form btn-primary" id="sort-button">
+                        {{- 'common.button_ok'|trans -}}
+                    </button>
+                </div>
             </div>
-        {% elseif (app.user) %}
-            <div class="col-md-8 offset-md-2 my-auto h-50">
-                {{ include('@TalavWeb/index/panel_disabled.html.twig') }}
-                {{ include('@TalavWeb/user/user_switch.html.twig') }}
-            </div>
-        {% endif %}
+        </div>
     </div>
+
+
 {%- endblock %}
