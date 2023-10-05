@@ -48,6 +48,22 @@ trait HasRoles
         return explode('|', $roles);
     }
 
+	/**
+	 * @param array<string, array<string, string|bool>>|array<string, string|bool> $roles
+	 *
+	 * @phpstan-param Role[]|Role $roles
+	 */
+	private function recursiveArraySearch(string $role, array $roles): bool
+	{
+		foreach ($roles as $key => $value) {
+			if ($role === $key || (\is_array($value) && true === $this->recursiveArraySearch($role, $value))) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 
 
 

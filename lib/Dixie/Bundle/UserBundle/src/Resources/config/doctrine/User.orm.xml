@@ -7,7 +7,7 @@
 
     <mapped-superclass name="Talav\UserBundle\Entity\User" table="user">
         <!-- value object -->
-        <embedded name="roles" class="Talav\Component\User\ValueObject\Roles" use-column-prefix="false" />
+        <embedded name="talav_roles" class="Talav\Component\User\ValueObject\Roles" use-column-prefix="false" />
         <embedded name="username" class="Talav\Component\User\ValueObject\Username" use-column-prefix="false" />
 
 <!--        <field name="username" column="username" length="180" />-->
@@ -60,7 +60,7 @@
 
         <field name="lastActivityAt" column="last_activity_at" type="datetimetz_immutable" column-definition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP"/>
 
-        <many-to-many field="aclRoles" target-entity="Talav\PermissionBundle\Entity\RoleInterface">
+        <many-to-many field="roles" target-entity="Talav\PermissionBundle\Entity\RoleInterface">
             <join-table name="user_role">
                 <join-columns>
                     <join-column name="user_id" referenced-column-name="id"/>
@@ -70,7 +70,7 @@
                 </inverse-join-columns>
             </join-table>
         </many-to-many>
-        <many-to-many field="aclPermissions" target-entity="Talav\PermissionBundle\Entity\PermissionInterface" index-by="name">
+        <many-to-many field="permissions" target-entity="Talav\PermissionBundle\Entity\PermissionInterface" index-by="name">
             <join-table name="user_permission">
                 <join-columns>
                     <join-column name="user_id" referenced-column-name="id"/>

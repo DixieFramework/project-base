@@ -71,7 +71,6 @@ class ProfileController extends AbstractController
     #[Route(path: '/edit', name: 'user_profile_edit')]
     public function editProfil(Request $request, #[CurrentUser] UserInterface $user, EntityManagerInterface $manager): Response
     {
-        dd($user);
         if (false) {
             $user1 = $this->userManager->findUserByUsername('root');
             $user2 = $this->userManager->findUserByUsername('user0');

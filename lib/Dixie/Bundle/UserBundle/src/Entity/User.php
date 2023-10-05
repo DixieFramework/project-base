@@ -26,6 +26,9 @@ use Talav\ProfileBundle\Enum\FriendStatus;
 use Talav\UserBundle\Enum\UserFlagKey;
 use Talav\UserBundle\Model\UserInterface;
 
+//#[ORM\InheritanceType('SINGLE_TABLE')]
+//#[ORM\DiscriminatorColumn(name: 'class', type: 'string')]
+//#[ORM\DiscriminatorMap(['user' => 'User', 'ad' => 'ActiveDirectoryUser'])]
 #[ORM\UniqueConstraint(name: 'unique_user_email', columns: ['email'])]
 //#[ORM\UniqueConstraint(name: 'unique_user_username', columns: ['username'])]
 #[UniqueEntity(fields: ['email'], message: 'email.already_used')]
@@ -66,10 +69,10 @@ class User extends AbstractUser implements UserInterface
     protected Collection $metadata;
 
 //    #[ORM\ManyToMany(targetEntity: 'Talav\PermissionBundle\Entity\Role')]
-    protected Collection $aclRoles;
+    protected Collection $roles;
 
 //    #[ORM\ManyToMany(targetEntity: 'Talav\PermissionBundle\Entity\Permission', indexBy: 'name')]
-    protected Collection $aclPermissions;
+    protected Collection $permissions;
 
 //    #[ORM\Column(type: 'json', nullable: false)]
     protected array $flags;
@@ -104,9 +107,9 @@ class User extends AbstractUser implements UserInterface
 	    $this->sendedUserRelations = new ArrayCollection();
 	    $this->receivedUserRelations = new ArrayCollection();
 
-        $this->metadata = new ArrayCollection();
-        $this->aclRoles = new ArrayCollection();
-        $this->aclPermissions = new ArrayCollection();
+        $this->metadata       = new ArrayCollection();
+        $this->roles          = new ArrayCollection();
+        $this->permissions = new ArrayCollection();
 
         $this->flags = [];
     }
@@ -297,25 +300,25 @@ class User extends AbstractUser implements UserInterface
         return $this;
     }
 
-    public function getAclPermissions(): Collection
+    public function getPermissions(): Collection
     {
-        return $this->aclPermissions;
+        return $this->permissions;
     }
 
     public function getRolesRelation(): Collection
     {
-        return $this->aclRoles;
+        return $this->roles;
     }
 
     public function getFirstRole(): ?RoleInterface
     {
-        return $this->aclRoles->first() ?: null;
+        return $this->roles->first() ?: null;
     }
 
-	public function getAclRoles(): array
+	public function getRoles(): array
 	{
 		$roles = [];
-		$rolesDB = $this->aclRoles->toArray();
+		$rolesDB = $this->roles->toArray();
 		foreach ($rolesDB as $role) {
 			$roles[] = $role->getName();
 		}
@@ -337,7 +340,7 @@ class User extends AbstractUser implements UserInterface
 		}
 
 		if (is_string($role)) {
-            return in_array($role, array_values($this->getAclRoles()));
+            return in_array($role, array_values($this->getRoles()));
 //            return in_array($role, array_values(self::$roleHierarchy->getReachableRoleNames($this->getRoles())));
 		}
 
@@ -351,14 +354,14 @@ class User extends AbstractUser implements UserInterface
 	public function removeRole(string $role): void
 	{
 		if ($item = $this->findUserRole($role)) {
-			$this->aclRoles->removeElement($item);
+			$this->roles->removeElement($item);
 		}
 	}
 
 	public function findUserRole(string $role): ?RoleInterface
 	{
 		/** @var RoleInterface $item */
-		foreach ($this->aclRoles as $item) {
+		foreach ($this->roles as $item) {
 			if ($role == $item->getName()) {
 				return $item;
 			}

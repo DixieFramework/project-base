@@ -27,7 +27,7 @@ abstract class AbstractUser implements UserInterface
 
     public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
 
-    protected Roles $roles;
+    protected Roles $talav_roles;
 
 //    protected ?string $username = null;
     protected ?Username $username = null;
@@ -72,7 +72,7 @@ abstract class AbstractUser implements UserInterface
 
     public function __construct()
     {
-        $this->roles = Roles::developer();
+        $this->talav_roles = Roles::developer();
 
         $this->oauthAccounts = new ArrayCollection();
         $this->salt = base_convert(bin2hex(random_bytes(20)), 16, 36);
@@ -229,12 +229,12 @@ abstract class AbstractUser implements UserInterface
 
     public function getRoles(): array
     {
-        return $this->roles->toArray();
+        return $this->talav_roles->toArray();
     }
 
     public function setRoles(Roles|array $roles): self
     {
-        $this->roles = match (true) {
+        $this->talav_roles = match (true) {
             $roles instanceof Roles => $roles,
             default => Roles::fromArray($roles)
         };
@@ -246,7 +246,7 @@ abstract class AbstractUser implements UserInterface
     {
         $role = strtoupper($role);
         if (!$this->hasRole($role)) {
-            $this->roles[] = $role;
+            $this->talav_roles[] = $role;
         }
     }
 
@@ -256,7 +256,7 @@ abstract class AbstractUser implements UserInterface
 //    }
     public function hasRole(string $role): bool
     {
-        return $this->roles->contains($role);
+        return $this->talav_roles->contains($role);
     }
 
     public function isSuperAdmin(): bool
