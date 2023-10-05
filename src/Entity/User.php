@@ -6,18 +6,15 @@ namespace Groshy\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use DateTime;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\CustomIdGenerator;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\GeneratedValue;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping as ORM;
 use Groshy\Api\Action\User\UserStatsAction;
 use Ramsey\Uuid\Doctrine\UuidGenerator;
+use Talav\UserBundle\Doctrine\EntityListener\UserEmailEntityListener;
+use Talav\UserBundle\Doctrine\EntityListener\UserEntityListener;
 use Talav\UserBundle\Entity\User as BaseUser;
 
-#[Entity]
-#[Table(name: 'user')]
+#[ORM\Entity]
+#[ORM\Table(name: 'user')]
 #[ApiResource(
     collectionOperations: [],
     itemOperations: [
@@ -64,10 +61,10 @@ use Talav\UserBundle\Entity\User as BaseUser;
 )]
 class User extends BaseUser
 {
-    #[Id]
-    #[Column(type: 'uuid', unique: true)]
-    #[GeneratedValue(strategy: 'CUSTOM')]
-    #[CustomIdGenerator(class: UuidGenerator::class)]
+    #[ORM\Id]
+    #[ORM\Column(type: 'uuid', unique: true)]
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
     protected mixed $id = null;
 
     /**

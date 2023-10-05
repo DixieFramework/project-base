@@ -59,10 +59,11 @@ class EmailVerifier implements ServiceSubscriberInterface
         $signature = $this->generateSignature($routeName, $user);
         $email->action($this->trans('registration.action'), $signature->getSignedUrl());
         $context = $email->getContext();
-        $context['username'] = $user->getUserIdentifier();
+        $context['username'] = $user->getUsername();
         $context['expires_date'] = $signature->getExpiresAt();
         $context['expires_life_time'] = $this->getExpiresLifeTime($signature);
         $email->context($context);
+		dump($email);
         $this->mailer->send($email);
     }
 

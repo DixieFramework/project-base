@@ -137,10 +137,11 @@ class ProfileEditTypeExtension extends AbstractTypeExtension implements Containe
 
             ->add('bio', SimpleEditorType::class, [
                 'property_path' => 'profile.bio',
-                'label' => 'talav.profile.label.bio',
+                'label' => 'talav.profile.fields.bio',
+				'help' => 'talav.profile.bio_help',
                 'translation_domain' => 'TalavProfileBundle',
                 'attr' => [
-                    'minLength' => 10
+                    'minLength' => 10,
                 ]
             ])
         ;

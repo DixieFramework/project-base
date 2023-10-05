@@ -283,6 +283,7 @@ class RegistrationController extends AbstractController
 
         $form = $this->createForm(UserRegistrationType::class, $user);
         if ($this->handleRequestForm($request, $form)) {
+			$user->setIsNewUser(true);
             $this->userManager->update($user, true);
 
             try {
@@ -353,7 +354,7 @@ class RegistrationController extends AbstractController
 
     private function findUser(Request $request): ?UserInterface
     {
-        if (0 !== $id = $this->getRequestInt($request, 'id')) {
+        if (0 !== $id = $this->getRequestString($request, 'id')) {
             return $this->userRepository->find($id);
         }
 

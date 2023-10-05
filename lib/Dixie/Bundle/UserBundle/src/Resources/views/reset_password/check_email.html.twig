@@ -2,7 +2,8 @@
 {% from '@TalavWeb/macros/_icons.html.twig' import link, footer_center %}
 {# parameters #}
 {%- set title = 'resetting.request.title' -%}
-{%- set title_icon = 'eraser' -%}
+{%- set title_domain = 'TalavUserBundle' -%}
+{%- set title_icon = 'eraser me-2' -%}
 {%- set status_bar = false -%}
 {# hide navigation and footer #}
 {% block navigation_horizontal %}{% endblock %}
@@ -12,22 +13,22 @@
 {# body #}
 {% block card_body -%}
 <p>
-    Un courrier électronique vous a été envoyé. Il contient un lien sur lequel il vous faudra cliquer pour réinitialiser votre mot de passe.
+    We have sent you an email. It contains a link that you will need to click to reset your password.
 </p>
 <p>
-    Si vous ne recevez pas de courrier électronique, veuillez vérifier votre dossier de courrier indésirable (pourriel) ou <a href="{{ path('app_forgot_password_request') }}">essayer à nouveau</a>.
+    If you haven't received the email, please check your junk mail folder or you can <a href="{{ path('app_forgot_password_request') }}">try again</a>.
 </p>
 <p class="mb-1">
-    <b>Remarque :</b>
+    <b>Notice :</b>
 </p>
 <ul class="mb-0">
-    <li>La demande de changement du nouveau mot de passe expire dans {{ expires_life_time }} (à {{ expires_date|locale_time('short') }}).</li>
-    <li>Vous ne pouvez demander un nouveau mot de passe que dans {{ throttle_life_time }} (à {{ throttle_date|locale_time('short') }}).</li>
+    <li>The request to change the new password expires in {{ expires_life_time }} (at {{ expires_date|locale_time('short') }}).</li>
+    <li>You can request a new password again in {{ throttle_life_time }} (at {{ throttle_date|locale_time('short') }}).</li>
 </ul>
 {%- endblock %}
 {# footer #}
 {% block card_footer -%}
-{{ link(path('app_login'), 'security.login.submit', 'btn btn-form btn-primary', null, 'security.login.description') }}
+{{ link(path('app_login'), 'security.login.submit', 'btn btn-form btn-primary', null, 'security.login.description', 'TalavUserBundle') }}
 {{ footer_center() }}
 {%- endblock %}
 {# stylesheets #}

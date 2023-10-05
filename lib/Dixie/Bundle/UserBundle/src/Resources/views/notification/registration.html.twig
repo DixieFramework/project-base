@@ -4,43 +4,43 @@
 <container>
     <row>
         <columns>
-            Bonjour <b>{{ username }}</b>,
+            Hello <b>{{ username }}</b>,
         </columns>
     </row>
 </container>
 <container>
     <row>
         <columns>
-            Merci de vous être connecté à notre application. Nous sommes très heureux de vous compter parmi nous.
+            Thank you for logging into our app. We are very happy to have you among us.
         </columns>
     </row>
 </container>
 <container>
     <row>
         <columns>
-            Veuillez confirmer votre adresse électronique en cliquant sur le bouton ci-dessous.
+            Please confirm your email address by clicking the button below.
         </columns>
     </row>
 </container>
 <container>
     <row>
         <columns>
-            Si vous avez des questions ou si vous rencontrez des problèmes, n'hésitez pas à contacter l'<a href="mailto:{{ mailer_user_email }}?subject={{ app_name_version }}">administrateur du site</a>.
+            If you have any questions or encounter any problems, please do not hesitate to contact <a href="mailto:{{ mailer_user_email }}?subject={{ app_name_version }}">the support team</a>.
         </columns>
     </row>
 </container>
 <container>
     <row>
         <columns>
-            <b>Remarque :</b> Ce lien expirera dans {{ expires_life_time }} (à {{ expires_date|locale_time('short') }}).
+            <b>Notice :</b> This link expires in {{ expires_life_time }} (at {{ expires_date|locale_time('short') }}).
         </columns>
     </row>
 </container>
 <container>
     <row>
         <columns>
-            Cordialement,<br>
-            L'équipe de {{ app_name }}
+            Best regards,<br>
+            {{ app_name }}
         </columns>
     </row>
 </container>

@@ -23,6 +23,8 @@ use Talav\ProfileBundle\Entity\UserMetadata;
 use Talav\ProfileBundle\Entity\UserProfileRelation;
 use Talav\ProfileBundle\Entity\UserRelation;
 use Talav\ProfileBundle\Enum\FriendStatus;
+use Talav\UserBundle\Doctrine\EntityListener\UserEmailEntityListener;
+use Talav\UserBundle\Doctrine\EntityListener\UserEntityListener;
 use Talav\UserBundle\Enum\UserFlagKey;
 use Talav\UserBundle\Model\UserInterface;
 
@@ -33,8 +35,9 @@ use Talav\UserBundle\Model\UserInterface;
 //#[ORM\UniqueConstraint(name: 'unique_user_username', columns: ['username'])]
 #[UniqueEntity(fields: ['email'], message: 'email.already_used')]
 //#[UniqueEntity(fields: ['username'], message: 'username.already_used')]
+//#[ORM\EntityListeners([UserEmailEntityListener::class, UserEntityListener::class])]
 #[ORM\MappedSuperclass]
-class User extends AbstractUser implements UserInterface
+abstract class User extends AbstractUser implements UserInterface
 {
     use ResourceTrait;
     use HasRoles, HasRelations;
@@ -431,6 +434,21 @@ class User extends AbstractUser implements UserInterface
 
         return false;
     }
+
+	public function isNewUser(): bool
+	{
+		return $this->getFlagValue(UserFlagKey::IS_NEW_USER);
+	}
+
+	/**
+	 * @param bool $isNewUser
+	 */
+	public function setIsNewUser($isNewUser): UserInterface
+	{
+		$this->setFlagValue(UserFlagKey::IS_NEW_USER, $isNewUser);
+
+		return $this;
+	}
 
     public function isProfileCompleted(): bool
     {

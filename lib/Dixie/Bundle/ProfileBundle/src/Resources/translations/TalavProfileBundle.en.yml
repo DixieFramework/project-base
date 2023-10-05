@@ -9,6 +9,8 @@ talav:
                 day: Day
                 month: Month
                 year: Year
+            bio: Bio
+        bio_help: Fill in some cool details about yourself.
         label:
             birthdate: Birthdate
         relations:

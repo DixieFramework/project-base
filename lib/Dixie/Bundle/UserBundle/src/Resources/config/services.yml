@@ -106,6 +106,14 @@ services:
 
 #    Symfony\Component\Workflow\WorkflowInterface: '@state_machine.abstract'
 
+#    Talav\UserBundle\Doctrine\EntityListener\UserEmailEntityListener:
+#        class: Talav\UserBundle\Doctrine\EntityListener\UserEmailEntityListener
+#        tags:
+#            -
+#                name: 'doctrine.orm.entity_listener'
+#                event: 'postFlush'
+#                entity: 'Talav\UserBundle\Entity\User'
+
     SymfonyCasts\Bundle\ResetPassword\Persistence\ResetPasswordRequestRepositoryInterface: '@Talav\UserBundle\Repository\ResetPasswordRequestRepository'
 
     # ================================================================================
