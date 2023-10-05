@@ -7,20 +7,39 @@ namespace Talav\ResourceBundle\DependencyInjection;
 use DoctrineExtensions\Query\Mysql;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Talav\Component\Resource\Factory\Factory;
+use Talav\Component\Resource\Metadata\Resource as ResourceMetadata;
+use Talav\Component\Resource\Reflection\ClassReflection;
 
-class TalavResourceExtension extends Extension
+use function Symfony\Component\String\u;
+
+class TalavResourceExtension extends Extension implements PrependExtensionInterface
 {
+    use PrependBundleConfigTrait;
+
+    public function prepend(ContainerBuilder $container): void
+    {
+        $configs = $container->getExtensionConfig($this->getAlias());
+        $config = $this->processConfiguration(new Configuration(), $configs);
+
+        $this->configureDoctrine($container);
+
+        $this->prependBundleConfigFiles($container);
+    }
+
     public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
-	    $configs = $container->getExtensionConfig($this->getAlias());
+        $config = $this->processConfiguration($this->getConfiguration([], $container), $configs);
 
-		$this->configureDoctrine($container);
-	}
+        $container->setParameter('talav.resource.mapping', $config['mapping']);
+//        $this->autoRegisterResources($config, $container);
+    }
 
 	private function configureDoctrine(ContainerBuilder $container): void
 	{

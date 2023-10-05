@@ -21,11 +21,11 @@ doctrine:
 #                dir: '%kernel.project_dir%/src/Infrastructure/Authentication/Doctrine/Mapping/Entity'
 #                prefix: 'Domain\Authentication\Entity'
 #                is_bundle: false
-            Talav\Component\User\ValueObject:
-                type: xml
-                dir: '%kernel.project_dir%/lib/Dixie/Component/User/src/Doctrine/Mapping/ValueObject'
-                prefix: 'Talav\Component\User\ValueObject'
-                is_bundle: false
+#            Talav\Component\User\ValueObject:
+#                type: xml
+#                dir: '%kernel.project_dir%/lib/Dixie/Component/User/src/Doctrine/Mapping/ValueObject'
+#                prefix: 'Talav\Component\User\ValueObject'
+#                is_bundle: false
 
         dql:
             datetime_functions:

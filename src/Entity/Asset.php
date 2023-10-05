@@ -21,6 +21,7 @@ use Gedmo\Mapping\Annotation\Timestampable as GedmoTimestampable;
 use Groshy\Enum\Privacy;
 use Ramsey\Uuid\Doctrine\UuidGenerator;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Talav\Component\Resource\Metadata\Resource;
 use Talav\Component\Resource\Model\ResourceInterface;
 use Talav\Component\Resource\Model\ResourceTrait;
 use Talav\Component\Resource\Model\TimestampableTrait;

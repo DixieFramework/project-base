@@ -1,6 +1,11 @@
 doctrine:
     orm:
-        entity_managers:
-            default:
-                hydrators:
-                    IdHydrator: Ekyna\Component\Resource\Doctrine\ORM\Hydrator\IdHydrator
+        auto_generate_proxy_classes: true
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        auto_mapping: true
+        mappings:
+            Talav\Component\User\ValueObject:
+                type: xml
+                dir: '%kernel.project_dir%/lib/Dixie/Component/User/src/Doctrine/Mapping/ValueObject'
+                prefix: 'Talav\Component\User\ValueObject'
+                is_bundle: false

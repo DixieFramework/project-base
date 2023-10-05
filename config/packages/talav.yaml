@@ -23,6 +23,13 @@ talav_user:
             enable_csrf: true
             csrf_parameter: talav_type_user_user_login[_csrf_token]
 
+talav_resource:
+    mapping:
+        paths:
+            - '%kernel.project_dir%/src/Entity'
+            - '%kernel.project_dir%/lib/Dixie/Component/User/src/Doctrine/Mapping/ValueObject'
+            - '%kernel.project_dir%/lib/Dixie/Component/User/src/ValueObject'
+
 talav_permission:
     resources:
         role:

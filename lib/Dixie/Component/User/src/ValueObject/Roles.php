@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Talav\Component\User\ValueObject;
 
+use Talav\Component\Resource\Metadata\Resource;
 use Webmozart\Assert\Assert;
 
+#[Resource(name: 'value_object_roles')]
 class Roles implements \Stringable
 {
     public const VALUES = ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_SUPER_ADMIN', 'ROLE_CONTENT_MANAGER'];

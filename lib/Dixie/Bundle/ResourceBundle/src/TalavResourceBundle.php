@@ -7,6 +7,7 @@ namespace Talav\ResourceBundle;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Talav\ResourceBundle\DependencyInjection\Compiler\AutoRegisterResourcesPass;
 use Talav\ResourceBundle\DependencyInjection\Compiler\DoctrineTargetEntitiesResolverPass;
 use Talav\ResourceBundle\DependencyInjection\Compiler\Helper\TargetEntitiesResolver;
 use Talav\ResourceBundle\DependencyInjection\Compiler\RegisterResourceManagerPass;
@@ -29,5 +30,6 @@ class TalavResourceBundle extends Bundle
         );
         $container->addCompilerPass(new RegisterResourceRepositoryPass());
         $container->addCompilerPass(new RegisterResourceManagerPass());
+//        $container->addCompilerPass(new AutoRegisterResourcesPass());
     }
 }
