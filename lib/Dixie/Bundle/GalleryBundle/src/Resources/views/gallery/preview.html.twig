@@ -2,9 +2,27 @@
 
 {% trans_default_domain 'TalavGalleryBundle' %}
 
-{% block titre %}
-    Galeria: {{ gallery.name }}
-{% endblock %}
+{%- block titre '' -%}
+
+{% block header %}
+    <div class="page-title-overlap bg-body-tertiary pt-4 mt-n4 shadow-sm">
+        <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+            <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
+                        <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>Home</a></li>
+                        <li class="breadcrumb-item text-nowrap"><a href="home-nft.html">Marketplace</a>
+                        </li>
+                        <li class="breadcrumb-item text-nowrap active" aria-current="page">Vendor Page</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
+                <h1 class="h3 text-light mb-0">Vendor Page</h1>
+            </div>
+        </div>
+    </div>
+{% endblock header %}
 
 {% block body %}
     <style>
@@ -20,10 +38,10 @@
                 <h1 class="h3 mb-2 mb-sm-0">{{ gallery.name }}</h1>
                 <div class="d-flex justify-content-end">
                     {% if is_granted('GALLERY_EDIT', gallery) %}
-                        <a href="{{ url('talav_gallery_edit', {'id': gallery.id}) }}" class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit fa-fw">&nbsp;</i>{{ 'talav.gallery.edit.link'|trans }}</a>
+                        <a href="{{ url('talav_gallery_edit', {'id': gallery.id}) }}" class="btn btn-sm btn-dark me-2"><i class="fas fa-edit fa-fw">&nbsp;</i>{{ 'talav.gallery.edit.link'|trans }}</a>
                     {% endif %}
                     {% if is_granted('IMAGE_CREATE') %}
-                        <a href="{{ url('talav_gallery_image_create', {'id': gallery.id}) }}" class="btn btn-sm btn-outline-primary mb-0"><i class="fas fa-plus fa-fw">&nbsp;</i>{{ 'talav.gallery.image.create.link'|trans }}</a>
+                        <a href="{{ url('talav_gallery_image_create', {'id': gallery.id}) }}" class="btn btn-sm btn-dark mb-0"><i class="fas fa-plus fa-fw">&nbsp;</i>{{ 'talav.gallery.image.create.link'|trans }}</a>
                     {% endif %}
                 </div>
             </div>
@@ -31,46 +49,69 @@
     </div>
 
     <div class="row g-3">
+        <div class="col-lg-8 vstack gap-4">
+            <div class="card">
+                <div class="card-header d-sm-flex align-items-center justify-content-between border border-bottom-1 py-2">
+                    <h5 class="card-title h6 mb-0">Photos</h5>
 
-        {% for image in galleryImages %}
-        <!-- Photo item START -->
-        <div class="col-6 col-lg-2 position-relative">
-            <div class="position-absolute bottom-0 end-0">
-                <!-- Dropdown START -->
-                <div class="dropdown mb-2 me-3">
-                    <a href="#" class="icon-sm bg-primary text-white rounded-circle" id="photoActionEdit" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-pencil"></i>
-                    </a>
+                    <!-- Button modal -->
+                    <a class="btn btn-sm btn-primary-soft" href="#" data-bs-toggle="modal" data-bs-target="#modalCreateAlbum"> <i class="fa-solid fa-plus pe-1"></i> Create album</a>
+                </div>
 
-                    <!-- Dropdown menu -->
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="photoActionEdit">
-                        {% if is_granted('IMAGE_DELETE', image) %}
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-remove fa-fw pe-1"></i>Delete</a></li>
-                        {% endif %}
-                        {% if is_granted('COMMENT_LIST', image) %}
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-comment fa-fw pe-1"></i>View Comments</a></li>
-                        {% endif %}
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-flag fa-fw pe-1"></i>Report photo</a></li>
-                    </ul>
+                <div class="card-body">
+                    <div class="row g-3">
+                        {% for image in galleryImages %}
+                            <!-- Photo item START -->
+                            <div class="col-6 col-lg-3 position-relative">
+                                <div class="position-absolute bottom-0 start-0 text-light ms-2 me-2 rounded-bottom" style="background-color: rgba(0, 0, 0, 0.5)">
+                                    <p class="p-2 m-0">Title</p>
+                                </div>
+
+                                <div class="position-absolute top-0 end-0">
+                                    <!-- Dropdown START -->
+                                    <div class="dropdown mt-2 me-3">
+                                        <a href="#" class="icon-sm bg-primary text-white rounded-circle" id="photoActionEdit" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fas fa-pencil"></i>
+                                        </a>
+
+                                        <!-- Dropdown menu -->
+                                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="photoActionEdit">
+                                            {% if is_granted('IMAGE_DELETE', image) %}
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-remove fa-fw pe-1"></i>Delete</a></li>
+                                            {% endif %}
+                                            {% if is_granted('COMMENT_LIST', image) %}
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-comment fa-fw pe-1"></i>View Comments</a></li>
+                                            {% endif %}
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fas fa-flag fa-fw pe-1"></i>Report photo</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- Dropdown END -->
+                                <a href="{{ path('talav_gallery_image_view', {'id': image.id}) }}" data-gallery="image-popup" data-glightbox="description: .custom-desc2; descPosition: left;">
+                                    <img class="rounded img-fluid" src="{{ asset(image.image.filePath) |imagine_filter('gallery_thumb') }}" alt="{{ image.title }}">
+                                </a>
+                            </div>
+                            <!-- Photo item END -->
+                        {% else %}
+                            <div class="alert alert-primary" role="alert">
+                                {{ 'talav.gallery.message.empty_list'|trans }}
+                            </div>
+                        {% endfor %}
+
+                    </div>
                 </div>
             </div>
 
-            <!-- Dropdown END -->
-            <a href="{{ path('talav_gallery_image_view', {'id': image.id}) }}" data-gallery="image-popup" data-glightbox="description: .custom-desc2; descPosition: left;">
-                <img class="rounded img-fluid" src="{{ asset(image.image.filePath) |imagine_filter('gallery_thumb') }}" alt="{{ image.title }}">
-            </a>
-
-            <div class="position-absolute top-0 bg-opacity-25">
-                ssss
-            </div>
         </div>
-        <!-- Photo item END -->
-        {% else %}
-            <div class="alert alert-primary" role="alert">
-                {{ 'talav.gallery.message.empty_list'|trans }}
-            </div>
-        {% endfor %}
+        <div class="col-lg-4">
+            sidebar
+        </div>
+    </div>
+
+    <div class="row g-3">
+
     </div>
 
     <div class="row">
