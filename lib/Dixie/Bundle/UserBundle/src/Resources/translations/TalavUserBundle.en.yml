@@ -98,6 +98,13 @@ user:
     success: La demande de mot de passe pour l'utilisateur <b>%name%</b> a été supprimée avec succès.
     error: Aucune demande de mot de passe pour l'utilisateur <b>%name%</b> n'a été requise.
 
+login_link:
+  request:
+    title: Request Login Link
+    description: Enter your account email address to get a login link.
+    form:
+      email: E-mail
+
 profile:
   change_password:
     title: Change Password
@@ -112,6 +119,7 @@ profile:
       title: Viewing %username%'s Profile
 
 registration:
+  link: Create an account
   agreeTerms:
     error: You must accept the general conditions of use.
     label: I accept the general conditions of use of the application.
@@ -146,3 +154,6 @@ security:
     error: Le nom de l'utilisateur ou le mot de passe est invalide.
   logout:
     success: Vous vous êtes déconnecté de l'application <b>%app_name%</b> avec succès.
+
+# safe massages exceptions
+authentication.exceptions.user_not_found: This e-mail address does not match any of our records.

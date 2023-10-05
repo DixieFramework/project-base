@@ -25,8 +25,8 @@ parameters:
     app_mode:           '%env(string:APP_MODE)%'
 
     # mailer
-    mailer_user_name: Calculation
-    mailer_user_email: calculation@bibi.nu
+    mailer_user_name: Talav
+    mailer_user_email: no-reply@talav.com
 
     # cookies
     cookie_path: '%env(string:COOKIE_PATH)%'

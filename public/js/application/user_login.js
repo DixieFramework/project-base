@@ -14,7 +14,8 @@
         {
             showModification: false,
             spinner: {
-                text: $('.card-title').text() + '...',
+                // text: $('.card-title').text() + '...',
+                text: 'Signing in ...',
                 // css: {
                 //     top: '25%',
                 // }

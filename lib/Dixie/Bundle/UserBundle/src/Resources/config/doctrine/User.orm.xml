@@ -14,6 +14,7 @@
         <field name="salt" column="salt" type="string" nullable="false" />
         <field name="password" column="password" type="string" />
         <field name="lastLogin" column="last_login" type="datetime" nullable="true" />
+        <field name="loginAttemptsResetToken" column="login_attempts_reset_token" type="string" length="180" unique="true" nullable="true" />
         <field name="passwordResetToken" column="password_reset_token" type="string" length="180" unique="true" nullable="true" />
         <field name="passwordRequestedAt" column="password_requested_at" type="datetime" nullable="true" />
         <field name="confirmationToken" column="confirmation_token" type="string" length="180" unique="true" nullable="true" />

@@ -37,6 +37,7 @@ abstract class AbstractUser implements UserInterface
 
     protected ?DateTimeInterface $lastLogin = null;
 
+    protected ?string $loginAttemptsResetToken = null;
     protected ?string $passwordResetToken = null;
 
     protected ?DateTimeInterface $passwordRequestedAt = null;
@@ -128,6 +129,18 @@ abstract class AbstractUser implements UserInterface
     public function setLastLogin(?DateTimeInterface $lastLogin): void
     {
         $this->lastLogin = $lastLogin;
+    }
+
+    public function getLoginAttemptsResetToken(): ?string
+    {
+        return $this->loginAttemptsResetToken;
+    }
+
+    public function setLoginAttemptsResetToken(?string $token): self
+    {
+        $this->loginAttemptsResetToken = $token;
+
+        return $this;
     }
 
     public function getPasswordResetToken(): ?string

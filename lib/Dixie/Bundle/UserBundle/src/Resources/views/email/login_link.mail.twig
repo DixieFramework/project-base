@@ -1,0 +1,31 @@
+{% extends _layout %}
+
+<twig:block name="body">
+    {% apply markdown_email %}
+        # Hey {{ user.username }},
+
+        Désolé d'apprendre que vous avez des difficultés à vous connecter à Devscast.
+        Nous pouvons vous aider à vous reconnecter directement à votre compte.
+
+{#        {% if false and false is same as true %}#}
+{#                    {% if _format == 'html' %}#}
+{#            <twig:DashliteEmailQrCode#}
+{#                    src="{{ qr_code_data_uri(event.link.url) }}"#}
+{#                    title="Scanner le QRCode pour vous connecter ou utiliser le lien direct"#}
+{#            />#}
+{#        {% endif %}#}
+{#        {% endif %}#}
+
+        Ce lien peut être utilisé pour vous connecter à votre compte Devscast. On ne le demande jamais pour autre chose.
+
+
+
+        Si vous n'avez pas demandé ce lien en essayant de vous connecter ou de réinitialiser votre mot de passe, ignorez simplement ce mail.
+
+        Ce lien ne sera plus valide après **10 minutes**,
+        <a href="{{ event.link.url }}" title="Login">Click Here to Log in</a>
+{#        <twig:DashliteEmailButton url="{{ event.link.url }}" title="Me connecter" :format="_format" />#}
+
+        Vous pouvez également <a rel="noopener" href="{{ url('talav_user_reset_request') }}" title="réinitialiser votre mot de passe Devscast.">réinitialiser votre mot de passe</a>
+    {% endapply %}
+</twig:block>

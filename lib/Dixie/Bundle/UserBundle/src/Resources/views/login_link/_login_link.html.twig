@@ -1,0 +1,21 @@
+{% extends '@TalavUser/layout/base.html.twig' %}
+<twig:block name="title">{{ 'authentication.titles.login_link' | trans([], 'authentication') }}</twig:block>
+
+<twig:block name="content">
+    <div class="mt-8 rounded-outer-radius shadow-2xl bg-background-card border border-bdr -mx-6 sm:-mx-10 p-8 sm:p-10 xl:p-12 2xl:p-16">
+        <h1 class="text-2xl text-fg-heading1">{{ 'authentication.titles.login_link' | trans([], 'authentication') }}</h1>
+
+        {{ form_start(form, {attr: {class: 'mt-8 space-y-8 text-fg-heading2'}}) }}
+            {{ form_row(form.email, {help: "Enter your account email address to get a login link."}) }}
+
+            <div>
+                <button class="group w-full flex justify-center items-center btn btn-md dark:before:bg-primary dark:text-gray-900 before:bg-gray-900 text-gray-50 rounded-lg">
+                    <span class="relative z-[6]">Suivant</span>
+                </button>
+                <a href="{{ path('talav_user_login') }}" class="inline-block mt-4 -ml-3 w-max px-3  text-sky-500 dark:text-sky-300 hover:text-sky-600">
+                    <span class="text-sm tracking-wide">Se connecter</span>
+                </a>
+            </div>
+        {{ form_end(form) }}
+    </div>
+</twig:block>

@@ -30,8 +30,8 @@
 {# footer #}
 {% block card_footer -%}
 {%- set show_required = show_required is defined ? show_required : true -%}
-    <div class="d-flex-wrap justify-content-between align-items-center py-2 ps-1">
-{#        <div class="d-flex-wrap">#}
+{#    <div class="d-flex-wrap justify-content-between align-items-center py-2 ps-1">#}
+<div class="d-flex-wrap">
     {% block actions_form -%}
         {{ button_submit(submit_text, submit_class, submit_params, submit_domain) }}
         {% if cancel_path|default(false) -%}

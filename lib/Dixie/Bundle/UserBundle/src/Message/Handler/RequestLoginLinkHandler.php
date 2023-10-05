@@ -8,14 +8,10 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 use Talav\Component\User\Repository\UserRepositoryInterface;
+use Talav\UserBundle\Exception\UserNotFoundException;
 use Talav\UserBundle\Message\Command\RequestLoginLinkCommand;
 use Talav\UserBundle\Message\Event\LoginLinkRequestedEvent;
 
-/**
- * Class RequestLoginLinkHandler.
- *
- * @author bernard-ng <bernard@devscast.tech>
- */
 #[AsMessageHandler]
 final class RequestLoginLinkHandler
 {
@@ -30,7 +26,7 @@ final class RequestLoginLinkHandler
     {
         $user = $this->userRepository->findOneByEmail((string) $command->email);
         if (null === $user) {
-            throw new \InvalidArgumentException();//\UserNotFoundException();
+            throw new UserNotFoundException();
         }
 
         $loginLinkDetails = $this->loginLinkHandler->createLoginLink($user);

@@ -44,7 +44,7 @@
                     {{ include('@TalavWeb/navigation/horizontal/navigation_user.html.twig') }}
                 {% else %}
                     {{ navItem(path('talav_user_login'), 'index.login', 'fas fa-sign-in fa-fw me-2', 'TalavWebBundle') }}
-                    {{ navItem(path('talav_user_register'), 'index.register', 'fas fa-user-plus fa-fw me-2', 'TalavWebBundle') }}
+                    {{ navItem(path('talav_user_registration_register'), 'index.register', 'fas fa-user-plus fa-fw me-2', 'TalavWebBundle') }}
                 {% endif %}
             </ul>
         </div>

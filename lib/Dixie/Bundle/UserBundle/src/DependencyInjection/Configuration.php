@@ -10,9 +10,11 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Talav\Component\User\Canonicalizer\Canonicalizer;
 use Talav\Component\User\Manager\UserManager;
 use Talav\Component\User\Manager\UserOAuthManager;
+use Talav\Component\User\Repository\LoginAttemptRepository;
 use Talav\Component\User\Repository\UserRepository;
 use Talav\Component\User\Util\PasswordUpdater;
 use Talav\Component\User\Util\TokenGenerator;
+use Talav\UserBundle\Entity\LoginAttempt;
 use Talav\UserBundle\Entity\User;
 use Talav\UserBundle\Entity\UserOAuth;
 use Talav\UserBundle\Form\Model\RegistrationFormModel;
@@ -121,6 +123,19 @@ final class Configuration implements ConfigurationInterface
                                     ->children()
                                         ->scalarNode('model')->defaultValue(UserOAuth::class)->end()
                                         ->scalarNode('manager')->defaultValue(UserOAuthManager::class)->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('user_login_attempt')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(LoginAttempt::class)->end()
+//                                        ->scalarNode('manager')->defaultValue(UserOAuthManager::class)->end()
+                                        ->scalarNode('repository')->defaultValue(LoginAttemptRepository::class)->end()
                                     ->end()
                                 ->end()
                             ->end()

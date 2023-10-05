@@ -24,7 +24,7 @@ final class LoginLinkController extends AbstractController
     public function request(Request $request): Response
     {
         if ($this->getUser()) {
-            $this->redirectToRoute('app_index');
+            $this->redirectToRoute(AbstractController::HOME_PAGE);
         }
 
         $command = new RequestLoginLinkCommand();

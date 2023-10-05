@@ -11,5 +11,5 @@ interface UserAwareInterface
 {
     public function getUser(): ?UserInterface;
 
-    public function setUser(?UserInterface $user): void;
+    public function setUser(?UserInterface $user): self;
 }
