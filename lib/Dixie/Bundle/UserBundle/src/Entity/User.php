@@ -109,7 +109,7 @@ class User extends AbstractUser implements UserInterface
 
         $this->metadata       = new ArrayCollection();
         $this->roles          = new ArrayCollection();
-        $this->permissions = new ArrayCollection();
+        $this->permissions    = new ArrayCollection();
 
         $this->flags = [];
     }
