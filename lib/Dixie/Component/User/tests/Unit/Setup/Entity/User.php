@@ -153,7 +153,7 @@ class User implements UserInterface
         return $threshold <= $this->passwordRequestedAt;
     }
 
-    public function getRoles(): array
+    public function getAclRoles(): array
     {
         return $this->roles;
     }
@@ -168,7 +168,7 @@ class User implements UserInterface
 
     public function hasRole(string $role): bool
     {
-        return in_array(strtoupper($role), $this->getRoles(), true);
+        return in_array(strtoupper($role), $this->getAclRoles(), true);
     }
 
     public function removeRole(string $role): void

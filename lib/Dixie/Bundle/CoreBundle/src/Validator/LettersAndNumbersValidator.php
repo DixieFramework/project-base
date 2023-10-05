@@ -23,7 +23,7 @@ class LettersAndNumbersValidator extends ConstraintValidator
             return;
         }
 
-        if (!preg_match('/^[a-zA-Z0-9_]+$/', $value)) {
+        if (!preg_match('/^[a-zA-Z0-9_]+$/', (string) $value)) {
             $this->context->buildViolation($constraint->message)
                 ->addViolation();
         }

@@ -48,7 +48,7 @@ class UserRegistrationType extends AbstractUserCaptchaType implements ServiceSub
     {
         $helper->field('username')
             ->label('user.fields.username')
-            ->addUserNameType();
+            ->addUserNameFieldType();
 
         $helper->field('email')
             ->label('user.fields.email')

@@ -13,6 +13,8 @@ use Doctrine\Common\Collections\Collection;
 use Exception;
 use Talav\Component\Resource\Model\ResourceTrait;
 use Talav\Component\Resource\Model\TimestampableTrait;
+use Talav\Component\User\ValueObject\Roles;
+use Talav\Component\User\ValueObject\Username;
 use function serialize;
 use function unserialize;
 
@@ -25,8 +27,10 @@ abstract class AbstractUser implements UserInterface
 
     public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
 
-    protected ?string $username = null;
+    protected Roles $roles;
 
+//    protected ?string $username = null;
+    protected ?Username $username = null;
     protected ?string $usernameCanonical = null;
 
     protected bool $enabled;
@@ -68,20 +72,36 @@ abstract class AbstractUser implements UserInterface
 
     public function __construct()
     {
+        $this->roles = Roles::developer();
+
         $this->oauthAccounts = new ArrayCollection();
         $this->salt = base_convert(bin2hex(random_bytes(20)), 16, 36);
         $this->enabled = false;
     }
 
-    public function getUsername(): ?string
+    public function getUsername(): ?Username
     {
         return $this->username;
     }
 
-    public function setUsername(?string $username): void
+    public function setUsername(Username|string $username): self
     {
-        $this->username = $username;
+        $this->username = match (true) {
+            $username instanceof Username => $username,
+            default => Username::fromString($username)
+        };
+
+        return $this;
     }
+//    public function getUsername(): ?string
+//    {
+//        return $this->username;
+//    }
+//
+//    public function setUsername(?string $username): void
+//    {
+//        $this->username = $username;
+//    }
 
     public function getUsernameCanonical(): ?string
     {
@@ -209,28 +229,34 @@ abstract class AbstractUser implements UserInterface
 
     public function getRoles(): array
     {
-        return $this->arrRoles;
+        return $this->roles->toArray();
+    }
+
+    public function setRoles(Roles|array $roles): self
+    {
+        $this->roles = match (true) {
+            $roles instanceof Roles => $roles,
+            default => Roles::fromArray($roles)
+        };
+
+        return $this;
     }
 
     public function addRole(string $role): void
     {
         $role = strtoupper($role);
         if (!$this->hasRole($role)) {
-            $this->arrRoles[] = $role;
+            $this->roles[] = $role;
         }
     }
 
+//    public function hasRole(string $role): bool
+//    {
+//        return in_array(strtoupper($role), $this->getRoles(), true);
+//    }
     public function hasRole(string $role): bool
     {
-        return in_array(strtoupper($role), $this->getRoles(), true);
-    }
-
-    public function removeRole(string $role): void
-    {
-        if (false !== $key = array_search(strtoupper($role), $this->arrRoles, true)) {
-            unset($this->arrRoles[$key]);
-            $this->arrRoles = array_values($this->arrRoles);
-        }
+        return $this->roles->contains($role);
     }
 
     public function isSuperAdmin(): bool

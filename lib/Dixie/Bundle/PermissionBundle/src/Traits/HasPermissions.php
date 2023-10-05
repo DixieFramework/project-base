@@ -11,7 +11,7 @@ trait HasPermissions
 {
     public function hasPermissionTo(Permission $permission): bool
     {
-        return $this->getPermissions()->contains($permission) || $this->hasPermissionViaRole($permission);
+        return $this->getAclPermissions()->contains($permission) || $this->hasPermissionViaRole($permission);
     }
 
     public function hasPermissionViaRole(Permission $permission): bool

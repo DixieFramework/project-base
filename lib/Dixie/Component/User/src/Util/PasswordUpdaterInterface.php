@@ -6,9 +6,6 @@ namespace Talav\Component\User\Util;
 
 use Talav\Component\User\Model\UserInterface;
 
-/**
- * @author Christophe Coevoet <stof@notk.org>
- */
 interface PasswordUpdaterInterface
 {
     /**

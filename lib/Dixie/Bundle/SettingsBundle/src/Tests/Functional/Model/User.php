@@ -32,7 +32,7 @@ class User implements SettingsOwnerInterface, UserInterface
         return true;
     }
 
-    public function getRoles()
+    public function getAclRoles()
     {
         return ['ROLE_USER', 'ROLE_ADMIN'];
     }

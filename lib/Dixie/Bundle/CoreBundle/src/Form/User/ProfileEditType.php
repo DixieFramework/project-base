@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Talav\CoreBundle\Form\User;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Talav\Component\User\Model\UserInterface;
 use Talav\CoreBundle\Entity\User;
 use Talav\CoreBundle\Form\AbstractEntityType;
 use Talav\CoreBundle\Form\FormHelper;
@@ -35,7 +36,7 @@ class ProfileEditType extends AbstractEntityType
 
         // username
         $helper->field('username')
-            ->addUserNameType();
+            ->addUserNameFieldType();
 
         // email
         $helper->field('email')
@@ -69,7 +70,7 @@ class ProfileEditType extends AbstractEntityType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => \Talav\UserBundle\Entity\User::class,
+            'data_class' => UserInterface::class,
             'translation_domain' => 'TalavUserBundle'
         ]);
     }

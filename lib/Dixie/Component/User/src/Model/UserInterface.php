@@ -10,13 +10,20 @@ use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface as SymfonyUserInterface;
 use Talav\Component\Resource\Model\ResourceInterface;
+use Talav\Component\User\ValueObject\Username;
 
 interface UserInterface extends SymfonyUserInterface, PasswordAuthenticatedUserInterface, ResourceInterface
 {
     /**
+     * Gets the username.
+     */
+//    public function setUsername(?string $username): void;
+    public function getUsername(): ?Username;
+
+    /**
      * Sets the username.
      */
-    public function setUsername(?string $username): void;
+    public function setUsername(Username|string $username): self;
 
     /**
      * Gets the canonical username in search and sort queries.

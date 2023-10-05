@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Talav\CoreBundle\Form;
 
+use Talav\Component\User\Form\Type\UsernameType;
 use Talav\CoreBundle\Form\Type\CurrentPasswordType;
 use Talav\CoreBundle\Form\Type\PlainType;
 use Talav\CoreBundle\Form\Type\RepeatPasswordType;
@@ -491,6 +492,38 @@ class FormHelper
                 'maxLength' => UserInterface::MAX_USERNAME_LENGTH,
             ])
             ->addTextType();
+    }
+
+    /**
+     * Add a username type.
+     */
+    public function addUserNameFieldType(string|bool $autocomplete = 'username'): self
+    {
+        return $this->updateOption('prepend_icon', 'fa-fw fa-regular fa-user')
+            ->autocomplete($autocomplete)
+            ->constraints(
+                new Constraints\NotBlank([
+                    'message' => 'username.blank',
+                ]),
+                new LettersAndNumbers([
+                    'message' => 'username.letters_and_numbers',
+                ]),
+//                new RegisteredUser([
+//                    'message' => 'username.already_used',
+//                    'field' => 'username'
+//                ]),
+                new Constraints\Length([
+                    'minMessage' => 'username.short',
+                    'maxMessage' => 'username.long',
+                    'min' => UserInterface::MIN_USERNAME_LENGTH,
+                    'max' => UserInterface::MAX_USERNAME_LENGTH,
+                ])
+            )
+            ->updateAttributes([
+                'minLength' => UserInterface::MIN_USERNAME_LENGTH,
+                'maxLength' => UserInterface::MAX_USERNAME_LENGTH,
+            ])
+            ->add(UsernameType::class);
     }
 
     /**

@@ -7,6 +7,7 @@ namespace Talav\UserBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Talav\Component\User\Manager\UserManagerInterface;
 use Talav\CoreBundle\Controller\AbstractController;
 use Talav\CoreBundle\Form\User\UserLoginType;
 use Talav\CoreBundle\Interfaces\RoleInterface;
@@ -26,7 +27,7 @@ use Talav\UserBundle\Event\TalavUserEvents;
 #[AsController]
 class SecurityController extends AbstractController
 {
-	public function __construct(private readonly EventDispatcherInterface $eventDispatcher)
+	public function __construct(private readonly EventDispatcherInterface $eventDispatcher, private UserManagerInterface $userManager)
 	{
 	}
 
