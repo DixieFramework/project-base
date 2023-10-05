@@ -14,6 +14,7 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use Symfony\Component\Security\Http\Authenticator\FormLoginAuthenticator;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Talav\Component\Resource\Manager\ManagerInterface;
 use Talav\Component\User\Manager\UserManagerInterface;
@@ -71,6 +72,8 @@ class RegistrationController extends AbstractController
         private readonly UserManagerInterface       $userManager,
         private readonly ManagerInterface           $profileManager,
         private readonly UserExceptionService       $service,
+        private readonly FormLoginAuthenticator $formLoginAuthenticator,
+
 
         private readonly WorkflowInterface $registrationStateMachine,
 

@@ -18,7 +18,7 @@ class Roles implements \Stringable
         'authentication.value_object.roles.content_manager' => 'ROLE_CONTENT_MANAGER',
     ];
 
-    private readonly array $talav_roles;
+    private readonly array $userRoles;
 
     private function __construct(array $roles = ['ROLE_USER'])
     {
@@ -28,12 +28,12 @@ class Roles implements \Stringable
         }
 
         $roles[]           = 'ROLE_USER';
-        $this->talav_roles = array_unique($roles);
+        $this->userRoles = array_unique($roles);
     }
 
     public function __toString(): string
     {
-        return implode(',', $this->talav_roles);
+        return implode(',', $this->userRoles);
     }
 
     public function getTranslationKey(): string
@@ -48,7 +48,7 @@ class Roles implements \Stringable
 
     public function toArray(): array
     {
-        return $this->talav_roles;
+        return $this->userRoles;
     }
 
     public static function fromArray(array $roles): self
@@ -79,15 +79,15 @@ class Roles implements \Stringable
     public function equals(array|self $roles): bool
     {
         if ($roles instanceof self) {
-            return $roles->talav_roles === $this->talav_roles;
+            return $roles->userRoles === $this->userRoles;
         }
 
-        return $roles === $this->talav_roles;
+        return $roles === $this->userRoles;
     }
 
     public function contains(string $role): bool
     {
-        return in_array($role, $this->talav_roles, true);
+        return in_array($role, $this->userRoles, true);
     }
 
 //    public function removeElement(string $role): bool

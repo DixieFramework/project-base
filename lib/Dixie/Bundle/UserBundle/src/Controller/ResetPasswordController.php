@@ -144,7 +144,7 @@ class ResetPasswordController extends AbstractController
         ];
 
         return (new ResetPasswordEmail())
-            ->to($user->getEmailAddress())
+            ->to($user->getEmail())
             ->from($this->getAddressFrom())
             ->subject($this->trans('resetting.request.title'))
             ->update(Importance::HIGH, $this->getTranslator())

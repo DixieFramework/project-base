@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Talav\UserBundle\Controller\Frontend;
+namespace Talav\UserBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Messenger\MessageBusInterface;

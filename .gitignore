@@ -35,3 +35,4 @@ phpstan.neon
 ###> liip/imagine-bundle ###
 /public/media/cache/
 ###< liip/imagine-bundle ###
+/lib/Dixie/Bundle/UserBundle/src/Controller/Frontend.zip

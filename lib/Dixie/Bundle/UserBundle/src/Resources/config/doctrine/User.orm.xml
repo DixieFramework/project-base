@@ -7,7 +7,7 @@
 
     <mapped-superclass name="Talav\UserBundle\Entity\User" table="user">
         <!-- value object -->
-        <embedded name="talav_roles" class="Talav\Component\User\ValueObject\Roles" use-column-prefix="false" />
+        <embedded name="userRoles" class="Talav\Component\User\ValueObject\Roles" use-column-prefix="false" />
         <embedded name="username" class="Talav\Component\User\ValueObject\Username" use-column-prefix="false" />
 
 <!--        <field name="username" column="username" length="180" />-->
