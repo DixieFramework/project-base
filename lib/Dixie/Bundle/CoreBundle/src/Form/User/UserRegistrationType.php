@@ -9,10 +9,12 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Talav\CoreBundle\Form\FormHelper;
 use Talav\CoreBundle\Service\ApplicationService;
 use Talav\CoreBundle\Service\CaptchaImageService;
+use Talav\CoreBundle\Service\ContainerService\RouterAwareTrait;
 use Talav\CoreBundle\Traits\TranslatorAwareTrait;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Symfony\Contracts\Service\ServiceSubscriberTrait;
+use Talav\CoreBundle\Traits\UrlGeneratorAwareTrait;
 use Talav\UserBundle\Entity\User;
 
 /**
@@ -22,6 +24,7 @@ class UserRegistrationType extends AbstractUserCaptchaType implements ServiceSub
 {
     use ServiceSubscriberTrait;
     use TranslatorAwareTrait;
+    use UrlGeneratorAwareTrait;
 
     /**
      * Constructor.
@@ -47,7 +50,7 @@ class UserRegistrationType extends AbstractUserCaptchaType implements ServiceSub
     protected function addFormFields(FormHelper $helper): void
     {
         $helper->field('username')
-            ->label('user.fields.username')
+            ->label(false)
             ->addUserNameFieldType();
 
         $helper->field('email')
@@ -62,7 +65,7 @@ class UserRegistrationType extends AbstractUserCaptchaType implements ServiceSub
         $helper->field('agreeTerms')
             ->notMapped()
             ->rowClass('mb-0')
-            ->label('registration.agreeTerms.label')
+            ->label($this->trans('registration.agreeTerms.label', ['%link%' => $this->urlGenerator->generate('about_policy')], 'TalavUserBundle'))
             ->updateAttribute('data-error', $this->trans('registration.agreeTerms.error', [], 'TalavUserBundle'))
             ->constraints(
                 new IsTrue([

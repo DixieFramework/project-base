@@ -508,10 +508,10 @@ class FormHelper
                 new LettersAndNumbers([
                     'message' => 'username.letters_and_numbers',
                 ]),
-//                new RegisteredUser([
-//                    'message' => 'username.already_used',
-//                    'field' => 'username'
-//                ]),
+                new RegisteredUser([
+                    'message' => 'username.already_used',
+                    'field' => 'username'
+                ]),
                 new Constraints\Length([
                     'minMessage' => 'username.short',
                     'maxMessage' => 'username.long',

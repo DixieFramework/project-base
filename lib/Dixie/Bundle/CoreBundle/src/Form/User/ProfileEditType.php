@@ -36,6 +36,7 @@ class ProfileEditType extends AbstractEntityType
 
         // username
         $helper->field('username')
+            ->label(false)
             ->addUserNameFieldType();
 
         // email

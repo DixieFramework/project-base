@@ -1,0 +1,21 @@
+.nav-pills-primary-soft .nav-item {
+    padding: 0 !important;
+    margin-right: 2px;
+    margin-left: 2px;
+    border-bottom: 0 !important;
+}
+.nav-pills-primary-soft .nav-link {
+    padding: 0.5rem 0.8rem !important;
+    color: var(--bs-link-color);
+    font-weight: 500;
+    border-radius: 0.5rem;
+}
+.nav-pills-primary-soft .nav-link.active, .nav-pills-primary-soft .nav-link:hover {
+    color: var(--bs-primary);
+    background-color: rgba(var(--bs-primary-rgb), 0.1);
+}
+
+.nav-pills-primary-soft.flex-column .nav-item {
+    margin-bottom: 3px;
+    margin-right: 0;
+}

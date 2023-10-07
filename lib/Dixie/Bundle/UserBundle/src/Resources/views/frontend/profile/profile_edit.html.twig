@@ -9,8 +9,10 @@
                 'data-check-name': url('ajax_check_user_name'),
                 'data-check-email': url('ajax_check_user_email')}) -%}
 {% block container_class 'container mt-n4' %}
-{%- block card_container_class ' col-xl-7 col-lg-8 col-md-7 order-md-1 mb-5' -%}
-{%- block card_sidebar_class ' col-lg-4 col-md-5 offset-xl-1 order-md-2 mb-5' -%}
+{%- block card_container_class ' col-lg-8 col-xl-8 offset-xl-1' -%}
+{%- block card_sidebar_class ' col-lg-4 col-xl-3' -%}
+{#{%- block card_container_class ' col-xl-8 col-lg-9 col-md-8 order-md-1 mb-5' -%}#}
+{#{%- block card_sidebar_class ' col-lg-3 col-md-4 offset-xl-2 order-md-2 mb-5' -%}#}
 {% block card_sidebar %}
     {% include '@TalavUser/profile/_side_menu.html.twig' with {'user': app.user} %}
 {% endblock %}

@@ -18,11 +18,15 @@ final class UsernameType extends AbstractType implements DataMapperInterface
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('username', TextType::class, [
-            'label' => false,
+            'label' => 'authentication.forms.labels.username',
             //'authentication.forms.labels.username',
+            'translation_domain' => 'TalavUserBundle',
             'attr' => [
                 'placeholder' => 'authentication.forms.labels.placeholders.username',
             ],
+            'row_attr' => [
+                'class' => 'mb-0'
+            ]
         ])->setDataMapper($this);
     }
 
@@ -42,7 +46,7 @@ final class UsernameType extends AbstractType implements DataMapperInterface
                 'autocomplete' => 'username',
                 'minLength' => UserInterface::MIN_USERNAME_LENGTH,
                 'maxLength' => UserInterface::MAX_USERNAME_LENGTH,
-            ]
+            ],
         ])->setDefault('prepend_icon', 'fa-fw fa-regular fa-user');
 
         return $resolver;
