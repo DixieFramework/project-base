@@ -5,13 +5,18 @@ declare(strict_types=1);
 namespace Talav\UserBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Requirement\Requirement;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserInterface as SymfonyUserInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Talav\Component\Resource\Manager\ManagerInterface;
 use Talav\Component\User\Manager\UserManagerInterface;
+use Talav\Component\User\Model\UserInterface;
 use Talav\CoreBundle\Controller\AbstractController;
 use Talav\CoreBundle\Enums\FlashType;
 use Talav\CoreBundle\Form\User\ProfileChangePasswordType;
@@ -27,6 +32,11 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Talav\CoreBundle\Utils\TypeCast;
 use Talav\ProfileBundle\Entity\UserRelation;
 use Talav\SettingsBundle\Trait\SettingManagerAwareTrait;
+use Talav\UserBundle\Event\FilterUserResponseEvent;
+use Talav\UserBundle\Event\FormEvent;
+use Talav\UserBundle\Event\GetResponseUserEvent;
+use Talav\UserBundle\Event\TalavUserEvents;
+use Talav\UserBundle\Event\UserFormEvent;
 
 /**
  * Controller for user profile.
@@ -39,6 +49,7 @@ class ProfileController extends AbstractController
 	use SettingManagerAwareTrait;
 
 	public function __construct(
+        private readonly EventDispatcherInterface $eventDispatcher,
         private UserManagerInterface $userManager,
         private TranslatorInterface $translator,
         private MessageBusInterface $messageBus,
@@ -72,7 +83,8 @@ class ProfileController extends AbstractController
     #[Route(path: '/edit', name: 'user_profile_edit')]
     public function editProfil(Request $request, #[CurrentUser] UserInterface $user, EntityManagerInterface $manager, ManagerInterface $userPropertyManager): Response
     {
-//        $userProperty = $userPropertyManager->create();
+        if (false) {
+            //        $userProperty = $userPropertyManager->create();
 //        $userProperty->setUser($this->getUser());
 //        $userProperty->setName('Lolz');
 //        $userProperty->setString('Haha');
@@ -84,36 +96,51 @@ class ProfileController extends AbstractController
 //
 //	    dd($property);
 
-        if (false) {
-            $user1 = $this->userManager->findUserByUsername('root');
-            $user2 = $this->userManager->findUserByUsername('user0');
-            dd($this->entityManager->getRepository(UserRelation::class)->findRelationBetween($user1, $user2));
-        }
+            if (false) {
+                $user1 = $this->userManager->findUserByUsername('root');
+                $user2 = $this->userManager->findUserByUsername('user0');
+                dd($this->entityManager->getRepository(UserRelation::class)->findRelationBetween($user1, $user2));
+            }
 
-        if (false) {
+            if (false) {
 
-        /** @var \Talav\UserBundle\Model\UserInterface $user */
-        $user = $this->userManager->findUserByUsername('root');
+                /** @var \Talav\UserBundle\Model\UserInterface $user */
+                $user = $this->userManager->findUserByUsername('root');
 //        $user->setMetadata('PROFILE_COMPLETED','0');
 //        $this->userManager->update($user);
 
-        dd(TypeCast::try($user->getMetadataValue('PROFILE_COMPLETED'), 'string'));
+                dd(TypeCast::try($user->getMetadataValue('PROFILE_COMPLETED'), 'string'));
 
-        $user1 = $this->userManager->findUserByUsername('root');
-        $user2 = $this->userManager->findUserByUsername('user0');
+                $user1 = $this->userManager->findUserByUsername('root');
+                $user2 = $this->userManager->findUserByUsername('user0');
 
-        dd($this->entityManager->getRepository(UserRelation::class)->findUnconfirmedRelationBetween($user1, $user2));
+                dd($this->entityManager->getRepository(UserRelation::class)->findUnconfirmedRelationBetween($user1, $user2));
+            }
         }
 
+        if (!$user instanceof UserInterface) {
+            throw new AccessDeniedException('This user does not have access to this section.');
+        }
+
+        $event = new GetResponseUserEvent($user, $request);
+        $this->eventDispatcher->dispatch($event, TalavUserEvents::PROFILE_EDIT_INITIALIZE);
+
+        if (null !== $event->getResponse()) {
+            return $event->getResponse();
+        }
 
 	    $form = $this->createForm(ProfileEditType::class, $user);
         if ($this->handleRequestForm($request, $form)) {
+//            $event = new FormEvent($form, $request);
+//            $this->eventDispatcher->dispatch($event, TalavUserEvents::COMPLETE_PROFILE_SUCCESS);
+
             $this->userManager->update($user, true);
 
             $message = $this->trans('profile.edit.success', ['%username%' => $user->getUserIdentifier()], null, null);
             $this->addFlashMessage(FlashType::SUCCESS, $message);
 
-            return $this->redirectToRoute('user_profile_edit');
+            return $this->updateUser($request, $form, $user);
+            //return $this->redirectToRoute('user_profile_edit');
         }
 
         return $this->render('@TalavUser/frontend/profile/profile_edit.html.twig', [
@@ -160,5 +187,24 @@ class ProfileController extends AbstractController
 //        }
 
         return $this->renderProfile(false, $user, $loggedInMember);
+    }
+
+    private function updateUser(Request $request, FormInterface $form, UserInterface $user): Response
+    {
+        $event = new UserFormEvent($user, $form, $request);
+        $this->eventDispatcher->dispatch($event, TalavUserEvents::PROFILE_EDIT_SUCCESS);
+
+        $this->userManager->update($user, true);
+
+        if (null === $response = $event->getResponse()) {
+            $response = new RedirectResponse($this->generateUrl('user_profile_edit'));
+        }
+
+        $this->eventDispatcher->dispatch(
+            new FilterUserResponseEvent($user, $request, $response),
+            TalavUserEvents::PROFILE_EDIT_COMPLETED
+        );
+
+        return $response;
     }
 }

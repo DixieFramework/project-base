@@ -13,7 +13,7 @@
                 <div class="infos">
                     <div class="bg-body-tertiary p-3 rounded">
                         <div class="d-flex justify-content-between">
-                            <h6 class="mb-1"><a href="{{ path('user_profile_view', {'username': comment.author.username}) }}">{{ comment.author.username }}</a></h6>
+                            <h6 class="mb-1"><a href="{{ path('user_profile_view', {'id':comment.author.profile.id,'username': comment.author.username}) }}">{{ comment.author.username }}</a></h6>
                             <small class="ms-2" title="{{ comment.publishedAt|format_datetime('medium', 'medium')|capitalize }}">{{ comment.publishedAt|diff_date }}</small>
                         </div>
                         <p class="small mb-0">{{ comment.message|striptags('<i><b>')|nl2br|parse_tags|raw }}</p>

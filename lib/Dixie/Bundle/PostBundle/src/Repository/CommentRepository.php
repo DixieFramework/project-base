@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Talav\Component\Resource\Repository\ResourceRepository;
+use Talav\Component\User\Model\UserInterface;
 use Talav\PostBundle\Entity\Comment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -73,7 +74,36 @@ class CommentRepository extends ResourceRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function findAllByEventQueryBuilder(PostInterface $post): QueryBuilder
+    public function findAllQueryBuilder($criteria, $orderBy = ['id' => 'DESC'], $limit = null, $offset = null): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('c');
+
+        $qb->leftJoin('c.parent','p')
+            ->where('p.id IS NULL')
+        ;
+
+        foreach ($criteria as $property => $value) {
+            if ($property == 'post') {
+                $qb ->andWhere('c.post = :post')
+                    ->setParameter('post', $criteria['post']);
+            } elseif ($property == 'song') {
+                $qb ->andWhere('c.song = :song')
+                    ->setParameter('song', $criteria['song']);
+            } else {
+                $qb ->andWhere('s.'. $property .' = :' . $property . '')
+                    ->setParameter($property,$value)
+                ;
+            }
+        }
+
+        foreach ($orderBy as $key => $value) {
+            $qb->orderBy('c.'.$key,$value);
+        }
+
+        return $qb;
+    }
+
+    public function findAllByPostQueryBuilder(PostInterface $post): QueryBuilder
     {
         return $this
             ->createQueryBuilder('c')
@@ -86,7 +116,7 @@ class CommentRepository extends ResourceRepository
     /**
      * @return Comment[]
      */
-    public function findAllByUser(User $user): array
+    public function findAllByUser(UserInterface $user): array
     {
         return $this
             ->createQueryBuilder('c')

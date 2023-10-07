@@ -15,10 +15,12 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Talav\Component\Resource\Manager\ManagerInterface;
 use Talav\CoreBundle\Controller\AbstractController;
 use Talav\CoreBundle\Interfaces\RoleInterface;
+use Talav\PostBundle\Entity\Comment;
 use Talav\PostBundle\Entity\PostInterface;
 use Talav\PostBundle\Form\Type\CommentType;
 use Talav\PostBundle\Form\Type\PostType;
 use Talav\PostBundle\Repository\CommentRepository;
+use Talav\WebBundle\Service\PaginatorService;
 
 #[AsController]
 #[Route('/post', name: 'talav_post_comment_')]
@@ -30,7 +32,7 @@ class CommentController extends AbstractController
      */
     final public const COMMENTS_PER_PAGE = 10;
 
-    public function __construct(private readonly ManagerInterface $postCommentManager)
+    public function __construct(private readonly ManagerInterface $postCommentManager, private readonly PaginatorService $paginator)
     {
     }
 
@@ -48,7 +50,7 @@ class CommentController extends AbstractController
         }
 
         $comments = $this->createQueryBuilderPaginator(
-            $this->postCommentManager->getRepository()->findAllByEventQueryBuilder($event),
+            $this->postCommentManager->getRepository()->findAllByPostQueryBuilder($event),
             $page,
             self::COMMENTS_PER_PAGE
         );
@@ -64,8 +66,22 @@ class CommentController extends AbstractController
 //    #[ReverseProxy(expires: 'tomorrow')]
     public function list(Post $event, int $page = 1): Response
     {
+//        $name = strtolower((new \ReflectionClass($event))->getShortName());
+//dd($name);
+//        $this->paginator->setClass(Comment::class)
+//            ->setMethod('getNoParentComments')
+//            ->setType('comments')
+//            ->setOrder(['id' => 'DESC'])
+//            ->setCriteria([$name => $event])
+//            ->setParameters(['id' => $event->getId()])
+//            ->setLimit(30)
+//            ->setPage($page);
+//dd($this->paginator->getData());
+
+        $name = strtolower((new \ReflectionClass($event))->getShortName());
+
         $comments = $this->createQueryBuilderPaginator(
-            $this->postCommentManager->getRepository()->findAllByEventQueryBuilder($event),
+            $this->postCommentManager->getRepository()->findAllQueryBuilder([$name => $event]),
             $page,
             self::COMMENTS_PER_PAGE
         );
@@ -96,7 +112,7 @@ class CommentController extends AbstractController
             $this->postCommentManager->update($comment, true);
 
             $comments = $this->createQueryBuilderPaginator(
-                $this->postCommentManager->getRepository()->findAllByEventQueryBuilder($event),
+                $this->postCommentManager->getRepository()->findAllByPostQueryBuilder($event),
                 1,
                 self::COMMENTS_PER_PAGE
             );
