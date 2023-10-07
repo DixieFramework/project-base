@@ -10,9 +10,23 @@
             <!-- Avatar -->
             <div class="avatar avatar-xl mt-n5 mb-3">
                 <a href="#!"><img class="avatar-img rounded border border-tertiary border-3 bg-body-tertiary" src="{% if app.user.avatar %}{{ media_thumb_reference(app.user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar/male.png') }}{% endif %}" alt=""></a>
+                <div class="position-absolute bottom-0 end-0">
+                    <!-- Dropdown START -->
+                    <div class="dropdown mb-2 me-2">
+                        <a href="#" class="icon-xs bg-primary text-white rounded-circle link-opacity-50 link-opacity-100-hover" id="photoActionEdit" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-pencil"></i>
+                        </a>
+
+                        <!-- Dropdown menu -->
+                        <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="photoActionEdit">
+                            <li><a class="dropdown-item" href="{{ path('talav_user_profile_avatar') }}"><i class="fas fa-edit fa-fw pe-1"></i>Edit</a></li>
+                            <li><a class="dropdown-item" href="{{ path('talav_user_profile_avatar') }}"><i class="fas fa-remove fa-fw pe-1"></i>Delete</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
-            {{ asset_image_user(app.user, constant('Talav\\AvatarBundle\\Enum\\AvatarSize::SMALL').value, {'class': 'avatar-img rounded border border-tertiary border-3 bg-body-tertiary'}) }}
+{#            {{ asset_image_user(app.user, constant('Talav\\AvatarBundle\\Enum\\AvatarSize::DEFAULT').value, {'class': 'avatar-img rounded border border-tertiary border-3 bg-body-tertiary'}) }}#}
 
             <!-- Info -->
             <h5 class="mb-0"><a href="#!">{{ user_link(app.user) }}</a></h5>

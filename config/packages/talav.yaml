@@ -210,6 +210,10 @@ talav_media:
                 large:
                     w: 300
                     h: 300
+                square_large:
+                    w: 300
+                    h: 300
+                    fit: crop
                 medium:
                     w: 200
                     h: 200

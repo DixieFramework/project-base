@@ -77,7 +77,12 @@ class ProfileController extends AbstractController
 //        $userProperty->setName('Lolz');
 //        $userProperty->setString('Haha');
 //        $userPropertyManager->update($userProperty, true);
-        dd($userPropertyManager->getRepository()->findOneBy(['name' => 'Lolz']));
+//        $property = $userPropertyManager->getRepository()->findOneByUserAndName($this->getUser(), 'Lolz');
+//		$property->setBoolean(true);
+//		$userPropertyManager->update($property, true);
+//	    $property = $userPropertyManager->getRepository()->findOneByUserAndName($this->getUser(), 'Lolz');
+//
+//	    dd($property);
 
         if (false) {
             $user1 = $this->userManager->findUserByUsername('root');
