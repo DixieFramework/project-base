@@ -16,6 +16,7 @@ final class MediaExtension extends AbstractExtension
             new TwigFunction('media_thumb_reference', [MediaRuntime::class, 'thumbReference']),
             new TwigFunction('media_thumb', [MediaRuntime::class, 'thumb'], ['is_safe' => ['html']]),
             new TwigFunction('media_media', [MediaRuntime::class, 'media'], ['is_safe' => ['html']]),
+            new TwigFunction('asset_image_user', [MediaRuntime::class, 'assetImageUser'], ['is_safe' => ['html']]),
         ];
     }
 }

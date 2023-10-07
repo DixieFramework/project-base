@@ -1,21 +1,25 @@
+{% from '@TalavUser/macros/_macros.html.twig' import user_link %}
+
 <div class="card overflow-hidden">
     <!-- Cover image -->
-    <div class="h-50px" style="background-image:url({{ asset('images/cover/01.jpg') }}); background-position: center; background-size: cover; background-repeat: no-repeat;height:50px!important;"></div>
+    <div class="h-50px border-bottom border-1" style="background-image:url({{ asset('images/cover/01.jpg') }}); background-position: center; background-size: cover; background-repeat: no-repeat;height:50px!important;"></div>
 
     <!-- Card body START -->
     <div class="card-body pt-0">
         <div class="text-center">
             <!-- Avatar -->
-            <div class="avatar avatar-lg mt-n5 mb-3">
-                <a href="#!"><img class="avatar-img rounded border border-white border-3" src="{% if app.user.avatar %}{{ media_thumb_reference(app.user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar.png') }}{% endif %}" alt=""></a>
+            <div class="avatar avatar-xl mt-n5 mb-3">
+                <a href="#!"><img class="avatar-img rounded border border-tertiary border-3 bg-body-tertiary" src="{% if app.user.avatar %}{{ media_thumb_reference(app.user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar/male.png') }}{% endif %}" alt=""></a>
             </div>
+
+            {{ asset_image_user(app.user, constant('Talav\\AvatarBundle\\Enum\\AvatarSize::SMALL').value, {'class': 'avatar-img rounded border border-tertiary border-3 bg-body-tertiary'}) }}
+
             <!-- Info -->
-            <h5 class="mb-0"> <a href="#!">Sam Lanson </a> </h5>
-            <small>Web Developer at Webestica</small>
-            <p class="mt-3">I'd love to change the world, but they won’t give me the source code.</p>
+            <h5 class="mb-0"><a href="#!">{{ user_link(app.user) }}</a></h5>
+{#            <small>user info line here...</small>#}
 
             <!-- User stat START -->
-            <div class="hstack gap-2 gap-xl-3 justify-content-center">
+            <div class="hstack gap-2 gap-xl-3 justify-content-center mt-3">
                 <!-- User stat item -->
                 <div>
                     <h6 class="mb-0">256</h6>

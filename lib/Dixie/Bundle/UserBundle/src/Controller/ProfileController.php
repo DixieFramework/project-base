@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Talav\Component\Resource\Manager\ManagerInterface;
 use Talav\Component\User\Manager\UserManagerInterface;
 use Talav\CoreBundle\Controller\AbstractController;
 use Talav\CoreBundle\Enums\FlashType;
@@ -69,8 +70,15 @@ class ProfileController extends AbstractController
      * Edit the profile of the current user (if any).
      */
     #[Route(path: '/edit', name: 'user_profile_edit')]
-    public function editProfil(Request $request, #[CurrentUser] UserInterface $user, EntityManagerInterface $manager): Response
+    public function editProfil(Request $request, #[CurrentUser] UserInterface $user, EntityManagerInterface $manager, ManagerInterface $userPropertyManager): Response
     {
+        $userProperty = $userPropertyManager->create();
+        $userProperty->setUser($this->getUser());
+        $userProperty->setName('Lolz');
+        $userProperty->setString('Haha');
+        $userPropertyManager->update($userProperty, true);
+        dd($userPropertyManager->getRepository()->findOneBy(['name' => 'Lolz']));
+
         if (false) {
             $user1 = $this->userManager->findUserByUsername('root');
             $user2 = $this->userManager->findUserByUsername('user0');

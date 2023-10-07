@@ -3,7 +3,7 @@
  # - class (string): Additional classes
 #}
 {%- macro user_link(user, options) -%}
-    <a href="{{ path('user_profile_view', { username: user.username|slug }) }}" class="{{ options.class ?? 'fw-light' }}">
+    <a href="{{ path('user_profile_view', { id:user.profile.id, username: user.username|slug }) }}" class="{{ options.class ?? 'fw-light' }}">
         {{- (options.prefix ?? false) ? '/u/' -}}
         {{- user.username -}}
     </a>

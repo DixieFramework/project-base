@@ -35,3 +35,18 @@
         {{ text }}
     </span>
 {%- endmacro profile_gender_identifier -%}
+
+{%- macro default_gender_avatar(user) -%}
+    {% from '@TalavUser/macros/_macros.html.twig' import user_link %}
+
+    <span class="fw-light ms-1">
+    {%- if user.profile.gender is constant('Talav\\ProfileBundle\\Enum\\Gender::Male') -%}
+        M
+    {%- elseif user.profile.gender is constant('Talav\\ProfileBundle\\Enum\\Gender::Female') -%}
+        F
+    {%- else -%}
+        N
+    {%- endif -%}
+        {{ ageYear(user.profile.birthdate) }}
+    </span>
+{%- endmacro default_gender_avatar %}

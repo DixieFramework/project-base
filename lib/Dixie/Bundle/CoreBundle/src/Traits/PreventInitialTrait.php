@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace Talav\CoreBundle\Traits;
+
 trait PreventInitialTrait
 {
     /**

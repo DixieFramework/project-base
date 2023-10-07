@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Talav\ProfileBundle\Entity\UserProperty" repository-class="Talav\ProfileBundle\Repository\UserPropertyRepository" table="profile_user_property">
+
+    <unique-constraints>
+      <unique-constraint name="unique_user_property_user_name" columns="user_id,name"/>
+    </unique-constraints>
+
+    <id name="id" type="integer">
+      <generator strategy="AUTO"/>
+    </id>
+
+    <field name="name" type="string" length="50"/>
+    <field name="value" type="string" nullable="true"/>
+
+    <many-to-one field="user" target-entity="Talav\UserBundle\Model\UserInterface" inversed-by="properties">
+      <join-column name="user_id" nullable="false" on-delete="CASCADE" />
+<!--      <join-columns>-->
+<!--        <join-column name="user_id" nullable="false" on-delete="CASCADE"/>-->
+<!--      </join-columns>-->
+    </many-to-one>
+
+  </entity>
+</doctrine-mapping>

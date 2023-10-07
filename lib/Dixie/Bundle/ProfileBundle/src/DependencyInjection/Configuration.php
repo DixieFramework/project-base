@@ -16,6 +16,7 @@ use Talav\ProfileBundle\Entity\Notification;
 use Talav\ProfileBundle\Entity\Profile;
 use Talav\ProfileBundle\Entity\Report;
 use Talav\ProfileBundle\Entity\UserFriend;
+use Talav\ProfileBundle\Entity\UserProperty;
 use Talav\ProfileBundle\Entity\UserRelation;
 use Talav\ProfileBundle\Repository\FriendshipRepository;
 use Talav\ProfileBundle\Repository\FriendshipRequestRepository;
@@ -165,6 +166,18 @@ class Configuration implements ConfigurationInterface
                                     ->children()
                                         ->scalarNode('model')->defaultValue(Report::class)->end()
                                         ->scalarNode('repository')->defaultValue(ReportRepository::class)->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('user_property')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(UserProperty::class)->end()
+                                        ->scalarNode('repository')->defaultValue(UserProperty::class)->end()
                                     ->end()
                                 ->end()
                             ->end()
