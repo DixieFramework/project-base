@@ -72,11 +72,11 @@ class ProfileController extends AbstractController
     #[Route(path: '/edit', name: 'user_profile_edit')]
     public function editProfil(Request $request, #[CurrentUser] UserInterface $user, EntityManagerInterface $manager, ManagerInterface $userPropertyManager): Response
     {
-        $userProperty = $userPropertyManager->create();
-        $userProperty->setUser($this->getUser());
-        $userProperty->setName('Lolz');
-        $userProperty->setString('Haha');
-        $userPropertyManager->update($userProperty, true);
+//        $userProperty = $userPropertyManager->create();
+//        $userProperty->setUser($this->getUser());
+//        $userProperty->setName('Lolz');
+//        $userProperty->setString('Haha');
+//        $userPropertyManager->update($userProperty, true);
         dd($userPropertyManager->getRepository()->findOneBy(['name' => 'Lolz']));
 
         if (false) {

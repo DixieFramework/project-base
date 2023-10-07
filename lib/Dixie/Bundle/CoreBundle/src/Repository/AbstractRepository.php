@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Talav\CoreBundle\Repository;
 
+use Talav\Component\Resource\Repository\ResourceRepository;
 use Talav\CoreBundle\Attribute\SortableEntity;
 use Talav\CoreBundle\Entity\AbstractEntity;
 use Talav\CoreBundle\Utils\StringUtils;
@@ -19,7 +20,7 @@ use Doctrine\ORM\QueryBuilder;
  *
  * @template-extends ServiceEntityRepository<T>
  */
-abstract class AbstractRepository extends ServiceEntityRepository
+abstract class AbstractRepository extends ResourceRepository //extends ServiceEntityRepository
 {
     /**
      * The default entity alias used to create query builder (value = 'e') .

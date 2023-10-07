@@ -25,6 +25,7 @@ use Talav\ProfileBundle\Repository\MessageRepository;
 use Talav\ProfileBundle\Repository\NotificationRepository;
 use Talav\ProfileBundle\Repository\ReportRepository;
 use Talav\ProfileBundle\Repository\UserFriendRepository;
+use Talav\ProfileBundle\Repository\UserPropertyRepository;
 use Talav\ProfileBundle\Repository\UserRelationRepository;
 
 /**
@@ -177,7 +178,7 @@ class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode('model')->defaultValue(UserProperty::class)->end()
-                                        ->scalarNode('repository')->defaultValue(UserProperty::class)->end()
+                                        ->scalarNode('repository')->defaultValue(UserPropertyRepository::class)->end()
                                     ->end()
                                 ->end()
                             ->end()

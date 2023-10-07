@@ -127,8 +127,44 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    #[Route('/step-two', name: 'register_step_two')]
-    public function stepTwo(
+	#[Route('/register/step-two', name: 'register_step_two')]
+	public function stepTwo(
+		Request $request,
+		UserAuthenticatorInterface $userAuthenticator,
+		UserFormAuthenticator $authenticator,
+		WorkflowInterface $registrationStateMachine,
+	): ?Response {
+		$session = $request->getSession();
+		/** @var UserInterface $user */
+		$user = $session->get('user_data');
+
+		if (! $user instanceof UserInterface) {
+			return $this->redirectToRoute('talav_user_registration_register_step_one');
+		}
+
+		$card = new Profile();
+		$cardForm = $this->createForm(ProfileFormType::class, $card);
+		$cardForm->handleRequest($request);
+
+		if ($cardForm->isSubmitted() && $cardForm->isValid()) {
+			// send card details to stripe API
+
+			// persist user details
+			$registrationStateMachine->apply($user, RegistrationWorkflowEnum::TRANSITION_TO_COMPLETE->value);
+			$this->entityManager->persist($user);
+			$this->entityManager->flush();
+
+			return $userAuthenticator->authenticateUser($user, $authenticator, $request);
+		}
+
+		return $this->render('@TalavUser/registration/workflow/register_profile.html.twig', [
+			'user' => $user,
+			'form' => $cardForm,
+		]);
+	}
+
+    #[Route('/step-two', name: 'register_step_twozz')]
+    public function stepTwop(
         Request $request,
         UserAuthenticatorInterface $userAuthenticator,
         UserFormAuthenticator $authenticator,
@@ -154,7 +190,7 @@ class RegistrationController extends AbstractController
 			if ($profileForm->isValid()) {
 				$user->setProfile($profile);
 
-				$registrationStateMachine->apply($user, RegistrationWorkflowEnum::TRANSITION_TO_COMPLETE->value);
+				$this->registrationStateMachine->apply($user, RegistrationWorkflowEnum::TRANSITION_TO_COMPLETE->value);
 
 				return $this->updateUser($request, $user, $profileForm);
 			}

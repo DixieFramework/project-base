@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Talav\CoreBundle\Entity;
 
-use App\Repository\PropertyRepository;
+use Talav\CoreBundle\Repository\PropertyRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 

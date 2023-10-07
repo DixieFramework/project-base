@@ -80,9 +80,9 @@ class ProfileFormType extends AbstractType
                 'class' => Gender::class,
                 'label' => 'label.gender',
                 'translation_domain' => 'enums',
-                'expanded' => true,
+                'expanded' => false,
                 'label_attr' => [
-                    'class' => 'radio-custom'
+                    'class' => 'radio-inline'
                 ],
                 'choice_label' => function(Gender $gender) {
                     return $this->translator->trans('gender.' . $gender->value, [], 'enums');

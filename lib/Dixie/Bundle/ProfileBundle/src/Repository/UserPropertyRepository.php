@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Talav\ProfileBundle\Repository;
 
+use Talav\Component\Resource\Repository\RepositoryInterface;
+use Talav\CoreBundle\Repository\AbstractRepository;
 use Talav\ProfileBundle\Entity\UserProperty;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -13,12 +15,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *
  * @template-extends AbstractRepository<UserProperty>
  */
-class UserPropertyRepository extends AbstractRepository
+class UserPropertyRepository extends AbstractRepository implements RepositoryInterface
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, UserProperty::class);
-    }
+//    public function __construct(ManagerRegistry $registry)
+//    {
+//        parent::__construct($registry, UserProperty::class);
+//    }
 
     /**
      * Gets all properties for the given user.

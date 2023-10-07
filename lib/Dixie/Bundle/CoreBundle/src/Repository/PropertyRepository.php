@@ -1,18 +1,11 @@
 <?php
-/*
- * This file is part of the Calculation package.
- *
- * (c) bibi.nu <bibi@bibi.nu>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 declare(strict_types=1);
 
-namespace App\Repository;
+namespace Talav\CoreBundle\Repository;
 
-use App\Entity\Property;
+use Talav\Component\Resource\Repository\RepositoryInterface;
+use Talav\CoreBundle\Entity\Property;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -20,12 +13,12 @@ use Doctrine\Persistence\ManagerRegistry;
  *
  * @template-extends AbstractRepository<Property>
  */
-class PropertyRepository extends AbstractRepository
+class PropertyRepository extends AbstractRepository implements RepositoryInterface
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, Property::class);
-    }
+//    public function __construct(ManagerRegistry $registry)
+//    {
+//        parent::__construct($registry, Property::class);
+//    }
 
     /**
      * Gets a property for the given name.

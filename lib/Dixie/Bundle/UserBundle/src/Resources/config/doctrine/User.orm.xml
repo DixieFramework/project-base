@@ -87,6 +87,8 @@
                 <option name="default">Default Value</option>
             </options>
         </field>
+
+        <field name="state" column="state" nullable="true" />
     </mapped-superclass>
 
 </doctrine-mapping>

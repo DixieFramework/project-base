@@ -1,18 +1,16 @@
 {% extends '@TalavWeb/cards/card_edit_center.html.twig' %}
 {% trans_default_domain 'TalavProfileBundle' %}
 {# parameters #}
-{%- set title = 'registration.register.title' -%}
+{%- set title = 'registration.register.step_2_title' -%}
 {%- set title_icon = 'user-plus fa-fw me-2' -%}
-{%- set title_domain = 'TalavProfileBundle' -%}
+{%- set title_domain = 'TalavUserBundle' -%}
 {%- set submit_text = 'registration.register.submit' -%}
-{%- set submit_domain = 'TalavProfileBundle' -%}
+{%- set submit_domain = 'TalavUserBundle' -%}
 {%- set cancel_path = false -%}
 {%- set form_attr = form_attr|default({})|merge({'data-equal_to': 'password.mismatch'|trans([], 'validators')}) -%}
-
+{%- block card_container_class ' col-xl-4 offset-xl-4 my-auto h-75' -%}
 {% block actions_form %}
 {{ parent() }}
-<a href="{{ path('app_login') }}" class="align-self-center" title="{{ 'security.login.description'|trans }}">{{ 'security.login.submit'|trans({},'TalavUserBundle') }}</a>
-<a href="{{ path('app_forgot_password_request') }}" class="align-self-center" title="{{ 'resetting.request.description'|trans({}, 'TalavUserBundle') }}">{{ 'resetting.link'|trans({}, 'TalavUserBundle') }}</a>
 {% endblock %}
 
 {% block javascripts -%}
