@@ -2,10 +2,16 @@
 {# parameters #}
 {%- set title = 'profile.edit.title' -%}
 {%- set title_icon = 'user-gear fa-fw me-2' -%}
+{%- set title_domain = 'TalavUserBundle' -%}
 {%- set cancel_path = path('homepage') -%}
 {%- set form_attr = form_attr|default({})|merge({
                         'data-check-name': url('ajax_check_user_name'),
                         'data-check-email': url('ajax_check_user_email')}) -%}
+{%- block card_container_class ' col-lg-8 col-xl-8 offset-xl-1' -%}
+{%- block card_sidebar_class ' col-lg-4 col-xl-3' -%}
+{% block header %}
+{% include '@TalavUser/profile/_tabs.html.twig' with {'user': app.user} %}
+{% endblock %}
 {% block card_sidebar %}
 {% include '@TalavUser/profile/_side_menu.html.twig' with {'user': app.user} %}
 {% endblock %}

@@ -72,7 +72,7 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('user_profile_change_password');
         }
 
-        return $this->render('@TalavUser/frontend/profile/profile_change_password.html.twig', [
+        return $this->render('@TalavUser/profile/profile_change_password.html.twig', [
             'form' => $form,
         ]);
     }
@@ -143,7 +143,7 @@ class ProfileController extends AbstractController
             //return $this->redirectToRoute('user_profile_edit');
         }
 
-        return $this->render('@TalavUser/frontend/profile/profile_edit.html.twig', [
+        return $this->render('@TalavUser/profile/profile_edit.html.twig', [
             'form' => $form,
         ]);
     }
