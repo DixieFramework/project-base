@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Talav\UserBundle\Controller;
 
+use AutoMapperPlus\AutoMapperInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Groshy\Entity\Profile;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Routing\RouterInterface;
@@ -72,15 +74,17 @@ class RegistrationController extends AbstractController
         private readonly UserManagerInterface       $userManager,
         private readonly ManagerInterface           $profileManager,
         private readonly UserExceptionService       $service,
-        private readonly FormLoginAuthenticator $formLoginAuthenticator,
-
+        private readonly FormLoginAuthenticator     $formLoginAuthenticator,
+	    private readonly AutoMapperInterface        $mapper,
+	    private readonly MessageBusInterface        $bus,
+	    private iterable                            $parameters,
 
         private readonly WorkflowInterface $registrationStateMachine,
 
     ) {
     }
 
-    #[Route('/step-one', name: 'register_step_one')]
+    #[Route('/step/1', name: 'register_step_one')]
     public function stepOne(Request $request, UserPasswordHasherInterface $userPasswordHasher): ?Response
     {
         $session = $request->getSession();
@@ -127,44 +131,8 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-	#[Route('/register/step-two', name: 'register_step_two')]
-	public function stepTwo(
-		Request $request,
-		UserAuthenticatorInterface $userAuthenticator,
-		UserFormAuthenticator $authenticator,
-		WorkflowInterface $registrationStateMachine,
-	): ?Response {
-		$session = $request->getSession();
-		/** @var UserInterface $user */
-		$user = $session->get('user_data');
-
-		if (! $user instanceof UserInterface) {
-			return $this->redirectToRoute('talav_user_registration_register_step_one');
-		}
-
-		$card = new Profile();
-		$cardForm = $this->createForm(ProfileFormType::class, $card);
-		$cardForm->handleRequest($request);
-
-		if ($cardForm->isSubmitted() && $cardForm->isValid()) {
-			// send card details to stripe API
-
-			// persist user details
-			$registrationStateMachine->apply($user, RegistrationWorkflowEnum::TRANSITION_TO_COMPLETE->value);
-			$this->entityManager->persist($user);
-			$this->entityManager->flush();
-
-			return $userAuthenticator->authenticateUser($user, $authenticator, $request);
-		}
-
-		return $this->render('@TalavUser/registration/workflow/register_profile.html.twig', [
-			'user' => $user,
-			'form' => $cardForm,
-		]);
-	}
-
-    #[Route('/step-two', name: 'register_step_twozz')]
-    public function stepTwop(
+    #[Route('/step/2', name: 'register_step_two')]
+    public function stepTwo(
         Request $request,
         UserAuthenticatorInterface $userAuthenticator,
         UserFormAuthenticator $authenticator,

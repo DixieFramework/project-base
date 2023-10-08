@@ -171,7 +171,7 @@ final class Configuration implements ConfigurationInterface
                         ->arrayNode('form')
                             ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('type')->defaultValue(RegistrationFormType::class)->end()
+                                ->scalarNode('type')->defaultValue(\Talav\CoreBundle\Form\User\UserRegistrationType::class)->end()
                                 ->scalarNode('model')->defaultValue(RegistrationFormModel::class)->end()
                                 ->arrayNode('validation_groups')
                                     ->prototype('scalar')->end()

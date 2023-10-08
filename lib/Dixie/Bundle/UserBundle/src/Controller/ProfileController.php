@@ -86,7 +86,7 @@ class ProfileController extends AbstractController
     #[Route(path: '/edit', name: 'user_profile_edit')]
     public function editProfil(Request $request, #[CurrentUser] UserInterface $user, EntityManagerInterface $manager, ManagerInterface $userPropertyManager): Response
     {
-        dd($user->getProfile()->isBlocked($this->userManager->findUserByUsername('user')->getProfile()));
+//        dd($user->getProfile()->isBlocked($this->userManager->findUserByUsername('user')->getProfile()));
 
 		if (false) {
             //        $userProperty = $userPropertyManager->create();
@@ -171,10 +171,12 @@ class ProfileController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-//        dd($this->entityManager->getRepository(GalleryImage::class)->findFreshImagesLimit(5));
+        $photos = $this->entityManager->getRepository(GalleryImage::class)->findFreshImagesLimit(5);
+
         return $this->render('@TalavUser/profile/profile_view.html.twig', [
             'user' => $user,
-            'profile' => $profile
+            'profile' => $profile,
+	        'photos' => $photos
         ]);
 
         if (null !== $username) {

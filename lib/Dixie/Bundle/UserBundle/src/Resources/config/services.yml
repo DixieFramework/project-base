@@ -47,6 +47,12 @@ services:
 #                form_type: '%talav_user.registration.form_type%'
 #                form_model: '%talav_user.registration.form_model%'
 #                form_validation_groups: '%talav_user.registration.form_validation_groups%'
+    Talav\UserBundle\Controller\RegistrationController:
+        arguments:
+            $parameters:
+                form_type: '%talav_user.registration.form_type%'
+                form_model: '%talav_user.registration.form_model%'
+                form_validation_groups: '%talav_user.registration.form_validation_groups%'
 
     Talav\UserBundle\EventSubscriber\:
         resource: '../../EventSubscriber'

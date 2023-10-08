@@ -125,6 +125,7 @@
         <div class="col-lg-4">
             <div class="row g-4">
 
+                {% if photos|length > 0 %}
                 <!-- Card START -->
                 <div class="col-md-6 col-lg-12">
                     <div class="card">
@@ -138,44 +139,21 @@
                         <!-- Card body START -->
                         <div class="card-body position-relative">
                             <div class="row g-2">
+                                {% for photo in photos %}
                                 <!-- Photos item -->
-                                <div class="col-6">
+                                <div class="col-{% if loop.index == 1 or loop.index == 2 %}6{% else %}4{% endif %}">
                                     <a href="{{ asset('images/albums/01.jpg') }}" data-gallery="image-popup" data-glightbox="">
-                                        <img class="rounded img-fluid" src="{{ asset('images/albums/01.jpg') }}" alt="">
+                                        <img class="rounded img-fluid" src="{{ asset(photo.image.filePath)|imagine_filter('gallery_image_filter_small') }}" alt="">
                                     </a>
                                 </div>
-                                <!-- Photos item -->
-                                <div class="col-6">
-                                    <a href="{{ asset('images/albums/01.jpg') }}" data-gallery="image-popup" data-glightbox="">
-                                        <img class="rounded img-fluid" src="{{ asset('images/albums/01.jpg') }}" alt="">
-                                    </a>
-                                </div>
-                                <!-- Photos item -->
-                                <div class="col-4">
-                                    <a href="{{ asset('images/albums/01.jpg') }}" data-gallery="image-popup" data-glightbox="">
-                                        <img class="rounded img-fluid" src="{{ asset('images/albums/01.jpg') }}" alt="">
-                                    </a>
-                                </div>
-                                <!-- Photos item -->
-                                <div class="col-4">
-                                    <a href="{{ asset('images/albums/01.jpg') }}" data-gallery="image-popup" data-glightbox="">
-                                        <img class="rounded img-fluid" src="{{ asset('images/albums/01.jpg') }}" alt="">
-                                    </a>
-                                </div>
-                                <!-- Photos item -->
-                                <div class="col-4">
-                                    <a href="{{ asset('images/albums/01.jpg') }}" data-gallery="image-popup" data-glightbox="">
-                                        <img class="rounded img-fluid" src="{{ asset('images/albums/01.jpg') }}" alt="">
-                                    </a>
-                                    <!-- glightbox Albums left bar END  -->
-                                </div>
+                                {% endfor %}
                             </div>
                         </div>
                         <!-- Card body END -->
                     </div>
                 </div>
                 <!-- Card END -->
-
+                {% endif %}
             </div>
         </div>
         <!-- Left sidebar END -->
