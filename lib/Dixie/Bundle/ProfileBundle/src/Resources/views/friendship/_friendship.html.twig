@@ -12,7 +12,7 @@
             </div>
             <!-- Info -->
             <div class="ms-2">
-                <h6 class="mb-0 fw-light"><a href="{{ path('user_profile_view', {'username': friendship.friend.user.username|slug}) }}">{{ friendship.friend.user.username }}</a></h6>
+                <h6 class="mb-0 fw-light"><a href="{{ path('user_profile_view', {'id':friendship.friend.user.profile.id, 'username': friendship.friend.user.username|slug}) }}">{{ friendship.friend.user.username }}</a></h6>
             </div>
         </div>
     </div>

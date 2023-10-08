@@ -54,10 +54,10 @@ abstract class User extends AbstractUser implements UserInterface, \Serializable
     protected ?MediaInterface $avatar = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserFriend::class, cascade: ['persist', 'remove'])]
-    private Collection $friendRequests;
+    protected Collection $friendRequests;
 
     #[ORM\OneToMany(mappedBy: 'friend', targetEntity: UserFriend::class, cascade: ['persist', 'remove'])]
-    private Collection $acceptedFriendRequests;
+    protected Collection $acceptedFriendRequests;
 
 	#[ORM\OneToMany(targetEntity: UserRelation::class, mappedBy: 'owner')]
     protected $sendedUserRelations;
@@ -102,8 +102,6 @@ abstract class User extends AbstractUser implements UserInterface, \Serializable
 
     public function __construct()
     {
-        parent::__construct();
-
         $this->friendRequests = new ArrayCollection();
         $this->acceptedFriendRequests = new ArrayCollection();
 
@@ -115,6 +113,8 @@ abstract class User extends AbstractUser implements UserInterface, \Serializable
         $this->permissions    = new ArrayCollection();
 
         $this->flags = [];
+
+        parent::__construct();
     }
 
     /**

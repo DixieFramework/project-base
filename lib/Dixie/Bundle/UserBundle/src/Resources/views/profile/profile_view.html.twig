@@ -1,0 +1,260 @@
+{% extends '@TalavWeb/layouts/default.html.twig' %}
+{# parameters #}
+{%- set title = 'profile.view.title' -%}
+{%- set title_domain = 'TalavUserBundle' -%}
+{%- set title_icon = 'user' -%}
+{%- set title_parameters = {'%username%': user.username} -%}
+{%- set is_own_profile = user.id is same as app.user.id|default(false) -%}
+{%- set friendship_status = get_user_friendship_status(user) -%}
+{#{% block container_class 'mt-n4' %}#}
+{% block container_class 'container' %}
+{%- block titre '' -%}
+
+{% block header %}
+    <div class="user-area py-4 mt-n4 mb-4 bg-primary bg-opacity-10 border border-bottom border-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Author info START -->
+                    <div class="d-md-flex p-0 p-sm-0 mb-3 text-center text-md-start rounded">
+                        <!-- Avatar -->
+                        <div class=" me-0 me-md-4">
+                            <div class="avatar avatar-xxl">
+                                <div class="avatar-img rounded-circle border border-2 border-white" style="background: url({% if app.user.avatar %}{{ media_thumb_reference(app.user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar/male.png') }}{% endif %}) #ffffff no-repeat center center / cover"></div>
+                            </div>
+                            <!-- Post count -->
+                            <div class="text-center mt-n3 position-relative">
+                                <span class="badge bg-danger fs-6">6 posts</span>
+                            </div>
+                        </div>
+                        <!-- Info -->
+                        <div>
+                            <h2 class="m-0">Louis Ferguson</h2>
+                            <ul class="list-inline">
+                                <li class="list-inline-item"><i class="bi bi-person-fill me-1"></i> An editor at Blogzine</li>
+                                <li class="list-inline-item"><i class="bi bi-geo-alt me-1"></i> New York</li>
+                            </ul>
+                            <p class="my-2">Louis Ferguson is a senior editor for the blogzine and also reports on breaking news based in London. He has written about government, criminal justice, and the role of money in politics since 2015.</p>
+                            <!-- Social icons -->
+                            <ul class="nav justify-content-center justify-content-md-start">
+                                <li class="nav-item">
+                                    <a class="nav-link ps-0 pe-2 fs-5" href="#"><i class="fab fa-facebook-square"></i></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link px-2 fs-5" href="#"><i class="fab fa-twitter-square"></i></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link px-2 fs-5" href="#"><i class="fab fa-linkedin"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Author info END -->
+                </div>
+
+                <div class="col-sm-8">
+                    <div class="user-wrapper">
+                        <div class="d-flex d-md-block d-lg-flex align-items-start pt-lg-2 mb-4">
+{#                            <img class="rounded-circle" src="{{ asset('images/avatar/90x90.jpg') }}" width="90" alt="Annette Black">#}
+                            <div class="avatar avatar-xxl">
+                                <div class="avatar-img rounded-circle border border-2 border-white" style="background: url({% if app.user.avatar %}{{ media_thumb_reference(app.user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar/male.png') }}{% endif %}) #ffffff no-repeat center center / cover"></div>
+                            </div>
+                            <div class="pt-md-2 pt-lg-0 ps-3 ps-md-0 ps-lg-3">
+                                <h2 class="fs-lg mb-0">{{ user.username }}</h2>
+                                <span class="star-rating"><i class="star-rating-icon fas fa-star text-warning"></i><i class="star-rating-icon fas fa-star text-warning"></i><i class="star-rating-icon fas fa-star text-warning"></i><i class="star-rating-icon fas fa-star-half-stroke text-warning"></i><i class="star-rating-icon fas fa-star-half-stroke text-warning"></i></span>
+                                <ul class="list-unstyled fs-sm mt-3 mb-0">
+                                    <li><a class="nav-link fw-normal p-0" href="tel:3025550107"><i class="fas fa-phone opacity-60 me-2"></i>(302) 555-0107</a></li>
+                                    <li><a class="nav-link fw-normal p-0" href="mailto:annette_black@email.com"><i class="fas fa-envelope opacity-60 me-2"></i>annette_black@email.com</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 offset-sm-1 position-relative">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <span>Author Rating</span>
+{#                            <span class="star-rating"><i class="fas fa-star"></i><i class="fas fa-star active"></i><i class="star-rating-icon fi-star-filled active"></i><i class="star-rating-icon fi-star-filled active"></i><i class="star-rating-icon fi-star-filled active"></i></span>#}
+                            <div class="ratings">
+                                <span class="star-rating"><i class="fas fa-star text-warning"></i><i class="fas fa-star active text-warning"></i><i class="star-rating-icon fas fa-star text-warning"></i><i class="star-rating-icon fas fa-star-half-stroke text-warning"></i><i class="star-rating-icon fa fa-star-half-stroke text-warning"></i></span>
+                            </div>
+                        </div>
+                        <div>
+                            <span>Followers</span>
+                            <h4>0</h4>
+                        </div>
+                        <div>
+                            <span>Following</span>
+                            <h4>0</h4>
+                        </div>
+                    </div>
+
+                    <div class="position-absolute bottom-0 end-0">
+                        <div class="d-flex mt-2 mt-sm-0">
+                            <a href="!#" class="btn btn-primary">Message</a>
+                            <a href="!#" class="btn btn-primary ms-2">Add Friend</a>
+{#                            <h6 class="bg-danger py-2 px-3 text-white rounded">14K Follow</h6>#}
+{#                            <h6 class="bg-info py-2 px-3 text-white rounded ms-2">856 Posts</h6>#}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    rfrf
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock header %}
+
+{% block body %}
+    <div class="row g-4">
+        <!-- Main content START -->
+        <div class="col-lg-8 vstack gap-4">
+
+            <div class="card">
+                <!-- Cover image -->
+                <div class="h-200px rounded-top" style="background-image:url({{ asset('images/cover/01.jpg') }}); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
+
+                <!-- Card body START -->
+                <div class="card-body py-0">
+                    <div class="d-sm-flex align-items-start text-center text-sm-start">
+                        <div>
+                            <!-- Avatar -->
+                            <div class="avatar avatar-xxl mt-n5 mb-3">
+                                <div class="avatar-img rounded-circle border border-3 border-white" style="background: url({% if app.user.avatar %}{{ media_thumb_reference(app.user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar/male.png') }}{% endif %}) #ffffff no-repeat center center / cover"></div>
+                                {#                                <img class="avatar-img rounded-circle border border-white border-3" src="assets/images/avatar/07.jpg" alt="">#}
+                            </div>
+                        </div>
+                        <div class="ms-sm-4 mt-sm-3">
+                            <!-- Info -->
+                            <h1 class="mb-0 h5">{{ user.username }} <i class="fas fa-check-circle text-success small ms-1"></i></h1>
+                            <p>{{ get_friendship_count(user) }} Friend{% if get_friendship_count(user) > 1 %}s{% endif %}</p>
+                        </div>
+
+                        <!-- Button -->
+                        <div class="d-flex mt-3 justify-content-center ms-sm-auto">
+                            {% if is_own_profile %}
+                            <button class="btn btn-primary-soft me-2" type="button"><i class="bi bi-pencil-fill pe-1"></i> Edit profile</button>
+                            <div class="dropdown">
+                                <!-- Card share action menu -->
+                                <button class="icon-md btn btn-primary-soft" type="button" id="profileAction2" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+
+                                <!-- Card share action dropdown menu -->
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileAction2">
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-bookmark fa-fw pe-2"></i>Share profile in a message</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-file-earmark-pdf fa-fw pe-2"></i>Save your profile to PDF</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-lock fa-fw pe-2"></i>Lock profile</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-gear fa-fw pe-2"></i>Profile settings</a></li>
+                                </ul>
+                            </div>
+                            {% else %}
+{#                                {{ component('user_friend', {'user':user, 'class': 'hstack gap-4 flex-wrap align-items-center mb-3'}) }}#}
+
+{#                                {{ get_user_friendship_status(user) }}#}
+                                {% if friendship_status == 'no' %}
+                                <a href="{{ path('profile_friendship_request_create', {'username':user.username|slug}) }}" class="btn btn-primary-soft me-2"><i class="fas fa-add pe-1"></i> Add Friend</a>
+                                {% elseif friendship_status == 'incoming' %}
+                                <a href="{{ path('profile_friendship_create', {'username':user.username|slug}) }}" class="btn btn-primary-soft me-2"><i class="fas fa-check pe-1"></i> Accept Friend</a>
+                                {% elseif friendship_status == 'outgoing' %}
+                                <a href="{{ path('profile_friendship_request_delete', {'username':user.username|slug}) }}" class="btn btn-danger-soft me-2"><i class="fas fa-remove pe-1"></i> Cancel Request</a>
+                                {% elseif friendship_status == 'friend' %}
+                                <a href="{{ path('profile_friendship_delete', {'username':user.username|slug}) }}" class="btn btn-danger-soft me-2"><i class="fas fa-remove pe-1"></i> Delete Friend</a>
+                                {% endif %}
+                                <a href="!#" class="btn btn-primary-soft me-2"><i class="fas fa-message pe-1"></i> Send Message</a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+{#                    <!-- List profile -->#}
+{#                    <ul class="list-inline mb-0 text-center text-sm-start mt-3 mt-sm-0">#}
+{#                        <li class="list-inline-item"><i class="bi bi-briefcase me-1"></i> Lead Developer</li>#}
+{#                        <li class="list-inline-item"><i class="bi bi-geo-alt me-1"></i> New Hampshire</li>#}
+{#                        <li class="list-inline-item"><i class="bi bi-calendar2-plus me-1"></i> Joined on Nov 26, 2019</li>#}
+{#                    </ul>#}
+                </div>
+                <!-- Card body END -->
+
+                <div class="card-footer mt-0 py-0 {# py-2#}">
+                    <!-- Nav profile pages -->
+                    <ul class="nav nav-bottom-line align-items-center justify-content-center justify-content-md-start mb-0 border-0">
+                        <li class="nav-item"> <a class="nav-link active" href="my-profile.html"> Posts </a> </li>
+                        <li class="nav-item"> <a class="nav-link" href="my-profile-about.html"> About </a> </li>
+                        <li class="nav-item"> <a class="nav-link" href="my-profile-connections.html"> Connections <span class="badge bg-success bg-opacity-10 text-success small"> 230</span> </a> </li>
+                        <li class="nav-item"> <a class="nav-link" href="my-profile-media.html"> Media</a> </li>
+                        <li class="nav-item"> <a class="nav-link" href="my-profile-videos.html"> Videos</a> </li>
+                        <li class="nav-item"> <a class="nav-link" href="my-profile-events.html"> Events</a> </li>
+                        <li class="nav-item"> <a class="nav-link" href="my-profile-activity.html"> Activity</a> </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <!-- Main content END -->
+
+        <!-- Right sidebar START -->
+        <div class="col-lg-4">
+effe
+        </div>
+        <!-- Right sidebar END -->
+    </div>
+
+
+
+    <div class="">
+        <div class="avatar avatar-xxl">
+            <div class="avatar-img rounded-circle border border-2 border-white" style="background: url({% if app.user.avatar %}{{ media_thumb_reference(app.user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar/male.png') }}{% endif %}) #ffffff no-repeat center center / cover"></div>
+        </div>
+        <div class="d-lg-none d-flex align-items-center justify-content-center">
+            <img class="rounded-circle me-2" src="img/nft/vendor/avatar-sm.png" width="36" alt="Avatar">
+            <h6 class="mb-0 text-light">Robert Fox</h6>
+        </div>
+    </div>
+
+{#    <div class="row g-4 pb-4">#}
+{#        <div class="col-12">#}
+{#            <div class="d-sm-flex justify-content-between align-items-center">#}
+{#                <h1 class="mb-sm-0 h2">Profile</h1>#}
+{#                <div class="d-block d-flex gap-2 flex-wrap">#}
+{#                    {% if is_granted('GALLERY_CREATE') %}#}
+{#                        <a href="{{ url('talav_gallery_create') }}" class="btn btn-sm btn-primary mb-0"><i class="fas fa-plus fa-fw"></i>{{ 'Message'|trans }}</a>#}
+{#                    {% endif %}#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+
+    <div class="row">
+        <aside class="col-lg-3">
+            <div class="mb-4 pb-2">
+                <h3 class="mb-2 fs-lg fw-normal text-body">Robert Fox</h3>
+                <h2 class="h4 mb-3">@foxnet_creator</h2><span class="d-inline-block mb-3 fs-sm text-muted">Joined July 2021</span><a class="d-block mb-4 text-decoration-none" href="#"><span class="text-body">8508550793340827...</span><i class="ci-copy ms-2 ps-1 fs-sm text-accent" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Copy" data-bs-original-title="Copy"></i></a>
+                <div class="d-flex align-items-center flex-wrap text-nowrap mb-4 fs-sm">
+                    <div class="mb-2 me-sm-3 me-2 text-muted"><span class="fw-medium text-body">766</span> followers</div>
+                    <div class="mb-2 me-sm-3 me-2 ps-sm-3 ps-2 border-start text-muted"><span class="fw-medium text-body">2K</span> following</div>
+                </div>
+                <!-- Follow-->
+                <div class="d-flex flex-lg-row flex-column">
+                    <button class="btn btn-accent">Follow</button>
+                </div>
+            </div>
+        </aside>
+
+        <div class="col-lg-9">
+            <h2 class="h4">Bio</h2>
+
+            <div class="border p-2" style="min-height: 200px;">
+                <span>{{ user.profile.bio|purify }}</span>
+            </div>
+
+            {% if user.username is same as app.user.username %}
+                Your own profile
+            {% else %}
+                {{ user.username }}'s profile
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
