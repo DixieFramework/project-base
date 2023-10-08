@@ -13,6 +13,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Talav\Component\Media\Model\MediaInterface;
 use Talav\Component\Resource\Model\ResourceTrait;
 use Talav\Component\User\Model\AbstractUser;
+use Talav\Component\User\Model\RolesInterface;
+use Talav\Component\User\Model\RolesTrait;
 use Talav\CoreBundle\Entity\Traits\HasRelations;
 use Talav\PermissionBundle\Entity\Role;
 use Talav\PermissionBundle\Entity\RoleInterface;
@@ -37,10 +39,12 @@ use Talav\UserBundle\Model\UserInterface;
 //#[UniqueEntity(fields: ['username'], message: 'username.already_used')]
 //#[ORM\EntityListeners([UserEmailEntityListener::class, UserEntityListener::class])]
 #[ORM\MappedSuperclass]
-abstract class User extends AbstractUser implements UserInterface, \Serializable
+abstract class User extends AbstractUser implements UserInterface, RolesInterface, \Serializable
 {
     use ResourceTrait;
     use HasRoles, HasRelations;
+
+	use RolesTrait;
 
 	/**
 	 * @var RoleHierarchyInterface
@@ -318,16 +322,16 @@ abstract class User extends AbstractUser implements UserInterface, \Serializable
         return $this->roles->first() ?: null;
     }
 
-	public function getRoles(): array
-	{
-		$roles = [];
-		$rolesDB = $this->roles->toArray();
-		foreach ($rolesDB as $role) {
-			$roles[] = $role->getName();
-		}
-
-		return $roles;
-	}
+//	public function getRoles(): array
+//	{
+//		$roles = [];
+//		$rolesDB = $this->roles->toArray();
+//		foreach ($rolesDB as $role) {
+//			$roles[] = $role->getName();
+//		}
+//
+//		return $roles;
+//	}
     //public function getRoles(): array
     //{
     //    return ['ROLE_USER']; // Default role for any user.
@@ -354,12 +358,12 @@ abstract class User extends AbstractUser implements UserInterface, \Serializable
 		}
 	}
 
-	public function removeRole(string $role): void
-	{
-		if ($item = $this->findUserRole($role)) {
-			$this->roles->removeElement($item);
-		}
-	}
+//	public function removeRole(string $role): void
+//	{
+//		if ($item = $this->findUserRole($role)) {
+//			$this->roles->removeElement($item);
+//		}
+//	}
 
 	public function findUserRole(string $role): ?RoleInterface
 	{

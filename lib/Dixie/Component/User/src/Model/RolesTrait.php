@@ -24,7 +24,7 @@ trait RolesTrait
     /**
      * {@inheritdoc}
      */
-    public function getRolesCollection()
+    public function getRolesCollection(): Collection
     {
         return $this->roles;
     }
@@ -47,7 +47,7 @@ trait RolesTrait
     /**
      * {@inheritdoc}
      */
-    public function hasRole($role)
+    public function hasRole($role): bool
     {
         if ($role instanceof RoleInterface) {
             $roleName = $role->getName();
@@ -65,7 +65,7 @@ trait RolesTrait
     /**
      * {@inheritdoc}
      */
-    public function addRole(RoleInterface $role)
+    public function addRole(RoleInterface $role): self
     {
         if (!$this->hasRole($role)) {
             $this->roles->add($role);
@@ -77,7 +77,7 @@ trait RolesTrait
     /**
      * {@inheritdoc}
      */
-    public function removeRole($role)
+    public function removeRole($role): void
     {
         if ($role instanceof RoleInterface) {
             $roleObject = $role;
@@ -96,7 +96,7 @@ trait RolesTrait
     /**
      * {@inheritdoc}
      */
-    public function setRoles($roles)
+    public function setRoles(iterable $roles): self
     {
         if (!$roles instanceof Collection && !is_array($roles)) {
             throw new \InvalidArgumentException(
@@ -116,7 +116,7 @@ trait RolesTrait
     /**
      * {@inheritdoc}
      */
-    public function setRolesCollection(Collection $collection)
+    public function setRolesCollection(Collection $collection): self
     {
         if (!$collection instanceof Collection) {
             throw new \InvalidArgumentException(
@@ -181,7 +181,7 @@ trait RolesTrait
      *
      * @return bool
      */
-    private function hasRoles(array $roles)
+    public function hasRoles(array $roles): bool
     {
         return !$this->roles->isEmpty() && !empty(array_intersect($roles, array_map(function ($role) { return $role->getName(); }, $this->roles->toArray())));
     }

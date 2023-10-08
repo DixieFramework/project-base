@@ -75,17 +75,17 @@ interface UserInterface extends SymfonyUserInterface, PasswordAuthenticatedUserI
      *
      *         $authorizationChecker->isGranted('ROLE_USER');
      */
-    public function hasRole(string $role): bool;
-
-    /**
-     * Adds a role to the user.
-     */
-    public function addRole(string $role): void;
-
-    /**
-     * Removes a role to the user.
-     */
-    public function removeRole(string $role): void;
+//    public function hasRole(string $role): bool;
+//
+//    /**
+//     * Adds a role to the user.
+//     */
+//    public function addRole(string $role): void;
+//
+//    /**
+//     * Removes a role to the user.
+//     */
+//    public function removeRole(string $role): void;
 
     /**
      * @return Collection|UserOAuthInterface[]

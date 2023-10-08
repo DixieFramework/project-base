@@ -232,23 +232,23 @@ abstract class AbstractUser implements UserInterface
         return $this->userRoles->toArray();
     }
 
-    public function setRoles(Roles|array $roles): self
-    {
-        $this->userRoles = match (true) {
-            $roles instanceof Roles => $roles,
-            default => Roles::fromArray($roles)
-        };
+//    public function setRoles(Roles|array $roles): self
+//    {
+//        $this->userRoles = match (true) {
+//            $roles instanceof Roles => $roles,
+//            default => Roles::fromArray($roles)
+//        };
+//
+//        return $this;
+//    }
 
-        return $this;
-    }
-
-    public function addRole(string $role): void
-    {
-        $role = strtoupper($role);
-        if (!$this->hasRole($role)) {
-            $this->userRoles[] = $role;
-        }
-    }
+//    public function addRole(string $role): void
+//    {
+//        $role = strtoupper($role);
+//        if (!$this->hasRole($role)) {
+//            $this->userRoles[] = $role;
+//        }
+//    }
 
 //    public function hasRole(string $role): bool
 //    {

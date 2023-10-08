@@ -6,6 +6,7 @@ namespace Talav\Component\User\Model;
 
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Security\Core\Role\Role;
+use Talav\PermissionBundle\Entity\RoleInterface;
 
 interface RolesInterface
 {
@@ -14,7 +15,7 @@ interface RolesInterface
      *
      * @return Collection
      */
-    public function getRolesCollection();
+    public function getRolesCollection(): Collection;
 
     /**
      * Pass a string, get the desired Role object or null
@@ -38,37 +39,37 @@ interface RolesInterface
      *
      * @return boolean
      */
-    public function hasRole($role);
+    public function hasRole($role): bool;
 
     /**
      * Adds a Role to the Collection.
      *
-     * @param  Role $role
+     * @param  RoleInterface $role
      *
      * @return UserInterface
      */
-    public function addRole(Role $role);
+	public function addRole(RoleInterface $role): self;
 
     /**
      * Remove the Role object from collection
      *
-     * @param  Role|string $role
+     * @param  RoleInterface|string $role
      *
      * @throws \InvalidArgumentException
      */
-    public function removeRole($role);
+    public function removeRole($role): void;
 
     /**
      * Pass an array or Collection of Role objects and re-set roles collection with new Roles.
      * Type hinted array due to interface.
      *
-     * @param  array|Collection $roles Array of Role objects
+     * @param  iterable $roles Array of Role objects
      *
      * @throws \InvalidArgumentException
      *
      * @return UserInterface
      */
-    public function setRoles($roles);
+    public function setRoles(iterable $roles): self;
 
     /**
      * Directly set the Collection of Roles.
@@ -79,7 +80,7 @@ interface RolesInterface
      *
      * @return UserInterface
      */
-    public function setRolesCollection(Collection $collection);
+    public function setRolesCollection(Collection $collection): self;
 
-	function hasRoles(array $roles);
+	function hasRoles(array $roles): bool;
 }
