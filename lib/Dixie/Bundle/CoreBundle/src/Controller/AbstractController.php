@@ -157,6 +157,21 @@ abstract class AbstractController extends BaseController
 //        return $this->container->get('knp_paginator');
 //    }
 
+	protected function getUser(): ?UserInterface
+	{
+		$user = parent::getUser();
+
+		return $user instanceof UserInterface ? $user : null;
+	}
+
+	/** @param array<string, string> $params */
+	protected function refreshOrRedirect(string $route, array $params = []): RedirectResponse
+	{
+		$referer = $this->requestStack->getMainRequest()?->headers->get('referer');
+
+		return $this->redirect($referer ?? $this->generateUrl($route, $params));
+	}
+
     /**
      * Gets the connected user e-mail.
      *
