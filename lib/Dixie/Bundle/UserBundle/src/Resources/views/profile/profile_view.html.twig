@@ -14,43 +14,52 @@
     <div class="user-area py-4 mt-n4 mb-4 bg-primary bg-opacity-10 border border-bottom border-1">
         <div class="container">
             <div class="row">
-                <div class="col-12">
-                    <!-- Author info START -->
-                    <div class="d-md-flex p-0 p-sm-0 mb-3 text-center text-md-start rounded">
-                        <!-- Avatar -->
-                        <div class=" me-0 me-md-4">
-                            <div class="avatar avatar-xxl">
-                                <div class="avatar-img rounded-circle border border-2 border-white" style="background: url({% if app.user.avatar %}{{ media_thumb_reference(app.user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar/male.png') }}{% endif %}) #ffffff no-repeat center center / cover"></div>
+                {% if false %}
+                    
+                    <div class="col-12">
+                        <!-- Author info START -->
+                        <div class="d-md-flex p-0 p-sm-0 mb-3 text-center text-md-start rounded">
+                            <!-- Avatar -->
+                            <div class=" me-0 me-md-4">
+                                <div class="avatar avatar-xxl">
+                                    <div class="avatar-img rounded-circle border border-2 border-white"
+                                         style="background: url({% if app.user.avatar %}{{ media_thumb_reference(app.user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar/male.png') }}{% endif %}) #ffffff no-repeat center center / cover"></div>
+                                </div>
+                                <!-- Post count -->
+                                <div class="text-center mt-n3 position-relative">
+                                    <span class="badge bg-danger fs-6">6 posts</span>
+                                </div>
                             </div>
-                            <!-- Post count -->
-                            <div class="text-center mt-n3 position-relative">
-                                <span class="badge bg-danger fs-6">6 posts</span>
+                            <!-- Info -->
+                            <div>
+                                <h2 class="m-0">Louis Ferguson</h2>
+                                <ul class="list-inline">
+                                    <li class="list-inline-item"><i class="bi bi-person-fill me-1"></i> An editor at
+                                        Blogzine
+                                    </li>
+                                    <li class="list-inline-item"><i class="bi bi-geo-alt me-1"></i> New York</li>
+                                </ul>
+                                <p class="my-2">Louis Ferguson is a senior editor for the blogzine and also reports on
+                                    breaking news based in London. He has written about government, criminal justice,
+                                    and the role of money in politics since 2015.</p>
+                                <!-- Social icons -->
+                                <ul class="nav justify-content-center justify-content-md-start">
+                                    <li class="nav-item">
+                                        <a class="nav-link ps-0 pe-2 fs-5" href="#"><i
+                                                    class="fab fa-facebook-square"></i></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link px-2 fs-5" href="#"><i class="fab fa-twitter-square"></i></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link px-2 fs-5" href="#"><i class="fab fa-linkedin"></i></a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-                        <!-- Info -->
-                        <div>
-                            <h2 class="m-0">Louis Ferguson</h2>
-                            <ul class="list-inline">
-                                <li class="list-inline-item"><i class="bi bi-person-fill me-1"></i> An editor at Blogzine</li>
-                                <li class="list-inline-item"><i class="bi bi-geo-alt me-1"></i> New York</li>
-                            </ul>
-                            <p class="my-2">Louis Ferguson is a senior editor for the blogzine and also reports on breaking news based in London. He has written about government, criminal justice, and the role of money in politics since 2015.</p>
-                            <!-- Social icons -->
-                            <ul class="nav justify-content-center justify-content-md-start">
-                                <li class="nav-item">
-                                    <a class="nav-link ps-0 pe-2 fs-5" href="#"><i class="fab fa-facebook-square"></i></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link px-2 fs-5" href="#"><i class="fab fa-twitter-square"></i></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link px-2 fs-5" href="#"><i class="fab fa-linkedin"></i></a>
-                                </li>
-                            </ul>
-                        </div>
+                        <!-- Author info END -->
                     </div>
-                    <!-- Author info END -->
-                </div>
+                {% endif %}
 
                 <div class="col-sm-8">
                     <div class="user-wrapper">
@@ -89,18 +98,18 @@
                         </div>
                     </div>
 
-                    <div class="position-absolute bottom-0 end-0">
-                        <div class="d-flex mt-2 mt-sm-0">
+                    <div class="d-flex mt-4">
+                        <div class="ms-auto mt-auto">
                             <a href="!#" class="btn btn-primary">Message</a>
                             <a href="!#" class="btn btn-primary ms-2">Add Friend</a>
-{#                            <h6 class="bg-danger py-2 px-3 text-white rounded">14K Follow</h6>#}
-{#                            <h6 class="bg-info py-2 px-3 text-white rounded ms-2">856 Posts</h6>#}
                         </div>
                     </div>
-                </div>
-
-                <div class="col-12">
-                    rfrf
+{#                    <div class="position-absolute bottom-0 end-0">#}
+{#                        <div class="d-flex mt-2 mt-sm-0">#}
+{#                            <a href="!#" class="btn btn-primary">Message</a>#}
+{#                            <a href="!#" class="btn btn-primary ms-2">Add Friend</a>#}
+{#                        </div>#}
+{#                    </div>#}
                 </div>
             </div>
         </div>
