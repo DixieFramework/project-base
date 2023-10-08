@@ -34,7 +34,7 @@ abstract class Post implements PostInterface
     protected $imageFile;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    protected $image;
+    protected ?string $image;
 
     #[ORM\Column(type: 'text', nullable: true)]
     protected $content;
@@ -50,8 +50,8 @@ abstract class Post implements PostInterface
 //    #[Gedmo\Slug(fields: ['title', 'code'])]
     protected $slug;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    protected $publishedAt;
+    #[ORM\Column(type: 'datetime', name: 'published_at', nullable: true)]
+    protected ?\DateTimeInterface $publishedAt = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Assert\Type(\DateTimeInterface::class)]
@@ -59,7 +59,7 @@ abstract class Post implements PostInterface
 
     #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'posts')]
     #[ORM\JoinColumn(nullable: false)]
-    protected $author;
+    protected ?UserInterface $author = null;
 
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class, orphanRemoval: true)]
     protected Collection $comments;
@@ -188,7 +188,7 @@ abstract class Post implements PostInterface
 		return $this->publishedAt;
 	}
 
-	public function setPublishedAt(\DateTimeInterface $publishedAt): self
+	public function setPublishedAt(?\DateTimeInterface $publishedAt): self
 	{
 		$this->publishedAt = $publishedAt;
 

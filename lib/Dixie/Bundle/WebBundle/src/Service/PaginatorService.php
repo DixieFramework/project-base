@@ -75,7 +75,7 @@ class PaginatorService
             $start = $this->page;
         }
 
-        return $start;
+        return intval($start);
     }
 
     public function getEnd(): int
@@ -88,7 +88,7 @@ class PaginatorService
             $end = $this->page;
         }
 
-        return $end;
+        return intval($end);
     }
 
     public function setMethod($method): PaginatorService

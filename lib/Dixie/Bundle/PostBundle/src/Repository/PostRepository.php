@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Talav\PostBundle\Repository;
 
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\QueryBuilder;
 use Talav\Component\Resource\Repository\ResourceRepository;
+use Talav\Component\User\Model\UserInterface;
 use Talav\PostBundle\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -199,6 +202,22 @@ class PostRepository extends ResourceRepository
             ->setFirstResult($offset);
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function findAllByUserQueryBuilder(UserInterface $user, $criteria = [], ): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        foreach ($criteria as $property => $value) {
+            $qb ->andWhere('p.'. $property .' = :' . $property . '')
+                ->setParameter($property,$value)
+            ;
+        }
+
+        $qb
+            ->where('p.user = :user')
+            ->setParameters(['user' => $user])
+            ->orderBy('p.publishedAt', Criteria::DESC);
     }
 
     // /**

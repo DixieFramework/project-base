@@ -31,6 +31,8 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Talav\CoreBundle\Utils\TypeCast;
 use Talav\GalleryBundle\Entity\GalleryImage;
+use Talav\PostBundle\Entity\Post;
+use Talav\PostBundle\Entity\PostInterface;
 use Talav\ProfileBundle\Entity\UserRelation;
 use Talav\ProfileBundle\Repository\ProfileBlockRepository;
 use Talav\SettingsBundle\Trait\SettingManagerAwareTrait;
@@ -39,6 +41,7 @@ use Talav\UserBundle\Event\FormEvent;
 use Talav\UserBundle\Event\GetResponseUserEvent;
 use Talav\UserBundle\Event\TalavUserEvents;
 use Talav\UserBundle\Event\UserFormEvent;
+use Talav\WebBundle\Service\PaginatorService;
 use function Symfony\Component\String\u;
 
 /**
@@ -155,9 +158,9 @@ class ProfileController extends AbstractController
 
 //    #[Route(path: '/view/{username}', name: 'user_profile_show', requirements: ['username' => Requirement::ASCII_SLUG])]
 //    #[ParamConverter('user', class: UserInterface::class, options: ['mapping' => ['username' => 'username']])]
-    #[Route(path: '/{id}/{username}', name: 'user_profile_view', requirements: ['username' => Requirement::ASCII_SLUG], defaults: ['username' => null])]
+    #[Route(path: '/{id}/{username}/{page<\d+>?1}', name: 'user_profile_view', requirements: ['username' => Requirement::ASCII_SLUG], defaults: ['username' => null])]
 //    #[ParamConverter('user', class: UserInterface::class, options: ['mapping' => ['username_canonical' => 'username']])]
-    public function show(int $id, string $username, ProfileBlockRepository $profileBlockRepository): Response
+    public function show(int $id, string $username, $page, PaginatorService $paginator, ProfileBlockRepository $profileBlockRepository): Response
     {
         $currentUser = $this->getUser();
         if (!$currentUser) {
@@ -171,12 +174,36 @@ class ProfileController extends AbstractController
             throw $this->createNotFoundException();
         }
 
+        // posts
+        if ($user === $this->getUser() || $this->isGranted('ROLE_MODERATOR')) {
+            $criteria = ['author' => $user];
+        } else {
+            $criteria = ['author' => $user, 'status' => true];
+        }
+//        if (!$defender->isGranted($this->getUser(),'ROLE_GUEST') && $user === $this->user() || $this->isGranted('ROLE_POST_MODERATOR')) {
+//            $criteria = ['author' => $user];
+//        } else {
+//            $criteria = ['author' => $user, 'status' => true];
+//        }
+
+        $paginator
+            ->setClass(PostInterface::class)
+            ->setOrder(['publishedAt' => 'DESC'])
+            ->setCriteria($criteria)
+            ->setParameters(['id' => $profile->getId(), 'username' => $user->getUsername()])
+            ->setLimit(30)
+            ->setPage($page)
+        ;
+
         $photos = $this->entityManager->getRepository(GalleryImage::class)->findFreshImagesLimit(5);
 
         return $this->render('@TalavUser/profile/profile_view.html.twig', [
             'user' => $user,
             'profile' => $profile,
-	        'photos' => $photos
+	        'photos' => $photos,
+            'posts' => $paginator->getData(),
+            'paginator' => $paginator,
+            'type' => 'list'
         ]);
 
         if (null !== $username) {

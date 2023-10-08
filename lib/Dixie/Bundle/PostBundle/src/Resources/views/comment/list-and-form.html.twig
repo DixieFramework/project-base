@@ -1,8 +1,9 @@
 <div class="comments-container">
     <h4 class="heading mb-3">
-        {{ comments.nbResults }} Comment{{ comments.nbResults > 1 ? 's' }}
         {% if comments.nbResults == 0 %}
-            <small class="text-muted">No comments</small>
+            <small class="text-muted d-block">No comments</small>
+        {% else %}
+            {{ comments.nbResults }} Comment{{ comments.nbResults > 1 ? 's' }}
         {% endif %}
     </h4>
     {% include '@TalavPost/comment/form.html.twig' %}

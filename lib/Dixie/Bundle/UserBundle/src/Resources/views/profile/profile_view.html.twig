@@ -22,8 +22,7 @@
                             <!-- Avatar -->
                             <div class=" me-0 me-md-4">
                                 <div class="avatar avatar-xxl">
-                                    <div class="avatar-img rounded-circle border border-2 border-white"
-                                         style="background: url({% if app.user.avatar %}{{ media_thumb_reference(app.user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar/male.png') }}{% endif %}) #ffffff no-repeat center center / cover"></div>
+                                    <div class="avatar-img rounded-circle border border-2 border-white" style="background: url({% if app.user.avatar %}{{ media_thumb_reference(app.user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar/male.png') }}{% endif %}) #ffffff no-repeat center center / cover"></div>
                                 </div>
 
                                 <!-- Post count -->
@@ -241,6 +240,19 @@
                 </div>
             </div>
 
+            {% if type == 'list' and posts %}
+
+                {% for post in posts %}
+                {{ component('post', {post}) }}
+                {% else %}
+
+                {% endfor %}
+
+            {% endif %}
+
+            {{ paginator.display('margin-top') }}
+
+
         </div>
         <!-- Main content END -->
 
@@ -285,6 +297,7 @@
                     <div class="mb-2 me-sm-3 me-2 text-muted"><span class="fw-medium text-body">766</span> followers</div>
                     <div class="mb-2 me-sm-3 me-2 ps-sm-3 ps-2 border-start text-muted"><span class="fw-medium text-body">2K</span> following</div>
                 </div>
+
                 <!-- Follow-->
                 <div class="d-flex flex-lg-row flex-column">
                     <button class="btn btn-accent">Follow</button>

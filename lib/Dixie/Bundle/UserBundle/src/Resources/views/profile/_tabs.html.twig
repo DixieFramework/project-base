@@ -1,17 +1,23 @@
 {% set current = path(app.request.attributes.get('_route'),
     app.request.attributes.get('_route_params')) %}
 
-<div class="user-area mb-4">
+<div class="user-area pt-4 mb-4 mt-n4 bg-primary bg-opacity-10">
     <div class="container">
         <div class="row">
             <div class="col-md-9 col-sm-8">
                 <div class="user-wrapper">
-                    <div class="d-flex d-md-block d-lg-flex align-items-start pt-lg-2 mb-4"><img class="rounded-circle" src="{{ asset('images/avatar/90x90.jpg') }}" width="90" alt="Annette Black">
+                    <div class="d-flex d-md-block d-lg-flex align-items-center pt-lg-2 mb-4">
+{#                        <img class="rounded-circle" src="{{ asset('images/avatar/90x90.jpg') }}" width="90" alt="Annette Black">#}
+                        <div class="avatar avatar-xxl">
+                            <div class="avatar-img rounded-circle border border-2 border-white" style="background: url({% if app.user.avatar %}{{ media_thumb_reference(app.user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar/male.png') }}{% endif %}) #ffffff no-repeat center center / cover"></div>
+                        </div>
                         <div class="pt-md-2 pt-lg-0 ps-3 ps-md-0 ps-lg-3">
-                            <h2 class="fs-lg mb-0">Annette Black</h2><span class="star-rating"><i class="star-rating-icon fi-star-filled active"></i><i class="star-rating-icon fi-star-filled active"></i><i class="star-rating-icon fi-star-filled active"></i><i class="star-rating-icon fi-star-filled active"></i><i class="star-rating-icon fi-star-filled active"></i></span>
+                            <h2 class="fs-lg mb-0">{{ user.username }}</h2>
+                            <span class="star-rating"><i class="star-rating-icon fi-star-filled active"></i><i class="star-rating-icon fi-star-filled active"></i><i class="star-rating-icon fi-star-filled active"></i><i class="star-rating-icon fi-star-filled active"></i><i class="star-rating-icon fi-star-filled active"></i></span>
                             <ul class="list-unstyled fs-sm mt-3 mb-0">
-                                <li><a class="nav-link fw-normal p-0" href="tel:3025550107"><i class="fas fa-phone opacity-60 me-2"></i>(302) 555-0107</a></li>
-                                <li><a class="nav-link fw-normal p-0" href="mailto:annette_black@email.com"><i class="fas fa-envelope opacity-60 me-2"></i>annette_black@email.com</a></li>
+                                <li><a class="nav-link fw-normal p-0" href="tel:3025550107"><i class="fas fa-clock opacity-60 me-2"></i>Member since: {{ user.createdAt|date('d M Y') }}</a></li>
+{#                                <li><a class="nav-link fw-normal p-0" href="tel:3025550107"><i class="fas fa-phone opacity-60 me-2"></i>(302) 555-0107</a></li>#}
+{#                                <li><a class="nav-link fw-normal p-0" href="mailto:annette_black@email.com"><i class="fas fa-envelope opacity-60 me-2"></i>annette_black@email.com</a></li>#}
                             </ul>
                         </div>
                     </div>
@@ -25,7 +31,7 @@
                 </div>
             </div>
             <div class="col-md-3 col-sm-4 text-end">
-                <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between align-items-start">
                     <div class="left">
                         <span>Author Rating</span>
                         <div class="ratings">
@@ -44,13 +50,13 @@
                 <nav class="user-nav">
                     <ul class="nav nav-tabs user-nav-tabs">
                         {% for tab in [
-                            { path: 'user_profile_edit', label: 'label.overview', params: {} },
-                            { path: 'user_profile_change_password', label: 'user.submissions' },
+                            { path: 'user_profile_edit', label: 'profile.edit.title', params: {} },
+                            { path: 'user_profile_change_password', label: 'profile.change_password.title' },
                         ] %}
                             <li class="nav-item">
                                 <a href="{{ path(tab.path, tab.params ?? {}) }}"
                                    class="nav-link {{ tab.path == current ? 'active' }}">
-                                    {{- tab.label|trans -}}
+                                    {{- tab.label|trans({}, 'TalavUserBundle') -}}
                                 </a>
                             </li>
                         {% endfor %}

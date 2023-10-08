@@ -1,0 +1,125 @@
+{% if not app.user or (app.user and not app.user.profile.isBlocked(post.author.profile)) %}
+    <!-- Card feed item START -->
+    <div class="card">
+
+        <!-- Card body START -->
+        <div class="card-body">
+
+            <ul class="nav nav-divider d-flex justify-content-between align-items-center">
+                <li class="nav-item">
+                    <div class="nav-link">
+                        <div class="d-flex align-items-center">
+                            <!-- Avatar -->
+                            <div class="avatar avatar-sm">
+                                {#                                        <span style="background-image: url('{% if post.author.profile.avatar != 'avatar.jpg' %}{{ vich_uploader_asset(post.author.profile) | imagine_filter('thumbnail') }}{% else %}{{ asset('assets/images/avatar.jpg') | imagine_filter('thumbnail') }}{% endif %}')"></span>#}
+                                <img class="avatar-img rounded-circle border border-1 border-secondary" src="{% if post.author.avatar %}{{ media_thumb_reference(post.author.avatar, 'square_small') }}{% else %}{{ asset('images/avatar.png') }}{% endif %}" alt="avatar">
+                            </div>
+                            <!-- Info -->
+                            <div class="ms-2">
+                                <h6 class="mb-0">
+                                    <a href="#">{{ post.author.username }}</a>
+                                    {% if post.author.verified %}
+                                        <span class="md-comment-verified">
+                                            <i class="fas fa-check-circle text-success ms-1"></i>
+                                        </span>
+                                    {% endif %}
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                            <span class="date">
+                                {% if post.publishedAt | date('d') | slice(0,1) == 0 %}
+                                    {{ post.publishedAt ? post.publishedAt | date('d') | replace({'0':''}) }}
+                                {% else %}
+                                    {{ post.publishedAt ? post.publishedAt | date('d') }}
+                                {% endif %}
+
+                                {{ ('month' ~ post.publishedAt | date("m")) | trans({}, 'TalavWebBundle') }}
+
+                                {% if "now" | date("Y") != post.publishedAt | date('Y') %}
+                                    {{ post.publishedAt ? post.publishedAt | date('Y') }}
+                                {% endif %}
+
+                                {{ post.publishedAt ? post.publishedAt | date(' H:i') }}
+                            </span>
+                </li>
+            </ul>
+
+            <hr class="w-100">
+
+            {% if post.image %}
+
+                {% if '.gif' in post.image %}
+                    {% set post_image_link = vich_uploader_asset(post) %}
+                {% else %}
+                    {% set post_image_link = vich_uploader_asset(post) | imagine_filter('post') %}
+                {% endif %}
+
+                <div class="post-liker mb-3">
+                    <img class="card-img" width="100%" src="{{ post_image_link }}" alt="{{ post.slug }}">
+                </div>
+
+            {% endif %}
+
+            <div class="bg-body-tertiary p-3 rounded">
+                <div class="d-flex justify-content-between">
+                    {#                            <h6 class="mb-1"> <a href="#!"> Frances Guerrero </a> </h6>#}
+                    {#                            <small class="ms-2">4min</small>#}
+                </div>
+                <div class="simple-editor-content small mb-0">
+                    {{ post.content | purify | raw }}
+                </div>
+                {#                        <p class="">Removed demands expense account in outward tedious do. Particular way thoroughly unaffected projection.</p>#}
+            </div>
+
+            <ul class="nav nav-stack py-3 small">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#!"><i class="fas fa-thumbs-up pe-1"></i>Liked ({{ post.likes.count }})</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#!"><i class="fas fa-comment pe-1"></i>Comments ({{ post.comments.count }})</a>
+                </li>
+
+                <!-- Card share action START -->
+                <li class="nav-item dropdown ms-sm-auto">
+                    <a class="nav-link mb-0" href="#" id="cardShareAction8" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-share pe-1"></i>Share (3)</a>
+
+                    <!-- Card share action dropdown menu -->
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardShareAction8">
+                        <li><a class="dropdown-item" href="#"> <i class="bi bi-envelope fa-fw pe-2"></i>Send via Direct Message</a></li>
+                        <li><a class="dropdown-item" href="#"> <i class="bi bi-bookmark-check fa-fw pe-2"></i>Bookmark </a></li>
+                        <li><a class="dropdown-item" href="#"> <i class="bi bi-link fa-fw pe-2"></i>Copy link to post</a></li>
+                        <li><a class="dropdown-item" href="#"> <i class="bi bi-share fa-fw pe-2"></i>Share post via …</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Share to News Feed</a></li>
+                    </ul>
+                </li>
+                <!-- Card share action END -->
+            </ul>
+
+
+            {{ render_esi(path('talav_post_comment_app_comment_form', {
+                'id': post.id,
+            })) }}
+
+        </div>
+        <!-- Card body END -->
+
+{#        <!-- Card Footer START -->#}
+{#        <div class="card-footer">#}
+{#            ccc#}
+{#        </div>#}
+{#        <!-- Card Footer END -->#}
+    </div>
+    <!-- Card feed item END -->
+{#    {% if post.visibility is same as 'private' and (not app.user or not app.user.isFollower(post.user)) %}#}
+{#        <div class="section section--small"#}
+{#             style="z-index:3; position:relative;margin-bottom:0;">#}
+{#            Private#}
+{#        </div>#}
+{#    {% else %}#}
+
+{#    {% endif %}#}
+{% endif %}
