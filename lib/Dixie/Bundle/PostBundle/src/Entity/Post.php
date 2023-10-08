@@ -25,7 +25,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 //#[ORM\Table('post')]
 #[ORM\MappedSuperclass]
 #[Vich\Uploadable]
-abstract class Post implements PostInterface
+class Post implements PostInterface
 {
 	use ResourceTrait;
 
@@ -207,32 +207,6 @@ abstract class Post implements PostInterface
 		return $this;
 	}
 
-	/**
-	 * @return Collection
-	 */
-	public function getSongs(): Collection
-	{
-		return $this->songs;
-	}
-
-	public function addSong(Song $song): self
-	{
-		if (!$this->songs->contains($song)) {
-			$this->songs[] = $song;
-		}
-
-		return $this;
-	}
-
-	public function removeSong(Song $song): self
-	{
-		if ($this->songs->contains($song)) {
-			$this->songs->removeElement($song);
-		}
-
-		return $this;
-	}
-
 	public function getAuthor(): ?UserInterface
 	{
 		return $this->author;
@@ -361,35 +335,35 @@ abstract class Post implements PostInterface
 		return $this;
 	}
 
-	/**
-	 * @return Collection
-	 */
-	public function getActions(): Collection
-	{
-		return $this->actions;
-	}
-
-	public function addAction(Action $action): self
-	{
-		if (!$this->actions->contains($action)) {
-			$this->actions[] = $action;
-			$action->setPost($this);
-		}
-
-		return $this;
-	}
-
-	public function removeAction(Action $action): self
-	{
-		if ($this->actions->contains($action)) {
-			$this->actions->removeElement($action);
-			if ($action->getPost() === $this) {
-				$action->setPost(null);
-			}
-		}
-
-		return $this;
-	}
+//	/**
+//	 * @return Collection
+//	 */
+//	public function getActions(): Collection
+//	{
+//		return $this->actions;
+//	}
+//
+//	public function addAction(Action $action): self
+//	{
+//		if (!$this->actions->contains($action)) {
+//			$this->actions[] = $action;
+//			$action->setPost($this);
+//		}
+//
+//		return $this;
+//	}
+//
+//	public function removeAction(Action $action): self
+//	{
+//		if ($this->actions->contains($action)) {
+//			$this->actions->removeElement($action);
+//			if ($action->getPost() === $this) {
+//				$action->setPost(null);
+//			}
+//		}
+//
+//		return $this;
+//	}
 
 	/**
 	 * @return Collection

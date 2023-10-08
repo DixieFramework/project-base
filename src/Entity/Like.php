@@ -9,7 +9,7 @@ use Talav\ProfileBundle\Entity\Like as BaseLike;
 use Talav\ProfileBundle\Repository\LikeRepository;
 
 #[ORM\Entity(repositoryClass: LikeRepository::class)]
-#[ORM\Table(name: 'like')]
+#[ORM\Table(name: '`like`')]
 class Like extends BaseLike
 {
 	#[ORM\Id]

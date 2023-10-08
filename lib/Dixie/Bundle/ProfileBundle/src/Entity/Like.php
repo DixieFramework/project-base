@@ -17,11 +17,11 @@ use Talav\UserBundle\Model\UserInterface;
 //#[ORM\Table(name: 'like')]
 #[ORM\HasLifecycleCallbacks]
 #[ORM\MappedSuperclass]
-abstract class Like implements LikeInterface
+class Like implements LikeInterface
 {
 	use ResourceTrait;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(name: 'liked_at', type: 'datetime', columnDefinition: 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP')]
     protected $likedAt;
 
     #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'likes')]

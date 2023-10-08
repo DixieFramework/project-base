@@ -9,36 +9,34 @@ use Doctrine\ORM\QueryBuilder;
 use Talav\Component\Resource\Repository\ResourceRepository;
 use Talav\Component\User\Model\UserInterface;
 use Talav\PostBundle\Entity\Post;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 
 class PostRepository extends ResourceRepository
 {
-    public function flush(): void
-    {
-        $this->_em->flush();
-    }
-
-    public function persist(Post $entity): void
-    {
-        $this->_em->persist($entity);
-    }
-
-    public function add(Post $entity, bool $flush = true): void
-    {
-        $this->_em->persist($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
-    }
-
-    public function remove(Post $entity, bool $flush = true): void
-    {
-        $this->_em->remove($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
-    }
+//    public function flush(): void
+//    {
+//        $this->_em->flush();
+//    }
+//
+//    public function persist(Post $entity): void
+//    {
+//        $this->_em->persist($entity);
+//    }
+//
+//    public function add(Post $entity, bool $flush = true): void
+//    {
+//        $this->_em->persist($entity);
+//        if ($flush) {
+//            $this->_em->flush();
+//        }
+//    }
+//
+//    public function remove(Post $entity, bool $flush = true): void
+//    {
+//        $this->_em->remove($entity);
+//        if ($flush) {
+//            $this->_em->flush();
+//        }
+//    }
 
     public function findRecommendations($criteria, $orderBy = ['id' => 'DESC'], $limit = null, $offset = null)
     {

@@ -1,11 +1,11 @@
 {
   "entrypoints": {
     "admin": {
-      "css": [
-        "/bundles/talavweb/admin.css?bba4765cfd3411c63972"
-      ],
       "js": [
-        "/bundles/talavweb/admin.js?61bee77cfca91a1d1c84"
+        "/bundles/talavweb/admin.js?73b85c631c2050a4cb38"
+      ],
+      "css": [
+        "/bundles/talavweb/admin.css?53a31adc8d635b4d1851"
       ]
     }
   }

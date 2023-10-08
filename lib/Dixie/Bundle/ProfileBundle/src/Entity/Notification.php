@@ -7,6 +7,7 @@ namespace Talav\ProfileBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Talav\Component\Resource\Model\ResourceInterface;
 use Talav\Component\Resource\Model\ResourceTrait;
+use Talav\PostBundle\Entity\PostInterface;
 use Talav\ProfileBundle\Repository\NotificationRepository;
 use Talav\UserBundle\Model\UserInterface;
 use Talav\PostBundle\Entity\Comment;
@@ -25,7 +26,7 @@ abstract class Notification implements NotificationInterface
     protected mixed $id;
 
     #[ORM\Column(type: 'boolean')]
-    protected $seen;
+    protected bool $seen = false;
 
     #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'sentNotifications')]
     protected $sender;
@@ -37,7 +38,7 @@ abstract class Notification implements NotificationInterface
     #[ORM\ManyToOne(targetEntity: Comment::class, inversedBy: 'notifications')]
     protected $comment;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(name: 'published_at', type: 'datetime', columnDefinition: 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP')]
     protected $publishedAt;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
@@ -47,10 +48,10 @@ abstract class Notification implements NotificationInterface
     protected $type;
 
     #[ORM\Column(type: 'boolean')]
-    protected $status;
+    protected bool $status = true;
 
-//    #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'notifications')]
-//    protected $post;
+    #[ORM\ManyToOne(targetEntity: PostInterface::class, inversedBy: 'notifications')]
+    protected $post;
 
     #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'notifications')]
     protected UserInterface $user;
@@ -170,12 +171,12 @@ abstract class Notification implements NotificationInterface
         return $this;
     }
 
-    public function getPost(): ?Post
+    public function getPost(): ?PostInterface
     {
         return $this->post;
     }
 
-    public function setPost(?Post $post): self
+    public function setPost(?PostInterface $post): self
     {
         $this->post = $post;
 

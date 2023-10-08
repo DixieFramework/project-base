@@ -21,6 +21,9 @@ use Talav\CoreBundle\Entity\Traits\HasRelations;
 use Talav\PermissionBundle\Entity\Role;
 use Talav\PermissionBundle\Entity\RoleInterface;
 use Talav\PermissionBundle\Traits\HasRoles;
+use Talav\PostBundle\Entity\Bookmark;
+use Talav\PostBundle\Entity\PostInterface;
+use Talav\ProfileBundle\Entity\LikeInterface;
 use Talav\ProfileBundle\Model\ProfileInterface;
 use Talav\ProfileBundle\Entity\UserFriend;
 use Talav\ProfileBundle\Entity\UserMetadata;
@@ -87,6 +90,15 @@ abstract class User extends AbstractUser implements UserInterface, UserAvatarInt
 //    #[ORM\ManyToMany(targetEntity: 'Talav\PermissionBundle\Entity\Permission', indexBy: 'name')]
     protected Collection $permissions;
 
+	#[ORM\OneToMany(mappedBy: 'author', targetEntity: PostInterface::class, orphanRemoval: true)]
+	protected $posts;
+
+	#[ORM\OneToMany(mappedBy: 'user', targetEntity: Bookmark::class, orphanRemoval: true)]
+	protected $bookmarks;
+
+	#[ORM\OneToMany(mappedBy: 'user', targetEntity: LikeInterface::class, orphanRemoval: true)]
+	protected $likes;
+
 //    #[ORM\Column(type: 'json', nullable: false)]
     protected array $flags;
 
@@ -121,6 +133,10 @@ abstract class User extends AbstractUser implements UserInterface, UserAvatarInt
         $this->metadata       = new ArrayCollection();
         $this->roles          = new ArrayCollection();
         $this->permissions    = new ArrayCollection();
+
+	    $this->posts          = new ArrayCollection();
+	    $this->bookmarks      = new ArrayCollection();
+	    $this->likes          = new ArrayCollection();
 
         $this->flags = [];
 
@@ -419,7 +435,89 @@ abstract class User extends AbstractUser implements UserInterface, UserAvatarInt
         return $this->hasRole(RoleInterface::ROLE_SUPER_ADMIN);
     }
 
-    /**
+	public function getPosts(): Collection
+	{
+		return $this->posts;
+	}
+
+	public function addPost(PostInterface $post): self
+	{
+		if (!$this->posts->contains($post)) {
+			$this->posts[] = $post;
+			$post->setAuthor($this);
+		}
+
+		return $this;
+	}
+
+	public function removePost(PostInterface $post): self
+	{
+		if ($this->posts->contains($post)) {
+			$this->posts->removeElement($post);
+			if ($post->getAuthor() === $this) {
+				$post->setAuthor(null);
+			}
+		}
+
+		return $this;
+	}
+
+	public function getBookmarks(): Collection
+	{
+		return $this->bookmarks;
+	}
+
+	public function addBookmark(Bookmark $bookmark): self
+	{
+		if (!$this->bookmarks->contains($bookmark)) {
+			$this->bookmarks[] = $bookmark;
+			$bookmark->setUser($this);
+		}
+
+		return $this;
+	}
+
+	public function removeBookmark(Bookmark $bookmark): self
+	{
+		if ($this->bookmarks->contains($bookmark)) {
+			$this->bookmarks->removeElement($bookmark);
+			if ($bookmark->getUser() === $this) {
+				$bookmark->setUser(null);
+			}
+		}
+
+		return $this;
+	}
+
+	public function getLikes(): Collection
+	{
+		return $this->likes;
+	}
+
+	public function addLike(LikeInterface $like): self
+	{
+		if (!$this->likes->contains($like)) {
+			$this->likes[] = $like;
+			$like->setUser($this);
+		}
+
+		return $this;
+	}
+
+	public function removeLike(LikeInterface $like): self
+	{
+		if ($this->likes->contains($like)) {
+			$this->likes->removeElement($like);
+			if ($like->getUser() === $this) {
+				$like->setUser(null);
+			}
+		}
+
+		return $this;
+	}
+
+
+	/**
      * Add arbitrary UserFlag.
      *
      * @param string $key

@@ -8,7 +8,7 @@ doctrine:
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
-        quote_strategy: Talav\CoreBundle\Doctrine\BacktickQuoteStrategy
+#        quote_strategy: Talav\CoreBundle\Doctrine\BacktickQuoteStrategy
         auto_mapping: true
         mappings:
             App:

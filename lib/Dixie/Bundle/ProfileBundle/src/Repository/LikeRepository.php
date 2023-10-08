@@ -4,48 +4,38 @@ declare(strict_types=1);
 
 namespace Talav\ProfileBundle\Repository;
 
-use Talav\ProfileBundle\Entity\Like;
+use Talav\Component\Resource\Repository\ResourceRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Talav\ProfileBundle\Entity\LikeInterface;
 
-/**
- * @method Like|null find($id, $lockMode = null, $lockVersion = null)
- * @method Like|null findOneBy(array $criteria, array $orderBy = null)
- * @method Like[]    findAll()
- * @method Like[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
-class LikeRepository extends ServiceEntityRepository
+class LikeRepository extends ResourceRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, Like::class);
-    }
-
-    public function flush(): void
-    {
-        $this->_em->flush();
-    }
-
-    public function persist(Like $entity): void
-    {
-        $this->_em->persist($entity);
-    }
-
-    public function add(Like $entity, bool $flush = true): void
-    {
-        $this->_em->persist($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
-    }
-
-    public function remove(Like $entity, bool $flush = true): void
-    {
-        $this->_em->remove($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
-    }
+//    public function flush(): void
+//    {
+//        $this->_em->flush();
+//    }
+//
+//    public function persist(LikeInterface $entity): void
+//    {
+//        $this->_em->persist($entity);
+//    }
+//
+//    public function add(Like $entity, bool $flush = true): void
+//    {
+//        $this->_em->persist($entity);
+//        if ($flush) {
+//            $this->_em->flush();
+//        }
+//    }
+//
+//    public function remove(Like $entity, bool $flush = true): void
+//    {
+//        $this->_em->remove($entity);
+//        if ($flush) {
+//            $this->_em->flush();
+//        }
+//    }
 
     // /**
     //  * @return Like[] Returns an array of Like objects

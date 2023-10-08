@@ -18,6 +18,14 @@
                         </div>
                         <p class="small mb-0">{{ comment.message|striptags('<i><b>')|nl2br|parse_tags|raw }}</p>
                     </div>
+                    <ul class="nav nav-divider py-1 small">
+                        <li class="nav-item">
+                            <a class="nav-link py-0" href="{{ path('profile_like_toggle_comment_like', {'id':comment.id}) }}">Like ({{ comment.likes|length }})</a>
+                        </li>
+{#                        <li class="nav-item">#}
+{#                            <a class="nav-link py-0" href="#!">Reply</a>#}
+{#                        </li>#}
+                    </ul>
                 </div>
             </div>
         </div>
