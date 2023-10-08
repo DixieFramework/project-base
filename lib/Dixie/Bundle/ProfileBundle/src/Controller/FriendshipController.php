@@ -87,7 +87,7 @@ class FriendshipController extends AbstractController
 
     #[Route('/friendship-request/create/{username}', name: 'friendship_request_create', requirements: ['username' => Requirement::ASCII_SLUG], methods: ['POST', 'GET'])]
     #[ParamConverter('user', class: User::class, options: ['mapping' => ['username' => 'usernameCanonical']])]
-    public function createRequest(User $user): Response
+    public function createRequest(Request $request, User $user): Response
     {
         /** @var UserInterface $loggedInUser */
         $loggedInUser = $this->getUser();
@@ -103,7 +103,11 @@ class FriendshipController extends AbstractController
 
             $this->friendshipRequestRepository->save($friendshipRequest, true);
 
-            return new JsonResponse();
+	        if ($request->isXmlHttpRequest()) {
+		        return $this->json(['status' => 'ok']);
+	        } else {
+		        return $this->redirectToRoute('user_profile_view', ['id' => $requesteeProfile->getId(), 'username' => StringUtils::slug($user->getUsernameCanonical())]);
+	        }
         }
 
         throw $this->createNotFoundException();

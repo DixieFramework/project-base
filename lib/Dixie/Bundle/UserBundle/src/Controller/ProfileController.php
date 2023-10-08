@@ -84,8 +84,7 @@ class ProfileController extends AbstractController
     #[Route(path: '/edit', name: 'user_profile_edit')]
     public function editProfil(Request $request, #[CurrentUser] UserInterface $user, EntityManagerInterface $manager, ManagerInterface $userPropertyManager): Response
     {
-		dd($user->hasRoles(['ROLE_USER', 'ROLE_ADMIN']));
-        if (false) {
+		if (false) {
             //        $userProperty = $userPropertyManager->create();
 //        $userProperty->setUser($this->getUser());
 //        $userProperty->setName('Lolz');
