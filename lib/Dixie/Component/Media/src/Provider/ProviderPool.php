@@ -83,4 +83,58 @@ class ProviderPool
 
         return $choices;
     }
+
+    /**
+     * @param string $name
+     *
+     * @return array|null
+     */
+    public function getProviderNamesByContext($name)
+    {
+        $context = $this->getContext($name);
+
+        if (!$context) {
+            return null;
+        }
+
+        return $context['providers'];
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return array|null
+     */
+    public function getFormatNamesByContext($name)
+    {
+        $context = $this->getContext($name);
+
+        if (!$context) {
+            return null;
+        }
+
+        return $context->getFormats();
+
+        return $context['formats'];
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return array
+     */
+    public function getProvidersByContext($name)
+    {
+        $providers = [];
+
+        if (!$this->hasContext($name)) {
+            return $providers;
+        }
+
+        foreach ($this->getProviderNamesByContext($name) as $name) {
+            $providers[] = $this->getProvider($name);
+        }
+
+        return $providers;
+    }
 }

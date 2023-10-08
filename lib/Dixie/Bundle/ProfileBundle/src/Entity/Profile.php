@@ -6,6 +6,7 @@ namespace Talav\ProfileBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Talav\Component\Resource\Model\ResourceTrait;
 use Talav\Component\Resource\Model\TimestampableTrait;
@@ -37,6 +38,20 @@ class Profile implements ProfileInterface
 
 	protected Collection $friendships;
 
+    #[ORM\OneToMany(mappedBy: 'blocker', targetEntity: ProfileBlock::class, cascade: [
+        'persist',
+        'remove',
+    ], orphanRemoval: true)]
+    #[ORM\OrderBy(['createdAt' => 'DESC'])]
+    public Collection $blocks;
+
+    #[ORM\OneToMany(mappedBy: 'blocked', targetEntity: ProfileBlock::class, cascade: [
+        'persist',
+        'remove',
+    ], orphanRemoval: true)]
+    #[ORM\OrderBy(['createdAt' => 'DESC'])]
+    public ?Collection $blockers;
+
     /**
      * @var ArrayCollection
      */
@@ -47,6 +62,10 @@ class Profile implements ProfileInterface
 	    $this->requester = new ArrayCollection();
 	    $this->requestee = new ArrayCollection();
 	    $this->friendships = new ArrayCollection();
+
+        $this->blocks = new ArrayCollection();
+        $this->blockers = new ArrayCollection();
+
         $this->relationships = new ArrayCollection();
     }
 
@@ -283,6 +302,55 @@ class Profile implements ProfileInterface
 				}
 			)->count();
 	}
+
+
+    public function isBlocker(ProfileInterface $user): bool
+    {
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('blocker', $user));
+
+        return $user->blockers->matching($criteria)->count() > 0;
+    }
+
+    public function block(ProfileInterface $blocked): self
+    {
+        if (!$this->isBlocked($blocked)) {
+            $this->blocks->add($userBlock = new ProfileBlock($this, $blocked));
+
+            if (!$blocked->blockers->contains($userBlock)) {
+                $blocked->blockers->add($userBlock);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Returns whether or not the given user is blocked by the user this method is called on.
+     */
+    public function isBlocked(ProfileInterface $user): bool
+    {
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('blocked', $user));
+
+        return $this->blocks->matching($criteria)->count() > 0;
+    }
+    public function unblock(ProfileInterface $blocked): void
+    {
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('blocked', $blocked));
+
+        /**
+         * @var $userBlock ProfileBlock
+         */
+        $userBlock = $this->blocks->matching($criteria)->first();
+
+        if ($this->blocks->removeElement($userBlock)) {
+            if ($userBlock->blocker === $this) {
+                $blocked->blockers->removeElement($this);
+            }
+        }
+    }
 
     public function getRelationships(): Collection
     {

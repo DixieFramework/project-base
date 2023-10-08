@@ -1,7 +1,15 @@
-{% extends '@TalavUser/frontend/profile/layout.html.twig' %}
-{%- set status_bar = true    -%}
+{% extends '@TalavWeb/layouts/with_widget.html.twig' %}
+{%- set status_bar = true -%}
 {% block container_class 'container mt-n4' %}
-
+{%- block content_container_class ' col-lg-8 col-xl-8 offset-xl-1' -%}
+{%- block sidebar_container_class ' col-lg-4 col-xl-3' -%}
+{%- block titre '' -%}
+{% block header %}
+    {% include '@TalavUser/profile/_tabs.html.twig' with {'user': app.user} %}
+{% endblock %}
+{% block sidebar %}
+    {% include '@TalavUser/profile/_side_menu.html.twig' with {'user': app.user} %}
+{% endblock %}
 {% block title %}Друзья {{ user.username }}{% endblock %}
 {#{% block breadcrumbs %}#}
 {#    {{ wapinet_breadcrumbs({#}
@@ -10,7 +18,7 @@
 {#    }) }}#}
 {#{% endblock %}#}
 
-{% block page_content %}
+{% block body %}
 {#    <h1 class="h2 text-center text-sm-start mb-4">Property offers</h1>#}
 {#    <!-- Nav tabs + Sorting-->#}
 {#    <div class="d-flex flex-column flex-sm-row align-items-center justify-content-between mb-4">#}
@@ -135,7 +143,7 @@
 {#            $('#tab-link-4').tab('show');#}
 {#		});#}
 {#    </script>#}
-{% endblock page_content %}
+{% endblock body %}
 
 {% block javascripts %}
 {{ parent() }}

@@ -2,20 +2,30 @@
 
 {% block head_js_layout %}
     <script type="text/javascript">
-        var fbAppId = "{{ facebook_app_id }}";
+        {#var fbAppId = "{{ facebook_app_id }}";#}
     </script>
 {% endblock %}
 
 {% block layout %}
     <div class="container">
         <h1>{% block titre 'Hello' %}</h1>
-        <div class="row">
-            <div id="content" class="col-lg-8">
+        <div class="row{% block row_class %} g-4{% endblock %}">
+            {% if block('sidebar') is defined and block('sidebar')|trim is not empty %}
+                <div class="col{% block sidebar_container_class %} col-xl-2{% endblock -%}">
+                    {{  block('sidebar') }}
+                </div>
+            {% endif %}
+
+            {% block start_card_container -%}
+            <div id="content" class="col{% block content_container_class %} col-xl-8 offset-xl-2{% endblock -%}">
+            {% endblock %}
                 {% block body %}{% endblock %}
+            {%- block end_card_container %}
             </div>
-            <div id="widgets" class="col-lg-4">
-                {% block widgets %}{% endblock %}
-            </div>
+            {%- endblock %}
+{#            <div id="widgets" class="col-lg-4">#}
+{#                {% block widgets %}{% endblock %}#}
+{#            </div>#}
         </div>
     </div>
 {% endblock %}

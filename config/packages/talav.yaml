@@ -233,7 +233,7 @@ talav_media:
             providers:
                 - talav.media.provider.image
             formats:
-                user_cover:
+                default:
                     w: 1500
                     h: 500
                     fit: crop

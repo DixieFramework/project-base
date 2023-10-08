@@ -12,8 +12,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
 trait UpdatedAtTrait
 {
     #[Gedmo\Timestampable(on: 'update')]
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?DateTimeImmutable $updatedAt = null;
+    #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE, nullable: true)]
+    public ?DateTimeImmutable $updatedAt = null;
 
     #[ORM\PreUpdate]
     public function setUpdatedAt(): void

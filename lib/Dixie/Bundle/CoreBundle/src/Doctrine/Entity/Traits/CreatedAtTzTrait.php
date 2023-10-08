@@ -9,20 +9,26 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait CreatedAtTzTrait
 {
-    /**
-     * @ORM\Column(type="datetimetz_immutable")
-     */
-    #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE)]
-    protected ?\DateTimeImmutable $created_at = null;
+    #[ORM\Column(name: 'created_at', type: Types::DATETIMETZ_IMMUTABLE)]
+    protected ?\DateTimeImmutable $createdAt = null;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable('@'.time());
+    }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at?->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        return $this->createdAt?->setTimezone(new \DateTimeZone(date_default_timezone_get()));
     }
 
-    public function setCreatedAt(?\DateTimeImmutable $created_at): self
+    public function setCreatedAt(?\DateTimeImmutable $createdAt): self
     {
-        $this->created_at = $created_at;
+        if (!$createdAt) {
+            $createdAt = new \DateTimeImmutable('@'.time());
+        }
+
+        $this->createdAt = $createdAt;
 
         return $this;
     }

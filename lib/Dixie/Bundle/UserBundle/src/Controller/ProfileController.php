@@ -30,7 +30,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Talav\CoreBundle\Utils\TypeCast;
+use Talav\GalleryBundle\Entity\GalleryImage;
 use Talav\ProfileBundle\Entity\UserRelation;
+use Talav\ProfileBundle\Repository\ProfileBlockRepository;
 use Talav\SettingsBundle\Trait\SettingManagerAwareTrait;
 use Talav\UserBundle\Event\FilterUserResponseEvent;
 use Talav\UserBundle\Event\FormEvent;
@@ -84,6 +86,8 @@ class ProfileController extends AbstractController
     #[Route(path: '/edit', name: 'user_profile_edit')]
     public function editProfil(Request $request, #[CurrentUser] UserInterface $user, EntityManagerInterface $manager, ManagerInterface $userPropertyManager): Response
     {
+        dd($user->getProfile()->isBlocked($this->userManager->findUserByUsername('user')->getProfile()));
+
 		if (false) {
             //        $userProperty = $userPropertyManager->create();
 //        $userProperty->setUser($this->getUser());
@@ -153,12 +157,25 @@ class ProfileController extends AbstractController
 //    #[ParamConverter('user', class: UserInterface::class, options: ['mapping' => ['username' => 'username']])]
     #[Route(path: '/{id}/{username}', name: 'user_profile_view', requirements: ['username' => Requirement::ASCII_SLUG], defaults: ['username' => null])]
 //    #[ParamConverter('user', class: UserInterface::class, options: ['mapping' => ['username_canonical' => 'username']])]
-    public function show(int $id, string $username = null): Response
+    public function show(int $id, string $username, ProfileBlockRepository $profileBlockRepository): Response
     {
         $currentUser = $this->getUser();
         if (!$currentUser) {
             throw $this->createAccessDeniedException();
         }
+
+        $user = $this->userManager->getRepository()->findOneBy(['usernameCanonical' => $username]);
+        $profile = $user->getProfile();
+
+        if ($profile === null || $profile->isBlocked($currentUser->getProfile())) {
+            throw $this->createNotFoundException();
+        }
+
+//        dd($this->entityManager->getRepository(GalleryImage::class)->findFreshImagesLimit(5));
+        return $this->render('@TalavUser/profile/profile_view.html.twig', [
+            'user' => $user,
+            'profile' => $profile
+        ]);
 
         if (null !== $username) {
             $user = $this->userManager->getRepository()->findOneBy(['usernameCanonical' => $username]);

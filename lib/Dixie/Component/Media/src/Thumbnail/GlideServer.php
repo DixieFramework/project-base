@@ -22,12 +22,16 @@ final class GlideServer implements ThumbnailInterface
         $this->tempDir = rtrim($tempDir, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR;
     }
 
-    public function generate(MediaProviderInterface $provider, MediaInterface $media): iterable
+    public function generate(MediaProviderInterface $provider, MediaInterface $media, array $formats): iterable
+    //public function generate(MediaProviderInterface $provider, MediaInterface $media): iterable
     {
+//        dd($formats);
+
         $server = $this->configServer($provider, $media);
         $sizes = [];
         try {
-            foreach ($provider->getFormats() as $formatName => $options) {
+//            foreach ($provider->getFormats() as $formatName => $options) {
+            foreach ($formats as $formatName => $options) {
                 $options = $this->enforceExtension($options, $media);
                 $path = $server->makeImage($provider->getFilesystemReference($media), $options);
                 $sizes[$formatName] = $this->extractSizes($path);

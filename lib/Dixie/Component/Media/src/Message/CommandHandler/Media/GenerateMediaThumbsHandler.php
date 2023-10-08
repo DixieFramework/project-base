@@ -36,7 +36,9 @@ final class GenerateMediaThumbsHandler implements MessageHandlerInterface
         if (!($provider instanceof ThumbnailableProviderInterface)) {
             return;
         }
-        $media->setThumbsInfo($this->thumbnail->generate($provider, $media));
+
+        //$media->setThumbsInfo($this->thumbnail->generate($provider, $media));
+        $media->setThumbsInfo((array) $this->thumbnail->generate($provider, $media, $this->providerPool->getFormatNamesByContext($media->getContext())));
         $this->mediaManager->update($media, true);
     }
 }

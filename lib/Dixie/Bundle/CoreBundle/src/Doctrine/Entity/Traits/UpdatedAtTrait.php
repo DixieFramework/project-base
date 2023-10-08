@@ -12,6 +12,7 @@ trait UpdatedAtTrait
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
+//    #[ORM\Column(name: 'updated_at', type: Types::DATETIME_MUTABLE, nullable: true)]
     #[ORM\Column(name: 'updated_at', type: Types::DATETIME_MUTABLE, nullable: true)]
     protected ?\DateTimeInterface $updatedAt;
 
@@ -22,6 +23,10 @@ trait UpdatedAtTrait
 
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
+        if (!$updatedAt) {
+            $updatedAt = new \DateTimeImmutable('@'.time());
+        }
+
         $this->updatedAt = $updatedAt;
 
         return $this;

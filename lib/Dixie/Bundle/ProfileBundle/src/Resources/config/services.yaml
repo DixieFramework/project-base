@@ -19,7 +19,7 @@ services:
             - '../../DependencyInjection/'
 #            - '../../Entity/'
             - '../../Migrations'
-            - '../../Repository/'
+#            - '../../Repository/'
             - '../../Tests/'
 
     # ---------------------------------------------------------

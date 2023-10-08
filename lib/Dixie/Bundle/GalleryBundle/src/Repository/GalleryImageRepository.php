@@ -88,4 +88,20 @@ class GalleryImageRepository extends ResourceRepository
             ->where('image.gallery = :galleryId')
             ->setParameter('galleryId', $gallery->getId());
     }
+
+    /**
+     * @param int $limit
+     *
+     * @return float|int|mixed|string
+     */
+    public function findFreshImagesLimit(int $limit)
+    {
+        return $this->createQueryBuilder('gi')
+            ->where('gi.visible = :isVisible')
+            ->setParameter('isVisible', true)
+            ->setMaxResults($limit)
+            ->orderBy('gi.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

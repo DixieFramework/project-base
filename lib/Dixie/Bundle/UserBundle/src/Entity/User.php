@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Talav\AvatarBundle\Model\UserAvatarInterface;
+use Talav\AvatarBundle\Model\UserCoverInterface;
 use Talav\Component\Media\Model\MediaInterface;
 use Talav\Component\Resource\Model\ResourceTrait;
 use Talav\Component\User\Model\AbstractUser;
@@ -39,7 +41,7 @@ use Talav\UserBundle\Model\UserInterface;
 //#[UniqueEntity(fields: ['username'], message: 'username.already_used')]
 //#[ORM\EntityListeners([UserEmailEntityListener::class, UserEntityListener::class])]
 #[ORM\MappedSuperclass]
-abstract class User extends AbstractUser implements UserInterface, RolesInterface, \Serializable
+abstract class User extends AbstractUser implements UserInterface, UserAvatarInterface, UserCoverInterface, RolesInterface, \Serializable
 {
     use ResourceTrait;
     use HasRoles, HasRelations;
@@ -54,8 +56,12 @@ abstract class User extends AbstractUser implements UserInterface, RolesInterfac
 	protected ?ProfileInterface $profile = null;
 
     #[ORM\OneToOne(targetEntity: MediaInterface::class, cascade: ['persist'])]
-    #[ORM\JoinColumn(name: 'media_id')]
+    #[ORM\JoinColumn(name: 'avatar_media_id')]
     protected ?MediaInterface $avatar = null;
+
+    #[ORM\OneToOne(targetEntity: MediaInterface::class, cascade: ['persist'])]
+    #[ORM\JoinColumn(name: 'cover_media_id')]
+    protected ?MediaInterface $cover = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserFriend::class, cascade: ['persist', 'remove'])]
     protected Collection $friendRequests;
@@ -159,6 +165,26 @@ abstract class User extends AbstractUser implements UserInterface, RolesInterfac
     public function getAvatarDescription(): ?string
     {
         return $this->getAvatarName();
+    }
+
+    public function getCover(): ?MediaInterface
+    {
+        return $this->cover;
+    }
+
+    public function setCover(?MediaInterface $avatar): void
+    {
+        $this->cover = $avatar;
+    }
+
+    public function getCoverName(): ?string
+    {
+        return $this->getFirstName().' '.$this->getLastName().'coverImage';
+    }
+
+    public function getCoverDescription(): ?string
+    {
+        return $this->getCoverName();
     }
 
     /**

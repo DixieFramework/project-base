@@ -73,4 +73,38 @@ class AvatarController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/user/profile/cover", name="talav_user_profile_cover")
+     */
+    public function updateCover(Request $request): Response
+    {
+        $user = $this->getUser();
+        $model = is_null($user->getCover()) ? new MediaModel() : $this->autoMapper->map($user->getCover(), MediaModel::class);
+
+        $form = $this->createForm(MediaType::class, $model, [
+            'provider' => 'image',
+            'context' => 'cover',
+            'required' => false,
+        ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $dto = ProcessMediaDto::fromObjects($user->getCover(), $form->getData());
+            $dto->name = $user->getCoverName();
+            $dto->description = $user->getCoverDescription();
+            $media = $this->bus->dispatch(new ProcessMediaModelCommand($dto))->last(HandledStamp::class)->getResult();
+            $user->setCover($media);
+            $this->userManager->update($user, true);
+            $this->addFlash(
+                'success',
+                $this->translator->trans('talav.update_avatar.flash.success', [], 'TalavAvatarBundle')
+            );
+
+            return $this->redirectToRoute('talav_user_profile_cover');
+        }
+
+        return $this->render('@TalavAvatar/frontend/avatar/update_cover.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 }

@@ -34,6 +34,9 @@ class GalleryImage implements ResourceInterface
     #[Assert\NotBlank]
     private string $description;
 
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true)]
+    protected ?bool $visible = null;
+
 	#[ORM\ManyToOne(targetEntity: Image::class, cascade: ['persist'])]
 	#[ORM\JoinColumn(nullable: true)]
 	public ?Image $image = null;
@@ -51,6 +54,12 @@ class GalleryImage implements ResourceInterface
      */
     #[ORM\OneToMany(mappedBy: 'image', targetEntity: Comment::class, cascade: ['remove'])]
     private Collection $comments;
+
+    #[ORM\Column(name: 'created_at', type: Types::DATETIMETZ_IMMUTABLE, columnDefinition: 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP')]
+    protected ?\DateTimeImmutable $createdAt;
+
+    #[ORM\Column(name: 'updated_at', type: Types::DATETIMETZ_IMMUTABLE, nullable: true, columnDefinition: 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')]
+    protected ?\DateTimeImmutable $updatedAt;
 
     /**
      * Constructor.
@@ -118,6 +127,22 @@ class GalleryImage implements ResourceInterface
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
+    public function getVisible(): ?bool
+    {
+        return $this->visible;
+    }
+
+    /**
+     * @param bool|null $visible
+     */
+    public function setVisible(?bool $visible): void
+    {
+        $this->visible = $visible;
+    }
+
 //	public function getImage(): ?MediaInterface
 //	{
 //		return $this->image;
@@ -146,6 +171,30 @@ class GalleryImage implements ResourceInterface
     public function setGallery(Gallery $gallery): self
     {
         $this->gallery = $gallery;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
