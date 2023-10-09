@@ -18,7 +18,7 @@ interface UserInterface extends SymfonyUserInterface, PasswordAuthenticatedUserI
      * Gets the username.
      */
 //    public function setUsername(?string $username): void;
-    public function getUsername(): ?string;//Username;
+    public function getUsername(): ?Username;
 
     /**
      * Sets the username.

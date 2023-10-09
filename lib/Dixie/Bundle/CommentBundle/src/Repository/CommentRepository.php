@@ -87,7 +87,7 @@ class CommentRepository extends ResourceRepository
                 $qb ->andWhere('c.song = :song')
                     ->setParameter('song', $criteria['song']);
             } else {
-                $qb ->andWhere('s.'. $property .' = :' . $property . '')
+                $qb ->andWhere('c.'. $property .' = :' . $property . '')
                     ->setParameter($property,$value)
                 ;
             }
@@ -135,9 +135,8 @@ class CommentRepository extends ResourceRepository
     public function findCommentsByTypeAndEntityQueryBuilder(string $type, int $entityId): QueryBuilder
     {
         $qb = $this->createQueryBuilder('c')
-            ->leftJoin('c.author', 'author')
-            ->where('c.type = :type AND c.entityId = :entityId')
-            ->andWhere('AND c.parent IS NULL AND c.status = 1')
+	        ->where('c.parent IS NULL AND c.status = 1')
+	        ->andWhere('c.type = :type AND c.entityId = :entityId')
             ->setParameter('type', $type)
             ->setParameter('entityId', $entityId)
             ->orderBy('c.publishedAt', Criteria::DESC)

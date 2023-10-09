@@ -6,9 +6,9 @@
             {{ comments.nbResults }} Comment{{ comments.nbResults > 1 ? 's' }}
         {% endif %}
     </h4>
-    {% include '@TalavPost/comment/form.html.twig' %}
+    {% include '@TalavComment/comment/form.html.twig' %}
 
     {% if comments.nbResults > 0 %}
-        {% include '@TalavPost/comment/list.html.twig' %}
+        {% include '@TalavComment/comment/list.html.twig' %}
     {% endif %}
 </div>

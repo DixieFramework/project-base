@@ -95,9 +95,9 @@ abstract class AbstractUser implements UserInterface
         return $this;
     }
 
-    public function getUsername(): ?string
+    public function getUsername(): ?Username
     {
-        return $this->username->__toString();
+        return $this->username;
     }
 //
 //    public function setUsername(?string $username): void

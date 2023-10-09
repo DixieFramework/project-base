@@ -4,13 +4,13 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
     <mapped-superclass name="Talav\CommentBundle\Entity\Comment" table="com_comment"
                        repository-class="Talav\CommentBundle\Repository\CommentRepository">
-        <indexes>
-            <index columns="type,entity_id"/>
-        </indexes>
+<!--        <indexes>-->
+<!--            <index columns="type,entity_id"/>-->
+<!--        </indexes>-->
 
-        <unique-constraints>
-            <unique-constraint columns="type,entity_id"/>
-        </unique-constraints>
+<!--        <unique-constraints>-->
+<!--            <unique-constraint columns="type,entity_id"/>-->
+<!--        </unique-constraints>-->
 
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO"/>
