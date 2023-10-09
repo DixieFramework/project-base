@@ -1,6 +1,12 @@
 {
-  "bundles/talavweb/admin.js": "/bundles/talavweb/admin.js?73b85c631c2050a4cb38",
-  "bundles/talavweb/admin.css": "/bundles/talavweb/admin.css?53a31adc8d635b4d1851",
+  "bundles/talavweb/admin.css": "/bundles/talavweb/admin.css?bba4765cfd3411c63972",
+  "bundles/talavweb/admin.js": "/bundles/talavweb/admin.js?61bee77cfca91a1d1c84",
+  "bundles/talavweb/event_details.js": "/bundles/talavweb/event_details.js?32ce1da9fb94a378c098",
+  "bundles/talavweb/app.css": "/bundles/talavweb/app.css?216229890b41c38acd5b",
+  "bundles/talavweb/app.js": "/bundles/talavweb/app.js?962f54a32eaf740e2a5a",
+  "bundles/talavweb/assets_js_lazy-listeners_image-previews_js-node_modules_fancybox_dist_css_jquery_fancybox_css.css?05aae27b3fd89b0dfe1c": "/bundles/talavweb/assets_js_lazy-listeners_image-previews_js-node_modules_fancybox_dist_css_jquery_fancybox_css.css?05aae27b3fd89b0dfe1c",
+  "bundles/talavweb/assets_js_lazy-listeners_image-previews_js-node_modules_fancybox_dist_css_jquery_fancybox_css.js?c6da466bc8f7df86e13d": "/bundles/talavweb/assets_js_lazy-listeners_image-previews_js-node_modules_fancybox_dist_css_jquery_fancybox_css.js?c6da466bc8f7df86e13d",
+  "bundles/talavweb/vendors-node_modules_fancybox_dist_js_jquery_fancybox_js-node_modules_fancybox_dist_css_jquer-2f7134.js?8d3f9175ff14aba7c4c5": "/bundles/talavweb/vendors-node_modules_fancybox_dist_js_jquery_fancybox_js-node_modules_fancybox_dist_css_jquer-2f7134.js?8d3f9175ff14aba7c4c5",
   "bundles/talavweb/fonts/materialdesignicons-webfont.eot": "/bundles/talavweb/fonts/materialdesignicons-webfont.d95c91e8.eot",
   "bundles/talavweb/fonts/materialdesignicons-webfont.ttf?v=7.2.96": "/bundles/talavweb/fonts/materialdesignicons-webfont.0207b94c.ttf",
   "bundles/talavweb/fonts/materialdesignicons-webfont.woff?v=7.2.96": "/bundles/talavweb/fonts/materialdesignicons-webfont.2e62b656.woff",
@@ -85,6 +91,7 @@
   "bundles/talavweb/fonts/unicons-15.woff": "/bundles/talavweb/fonts/unicons-15.21d4cc4f.woff",
   "bundles/talavweb/fonts/unicons-10.woff2": "/bundles/talavweb/fonts/unicons-10.91ee36cf.woff2",
   "bundles/talavweb/fonts/unicons-12.woff2": "/bundles/talavweb/fonts/unicons-12.6000a3b9.woff2",
+  "bundles/talavweb/images/fancybox_loading@2x.gif": "/bundles/talavweb/images/fancybox_loading@2x.d8f0a972.gif",
   "bundles/talavweb/fonts/unicons-6.woff": "/bundles/talavweb/fonts/unicons-6.abee15a6.woff",
   "bundles/talavweb/fonts/unicons-5.woff": "/bundles/talavweb/fonts/unicons-5.81ec80ba.woff",
   "bundles/talavweb/fonts/unicons-4.woff2": "/bundles/talavweb/fonts/unicons-4.bcc04ff7.woff2",
@@ -107,7 +114,13 @@
   "bundles/talavweb/fonts/unicons-14.woff2": "/bundles/talavweb/fonts/unicons-14.ba76f925.woff2",
   "bundles/talavweb/fonts/unicons-20.eot": "/bundles/talavweb/fonts/unicons-20.df16aa4d.eot",
   "bundles/talavweb/fonts/unicons-20.ttf": "/bundles/talavweb/fonts/unicons-20.7b053759.ttf",
+  "bundles/talavweb/images/fancybox_loading.gif": "/bundles/talavweb/images/fancybox_loading.78a563f0.gif",
+  "bundles/talavweb/images/fancybox_sprite@2x.png": "/bundles/talavweb/images/fancybox_sprite@2x.89fa20c7.png",
+  "bundles/talavweb/images/credit-cards.png": "/bundles/talavweb/images/credit-cards.d95e1266.png",
   "bundles/talavweb/fonts/unicons-20.woff": "/bundles/talavweb/fonts/unicons-20.41112a8a.woff",
   "bundles/talavweb/fonts/unicons-20.woff2": "/bundles/talavweb/fonts/unicons-20.3349daea.woff2",
-  "bundles/talavweb/images/unicons-20.svg": "/bundles/talavweb/images/unicons-20.eb1a53be.svg"
+  "bundles/talavweb/images/unicons-20.svg": "/bundles/talavweb/images/unicons-20.eb1a53be.svg",
+  "bundles/talavweb/images/fancybox_sprite.png": "/bundles/talavweb/images/fancybox_sprite.7b8e2ce6.png",
+  "bundles/talavweb/images/fancybox_overlay.png": "/bundles/talavweb/images/fancybox_overlay.f0eb3448.png",
+  "bundles/talavweb/images/blank.gif": "/bundles/talavweb/images/blank.e5634ce3.gif"
 }

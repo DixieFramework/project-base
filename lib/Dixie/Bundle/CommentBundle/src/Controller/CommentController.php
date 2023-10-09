@@ -33,7 +33,7 @@ class CommentController extends AbstractController
     }
 
     #[Route(path: '/form/{type}/{entityId<%patterns.id%>}', name: 'app_comment_form', methods: ['GET'])]
-    public function form($type, int $entityId, int $page = 1): Response
+    public function form(string $type, string $entityId, int $page = 1): Response
     {
 		switch ($type) {
 			case 'post':
@@ -52,7 +52,7 @@ class CommentController extends AbstractController
         if ($this->isGranted('ROLE_USER')) {
             $form = $this
                 ->createForm(CommentType::class, $comment, [
-                    'action' => $this->generateUrl('talav_comment_app_comment_new', ['id' => $entityId]),
+                    'action' => $this->generateUrl('talav_comment_app_comment_new', ['type' => $type, 'entityId' => $entityId]),
                 ])
                 ->createView();
         }
@@ -65,40 +65,16 @@ class CommentController extends AbstractController
 
         return $this->render('@TalavComment/comment/list-and-form.html.twig', [
             'comments' => $comments,
+            'type' => $type,
+            'entityId' => $entityId,
             'entity' => $entity,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route(path: '/form/{id<%patterns.id%>}', name: 'app_post_comment_form', methods: ['GET'])]
-    public function postForm(Post $event, int $page = 1): Response
-    {
-        $comment = $this->commentManager->create();
-        $form = null;
-        if ($this->isGranted('ROLE_USER')) {
-            $form = $this
-                ->createForm(CommentType::class, $comment, [
-                    'action' => $this->generateUrl('talav_post_comment_app_comment_new', ['id' => $event->getId()]),
-                ])
-                ->createView();
-        }
-
-        $comments = $this->createQueryBuilderPaginator(
-            $this->commentManager->getRepository()->findAllByPostQueryBuilder($event),
-            $page,
-            self::COMMENTS_PER_PAGE
-        );
-
-        return $this->render('@TalavPost/comment/list-and-form.html.twig', [
-            'comments' => $comments,
-            'event' => $event,
             'form' => $form,
         ]);
     }
 
     #[Route(path: '/comments/{type}/{entityId<%patterns.id%>}/{page<%patterns.page%>}', name: 'app_comment_list', methods: ['GET'])]
 //    #[ReverseProxy(expires: 'tomorrow')]
-    public function list($type, int $entityId, int $page = 1): Response
+    public function list(string $type, string $entityId, int $page = 1): Response
     {
 //        $name = strtolower((new \ReflectionClass($event))->getShortName());
 //dd($name);
@@ -134,42 +110,57 @@ class CommentController extends AbstractController
 
         return $this->render('@TalavComment/comment/list.html.twig', [
             'comments' => $comments,
+            'type' => $type,
+            'entityId' => $entityId,
             'entity' => $entity,
             'page' => $page,
             'offset' => self::COMMENTS_PER_PAGE,
         ]);
     }
 
-    #[Route(path: '/{id<%patterns.id%>}/nouveau', name: 'app_comment_new', methods: ['GET', 'POST'])]
+    #[Route(path: '/{type}/{entityId<%patterns.id%>}/new', name: 'app_comment_new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
-    public function new(Request $request, Post $event): Response
+    public function new(Request $request, string $type, string $entityId): Response
     {
+        switch ($type) {
+            case 'post':
+                $entity = $this->entityManager->getRepository(PostInterface::class)->find($entityId);
+                break;
+            case 'gallery-image':
+                $entity = $this->entityManager->getRepository(GalleryImage::class)->find($entityId);
+                break;
+            default:
+                throw $this->createNotFoundException();
+                break;
+        }
+
         $user = $this->getUser();
 
         $comment = $this->commentManager->create();
         $comment->setAuthor($user);
-        $comment->setPost($event);
+        $comment->setType($type);
+        $comment->setEntityId($entityId);
 
         $form = $this->createForm(CommentType::class, $comment, [
-            'action' => $this->generateUrl('talav_post_comment_app_comment_new', ['id' => $event->getId()]),
+            'action' => $this->generateUrl('talav_comment_app_comment_new', ['type' => $type, 'entityId' => $entity->getId()]),
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->commentManager->update($comment, true);
 
             $comments = $this->createQueryBuilderPaginator(
-                $this->commentManager->getRepository()->findAllByPostQueryBuilder($event),
+                $this->commentManager->getRepository()->findCommentsByTypeAndEntityQueryBuilder($type, $entityId),
                 1,
                 self::COMMENTS_PER_PAGE
             );
 
             return new JsonResponse([
                 'success' => true,
-                'comment' => $this->renderView('@TalavPost/comment/_details.html.twig', [
+                'comment' => $this->renderView('@TalavComment/comment/_details.html.twig', [
                     'comment' => $comment,
                     'success' => true,
                 ]),
-                'header' => $this->renderView('@TalavPost/comment/_header.html.twig', [
+                'header' => $this->renderView('@TalavComment/comment/_header.html.twig', [
                     'comments' => $comments,
                 ]),
             ]);
@@ -177,7 +168,7 @@ class CommentController extends AbstractController
 
         return new JsonResponse([
             'success' => false,
-            'post' => $this->renderView('@TalavPost/comment/form.html.twig', [
+            'post' => $this->renderView('@TalavComment/comment/form.html.twig', [
                 'form' => $form->createView(),
             ]),
         ]);

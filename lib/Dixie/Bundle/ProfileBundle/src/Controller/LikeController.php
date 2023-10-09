@@ -10,10 +10,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Talav\CommentBundle\Entity\CommentInterface;
 use Talav\Component\Resource\Manager\ManagerInterface;
 use Talav\CoreBundle\Controller\AbstractController;
 use Talav\CoreBundle\Interfaces\RoleInterface;
-use Talav\PostBundle\Entity\Comment;
+use Talav\CommentBundle\Entity\Comment;
 use Talav\PostBundle\Entity\Post;
 use Talav\PostBundle\Entity\PostInterface;
 
@@ -83,7 +84,8 @@ class LikeController extends AbstractController
 	}
 
 	#[Route('/comment/{id}/toggle', name: 'toggle_comment_like', methods: ['GET'])]
-	public function toggleCommentLike(Comment $comment, ManagerInterface $likeManager, ManagerInterface $notificationManager): Response
+    #[ParamConverter('comment', class: \Groshy\Entity\Comment::class, options: ['mapping' => ['id' => 'id']])]
+	public function toggleCommentLike(\Groshy\Entity\Comment $comment, ManagerInterface $likeManager, ManagerInterface $notificationManager): Response
 	{
 		$likeRepo = $likeManager->getRepository();
 		$notificationRepo = $notificationManager->getRepository();

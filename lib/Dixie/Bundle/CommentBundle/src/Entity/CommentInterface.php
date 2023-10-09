@@ -14,6 +14,10 @@ use Talav\ProfileBundle\Entity\ReportInterface;
 
 interface CommentInterface extends ResourceInterface
 {
+    public const STATE_UNPUBLISHED = 0;
+
+    public const STATE_PUBLISHED = 1;
+
     public function getMessage(): ?string;
 
     public function setMessage(string $message): self;

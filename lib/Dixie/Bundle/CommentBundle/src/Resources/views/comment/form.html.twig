@@ -1,6 +1,6 @@
 {#{% import 'form/macros.html.twig' as macros %}#}
 {% if is_granted('ROLE_USER') %}
-<div class="d-flex mb-3">
+<div class="d-flex mb-3 md-comment-write">
     <!-- Avatar -->
     <div class="avatar avatar-xs me-2">
         <a href="#!"><img class="avatar-img rounded-circle" src="{% if  app.user.avatar %}{{ media_thumb_reference( app.user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar.png') }}{% endif %}" alt=""></a>
@@ -13,16 +13,16 @@
                 {{ form_widget(form.message, {'attr': {'class': 'form-control pe-5 bg-body-tertiary skip-validation', 'rows': '1'}}) }}
             {% endblock %}
 
-            <button class="nav-link bg-transparent px-3 position-absolute top-50 end-0 translate-middle-y border-0" type="submit">
-                <i class="fas fa-message"></i>
-            </button>
+{#            <button class="nav-link bg-transparent px-3 position-absolute top-50 end-0 translate-middle-y border-0" type="submit">#}
+{#                <i class="fas fa-message"></i>#}
+{#            </button>#}
         </div>
 
 
         {{ form_rest(form) }}
 
 
-        <button type="submit" class="btn btn-primary btn-submit btn-raised ms-2">Post</button>
+        <button type="submit" class="btn btn-primary btn-submit btn-raised w-15 ms-2">Post</button>
         {{ form_end(form) }}
     </div>
 

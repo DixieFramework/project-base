@@ -17,6 +17,8 @@ Encore
         umbrella_admin: path.join(__dirname, '/lib/Dixie/Bundle/WebBundle/src/Resources/private/assets/'),
     })
     .addEntry('admin', './lib/Dixie/Bundle/WebBundle/src/Resources/private/assets/admin.js')
+    .addEntry('event_details', './assets/js/pages/event_details.js')
+    .addEntry('app', './assets/app.js')
     .enableSassLoader()
 
     .disableSingleRuntimeChunk()

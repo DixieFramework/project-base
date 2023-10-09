@@ -132,7 +132,7 @@ class CommentRepository extends ResourceRepository
             ->orderBy('c.publishedAt', Criteria::DESC);
     }
 
-    public function findCommentsByTypeAndEntityQueryBuilder(string $type, int $entityId): QueryBuilder
+    public function findCommentsByTypeAndEntityQueryBuilder(string $type, string $entityId): QueryBuilder
     {
         $qb = $this->createQueryBuilder('c')
 	        ->where('c.parent IS NULL AND c.status = 1')
@@ -178,6 +178,23 @@ class CommentRepository extends ResourceRepository
 
         /** @var CommentInterface[] $result */
         $result = $query->getResult();
+
+        return $result;
+    }
+
+    public function countPublishedComments(string $type, string $entityId): int
+    {
+        $queryBuilder = $this->createQueryBuilder('c')
+            ->select('count(c.id)')
+            ->where('c.status = :status')
+            ->andWhere('c.parent IS NULL')
+            ->andWhere('c.type = :type AND c.entityId = :entityId')
+            ->setParameter('status', CommentInterface::STATE_PUBLISHED)
+            ->setParameter('type', $type)
+            ->setParameter('entityId', $entityId);
+
+        /** @var int $result */
+        $result = $queryBuilder->getQuery()->getSingleScalarResult();
 
         return $result;
     }

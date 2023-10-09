@@ -9,7 +9,7 @@ use Talav\CommentBundle\Entity\Comment as BaseComment;
 use Talav\CommentBundle\Repository\CommentRepository;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
-#[ORM\Table(name: 'comment')]
+#[ORM\Table(name: 'com_comment')]
 class Comment extends BaseComment
 {
 //    #[Id]

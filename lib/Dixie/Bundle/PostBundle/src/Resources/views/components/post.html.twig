@@ -100,8 +100,9 @@
             </ul>
 
 
-            {{ render_esi(path('talav_post_comment_app_comment_form', {
-                'id': post.id,
+            {{ render_esi(path('talav_comment_app_comment_form', {
+                'type': 'post',
+                'entityId': post.id
             })) }}
 
         </div>

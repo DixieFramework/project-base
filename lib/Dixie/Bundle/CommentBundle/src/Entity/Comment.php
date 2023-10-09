@@ -17,7 +17,7 @@ use Talav\ProfileBundle\Entity\NotificationInterface;
 use Talav\ProfileBundle\Entity\ReportInterface;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
-#[ORM\Table('comment')]
+#[ORM\Table('com_comment')]
 #[ORM\HasLifecycleCallbacks]
 #[ORM\MappedSuperclass]
 abstract class Comment implements CommentInterface
@@ -103,17 +103,17 @@ abstract class Comment implements CommentInterface
     /**
      * @return int|null
      */
-    public function getEntityId(): ?int
+    public function getEntityId(): ?string
     {
         return $this->entityId;
     }
 
     /**
-     * @param int|null $entityId
+     * @param string|null $entityId
      *
      * @return self
      */
-    public function setEntityId(?int $entityId): self
+    public function setEntityId(?string $entityId): self
     {
         $this->entityId = $entityId;
 

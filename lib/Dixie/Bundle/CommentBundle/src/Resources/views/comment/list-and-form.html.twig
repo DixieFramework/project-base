@@ -9,6 +9,6 @@
     {% include '@TalavComment/comment/form.html.twig' %}
 
     {% if comments.nbResults > 0 %}
-        {% include '@TalavComment/comment/list.html.twig' %}
+        {% include '@TalavComment/comment/list.html.twig' with {'type': type, 'entityId': entityId} %}
     {% endif %}
 </div>

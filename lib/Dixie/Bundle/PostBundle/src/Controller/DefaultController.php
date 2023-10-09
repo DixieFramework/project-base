@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Talav\CommentBundle\Entity\CommentInterface;
 use Talav\Component\Resource\Manager\ManagerInterface;
 use Talav\CoreBundle\Controller\AbstractController;
 use Talav\CoreBundle\Interfaces\RoleInterface;
@@ -98,8 +99,9 @@ class DefaultController extends AbstractController
 	{
 		$followed = true;//$followRepo->findOneBy(['follower' => $this->getUser(), 'followed' => $post->getAuthor(), 'accepted' => true]);
 		if ($followed && $post->getStatus() === true || $post->getStatus() === true && $post->getAuthor()->getClosedAccount() === false || $this->getUser() === $post->getAuthor() || $this->isGranted('ROLE_OWNER')) {
-			return $this->render('@TalavPost/post/show.html.twig', [
+            return $this->render('@TalavPost/post/show.html.twig', [
 				'post' => $post,
+                'comments_count' => $this->entityManager->getRepository(CommentInterface::class)->countPublishedComments('post', (string)$post->getId()),
 				'page' => $page
 			]);
 		} else {

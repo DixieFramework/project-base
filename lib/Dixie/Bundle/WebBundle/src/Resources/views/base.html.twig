@@ -165,7 +165,20 @@ _______     __  _   _ _____ _____ _    _ _______
 
 <!-- JS -->
 {{- asset_js('js/vendor/jquery/jquery.js') }}
-{#{{ encore_entry_script_tags('app') }}#}
+{{ encore_entry_script_tags('app') }}
+{%- block js -%}{%- endblock -%}
+<script>
+{#  $('body').on(window, 'load', function () {#}
+  document.addEventListener("DOMContentLoaded", (event) => {
+    App.run({{ {
+        'environment': app.environment,
+        'locale': app.request.locale,
+        'release': app_version,
+        'user' : (app.user ? {'id': app.user.id, 'username': app.user.username, 'email': app.user.email} : null)
+    }|json_encode|raw }});
+  });
+</script>
+{{ encore_entry_script_tags('event_details') }}
 
 
 
@@ -173,7 +186,6 @@ _______     __  _   _ _____ _____ _    _ _______
 {{- asset_js('js/library/BeeflowAjax/js/js-url-2.3.0.min.js') }}
 {{- asset_js('js/library/BeeflowAjax/js/BeeflowAjax.js') }}
 
-{%- block js -%}{%- endblock -%}
 {# java scripts #}
 <noscript>{{ 'common.no_script_support'|trans }}</noscript>
 {% block javascripts %}

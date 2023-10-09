@@ -89,7 +89,7 @@
                                 <a class="nav-link active" href="{{ path('profile_like_toggle_post_like', {'id':post.id}) }}"><i class="fas fa-thumbs-up pe-1"></i>Liked ({{ post.likes.count }})</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#!"><i class="fas fa-comment pe-1"></i>Comments ({{ post.comments.count }})</a>
+                                <a class="nav-link" href="#!"><i class="fas fa-comment pe-1"></i>Comments ({{ comments_count }})</a>
                             </li>
 
                             <!-- Card share action START -->
@@ -111,8 +111,9 @@
                         </ul>
 
 
-                    {{ render_esi(path('talav_post_comment_app_comment_form', {
-                        'id': post.id,
+                    {{ render_esi(path('talav_comment_app_comment_form', {
+                        'type': 'post',
+                        'entityId': post.id
                     })) }}
 
                 </div>
@@ -142,9 +143,9 @@
     {{- asset_js('js/extensions/validator-extensions.js') }}
     {{- asset_js('js/extensions/validator-extensions-fr.js') -}}
     {{ asset_js('js/extensions/simple-editor-extension.js') }}
-    {{ asset_js('js/application/user_post.js') }}
+{#    {{ asset_js('js/application/user_post.js') }}#}
 {% else %}
     {{- asset_js('js/core_edit.js') }}
-    {{ asset_js('js/user_comment.js') }}
+{#    {{ asset_js('js/user_comment.js') }}#}
 {% endif %}
 {% endblock %}
