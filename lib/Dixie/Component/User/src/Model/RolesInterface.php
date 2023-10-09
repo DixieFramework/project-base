@@ -39,7 +39,7 @@ interface RolesInterface
      *
      * @return boolean
      */
-    public function hasRole($role): bool;
+    public function _hasRole($role): bool;
 
     /**
      * Adds a Role to the Collection.
@@ -48,7 +48,7 @@ interface RolesInterface
      *
      * @return UserInterface
      */
-	public function addRole(RoleInterface $role): self;
+	public function _addRole(RoleInterface $role): self;
 
     /**
      * Remove the Role object from collection
@@ -57,7 +57,7 @@ interface RolesInterface
      *
      * @throws \InvalidArgumentException
      */
-    public function removeRole($role): void;
+    public function _removeRole($role): void;
 
     /**
      * Pass an array or Collection of Role objects and re-set roles collection with new Roles.
@@ -69,7 +69,7 @@ interface RolesInterface
      *
      * @return UserInterface
      */
-    public function setRoles(iterable $roles): self;
+    public function _setRoles(iterable $roles): self;
 
     /**
      * Directly set the Collection of Roles.

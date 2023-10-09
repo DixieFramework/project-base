@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Talav\ProfileBundle\Entity;
 
+use Talav\CommentBundle\Entity\CommentInterface;
 use Talav\Component\Resource\Model\ResourceInterface;
 use Talav\Component\Resource\Model\ResourceTrait;
 use Talav\PostBundle\Entity\Comment;
@@ -31,7 +32,7 @@ class Like implements LikeInterface
     #[ORM\ManyToOne(targetEntity: PostInterface::class, inversedBy: 'likes')]
     protected $post;
 
-    #[ORM\ManyToOne(targetEntity: Comment::class, inversedBy: 'likes')]
+    #[ORM\ManyToOne(targetEntity: CommentInterface::class, inversedBy: 'likes')]
     protected $comment;
 
     #[ORM\PrePersist]
@@ -76,12 +77,12 @@ class Like implements LikeInterface
         return $this;
     }
 
-    public function getComment(): ?Comment
+    public function getComment(): ?CommentInterface
     {
         return $this->comment;
     }
 
-    public function setComment(?Comment $comment): self
+    public function setComment(?CommentInterface $comment): self
     {
         $this->comment = $comment;
 

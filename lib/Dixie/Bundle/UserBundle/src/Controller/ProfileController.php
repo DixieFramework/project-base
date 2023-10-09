@@ -68,6 +68,8 @@ class ProfileController extends AbstractController
     #[Route(path: '/change-password', name: 'user_profile_change_password')]
     public function changePassword(Request $request, #[CurrentUser] UserInterface $user, EntityManagerInterface $manager): Response
     {
+        dd($this->userManager->getRepository()->findUserByIdentifier('user@local.dev'));
+
         $form = $this->createForm(ProfileChangePasswordType::class, $user);
         if ($this->handleRequestForm($request, $form)) {
             $manager->flush();

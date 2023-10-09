@@ -10,8 +10,8 @@ use Talav\PermissionBundle\Entity\RoleInterface;
 
 trait RolesTrait
 {
-    /** @var RoleInterface[] */
-    protected Collection $roles;
+//    /** @var RoleInterface[] */
+//    protected Collection $roles;
 
     /**
      * {@inheritdoc}
@@ -47,7 +47,7 @@ trait RolesTrait
     /**
      * {@inheritdoc}
      */
-    public function hasRole($role): bool
+    public function _hasRole($role): bool
     {
         if ($role instanceof RoleInterface) {
             $roleName = $role->getName();
@@ -65,7 +65,7 @@ trait RolesTrait
     /**
      * {@inheritdoc}
      */
-    public function addRole(RoleInterface $role): self
+    public function _addRole(RoleInterface $role): self
     {
         if (!$this->hasRole($role)) {
             $this->roles->add($role);
@@ -77,7 +77,7 @@ trait RolesTrait
     /**
      * {@inheritdoc}
      */
-    public function removeRole($role): void
+    public function _removeRole($role): void
     {
         if ($role instanceof RoleInterface) {
             $roleObject = $role;
@@ -96,7 +96,7 @@ trait RolesTrait
     /**
      * {@inheritdoc}
      */
-    public function setRoles(iterable $roles): self
+    public function _setRoles(iterable $roles): self
     {
         if (!$roles instanceof Collection && !is_array($roles)) {
             throw new \InvalidArgumentException(

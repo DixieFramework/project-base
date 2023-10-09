@@ -10,6 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use JetBrains\PhpStorm\Pure;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
+use Talav\CommentBundle\Entity\CommentInterface;
 use Talav\Component\Resource\Model\ResourceInterface;
 use Talav\Component\Resource\Model\ResourceTrait;
 use Talav\Component\User\Model\UserInterface;
@@ -61,7 +62,7 @@ class Post implements PostInterface
     #[ORM\JoinColumn(nullable: false)]
     protected ?UserInterface $author = null;
 
-    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: CommentInterface::class, orphanRemoval: true)]
     protected Collection $comments;
 
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: Bookmark::class, orphanRemoval: true)]
@@ -227,7 +228,7 @@ class Post implements PostInterface
 		return $this->comments;
 	}
 
-	public function addComment(Comment $comment): self
+	public function addComment(CommentInterface $comment): self
 	{
 		if (!$this->comments->contains($comment)) {
 			$this->comments[] = $comment;
@@ -237,7 +238,7 @@ class Post implements PostInterface
 		return $this;
 	}
 
-	public function removeComment(Comment $comment): self
+	public function removeComment(CommentInterface $comment): self
 	{
 		if ($this->comments->contains($comment)) {
 			$this->comments->removeElement($comment);

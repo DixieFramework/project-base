@@ -25,7 +25,7 @@ class LoginRedirectListener
     {
         $this->allowedUrls = [
             $this->router->generate('talav_user_login'),
-            $this->router->generate('talav_user_registration_register'),
+            $this->router->generate('talav_user_register'),
         ];
     }
 

@@ -12,6 +12,7 @@ use Talav\Component\User\Model\UserInterface;
 use Talav\CoreBundle\Controller\AbstractController;
 use Talav\CoreBundle\Interfaces\RoleInterface;
 use Talav\GalleryBundle\Entity\Gallery;
+use Talav\GalleryBundle\Entity\GalleryImage;
 use Talav\GalleryBundle\Form\Type\GalleryType;
 use Talav\GalleryBundle\Repository\GalleryRepository;
 use Talav\GalleryBundle\Repository\GalleryImageRepository;
@@ -80,6 +81,11 @@ class GalleryController extends AbstractController
             $page,
             self::GALLERY_PER_PAGE
         );
+
+        foreach ($galleries as $gallery) {
+            $gallery->coverImage = $this->entityManager->getRepository(GalleryImage::class)->findLastFromGallery($gallery);
+        }
+
 
         return $this->render('@TalavGallery/gallery/index.html.twig', [
             'galleries' => $galleries,

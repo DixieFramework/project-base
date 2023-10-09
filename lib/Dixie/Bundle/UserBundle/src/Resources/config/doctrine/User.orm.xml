@@ -7,7 +7,7 @@
 
     <mapped-superclass name="Talav\UserBundle\Entity\User" table="user">
         <!-- value object -->
-        <embedded name="userRoles" class="Talav\Component\User\ValueObject\Roles" use-column-prefix="false" />
+        <embedded name="roles" class="Talav\Component\User\ValueObject\Roles" use-column-prefix="false" />
         <embedded name="username" class="Talav\Component\User\ValueObject\Username" use-column-prefix="false" />
 
 <!--        <field name="username" column="username" length="180" />-->
@@ -27,7 +27,7 @@
                 <option name="default">0</option>
             </options>
         </field>
-        <field name="arrRoles" column="roles_array" type="array" />
+<!--        <field name="roles" column="roles" type="array" />-->
         <field name="firstName" column="first_name" nullable="true" />
         <field name="lastName" column="last_name" nullable="true" />
 
@@ -60,7 +60,7 @@
 
         <field name="lastActivityAt" column="last_activity_at" type="datetimetz_immutable" column-definition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP"/>
 
-        <many-to-many field="roles" target-entity="Talav\PermissionBundle\Entity\RoleInterface">
+        <many-to-many field="userRoles" target-entity="Talav\PermissionBundle\Entity\RoleInterface">
             <join-table name="user_role">
                 <join-columns>
                     <join-column name="user_id" referenced-column-name="id"/>

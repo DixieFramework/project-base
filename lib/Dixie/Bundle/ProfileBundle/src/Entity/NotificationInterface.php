@@ -23,9 +23,9 @@ interface NotificationInterface extends ResourceInterface
 
     public function setReceiver(?UserInterface $receiver): self;
 
-    public function getPublishedAt(): ?\DateTimeInterface;
+    public function getPublishedAt(): ?\DateTimeImmutable;
 
-    public function setPublishedAt(\DateTimeInterface $publishedAt): self;
+    public function setPublishedAt(\DateTimeImmutable $publishedAt): self;
 
     public function getMessage(): ?string;
 

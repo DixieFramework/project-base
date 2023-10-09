@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "edb1b3ab589b0d787e56ce7a256e308d",
+    "content-hash": "a8dd0657358d0ae078579e9a47d64ffe",
     "packages": [
         {
             "name": "api-platform/core",
@@ -12367,6 +12367,44 @@
             }
         },
         {
+            "name": "talav/comment-bundle",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "lib/Dixie/Bundle/CommentBundle",
+                "reference": "92d038db9c704b1739ac617a6c8ef0651efdaab6"
+            },
+            "require": {
+                "php": ">=8.1.14"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Talav\\CommentBundle\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Name",
+                    "homepage": "http://example.com/",
+                    "email": "example@example.com"
+                }
+            ],
+            "description": "CommentBundle description",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "talav/core-bundle",
             "version": "dev-main",
             "dist": {
@@ -14106,6 +14144,49 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "bornfight/maboo-maker-bundle",
+            "version": "v0.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bornfight/maboo-maker-bundle.git",
+                "reference": "300bfe3ae05de583c1525cec02064f1eaf464e0c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bornfight/maboo-maker-bundle/zipball/300bfe3ae05de583c1525cec02064f1eaf464e0c",
+                "reference": "300bfe3ae05de583c1525cec02064f1eaf464e0c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "8.*"
+            },
+            "require-dev": {
+                "symfony/maker-bundle": "^1.36"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Bornfight\\MabooMakerBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "gh0c",
+                    "email": "goran.hrzenjak@bornfight.com"
+                }
+            ],
+            "description": "Boilerplate code generator for projects with layered architecture. Inspired by Maboo",
+            "support": {
+                "issues": "https://github.com/bornfight/maboo-maker-bundle/issues",
+                "source": "https://github.com/bornfight/maboo-maker-bundle/tree/v0.6.1"
+            },
+            "time": "2023-09-01T09:57:16+00:00"
+        },
         {
             "name": "dama/doctrine-test-bundle",
             "version": "v7.2.1",
@@ -16847,6 +16928,7 @@
     "stability-flags": {
         "talav/avatar-bundle": 20,
         "talav/bundle-generator-bundle": 20,
+        "talav/comment-bundle": 20,
         "talav/core-bundle": 20,
         "talav/gallery-bundle": 20,
         "talav/image-bundle": 20,

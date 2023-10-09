@@ -40,7 +40,7 @@ trait HasRoles
 
     public function getRoleNames(): array
     {
-        return array_map(fn (Role $role) => $role->getName(), $this->getRolesRelation()->toArray());
+        return array_map(fn (RoleInterface $role) => $role->getName(), $this->getRolesRelation()->toArray());
     }
 
     #[Pure] private function convertPipeToArray(string $roles): array
@@ -51,7 +51,7 @@ trait HasRoles
 	/**
 	 * @param array<string, array<string, string|bool>>|array<string, string|bool> $roles
 	 *
-	 * @phpstan-param Role[]|Role $roles
+	 * @phpstan-param RoleInterface[]|RoleInterface $roles
 	 */
 	private function recursiveArraySearch(string $role, array $roles): bool
 	{
@@ -63,22 +63,4 @@ trait HasRoles
 
 		return false;
 	}
-
-
-
-
-
-    public function isSuperAdmin(): bool
-    {
-        return $this->hasRole(static::ROLE_SUPER_ADMIN);
-    }
-
-    public function setSuperAdmin($boolean): void
-    {
-        if (true === $boolean) {
-            $this->addRole(static::ROLE_SUPER_ADMIN);
-        } else {
-            $this->removeRole(static::ROLE_SUPER_ADMIN);
-        }
-    }
 }

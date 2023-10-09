@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Talav\ProfileBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Talav\CommentBundle\Entity\CommentInterface;
 use Talav\Component\Resource\Model\ResourceInterface;
 use Talav\Component\Resource\Model\ResourceTrait;
 use Talav\PostBundle\Entity\PostInterface;
 use Talav\ProfileBundle\Repository\NotificationRepository;
 use Talav\UserBundle\Model\UserInterface;
-use Talav\PostBundle\Entity\Comment;
 
 #[ORM\Entity(repositoryClass: NotificationRepository::class)]
 #[ORM\Table(name: 'notification')]
@@ -26,38 +26,38 @@ abstract class Notification implements NotificationInterface
     protected mixed $id;
 
     #[ORM\Column(type: 'boolean')]
-    protected bool $seen = false;
+    protected ?bool $seen = false;
 
     #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'sentNotifications')]
-    protected $sender;
+    protected ?UserInterface $sender;
 
     #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'receivedNotifications')]
     #[ORM\JoinColumn(nullable: false)]
-    protected $receiver;
+    protected UserInterface $receiver;
 
-    #[ORM\ManyToOne(targetEntity: Comment::class, inversedBy: 'notifications')]
-    protected $comment;
+    #[ORM\ManyToOne(targetEntity: CommentInterface::class, inversedBy: 'notifications')]
+    protected ?CommentInterface $comment;
 
-    #[ORM\Column(name: 'published_at', type: 'datetime', columnDefinition: 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP')]
-    protected $publishedAt;
-
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    protected $message;
+    #[ORM\Column(name: 'published_at', type: 'datetimetz_immutable', columnDefinition: 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP')]
+    protected ?\DateTimeImmutable $publishedAt;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    protected $type;
+    protected ?string $message;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    protected ?string $type;
 
     #[ORM\Column(type: 'boolean')]
     protected bool $status = true;
 
     #[ORM\ManyToOne(targetEntity: PostInterface::class, inversedBy: 'notifications')]
-    protected $post;
+    protected PostInterface $post;
 
     #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'notifications')]
     protected UserInterface $user;
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    protected $quantity;
+    protected ?int $quantity;
 
 //    #[ORM\ManyToOne(targetEntity: Follow::class, inversedBy: 'notifications')]
 //    protected $follow;
@@ -67,7 +67,7 @@ abstract class Notification implements NotificationInterface
     {
         $this->seen = false;
         $this->status = true;
-        $this->publishedAt = new \DateTime('now');
+        $this->publishedAt = new \DateTimeImmutable('now');
     }
 
     public function getId(): ?int
@@ -111,24 +111,24 @@ abstract class Notification implements NotificationInterface
         return $this;
     }
 
-    public function getComment(): ?Comment
+    public function getComment(): ?CommentInterface
     {
         return $this->comment;
     }
 
-    public function setComment(?Comment $comment): self
+    public function setComment(?CommentInterface $comment): self
     {
         $this->comment = $comment;
 
         return $this;
     }
 
-    public function getPublishedAt(): ?\DateTimeInterface
+    public function getPublishedAt(): ?\DateTimeImmutable
     {
         return $this->publishedAt;
     }
 
-    public function setPublishedAt(\DateTimeInterface $publishedAt): self
+    public function setPublishedAt(\DateTimeImmutable $publishedAt): self
     {
         $this->publishedAt = $publishedAt;
 

@@ -51,7 +51,7 @@
                     <div class="col-6 col-lg-3">
                         <!-- Album poster -->
                         <a href="{{ url('talav_gallery_preview', {'id': gallery.id}) }}">
-                            <img class="rounded img-fluid" src="{{ asset('images/albums/01.jpg') }}" alt="">
+                            <img class="rounded img-fluid" src="{{ asset(gallery.coverImage.image.filePath)|imagine_filter('gallery_image_filter_small') }}" alt="">
                         </a>
 
                         <!-- Album name -->

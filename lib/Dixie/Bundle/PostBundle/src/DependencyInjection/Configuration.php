@@ -8,9 +8,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Talav\PostBundle\Entity\Comment;
 use Talav\PostBundle\Entity\Post;
-use Talav\PostBundle\Repository\CommentRepository;
 use Talav\PostBundle\Repository\PostRepository;
 
 /**
@@ -56,18 +54,6 @@ class Configuration implements ConfigurationInterface
                                     ->children()
                                         ->scalarNode('model')->defaultValue(Post::class)->end()
                                         ->scalarNode('repository')->defaultValue(PostRepository::class)->end()
-                                    ->end()
-                                ->end()
-                            ->end()
-                        ->end()
-                        ->arrayNode('post_comment')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->arrayNode('classes')
-                                    ->addDefaultsIfNotSet()
-                                    ->children()
-                                        ->scalarNode('model')->defaultValue(Comment::class)->end()
-                                        ->scalarNode('repository')->defaultValue(CommentRepository::class)->end()
                                     ->end()
                                 ->end()
                             ->end()

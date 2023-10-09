@@ -45,4 +45,6 @@ return [
     Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
     Liip\ImagineBundle\LiipImagineBundle::class => ['all' => true],
     Talav\PostBundle\TalavPostBundle::class => ['all' => true],
+    Bornfight\MabooMakerBundle\BornfightMabooMakerBundle::class => ['dev' => true, 'test' => true],
+    Talav\CommentBundle\TalavCommentBundle::class => ['all' => true],
 ];

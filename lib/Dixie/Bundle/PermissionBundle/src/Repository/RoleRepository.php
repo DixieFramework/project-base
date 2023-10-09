@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Talav\PermissionBundle\Repository;
 
 use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Talav\Component\Resource\Repository\ResourceRepository;
 use Talav\PermissionBundle\Entity\RoleInterface;
@@ -54,5 +55,56 @@ class RoleRepository extends ResourceRepository implements RoleRepositoryInterfa
             ->setParameter('permission', $permission)
             ->getQuery()
             ->execute();
+    }
+
+    public function findRoleById($id)
+    {
+        try {
+            $queryBuilder = $this->createQueryBuilder('role')
+                ->leftJoin('role.permissions', 'permissions')
+                ->addSelect('permissions')
+                ->where('role.id=:roleId');
+
+            $query = $queryBuilder->getQuery();
+            $query->setParameter('roleId', $id);
+
+            return $query->getSingleResult();
+        } catch (NoResultException $e) {
+            return;
+        }
+    }
+
+    public function findAllRoles(array $filters = [])
+    {
+        try {
+            $queryBuilder = $this->createQueryBuilder('role')
+                ->leftJoin('role.permissions', 'permissions')
+                ->addSelect('permissions');
+
+            if (isset($filters['system'])) {
+                $queryBuilder->andWhere('role.system = :roleSystem')
+                    ->setParameter('roleSystem', $filters['system']);
+            }
+
+            $query = $queryBuilder->getQuery();
+
+            return $query->getResult();
+        } catch (NoResultException $e) {
+            return;
+        }
+    }
+
+    public function getRoleNames()
+    {
+        $query = $this->createQueryBuilder('role')
+            ->select('role.name')
+            ->getQuery();
+
+        $roles = [];
+        foreach ($query->getArrayResult() as $roleEntity) {
+            $roles[] = $roleEntity['name'];
+        }
+
+        return $roles;
     }
 }

@@ -89,6 +89,17 @@ class GalleryImageRepository extends ResourceRepository
             ->setParameter('galleryId', $gallery->getId());
     }
 
+    public function findLastFromGallery(Gallery $id)
+    {
+        return $this->createQueryBuilder('gi')
+            ->andWhere('gi.gallery = :gallery')
+            ->setParameter('gallery', $id)
+            ->orderBy('gi.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     /**
      * @param int $limit
      *

@@ -19,6 +19,8 @@ class Role implements RoleInterface
 
     protected Collection $permissions;
 
+    protected Collection $rolePermissions;
+
     #[Pure] public function __construct(?string $name = null)
     {
         if ($name) {

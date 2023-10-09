@@ -7,7 +7,7 @@ liip_imagine:
         gallery_thumb:
             quality: 90
             filters:
-                thumbnail: { size: [ 200, 200 ], mode: fixed }
+                thumbnail: { size: [ 220, 220 ], mode: fixed }
         avatar_thumb:
             quality: 90
             filters:
@@ -50,7 +50,7 @@ liip_imagine:
 #            data_loader: flysystem_loader
             quality: 90
             filters:
-                thumbnail: { size: [ 200, 200 ], mode: fixed }
+                thumbnail: { size: [ 230, 230 ], mode: fixed }
 #            filters:
 #                downscale:
 #                    max: [200, 200]

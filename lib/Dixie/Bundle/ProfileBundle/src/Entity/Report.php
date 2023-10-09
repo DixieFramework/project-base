@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Talav\ProfileBundle\Entity;
 
+use Talav\CommentBundle\Entity\CommentInterface;
 use Talav\Component\Resource\Model\ResourceInterface;
 use Talav\Component\Resource\Model\ResourceTrait;
 use Talav\PostBundle\Entity\Comment;
+use Talav\ProfileBundle\Entity\MessageInterface;
 use Talav\ProfileBundle\Repository\ReportRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Talav\ProfileBundle\Entity\MessageInterface;
 use Talav\UserBundle\Model\UserInterface;
 
 //#[ORM\Entity(repositoryClass: ReportRepository::class)]
@@ -20,27 +21,27 @@ class Report implements ReportInterface
     use ResourceTrait;
 
     #[ORM\OneToOne(targetEntity: MessageInterface::class, cascade: ['persist', 'remove'])]
-    protected $message;
+    protected ?MessageInterface $message;
 
     #[ORM\OneToOne(targetEntity: UserInterface::class, cascade: ['persist', 'remove'])]
-    protected $profile;
+    protected ?UserInterface $profile;
 
-    #[ORM\OneToOne(inversedBy: 'report', targetEntity: Comment::class, cascade: ['persist', 'remove'])]
-    protected $comment;
+    #[ORM\OneToOne(inversedBy: 'report', targetEntity: CommentInterface::class, cascade: ['persist', 'remove'])]
+    protected ?CommentInterface $comment;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    protected $content;
+    protected ?string $content;
 
     #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'reports')]
     #[ORM\JoinColumn(nullable: false)]
-    protected $sender;
+    protected UserInterface $sender;
 
     #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'accusations')]
     #[ORM\JoinColumn(nullable: false)]
-    protected $accused;
+    protected UserInterface $accused;
 
     #[ORM\Column(type: 'boolean')]
-    protected $seen;
+    protected ?bool $seen = false;
 
     #[ORM\PrePersist]
     public function initialize()

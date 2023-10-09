@@ -5,6 +5,7 @@ talav_user:
         user:
             classes:
                 model: Groshy\Entity\User
+                repository: Talav\UserBundle\Repository\UserRepository
         user_oauth:
             classes:
                 model: Groshy\Entity\UserOAuth
@@ -94,6 +95,12 @@ talav_post:
         post:
             classes:
                 model: Groshy\Entity\Post
+
+talav_comment:
+    resources:
+        comment:
+            classes:
+                model: Groshy\Entity\Comment
 
 talav_profile:
     resources:

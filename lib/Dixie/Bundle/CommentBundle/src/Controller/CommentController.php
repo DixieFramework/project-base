@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Talav\PostBundle\Controller;
+namespace Talav\CommentBundle\Controller;
 
-use Groshy\Entity\Post;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,15 +13,11 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Talav\Component\Resource\Manager\ManagerInterface;
 use Talav\CoreBundle\Controller\AbstractController;
 use Talav\CoreBundle\Interfaces\RoleInterface;
-use Talav\PostBundle\Entity\Comment;
-use Talav\PostBundle\Entity\PostInterface;
-use Talav\PostBundle\Form\Type\CommentType;
-use Talav\PostBundle\Form\Type\PostType;
-use Talav\PostBundle\Repository\CommentRepository;
+use Talav\CommentBundle\Form\Type\CommentType;
 use Talav\WebBundle\Service\PaginatorService;
 
 #[AsController]
-#[Route('/post', name: 'talav_post_comment_')]
+#[Route('/post', name: 'talav_comment_')]
 #[IsGranted(RoleInterface::ROLE_USER)]
 class CommentController extends AbstractController
 {
@@ -32,14 +26,14 @@ class CommentController extends AbstractController
      */
     final public const COMMENTS_PER_PAGE = 10;
 
-    public function __construct(private readonly ManagerInterface $postCommentManager, private readonly PaginatorService $paginator)
+    public function __construct(private readonly ManagerInterface $commentManager, private readonly PaginatorService $paginator)
     {
     }
 
-    #[Route(path: '/form/{id<%patterns.id%>}', name: 'app_comment_form', methods: ['GET'])]
-    public function form(Post $event, int $page = 1): Response
+    #[Route(path: '/form/{type}/{entityId<%patterns.id%>}', name: 'app_comment_form', methods: ['GET'])]
+    public function form($type, int $entityId, int $page = 1): Response
     {
-        $comment = $this->postCommentManager->create();
+        $comment = $this->commentManager->create();
         $form = null;
         if ($this->isGranted('ROLE_USER')) {
             $form = $this
@@ -50,7 +44,33 @@ class CommentController extends AbstractController
         }
 
         $comments = $this->createQueryBuilderPaginator(
-            $this->postCommentManager->getRepository()->findAllByPostQueryBuilder($event),
+            $this->commentManager->getRepository()->findCommentsByTypeAndEntityQueryBuilder($type, $entityId),
+            $page,
+            self::COMMENTS_PER_PAGE
+        );
+
+        return $this->render('@TalavPost/comment/list-and-form.html.twig', [
+            'comments' => $comments,
+            'event' => $event,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route(path: '/form/{id<%patterns.id%>}', name: 'app_post_comment_form', methods: ['GET'])]
+    public function postForm(Post $event, int $page = 1): Response
+    {
+        $comment = $this->commentManager->create();
+        $form = null;
+        if ($this->isGranted('ROLE_USER')) {
+            $form = $this
+                ->createForm(CommentType::class, $comment, [
+                    'action' => $this->generateUrl('talav_post_comment_app_comment_new', ['id' => $event->getId()]),
+                ])
+                ->createView();
+        }
+
+        $comments = $this->createQueryBuilderPaginator(
+            $this->commentManager->getRepository()->findAllByPostQueryBuilder($event),
             $page,
             self::COMMENTS_PER_PAGE
         );
@@ -81,7 +101,7 @@ class CommentController extends AbstractController
         $name = strtolower((new \ReflectionClass($event))->getShortName());
 
         $comments = $this->createQueryBuilderPaginator(
-            $this->postCommentManager->getRepository()->findAllQueryBuilder([$name => $event]),
+            $this->commentManager->getRepository()->findAllQueryBuilder([$name => $event]),
             $page,
             self::COMMENTS_PER_PAGE
         );
@@ -100,7 +120,7 @@ class CommentController extends AbstractController
     {
         $user = $this->getUser();
 
-        $comment = $this->postCommentManager->create();
+        $comment = $this->commentManager->create();
         $comment->setAuthor($user);
         $comment->setPost($event);
 
@@ -109,10 +129,10 @@ class CommentController extends AbstractController
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->postCommentManager->update($comment, true);
+            $this->commentManager->update($comment, true);
 
             $comments = $this->createQueryBuilderPaginator(
-                $this->postCommentManager->getRepository()->findAllByPostQueryBuilder($event),
+                $this->commentManager->getRepository()->findAllByPostQueryBuilder($event),
                 1,
                 self::COMMENTS_PER_PAGE
             );

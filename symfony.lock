@@ -22,6 +22,9 @@
     "behat/transliterator": {
         "version": "v1.5.0"
     },
+    "bornfight/maboo-maker-bundle": {
+        "version": "v0.6.1"
+    },
     "brick/math": {
         "version": "0.9.3"
     },
@@ -914,6 +917,9 @@
         "version": "dev-main"
     },
     "talav/bundle-generator-bundle": {
+        "version": "dev-main"
+    },
+    "talav/comment-bundle": {
         "version": "dev-main"
     },
     "talav/core-bundle": {

@@ -15,6 +15,7 @@ use Talav\Component\Resource\Model\ResourceTrait;
 use Talav\Component\Resource\Model\TimestampableTrait;
 use Talav\Component\User\ValueObject\Roles;
 use Talav\Component\User\ValueObject\Username;
+use Talav\PermissionBundle\Entity\RoleInterface;
 use function serialize;
 use function unserialize;
 
@@ -27,10 +28,8 @@ abstract class AbstractUser implements UserInterface
 
     public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
 
-    protected Roles $userRoles;
-
-//    protected ?string $username = null;
     protected ?Username $username = null;
+
     protected ?string $usernameCanonical = null;
 
     protected bool $enabled;
@@ -51,7 +50,8 @@ abstract class AbstractUser implements UserInterface
 
     protected bool $verified = false;
 
-    protected iterable $arrRoles = [];
+//    protected iterable $userRoles = [];
+    protected Roles $roles;
 
     protected ?string $email = null;
 
@@ -72,17 +72,18 @@ abstract class AbstractUser implements UserInterface
 
     public function __construct()
     {
-        $this->userRoles = Roles::developer();
+        $this->userRoles = new ArrayCollection();
+        $this->roles = Roles::developer();
 
         $this->oauthAccounts = new ArrayCollection();
         $this->salt = base_convert(bin2hex(random_bytes(20)), 16, 36);
         $this->enabled = false;
     }
 
-    public function getUsername(): ?Username
-    {
-        return $this->username;
-    }
+//    public function getUsername(): ?Username
+//    {
+//        return $this->username;
+//    }
 
     public function setUsername(Username|string $username): self
     {
@@ -93,10 +94,11 @@ abstract class AbstractUser implements UserInterface
 
         return $this;
     }
-//    public function getUsername(): ?string
-//    {
-//        return $this->username;
-//    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username->__toString();
+    }
 //
 //    public function setUsername(?string $username): void
 //    {
@@ -229,34 +231,42 @@ abstract class AbstractUser implements UserInterface
 
     public function getRoles(): array
     {
-        return $this->userRoles->toArray();
+        $roles = $this->roles->toArray();
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+//        $roles = ['ROLE_USER'];
+//
+//        foreach ($this->getUserRoles() as $userRole) {
+//            /* @var RoleInterface $userRole */
+//            $roles[] = $userRole->getName();
+//        }
+//
+//        return $roles;
     }
 
-//    public function setRoles(Roles|array $roles): self
-//    {
-//        $this->userRoles = match (true) {
-//            $roles instanceof Roles => $roles,
-//            default => Roles::fromArray($roles)
-//        };
-//
-//        return $this;
-//    }
+    public function setRoles(Roles|array $roles): self
+    {
+        $this->roles = match (true) {
+            $roles instanceof Roles => $roles,
+            default => Roles::fromArray($roles)
+        };
 
-//    public function addRole(string $role): void
-//    {
-//        $role = strtoupper($role);
-//        if (!$this->hasRole($role)) {
-//            $this->userRoles[] = $role;
-//        }
-//    }
+        return $this;
+    }
 
-//    public function hasRole(string $role): bool
-//    {
-//        return in_array(strtoupper($role), $this->getRoles(), true);
-//    }
+    public function addRole(string $role): void
+    {
+        $role = strtoupper($role);
+        if (!$this->hasRole($role)) {
+            $this->userRoles[] = $role;
+        }
+    }
+
     public function hasRole(string $role): bool
     {
-        return $this->userRoles->contains($role);
+        return in_array(strtoupper($role), $this->getRoles(), true);
     }
 
     public function isSuperAdmin(): bool
@@ -264,13 +274,9 @@ abstract class AbstractUser implements UserInterface
         return $this->hasRole(static::ROLE_SUPER_ADMIN);
     }
 
-    public function setSuperAdmin($boolean): void
+    public function setSuperAdmin(): void
     {
-        if (true === $boolean) {
-            $this->addRole(static::ROLE_SUPER_ADMIN);
-        } else {
-            $this->removeRole(static::ROLE_SUPER_ADMIN);
-        }
+        $this->addRole(static::ROLE_SUPER_ADMIN);
     }
 
     public function getEmail(): ?string

@@ -34,6 +34,8 @@ use Talav\UserBundle\Doctrine\EntityListener\UserEmailEntityListener;
 use Talav\UserBundle\Doctrine\EntityListener\UserEntityListener;
 use Talav\UserBundle\Enum\UserFlagKey;
 use Talav\UserBundle\Model\UserInterface;
+use Talav\UserBundle\Model\UserRolesInterface;
+use Talav\UserBundle\Model\UserRolesTrait;
 
 //#[ORM\InheritanceType('SINGLE_TABLE')]
 //#[ORM\DiscriminatorColumn(name: 'class', type: 'string')]
@@ -44,12 +46,13 @@ use Talav\UserBundle\Model\UserInterface;
 //#[UniqueEntity(fields: ['username'], message: 'username.already_used')]
 //#[ORM\EntityListeners([UserEmailEntityListener::class, UserEntityListener::class])]
 #[ORM\MappedSuperclass]
-abstract class User extends AbstractUser implements UserInterface, UserAvatarInterface, UserCoverInterface, RolesInterface, \Serializable
+abstract class User extends AbstractUser implements UserInterface, UserAvatarInterface, UserCoverInterface, UserRolesInterface, \Serializable
 {
     use ResourceTrait;
     use HasRoles, HasRelations;
 
-	use RolesTrait;
+    use UserRolesTrait;
+	//use RolesTrait;
 
 	/**
 	 * @var RoleHierarchyInterface
@@ -85,7 +88,7 @@ abstract class User extends AbstractUser implements UserInterface, UserAvatarInt
     protected Collection $metadata;
 
 //    #[ORM\ManyToMany(targetEntity: 'Talav\PermissionBundle\Entity\Role')]
-    protected Collection $roles;
+//    protected Collection $roles;
 
 //    #[ORM\ManyToMany(targetEntity: 'Talav\PermissionBundle\Entity\Permission', indexBy: 'name')]
     protected Collection $permissions;
@@ -131,7 +134,7 @@ abstract class User extends AbstractUser implements UserInterface, UserAvatarInt
 	    $this->receivedUserRelations = new ArrayCollection();
 
         $this->metadata       = new ArrayCollection();
-        $this->roles          = new ArrayCollection();
+        $this->userRoles      = new ArrayCollection();
         $this->permissions    = new ArrayCollection();
 
 	    $this->posts          = new ArrayCollection();
@@ -356,7 +359,7 @@ abstract class User extends AbstractUser implements UserInterface, UserAvatarInt
 
     public function getRolesRelation(): Collection
     {
-        return $this->roles;
+        return $this->userRoles;
     }
 
     public function getFirstRole(): ?RoleInterface
@@ -379,26 +382,26 @@ abstract class User extends AbstractUser implements UserInterface, UserAvatarInt
     //    return ['ROLE_USER']; // Default role for any user.
     //}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function hasRole($role): bool
-	{
-		if ($role instanceof RoleInterface) {
-			$role = $role->getName();
-		}
-
-		if (is_string($role)) {
-            return in_array($role, array_values($this->getRoles()));
-//            return in_array($role, array_values(self::$roleHierarchy->getReachableRoleNames($this->getRoles())));
-		}
-
-		if (is_array($role)) {
-			foreach ($role as $item)
-				if ($this->hasRole($item)) return true;
-			return false;
-		}
-	}
+//	/**
+//	 * {@inheritdoc}
+//	 */
+//	public function hasRole($role): bool
+//	{
+//		if ($role instanceof RoleInterface) {
+//			$role = $role->getName();
+//		}
+//
+//		if (is_string($role)) {
+//            return in_array($role, array_values($this->getRoles()));
+////            return in_array($role, array_values(self::$roleHierarchy->getReachableRoleNames($this->getRoles())));
+//		}
+//
+//		if (is_array($role)) {
+//			foreach ($role as $item)
+//				if ($this->hasRole($item)) return true;
+//			return false;
+//		}
+//	}
 
 //	public function removeRole(string $role): void
 //	{
@@ -591,6 +594,29 @@ abstract class User extends AbstractUser implements UserInterface, UserAvatarInt
         $this->setFlagValue(UserFlagKey::PROFILE_COMPLETED, $profileCompleted);
 
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getProfileCompletion()
+    {
+        $infos = [
+            $this->firstName, $this->lastName, $this->profile->getGender(), $this->profile->getBirthDate()
+        ];
+
+        $completion = 0;
+        $count = 0;
+
+        foreach ($infos as $value) {
+            ++$count;
+
+            if (!empty($value)) {
+                ++$completion;
+            }
+        }
+
+        return round($completion / $count, 2) * 100;
     }
 
 	public function getPlainPassword(): ?string

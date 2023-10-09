@@ -18,7 +18,7 @@ interface UserInterface extends SymfonyUserInterface, PasswordAuthenticatedUserI
      * Gets the username.
      */
 //    public function setUsername(?string $username): void;
-    public function getUsername(): ?Username;
+    public function getUsername(): ?string;//Username;
 
     /**
      * Sets the username.
@@ -68,6 +68,11 @@ interface UserInterface extends SymfonyUserInterface, PasswordAuthenticatedUserI
 	public function setVerified(bool $verified): void;
 
     /**
+     * Returns all the roles the user has assigned.
+     */
+    public function getRoleObjects();
+
+    /**
      * Never use this to check if this user has access to anything!
      *
      * Use the AuthorizationChecker, or an implementation of AccessDecisionManager
@@ -75,16 +80,16 @@ interface UserInterface extends SymfonyUserInterface, PasswordAuthenticatedUserI
      *
      *         $authorizationChecker->isGranted('ROLE_USER');
      */
-//    public function hasRole(string $role): bool;
-//
-//    /**
-//     * Adds a role to the user.
-//     */
-//    public function addRole(string $role): void;
-//
-//    /**
-//     * Removes a role to the user.
-//     */
+    public function hasRole(string $role): bool;
+
+    /**
+     * Adds a role to the user.
+     */
+    public function addRole(string $role): void;
+
+    /**
+     * Removes a role to the user.
+     */
 //    public function removeRole(string $role): void;
 
     /**
@@ -109,14 +114,14 @@ interface UserInterface extends SymfonyUserInterface, PasswordAuthenticatedUserI
     public function setEnabled(bool $enabled): void;
 
     /**
-     * Sets the super admin status.
-     */
-    public function setSuperAdmin(bool $boolean): void;
-
-    /**
      * Tells if the the given user has the super admin role.
      */
     public function isSuperAdmin(): bool;
+
+    /**
+     * Sets the super admin status.
+     */
+    public function setSuperAdmin(): void;
 
     /**
      * Sets the plain password.

@@ -57,6 +57,7 @@
         "symfony/yaml": "6.3.*",
         "talav/avatar-bundle": "@dev",
         "talav/bundle-generator-bundle": "@dev",
+        "talav/comment-bundle": "@dev",
         "talav/core-bundle": "@dev",
         "talav/gallery-bundle": "@dev",
         "talav/image-bundle": "@dev",
@@ -129,6 +130,7 @@
         }
     },
     "require-dev": {
+        "bornfight/maboo-maker-bundle": "*",
         "dama/doctrine-test-bundle": "^7.1",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "fakerphp/faker": "^1.19",
@@ -264,6 +266,13 @@
                 "symlink": true
             },
             "url": "lib/Dixie/Bundle/PostBundle"
+        },
+        {
+            "type": "path",
+            "options": {
+                "symlink": true
+            },
+            "url": "lib/Dixie/Bundle/CommentBundle"
         }
     ]
 }

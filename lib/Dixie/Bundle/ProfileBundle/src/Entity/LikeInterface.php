@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Talav\ProfileBundle\Entity;
 
+use Talav\CommentBundle\Entity\CommentInterface;
 use Talav\Component\Resource\Model\ResourceInterface;
-use Talav\PostBundle\Entity\Comment;
 use Talav\PostBundle\Entity\PostInterface;
 use Talav\UserBundle\Model\UserInterface;
 
@@ -23,7 +23,7 @@ interface LikeInterface extends ResourceInterface
 
     public function setPost(?PostInterface $post): self;
 
-    public function getComment(): ?Comment;
+    public function getComment(): ?CommentInterface;
 
-    public function setComment(?Comment $comment): self;
+    public function setComment(?CommentInterface $comment): self;
 }
