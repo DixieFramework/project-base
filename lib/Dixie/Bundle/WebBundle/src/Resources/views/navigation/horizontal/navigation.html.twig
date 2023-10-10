@@ -1,5 +1,5 @@
 {# horizontal toolbar #}
-{% from '@TalavWeb/macros/_icons.html.twig' import icon, dropdownSeparator, dropdownItem, navItem %}
+{% from '@TalavWeb/macros/_icons.html.twig' import icon, dropdownSeparator, dropdownItem, navItem, navItemWithClass %}
 {# user menu #}
 {#{% from '@TalavWeb/macros/_icons.html.twig' import icon, dropdownSeparator, dropdownItem %}#}
 {# horizontal navigation #}
@@ -43,8 +43,8 @@
                 {% if is_remembered -%}
                     {{ include('@TalavWeb/navigation/horizontal/navigation_user.html.twig') }}
                 {% else %}
-                    {{ navItem(path('talav_user_login'), 'index.login', 'fas fa-sign-in fa-fw me-2', 'TalavWebBundle') }}
-                    {{ navItem(path('talav_user_registration_register'), 'index.register', 'fas fa-user-plus fa-fw me-2', 'TalavWebBundle') }}
+                    {{ navItemWithClass(path('talav_user_login'), 'index.login', 'fas fa-sign-in fa-fw me-2', 'connexion', 'TalavWebBundle') }}
+                    {{ navItemWithClass(path('talav_user_register'), 'index.register', 'fas fa-user-plus fa-fw me-2', 'register', 'TalavWebBundle') }}
                 {% endif %}
             </ul>
         </div>

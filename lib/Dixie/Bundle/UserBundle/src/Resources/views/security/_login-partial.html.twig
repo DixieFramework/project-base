@@ -1,0 +1,22 @@
+{% extends '@TalavWeb/layouts/modal-form.html.twig' %}
+
+{% block titre 'Sign In' %}
+
+{% block body -%}
+    {% include '@TalavUser/security/login-content.html.twig' with({'partial': true}) %}
+    <p class="mt-4 mb-0">
+        Not signed up yet ?
+        <a class="register" href="{{ path('talav_user_register') }}"
+           title="Register">
+            Register here
+        </a>
+    </p>
+{%- endblock %}
+
+{% block footer -%}
+    <button class="btn btn-primary" type="submit" id="login_submit" name="_submit" data-loading-text="Please wait...">
+        Sign In
+    </button>
+{%- endblock %}
+
+{% block form_action path('talav_user_login') %}

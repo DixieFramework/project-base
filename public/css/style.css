@@ -1677,3 +1677,64 @@ span.bottom-border-gradient {
         padding-bottom:5.5rem
     }
 }
+
+
+/* Image Wrapper */
+
+.image-wrapper {
+    overflow: hidden;
+    position:relative
+}
+
+.image-wrapper.image-wrapper-fluid {
+    display: inline-block;
+    vertical-align:top
+}
+
+.image-wrapper.main-image-loaded .img-placeholder.lazy-image {
+    opacity: 0;
+    transition:opacity .25s linear
+}
+
+.image-wrapper.image-wrapper-placeholder-cover.main-image-loaded .img-placeholder.lazy-image {
+    opacity: 1;
+    transition:none
+}
+
+.image-wrapper .image-sizer-fluid {
+    display:block
+}
+
+.image-wrapper .image-sizer-fluid img {
+    display: block;
+    max-width: 100%;
+    position:static
+}
+
+.image-wrapper img {
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    margin: 0;
+    max-width: none;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width:100%
+}
+
+.image-wrapper img.img-main.lazy-image {
+    opacity: 0;
+    transform: translateZ(0);
+    transition: opacity .25s linear;
+    will-change:opacity
+}
+
+.image-wrapper img.img-main.lazy-image.lazyloaded {
+    opacity:1
+}
+
+.image-wrapper img.img-placeholder {
+    filter:blur(20px)
+}

@@ -1,4 +1,6 @@
 parameters:
+    talav_user.authentication_handler.class: Talav\UserBundle\Handler\AuthenticationHandler
+
     talav_user.display_captcha: false
 
 services:
@@ -109,6 +111,15 @@ services:
     Talav\UserBundle\EventListener\RedirectUserListener:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    talav_user.authentication_handler:
+        class: '%talav_user.authentication_handler.class%'
+        arguments:
+            - '@translator'
+            - '@router'
+
+    Talav\UserBundle\Handler\AuthenticationHandler:
+        alias: '@talav_user.authentication_handler'
 
 #    Symfony\Component\Workflow\WorkflowInterface: '@state_machine.abstract'
 

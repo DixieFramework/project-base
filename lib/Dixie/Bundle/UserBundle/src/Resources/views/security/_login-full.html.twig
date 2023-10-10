@@ -1,0 +1,39 @@
+{% extends '@TalavWeb/layouts/default-stretch.html.twig' %}
+
+{% block meta_title 'Sign In' %}
+{% block titre -%}
+    Connectez-vous sur <strong>By Night</strong>
+{%- endblock %}
+
+{% block breadcrumb -%}
+    {% do menu.addItem("Connexion", url('talav_user_login')) %}
+{%- endblock %}
+
+{% block meta_description 'Connect to By Night, create your events and share them with your friends on social networks !' %}
+
+{% block body %}
+    <form method="post" action="{{ path('talav_user_login') }}" id="loginForm" class="loginForm">
+        <div class="card">
+            <div class="card-body">
+                {% include '@TalavUser/security/login-content.html.twig' with({'partial': false}) %}
+            </div>
+            <div class="card-footer text-center py-2">
+                <button class="btn btn-lg btn-primary" type="submit" id="_submit" name="_submit" data-loading-text="Please wait...">
+                    Sign In
+                </button>
+            </div>
+        </div>
+        <p>
+            Not registered ?
+            <a class="register" href="{{ path('talav_user_register') }}"
+               title="Register">
+                Join us now !
+            </a>
+        </p>
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ asset_js('js/funcs.js') }}
+    {{ asset_js('js/pages.js', {'async':true, 'defer':true}) }}
+{% endblock %}

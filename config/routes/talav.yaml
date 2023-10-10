@@ -3,6 +3,9 @@ _talav_bundle_auto:
   resource: .
   type: talav_bundle
 
+talav_core:
+  resource: '@TalavCoreBundle/Resources/config/routing.yml'
+
 talav_user:
   resource: '@TalavUserBundle/Resources/config/routing.yml'
 

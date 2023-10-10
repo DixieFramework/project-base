@@ -34,7 +34,7 @@ class SecurityController extends AbstractController
 
     #[IsGranted(AuthenticatedVoter::PUBLIC_ACCESS)]
     #[Route(path: '/login', name: 'talav_user_login')]
-    #[Route(path: '/login', name: 'app_login')]
+    #[Route(path: '/login', name: 'talav_user_login')]
     public function login(Request $request, #[CurrentUser] ?UserInterface $user, AuthenticationUtils $utils): Response
     {
 //		$edit = $this->userManager->findUserByUsername('user');

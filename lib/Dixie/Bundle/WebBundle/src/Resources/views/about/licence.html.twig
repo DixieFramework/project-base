@@ -21,7 +21,7 @@
             {{ link(path('policy_accept'), 'cookie_banner.accept', 'btn btn-form btn-success', null, 'cookie_banner.accept_title') }}
         {% endif %}
     {% else %}
-        {{ link(path('app_login'), 'index.login', 'btn btn-form btn-outline-primary') }}
+        {{ link(path('talav_user_login'), 'index.login', 'btn btn-form btn-outline-primary') }}
     {% endif %}
     {{ link(path('about_policy'), 'about.policy', 'btn btn-form btn-outline-info') }}
     {{ button_pdf('about_licence_pdf', {}, 'common.button_export_pdf') }}

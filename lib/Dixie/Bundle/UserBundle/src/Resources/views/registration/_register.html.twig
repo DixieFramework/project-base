@@ -1,0 +1,28 @@
+{% extends '@TalavWeb/cards/card_edit_center.html.twig' %}
+{% trans_default_domain 'TalavUserBundle' %}
+{# parameters #}
+{%- set title = 'registration.register.title' -%}
+{%- set title_icon = 'user-plus fa-fw me-2' -%}
+{%- set title_domain = 'TalavUserBundle' -%}
+{%- set submit_text = 'registration.register.submit' -%}
+{%- set submit_domain = 'TalavUserBundle' -%}
+{%- set cancel_path = false -%}
+{%- set form_attr = form_attr|default({})|merge({'data-equal_to': 'password.mismatch'|trans([], 'validators')}) -%}
+
+{% block actions_form %}
+{{ parent() }}
+<a href="{{ path('talav_user_login') }}" class="align-self-center me-2" title="{{ 'security.login.description'|trans }}">{{ 'security.login.submit'|trans({},'TalavUserBundle') }}</a>
+<a href="{{ path('app_forgot_password_request') }}" class="align-self-center" title="{{ 'resetting.request.description'|trans({}, 'TalavUserBundle') }}">{{ 'resetting.link'|trans({}, 'TalavUserBundle') }}</a>
+{% endblock %}
+
+{% block javascripts -%}
+{% if app.debug %}
+{{ parent() }}
+{{ asset_js('js/vendor/zxcvbn/zxcvbn.js') }}
+{{ asset_js('js/plugins/plugin-password-strength.js') }}
+{{ asset_js('js/extensions/password-extensions.js') }}
+{{ asset_js('js/application/user_register.js') }}
+{% else %}
+{{ asset_js('js/user_register.js') }}
+{% endif %}
+{%- endblock %}

@@ -4,21 +4,21 @@
         <div class="row comment mb-3">
             <div class="col col-auto d-flex align-items-center">
                 <!-- Avatar -->
-                <div class="avatar avatar-sm">
+                <div class="avatar avatar-lg">
                     <img class="avatar-img rounded-circle border border-1 border-secondary" src="{% if comment.author.avatar %}{{ media_thumb_reference(comment.author.avatar, 'square_small') }}{% else %}{{ asset('images/avatar.png') }}{% endif %}" alt="avatar">
                 </div>
 {#                {{ macros.userThumb(comment.user, 115, 115) }}#}
             </div>
             <div class="col">
-                <div class="infos">
-                    <div class="bg-body-tertiary p-3 rounded">
+                <div class="infos bg-body-tertiary p-3 rounded">
+                    <div class="">
                         <div class="d-flex justify-content-between">
                             <h6 class="mb-1"><a href="{{ path('user_profile_view', {'id':comment.author.profile.id,'username': comment.author.username}) }}">{{ comment.author.username }}</a></h6>
                             <small class="ms-2" title="{{ comment.publishedAt|format_datetime('medium', 'medium')|capitalize }}">{{ comment.publishedAt|diff_date }}</small>
                         </div>
                         <p class="small mb-0">{{ comment.message|striptags('<i><b>')|nl2br|parse_tags|raw }}</p>
                     </div>
-                    <ul class="nav nav-divider py-1 small">
+                    <ul class="nav nav-divider justify-content-end py-1 small">
                         <li class="nav-item">
                             <a class="nav-link py-0" href="{{ path('profile_like_toggle_comment_like', {'id':comment.id}) }}">Like ({{ comment.likes|length }})</a>
                         </li>

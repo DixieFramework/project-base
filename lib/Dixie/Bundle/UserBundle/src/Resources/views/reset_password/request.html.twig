@@ -12,7 +12,7 @@
 {# actions #}
 {% block actions_form %}
 {{ parent() }}
-<a href="{{ path('app_login') }}" class="align-self-center" title="{{ 'security.login.description'|trans }}">{{ 'security.login.submit'|trans({}, 'TalavUserBundle') }}</a>
+<a href="{{ path('talav_user_login') }}" class="align-self-center" title="{{ 'security.login.description'|trans }}">{{ 'security.login.submit'|trans({}, 'TalavUserBundle') }}</a>
 {% endblock %}
 {# javascripts #}
 {% block javascripts -%}

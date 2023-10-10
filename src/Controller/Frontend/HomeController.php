@@ -16,7 +16,7 @@ class HomeController extends AbstractController
 	#[Route(path: '/', name: AbstractController::HOME_PAGE)]
 	public function homeAction(SymfonyInfoService $service, PermissionLoaderInterface $permissionLoader, UrlGeneratorInterface $generator): Response
     {
-		$this->denyAccessUnlessGranted('edit_own_profile');
+		//$this->denyAccessUnlessGranted('edit_own_profile');
 //		dd($permissionLoader);
 //		dd($this->container->get('talav_permission.security.config_permission_loader'));
         return $this->render('home/home.html.twig', []);

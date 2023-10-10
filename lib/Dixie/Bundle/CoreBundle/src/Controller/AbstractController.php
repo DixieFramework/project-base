@@ -299,7 +299,8 @@ abstract class AbstractController extends BaseController
      */
     protected function jsonFalse(array $data = []): JsonResponse
     {
-        return $this->json(\array_merge_recursive(['result' => false, 'success' => false], $data));
+        return $this->json(\array_merge_recursive(['result' => true, 'status' => 'error'], $data));
+//        return $this->json(\array_merge_recursive(['result' => false, 'success' => false, 'status' => 'error'], $data));
     }
 
     /**
@@ -309,7 +310,7 @@ abstract class AbstractController extends BaseController
      */
     protected function jsonTrue(array $data = []): JsonResponse
     {
-        return $this->json(\array_merge_recursive(['result' => true], $data));
+        return $this->json(\array_merge_recursive(['result' => true, 'status' => 'ok'], $data));
     }
 
     /**

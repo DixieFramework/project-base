@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Talav\Bundle\CoreBundle\DependencyInjection\Compiler;
+namespace Talav\CoreBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

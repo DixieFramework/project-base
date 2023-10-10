@@ -180,15 +180,50 @@ class UserFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        if ($request->isXmlHttpRequest()) {
+            $result = ['status' => 'ok'];
+
+            return new JsonResponse($result);
+        }
+
+        $key = '_security.main.target_path'; // where "main" is your firewall name
+
+        if ($targetPath = $request->getSession()->get($key)) {
+            $url = $targetPath;
+        } elseif ($request->getSession()->has($key)) {
+            // set the url based on the link they were trying to access before being authenticated
+            $url = $request->getSession()->get($key);
+            // remove the session key
+            $request->getSession()->remove($key);
+        } else {
+            $user = $token->getUser();
+
+            if ($this->userNeedsProfileCompletion($user)) {
+                $request->getSession()->getFlashBag()->add('info', 'Please complete your profile.');
+                $url = $this->urlGenerator->generate('user_profile_edit');
+            }
+
+            if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
+                $url = $targetPath;
+            }
+
+            return new RedirectResponse($url);
+        }
+
+        return new RedirectResponse($this->urlGenerator->generate(AbstractController::HOME_PAGE));
+
+
+
+
         $user = $token->getUser();
 
         if ($this->userNeedsProfileCompletion($user)) {
             $request->getSession()->getFlashBag()->add('info', 'Please complete your profile.');
-            return new RedirectResponse($this->urlGenerator->generate('user_profile_edit'));
+            $url = $this->urlGenerator->generate('user_profile_edit');
         }
 
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
-            return new RedirectResponse($targetPath);
+            $url = $targetPath;
         }
 
         return new RedirectResponse($this->urlGenerator->generate(AbstractController::HOME_PAGE));
@@ -199,6 +234,20 @@ class UserFormAuthenticator extends AbstractLoginFormAuthenticator
 	    if ($this->user instanceof UserInterface && $exception instanceof BadCredentialsException) {
 		    $this->dispatcher->dispatch(new BadPasswordSubmittedEvent($this->user));
 	    }
+
+        if ($request->isXmlHttpRequest()) {
+            $result = [
+                'status' => 'error',
+                'data' => $this->translator->trans($exception->getMessageKey(), $exception->getMessageData(), 'security'),
+            ];
+
+            return new JsonResponse($result);
+        }
+
+//        $request->getSession()->set(SecurityRequestAttributes::AUTHENTICATION_ERROR, $exception);
+//        $url = $this->urlGenerator->generate('talav_user_login');
+//
+//        return new RedirectResponse($url);
 
         return parent::onAuthenticationFailure($request, $exception);
     }
