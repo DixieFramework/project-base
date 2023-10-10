@@ -1,20 +1,41 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}
-    Edytuj galerie
-{% endblock %}
+{% extends '@TalavWeb/layouts/default.html.twig' %}
+{%- block titre '' -%}
+{% block title %}Edit Gallery{% endblock %}
 
 {% block body %}
-    <h1>Edytuj galerię</h1>
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <div class="form-group row float-sm-right">
-        <input name="submit" type="submit" value="Zapisz" class="btn btn-primary"/>
+    <div class="row">
+        <div class="col-md-8">
+
+            <!-- Card feed item START -->
+            <div class="card">
+                <!-- Card header START -->
+                <div class="card-header pb-0">
+                    <h3 class="card-title h6">Edit Gallery - <b>{{ gallery.name }}</b></h3>
+                </div>
+                <!-- Card header START -->
+
+                {{ form_start(form) }}
+                <!-- Card body START -->
+                <div class="card-body">
+
+                    {{ form_widget(form) }}
+
+                </div>
+                <!-- Card body END -->
+
+                <!-- Card Footer START -->
+                <div class="card-footer border-top d-flex justify-content-between align-items-center p-3">
+                    <input name="submit" type="submit" value="{{ 'common.button_ok'|trans({}, 'TalavWebBundle') }}" class="btn btn-primary"/>
+                    <a href="{{ url('talav_gallery_index') }}" class="btn btn-secondary">{{ 'common.button_back_list'|trans({}, 'TalavWebBundle') }}</a>
+                </div>
+                <!-- Card Footer END -->
+                {{ form_end(form) }}
+            </div>
+            <!-- Card feed item END -->
+
+        </div>
+        <div class="col-md-4">
+            ccc
+        </div>
     </div>
-    <div class="form-group row float-sm-left">
-        <a href="{{ url('talav_gallery_index') }}" class="btn btn-link">
-            Wróć do listy
-        </a>
-    </div>
-    {{ form_end(form) }}
 {% endblock %}

@@ -5,6 +5,9 @@ import './overrides';
 import './utils/css';
 import './utils/dom';
 
+import "./services/tab_remember";
+import "./services/register_events";
+
 //import * as Sentry from '@sentry/browser';
 import Container from './services/Container';
 import registerServices from './services';

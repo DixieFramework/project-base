@@ -158,6 +158,7 @@ class GalleryController extends AbstractController
         }
 
         return $this->render('@TalavGallery/gallery/edit.html.twig', [
+			'gallery' => $gallery,
             'form' => $form->createView()
         ]);
     }

@@ -52,11 +52,12 @@
                         {% for tab in [
                             { path: 'user_profile_edit', label: 'profile.edit.title', params: {} },
                             { path: 'user_profile_change_password', label: 'profile.change_password.title' },
+                            { path: 'profile_friendship_index', label: 'talav.profile.friendships.title', domain: 'TalavProfileBundle', params: {'username':app.user.username} },
                         ] %}
                             <li class="nav-item">
                                 <a href="{{ path(tab.path, tab.params ?? {}) }}"
                                    class="nav-link {{ tab.path == current ? 'active' }}">
-                                    {{- tab.label|trans({}, 'TalavUserBundle') -}}
+                                    {{- tab.label|trans({}, tab.domain ?? 'TalavUserBundle') -}}
                                 </a>
                             </li>
                         {% endfor %}

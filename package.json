@@ -16,6 +16,7 @@
     "jquery-treetable": "^3.2.0-1",
     "lazysizes": "^5.3.2",
     "mustache": "^4.2.0",
+    "popper.js": "^1.16.1",
     "simplebar": "^6.2.1",
     "sweetalert2": "^11.7.32",
     "toastify-js": "^1.12.0",

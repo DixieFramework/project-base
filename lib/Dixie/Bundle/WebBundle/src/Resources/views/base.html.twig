@@ -205,6 +205,7 @@ _______     __  _   _ _____ _____ _    _ _______
 
 <!-- JS -->
 {{- asset_js('js/vendor/jquery/jquery.js') }}
+{{ encore_entry_script_tags('admin') }}
 {{ encore_entry_script_tags('app') }}
 {%- block js -%}{%- endblock -%}
 <script>
@@ -259,9 +260,6 @@ _______     __  _   _ _____ _____ _    _ _______
         {{- asset_js('js/core_common.js') }}
     {% endif %}
 {% endblock %}
-
-<!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
-<script src="{{ asset('js/library/plugins/jquery.bootstrap-wizard.js') }}"></script>
 
 {{- asset_js('js/base.js') }}
 <!-- ./JS -->

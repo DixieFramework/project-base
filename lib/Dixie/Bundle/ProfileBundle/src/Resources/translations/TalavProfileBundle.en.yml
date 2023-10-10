@@ -31,4 +31,6 @@ talav:
                 query: username
                 title: Search Friends
             title: Friends
+        friendships:
+            title: Friends
         enums:

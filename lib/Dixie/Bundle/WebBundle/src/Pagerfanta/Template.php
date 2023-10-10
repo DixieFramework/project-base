@@ -22,7 +22,7 @@ class Template extends DefaultTemplate
             'css_item_class' => 'pagination__item',
             'css_prev_class' => 'pagination__item--previous-page',
             'css_next_class' => 'pagination__item--next-page',
-            'container_template' => '<nav class="mt-4 d-flex justify-content-center" aria-label="navigation" data-role="controlgroup" data-type="horizontal">%%pages%%</nav>',
+            'container_template' => '<nav class="d-flex justify-content-center" aria-label="navigation" data-role="controlgroup" data-type="horizontal">%%pages%%</nav>',
             'rel_previous' => 'prev',
             'rel_next' => 'next',
             'page_template' => '<a href="%href%"%rel% data-role="button">%text%</a>',

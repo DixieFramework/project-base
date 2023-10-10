@@ -28,7 +28,7 @@
 
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 {{ 'talav.layout.logged_in_as'|trans({'%username%': app.user.username}, 'TalavUserBundle') }} |
-                <a href="{{ path('talav_user_change_password') }}">
+                <a href="{{ path('user_profile_change_password') }}">
                     {{ 'talav.change_password.submit'|trans({}, 'TalavUserBundle') }}
                 </a>  |
                 <a href="{{ path('groshy_frontend_user_profile') }}">Update Profile</a>  |
