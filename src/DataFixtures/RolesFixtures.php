@@ -34,28 +34,28 @@ class RolesFixtures extends Fixture implements DependentFixtureInterface
 
         /** @var User $user */
         $user = $this->getReference(UserFixtures::USER_USER_REFERENCE);
-        $user->sync('roles', new ArrayCollection([$userRole]));
+        $user->sync('userRoles', new ArrayCollection([$userRole]));
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
         /** @var User $moderatorUser */
         $moderatorUser = $this->getReference(UserFixtures::MODERATOR_USER_REFERENCE);
-        $moderatorUser->sync('roles', new ArrayCollection([$moderatorRole]));
+        $moderatorUser->sync('userRoles', new ArrayCollection([$moderatorRole]));
 
         $this->entityManager->persist($moderatorUser);
         $this->entityManager->flush();
 
         /** @var User $adminUser */
         $adminUser = $this->getReference(UserFixtures::ADMIN_USER_REFERENCE);
-        $adminUser->sync('roles', new ArrayCollection([$adminRole]));
+        $adminUser->sync('userRoles', new ArrayCollection([$adminRole]));
 
         $this->entityManager->persist($adminUser);
         $this->entityManager->flush();
 
         /** @var User $superAdminUser */
         $superAdminUser = $this->getReference(UserFixtures::SUPER_ADMIN_USER_REFERENCE);
-        $superAdminUser->sync('roles', new ArrayCollection([$superAdministratorRole]));
+        $superAdminUser->sync('userRoles', new ArrayCollection([$superAdministratorRole]));
 
         $this->entityManager->persist($superAdminUser);
         $this->entityManager->flush();

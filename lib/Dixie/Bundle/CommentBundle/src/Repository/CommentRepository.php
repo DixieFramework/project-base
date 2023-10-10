@@ -39,6 +39,11 @@ class CommentRepository extends ResourceRepository
         }
     }
 
+	public function findLastCommentByUser(UserInterface $user): ?CommentInterface
+	{
+		return $this->findOneBy(['author' => $user], ['publishedAt' => 'DESC']);
+	}
+
     public function getNoParentComments($criteria, $orderBy = ['id' => 'DESC'], $limit = null, $offset = null)
     {
         $qb = $this->createQueryBuilder('c');

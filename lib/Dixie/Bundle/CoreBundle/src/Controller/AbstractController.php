@@ -299,7 +299,7 @@ abstract class AbstractController extends BaseController
      */
     protected function jsonFalse(array $data = []): JsonResponse
     {
-        return $this->json(\array_merge_recursive(['result' => false], $data));
+        return $this->json(\array_merge_recursive(['result' => false, 'success' => false], $data));
     }
 
     /**

@@ -16,6 +16,7 @@ use Talav\CoreBundle\Interfaces\RoleInterface;
 use Talav\CommentBundle\Form\Type\CommentType;
 use Talav\GalleryBundle\Entity\GalleryImage;
 use Talav\PostBundle\Entity\PostInterface;
+use Talav\WebBundle\Service\AntispamService;
 use Talav\WebBundle\Service\PaginatorService;
 
 #[AsController]
@@ -28,7 +29,7 @@ class CommentController extends AbstractController
      */
     final public const COMMENTS_PER_PAGE = 10;
 
-    public function __construct(private readonly ManagerInterface $commentManager, private readonly PaginatorService $paginator)
+    public function __construct(private readonly ManagerInterface $commentManager, private readonly PaginatorService $paginator, private readonly AntispamService $antispamService)
     {
     }
 
@@ -144,8 +145,19 @@ class CommentController extends AbstractController
         $form = $this->createForm(CommentType::class, $comment, [
             'action' => $this->generateUrl('talav_comment_app_comment_new', ['type' => $type, 'entityId' => $entity->getId()]),
         ]);
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+			if (!$this->antispamService->canPostComment($user)) {
+				$this->errorTrans('comment.flash.antispam');
+
+				return $this->jsonFalse([
+					'post' => $this->renderView('@TalavComment/comment/form.html.twig', [
+						'form' => $form->createView(),
+					])
+				]);
+			}
+
             $this->commentManager->update($comment, true);
 
             $comments = $this->createQueryBuilderPaginator(
