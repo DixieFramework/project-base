@@ -12,7 +12,7 @@
 {% block meta_description 'Connect to By Night, create your events and share them with your friends on social networks !' %}
 
 {% block body %}
-    <form method="post" action="{{ path('talav_user_login') }}" id="loginForm" class="loginForm">
+{#    <form method="post" action="{{ path('talav_user_login') }}">#}
         <div class="card">
             <div class="card-body">
                 {% include '@TalavUser/security/login-content.html.twig' with({'partial': false}) %}
@@ -30,10 +30,5 @@
                 Join us now !
             </a>
         </p>
-    </form>
-{% endblock %}
-
-{% block javascripts %}
-    {{ asset_js('js/funcs.js') }}
-    {{ asset_js('js/pages.js', {'async':true, 'defer':true}) }}
+{#    </form>#}
 {% endblock %}

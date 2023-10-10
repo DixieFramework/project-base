@@ -6,10 +6,10 @@
         <id name="id" type="integer">
             <generator strategy="AUTO"/>
         </id>
-        <many-to-one field="permission" target-entity="Talav\PermissionBundle\Entity\PermissionInterface" fetch="LAZY">
+        <many-to-one field="permission" target-entity="Talav\PermissionBundle\Entity\PermissionInterface" fetch="EAGER">
             <join-column name="permission_id" referenced-column-name="id" nullable="false"/>
         </many-to-one>
-        <many-to-one field="role" target-entity="Talav\PermissionBundle\Entity\RoleInterface" fetch="LAZY" inversed-by="rolePermissions">
+        <many-to-one field="role" target-entity="Talav\PermissionBundle\Entity\RoleInterface" fetch="EAGER" inversed-by="rolePermissions">
             <join-column name="role_id" referenced-column-name="id" nullable="false"/>
         </many-to-one>
     </entity>

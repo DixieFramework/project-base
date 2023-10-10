@@ -31,6 +31,8 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Talav\CoreBundle\Utils\TypeCast;
 use Talav\GalleryBundle\Entity\GalleryImage;
+use Talav\PermissionBundle\Entity\RolePermission;
+use Talav\PermissionBundle\Service\RolePermissionManager;
 use Talav\PostBundle\Entity\Post;
 use Talav\PostBundle\Entity\PostInterface;
 use Talav\ProfileBundle\Entity\UserRelation;
@@ -66,8 +68,11 @@ class ProfileController extends AbstractController
      * Change password of the current user (if any).
      */
     #[Route(path: '/change-password', name: 'user_profile_change_password')]
-    public function changePassword(Request $request, #[CurrentUser] UserInterface $user, EntityManagerInterface $manager): Response
+    public function changePassword(Request $request, #[CurrentUser] UserInterface $user, EntityManagerInterface $manager, RolePermissionManager $rolePermissionManager): Response
     {
+		dd($rolePermissionManager);
+		dd($this->entityManager->getRepository(RolePermission::class)->findAll());
+
         dd($this->userManager->getRepository()->findUserByIdentifier('user@local.dev'));
 
         $form = $this->createForm(ProfileChangePasswordType::class, $user);

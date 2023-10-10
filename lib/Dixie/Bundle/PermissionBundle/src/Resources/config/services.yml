@@ -39,3 +39,13 @@ services:
         arguments: [ '@app.repository.permission' ]
         tags:
             - { name: security.voter }
+
+    Talav\PermissionBundle\Service\PermissionService:
+        class: Talav\PermissionBundle\Service\PermissionService
+        autowire: true
+        autoconfigure: true
+
+    Talav\PermissionBundle\Service\RolePermissionManager:
+        arguments:
+            $permissions: '%talav.permissions%'
+            $permissionNames: '%talav.permission_names%'

@@ -112,14 +112,14 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
-    talav_user.authentication_handler:
-        class: '%talav_user.authentication_handler.class%'
-        arguments:
-            - '@translator'
-            - '@router'
-
-    Talav\UserBundle\Handler\AuthenticationHandler:
-        alias: '@talav_user.authentication_handler'
+#    talav_user.authentication_handler:
+#        class: '%talav_user.authentication_handler.class%'
+#        arguments:
+#            - '@translator'
+#            - '@router'
+#
+#    Talav\UserBundle\Handler\AuthenticationHandler:
+#        alias: '@talav_user.authentication_handler'
 
 #    Symfony\Component\Workflow\WorkflowInterface: '@state_machine.abstract'
 

@@ -19,7 +19,7 @@
     {% include '@TalavUser/registration/register-content.html.twig' with({'partial': true}) %}
     <p class="mb-0">
         Already have an account ?
-        <a href="{{ path('talav_user_login') }}" class="align-self-center me-2" title="{{ 'security.login.description'|trans }}">{{ 'security.login.submit'|trans({},'TalavUserBundle') }}</a>
+        <a href="{{ path('talav_user_login') }}" class="align-self-center me-2 connexion" title="{{ 'security.login.description'|trans }}">{{ 'security.login.submit'|trans({},'TalavUserBundle') }}</a>
     </p>
 {%- endblock %}
 

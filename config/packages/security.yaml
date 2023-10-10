@@ -35,7 +35,7 @@ security:
                 username_parameter: talav_type_user_user_login[username]
                 password_parameter: talav_type_user_user_login[password]
                 enable_csrf: true
-                csrf_parameter: _token
+                csrf_parameter: _csrf_token
 
             login_link:
                 check_route: auth_login_link_check

@@ -145,46 +145,46 @@ _______     __  _   _ _____ _____ _    _ _______
 </div>
 {% block modals %}{% endblock %}
 
-<!-- Standard Modal -->
-<div class="modal fade" id="modal">
-    <div class="modal-dialog" id="modalContent">
-    </div>
-</div>
+{#<!-- Standard Modal -->#}
+{#<div class="modal fade" id="modal">#}
+{#    <div class="modal-dialog" id="modalContent">#}
+{#    </div>#}
+{#</div>#}
 
-<!-- Large Modal -->
-<div class="modal fade" id="largeModal" >
-    <div class="modal-dialog modal-lg" id="largeModalContent">
-    </div>
-</div>
+{#<!-- Large Modal -->#}
+{#<div class="modal fade" id="largeModal" >#}
+{#    <div class="modal-dialog modal-lg" id="largeModalContent">#}
+{#    </div>#}
+{#</div>#}
 
-<!-- Extra Large Modal -->
-<div class="modal fade" id="extraLargeModal" >
-    <div class="modal-dialog modal-xl " id="extraLargeModalContent">
-    </div>
-</div>
+{#<!-- Extra Large Modal -->#}
+{#<div class="modal fade" id="extraLargeModal" >#}
+{#    <div class="modal-dialog modal-xl " id="extraLargeModalContent">#}
+{#    </div>#}
+{#</div>#}
 <!-- ./Modals -->
 
-<a class="content-load-action" href="#"
-   role="button"
-   data-location="ProfileBundle/Controller/JsController::largeModal"
-   data-action="Profile:Js:largeModal"
-   data-content="modalContent"
-   data-name="A7"
-   data-bs-toggle="modal"
-   data-bs-target="#modal">
-    A7
-</a>
+{#<a class="content-load-action" href="#"#}
+{#   role="button"#}
+{#   data-location="ProfileBundle/Controller/JsController::largeModal"#}
+{#   data-action="Profile:Js:largeModal"#}
+{#   data-content="modalContent"#}
+{#   data-name="A7"#}
+{#   data-bs-toggle="modal"#}
+{#   data-bs-target="#modal">#}
+{#    A7#}
+{#</a>#}
 
-<a class="content-load-action" href="#"
-   role="button"
-   data-location="ProfileBundle/Controller/JsController::largeModal"
-   data-action="Profile:Js:largeModal"
-   data-content="modalContent"
-   data-name="A7"
-   data-bs-toggle="modal"
-   data-bs-target="#modal">
-    A6
-</a>
+{#<a class="content-load-action" href="#"#}
+{#   role="button"#}
+{#   data-location="ProfileBundle/Controller/JsController::largeModal"#}
+{#   data-action="Profile:Js:largeModal"#}
+{#   data-content="modalContent"#}
+{#   data-name="A7"#}
+{#   data-bs-toggle="modal"#}
+{#   data-bs-target="#modal">#}
+{#    A6#}
+{#</a>#}
 
 <!-- Footer -->
 {# messages #}
@@ -205,7 +205,7 @@ _______     __  _   _ _____ _____ _    _ _______
 
 <!-- JS -->
 {{- asset_js('js/vendor/jquery/jquery.js') }}
-{{ encore_entry_script_tags('admin') }}
+{#{{ encore_entry_script_tags('admin') }}#}
 {{ encore_entry_script_tags('app') }}
 {%- block js -%}{%- endblock -%}
 <script>
@@ -219,23 +219,23 @@ _______     __  _   _ _____ _____ _    _ _______
     }|json_encode|raw }});
   });
 </script>
-<script>
-    $("#largeModal").ready(function () {
-        $("#modal").on('show.bs.modal', function (e) {
-            $("#largeModal").modal("hide");
-        });
-    });
+{#<script>#}
+{#    $("#largeModal").ready(function () {#}
+{#        $("#modal").on('show.bs.modal', function (e) {#}
+{#            $("#largeModal").modal("hide");#}
+{#        });#}
+{#    });#}
 
-    $("#modal").ready(function () {
-        $("#largeModal").on('show.bs.modal', function (e) {
-            $("#modal").modal("hide");
-        });
-    });
-</script>
+{#    $("#modal").ready(function () {#}
+{#        $("#largeModal").on('show.bs.modal', function (e) {#}
+{#            $("#modal").modal("hide");#}
+{#        });#}
+{#    });#}
+{#</script>#}
 
 
 
-{{ encore_entry_script_tags('event_details') }}
+{#{{ encore_entry_script_tags('event_details') }}#}
 
 
 
@@ -261,7 +261,7 @@ _______     __  _   _ _____ _____ _    _ _______
     {% endif %}
 {% endblock %}
 
-{{- asset_js('js/base.js') }}
+{#{{- asset_js('js/base.js') }}#}
 <!-- ./JS -->
 </body>
 </html>
