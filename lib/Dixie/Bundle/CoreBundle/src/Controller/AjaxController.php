@@ -27,22 +27,24 @@ class AjaxController extends AbstractController
         $request               = $this->getRequestStack()->getCurrentRequest();
         //process ajax actions
         $authenticationChecker = $this->kernel->getContainer()->get('security.authorization_checker');
+        $location              = $this->getRequestString($request, 'location');
         $action                = $this->getRequestString($request, 'action');
         $bundleName            = null;
         if (empty($action)) {
             //check POST
             $action = $request->request->get('action');
         }
-dd($authenticationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED'));
+
+
         if ($authenticationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             if (strpos($action, ':') !== false) {
                 //call the specified bundle's ajax action
                 $parts     = explode(':', $action);
-                $namespace = 'Mautic';
+                $namespace = 'Talav';
                 $isPlugin  = false;
 
                 if (count($parts) == 3 && $parts['0'] == 'plugin') {
-                    $namespace = 'MauticPlugin';
+                    $namespace = 'TalavPlugin';
                     array_shift($parts);
                     $isPlugin = true;
                 }
@@ -53,10 +55,10 @@ dd($authenticationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED'));
                     $action     = $parts[1];
                     if (!$classExists = class_exists($namespace.'\\'.$bundle.'Bundle\\Controller\\AjaxController')) {
                         // Check if a plugin is prefixed with Mautic
-                        $bundle      = 'Mautic'.$bundle;
+                        $bundle      = 'Talav'.$bundle;
                         $classExists = class_exists($namespace.'\\'.$bundle.'Bundle\\Controller\\AjaxController');
                     } elseif (!$isPlugin) {
-                        $bundle = 'Mautic'.$bundle;
+                        $bundle = 'Talav'.$bundle;
                     }
 
                     if ($classExists) {
@@ -67,6 +69,30 @@ dd($authenticationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED'));
                                 //forward the request as well as Symfony creates a subrequest without GET/POST
                                 'request' => $request,
                                 'bundle'  => $bundleName,
+                            ]
+                        );
+                    }
+                } elseif (count($parts) == 3) {
+                    $bundleName = $parts[0];
+                    $bundle     = ucfirst($bundleName);
+                    $controller = ucfirst($parts[1]);
+                    $action     = $parts[2];
+                    if (!$classExists = class_exists($className = $namespace.'\\'.$bundle.'Bundle\\Controller\\'.$controller.'Controller')) {
+                        // Check if a plugin is prefixed with Mautic
+                        $bundle      = 'Talav'.$bundle;
+                        $classExists = class_exists($className = $namespace.'\\'.$bundle.'Bundle\\Controller\\'.$controller.'Controller');
+                    } elseif (!$isPlugin) {
+                        $bundle = 'Talav'.$bundle;
+                    }
+
+                    if ($classExists) {
+                        return $this->forward(
+                            $className . '::' . $action,
+                            [
+//                                'action' => $action,
+//                                //forward the request as well as Symfony creates a subrequest without GET/POST
+//                                'request' => $request,
+//                                'bundle'  => $bundleName,
                             ]
                         );
                     }

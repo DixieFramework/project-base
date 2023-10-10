@@ -1,21 +1,40 @@
 {% extends '@TalavWeb/layouts/modal-form.html.twig' %}
+{% from '@TalavWeb/macros/_icons.html.twig' import button_submit, button_cancel %}
+{# parameters #}
+{%- set submit_text = submit_text|default('common.button_ok') -%}
+{%- set submit_class = submit_class|default('btn btn-form btn-primary me-3') -%}
+{%- set submit_params = submit_params|default({}) -%}
+{%- set submit_domain = submit_domain|default('TalavWebBundle') -%}
 
-{% block titre 'Devenez membre de By Night' %}
+{%- set title = 'registration.register.title' -%}
+{%- set title_icon = 'user-plus fa-fw me-2' -%}
+{%- set title_domain = 'TalavUserBundle' -%}
+{%- set submit_text = 'registration.register.submit' -%}
+{%- set submit_domain = 'TalavUserBundle' -%}
+{%- set form_attr = form_attr|default({})|merge({'data-equal_to': 'password.mismatch'|trans([], 'validators')}) -%}
+
+{% block titre title %}
 
 {% block body -%}
     {% include '@TalavUser/registration/register-content.html.twig' with({'partial': true}) %}
     <p class="mb-0">
-        Vous avez déjà un compte ?
-        <a class="connexion" href="{{ path('talav_user_login') }}" title="Connectez-vous sur By Night">
-            Connectez-vous !
-        </a>
+        Already have an account ?
+        <a href="{{ path('talav_user_login') }}" class="align-self-center me-2" title="{{ 'security.login.description'|trans }}">{{ 'security.login.submit'|trans({},'TalavUserBundle') }}</a>
     </p>
 {%- endblock %}
 
 {% block footer -%}
-    <button class="btn btn-primary" type="submit">
-        Créer mon profil
-    </button>
+    {%- set show_required = show_required is defined ? show_required : true -%}
+{#        <div class="d-flex-wrap justify-content-between align-items-center py-2 ps-1">#}
+{#    <div class="d-flex-wrap">#}
+{#    <div class="d-flex justify-content-between align-items-center flex-wrap">#}
+        {% block actions_form -%}
+            {{ button_submit(submit_text, submit_class, submit_params, submit_domain) }}
+        {%- endblock %}
+        {% if show_required -%}
+            <small class="ms-sm-auto">{{ 'common.required'|trans({}, 'TalavWebBundle')|raw }}</small>
+        {%- endif %}
+{#    </div>#}
 {%- endblock %}
 
 {% block form_action path('talav_user_register') %}

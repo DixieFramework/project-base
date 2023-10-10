@@ -1,6 +1,6 @@
 {%- block modal -%}
     <form action="{% block form_action'#' %}" method="POST">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title">{% block titre '' %}</h3>
@@ -9,8 +9,7 @@
                 <div class="modal-body">
                     {% block body %}{% endblock %}
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary btn_retour" data-bs-dismiss="modal">Close</button>
+                <div class="modal-footer d-print-none justify-content-between align-items-center">
                     {% block footer %}{% endblock %}
                 </div>
             </div>

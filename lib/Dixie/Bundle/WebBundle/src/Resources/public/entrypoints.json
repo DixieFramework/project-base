@@ -10,7 +10,7 @@
     },
     "event_details": {
       "js": [
-        "/bundles/talavweb/event_details.js?fc7b6ddb9130e581e136"
+        "/bundles/talavweb/event_details.js?2e94b623beb3c846d081"
       ]
     },
     "app": {
@@ -18,7 +18,7 @@
         "/bundles/talavweb/app.css?216229890b41c38acd5b"
       ],
       "js": [
-        "/bundles/talavweb/app.js?9630f1d6935c8cda8fae"
+        "/bundles/talavweb/app.js?fbfc612f17986b106071"
       ]
     }
   }

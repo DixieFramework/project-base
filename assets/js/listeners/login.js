@@ -12,8 +12,8 @@ export default (di, container) => {
                 $.post(href, datas).done(function (data) {
                     submitButton.button('reset');
 
-                    if (!data.success) {
-                        $dialog.modal('setLittleErreur', data.message);
+                    if (!data.status=='ok'){
+                        $dialog.modal('setLittleErreur', data.data);
                     } else {
                         $dialog.modal('hide');
                         window.location.reload();

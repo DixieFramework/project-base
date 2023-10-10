@@ -7,11 +7,11 @@ $(document).ready(function () {
 
     /* blur on modal open, unblur on close */
     $('.modal').on('show.bs.modal', function () {
-        $('.wrapper').addClass('blur');
+        $('.page-content').addClass('blur');
     });
 
     $('.modal').on('hide.bs.modal', function () {
-        $('.wrapper').removeClass('blur');
+        $('.page-content').removeClass('blur');
     });
 
     $('#loading').fadeOut(100, function () {
@@ -251,7 +251,8 @@ function removeErrorMessage(input) {
 
 function ajaxRequest(data, contentElement, form = null) {
     $.ajax({
-        url: '/ajax/action',
+//        url: '/ajax/action',
+        url: '/c/ajax',
         type: 'post',
         data: data,
         dataType: "json",
