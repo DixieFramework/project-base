@@ -23,6 +23,10 @@ use Talav\PostBundle\Entity\PostInterface;
 //#[IsGranted(RoleInterface::ROLE_USER)]
 class LikeController extends AbstractController
 {
+	public function __construct(private readonly ManagerInterface $likeManager, private readonly ManagerInterface $notificationManager)
+	{
+	}
+
 //	#[Route('/', name: 'index', methods: ['GET'])]
 //    public function indexAction(Request $request): Response
 //    {
@@ -30,26 +34,26 @@ class LikeController extends AbstractController
 //    }
 
 	#[Route('/post/{id}/toggle', name: 'toggle_post_like', methods: ['GET'])]
-	public function togglePostLike(\Groshy\Entity\Post $post, ManagerInterface $likeManager, ManagerInterface $notificationManager): Response
+	public function togglePostLike(\Groshy\Entity\Post $post): Response
 	{
-		$likeRepo = $likeManager->getRepository();
-		$notificationRepo = $notificationManager->getRepository();
+		$likeRepo = $this->likeManager->getRepository();
+		$notificationRepo = $this->notificationManager->getRepository();
 
 		$like = $likeRepo->findOneBy(['user' => $this->getUser(), 'post' => $post]);
 
 		if ($like) {
 			$notification = $notificationRepo->findOneBy(['post' => $post, 'type' => 'post_like', 'sender' => $this->getUser()]);
 			if ($notification) {
-				$notificationManager->remove($notification);
+				$this->notificationManager->remove($notification);
 			}
 
 			$this->getUser()->removeLike($like);
 			$response = ['status' => 'removed'];
 		} else {
-			$like = $likeManager->create();
+			$like = $this->likeManager->create();
 			$like->setUser($this->getUser());
 			$like->setPost($post);
-			$likeManager->update($like, true);
+			$this->likeManager->update($like, true);
 			$response = ['status' => 'added'];
 
 			if ($post->getAuthor() !== $this->getUser()) {
@@ -65,13 +69,13 @@ class LikeController extends AbstractController
 					$existNotify->setPublishedAt(new \DateTime('now'));
 					$existNotify->setSender($this->getUser());
 				} else {
-					$notification = $notificationManager->create();
+					$notification = $this->notificationManager->create();
 					$notification->setType('post_like');
 					$notification->setReceiver($post->getAuthor());
 					$notification->setPost($post);
 					$notification->setQuantity(1);
 					$notification->setSender($this->getUser());
-					$notificationManager->update($notification, true);
+					$this->notificationManager->update($notification, true);
 				}
 			}
 		}

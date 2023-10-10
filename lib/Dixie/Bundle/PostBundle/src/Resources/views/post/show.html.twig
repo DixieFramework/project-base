@@ -86,7 +86,8 @@
 
                         <ul class="nav nav-stack py-3 small">
                             <li class="nav-item">
-                                <a class="nav-link active" href="{{ path('profile_like_toggle_post_like', {'id':post.id}) }}"><i class="fas fa-thumbs-up pe-1"></i>Liked ({{ post.likes.count }})</a>
+{#                                <a class="nav-link active" href="{{ path('profile_like_toggle_post_like', {'id':post.id}) }}"><i class="fas fa-thumbs-up pe-1"></i>Liked ({{ post.likes.count }})</a>#}
+                                <a class="nav-link active" data-xhr="{{ path('profile_js_add_like') }}?id={{ post.id }}" href="{{ path('profile_like_toggle_post_like', {'id':post.id}) }}"><i class="fas fa-thumbs-up pe-1"></i>Liked (<span id="postLikeCount{{ post.id }}">{{ post.likes.count }}</span>)</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#!"><i class="fas fa-comment pe-1"></i>Comments ({{ comments_count }})</a>
