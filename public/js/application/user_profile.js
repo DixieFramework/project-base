@@ -64,7 +64,7 @@
     };
 
     // validation
-    $('#edit-form').initValidator({
+    $('form').initValidator({
         simpleEditor: true,
         focus: false
     });

@@ -111,6 +111,7 @@ index:
     login: Sign In
     logout: Sign Out
     register: Register
+    view_profile: View Profile
     photos: Photos
     galleries: Galleries
     title: Home

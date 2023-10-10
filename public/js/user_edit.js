@@ -21,6 +21,7 @@
  */
 <!--#include file="extensions/password-extensions.js" -->
 <!--#include file="extensions/file-input-extensions.js" -->
+<!--#include file="extensions/simple-editor-extension.js" -->
 
 /**
  * Specific Files

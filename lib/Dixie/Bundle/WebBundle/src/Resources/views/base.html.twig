@@ -144,6 +144,34 @@ _______     __  _   _ _____ _____ _    _ _______
     {% include '@TalavWeb/layouts/modal.html.twig' %}
 </div>
 {% block modals %}{% endblock %}
+
+<a class="content-load-action" href="#"
+   role="button"
+   data-location="WarehouseController::showProductInBin"
+   data-content="modalContent"
+   data-name="A7"
+   data-toggle="modal"
+   data-target="#modal">
+    A7
+</a>
+
+<!-- Standard Modal -->
+<div class="modal fade" id="modal">
+    <div class="modal-dialog" id="modalContent">
+    </div>
+</div>
+
+<!-- Large Modal -->
+<div class="modal fade" id="largeModal" >
+    <div class="modal-dialog modal-lg" id="largeModalContent">
+    </div>
+</div>
+
+<!-- Extra Large Modal -->
+<div class="modal fade" id="extraLargeModal" >
+    <div class="modal-dialog modal-xl " id="extraLargeModalContent">
+    </div>
+</div>
 <!-- ./Modals -->
 
 <!-- Footer -->
@@ -178,6 +206,22 @@ _______     __  _   _ _____ _____ _    _ _______
     }|json_encode|raw }});
   });
 </script>
+<script>
+    $("#largeModal").ready(function () {
+        $("#modal").on('show.bs.modal', function (e) {
+            $("#largeModal").modal("hide");
+        });
+    });
+
+    $("#modal").ready(function () {
+        $("#largeModal").on('show.bs.modal', function (e) {
+            $("#modal").modal("hide");
+        });
+    });
+</script>
+
+
+
 {{ encore_entry_script_tags('event_details') }}
 
 
@@ -203,6 +247,11 @@ _______     __  _   _ _____ _____ _    _ _______
         {{- asset_js('js/core_common.js') }}
     {% endif %}
 {% endblock %}
+
+<!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
+<script src="{{ asset('js/library/plugins/jquery.bootstrap-wizard.js') }}"></script>
+
+{{- asset_js('js/base.js') }}
 <!-- ./JS -->
 </body>
 </html>

@@ -116,7 +116,7 @@ profile:
     failure: Impossible de trouver l'utilisateur actuel.
     submit: Submit
   view:
-      title: Viewing %username%'s Profile
+      title: View Profile
 
 registration:
   link: Create an account
