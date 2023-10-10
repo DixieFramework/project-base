@@ -10,18 +10,28 @@ use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Talav\Component\Resource\Model\ResourceTrait;
+use Talav\PermissionBundle\Repository\RolePermissionRepository;
 
+#[ORM\Entity(repositoryClass: RolePermissionRepository::class)]
+#[ORM\Table(name: 'tlv_role_permission')]
 class RolePermission
 {
-    use ResourceTrait;
+//    use ResourceTrait;
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    private ?int $id = null;
 
-    protected $permission;
+    #[ORM\ManyToOne(targetEntity: Role::class)]
+    #[ORM\JoinColumn(name: 'permission_id', nullable: false)]
+    protected PermissionInterface $permission;
 
-    protected $role;
+    #[ORM\ManyToOne(targetEntity: Role::class)]
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    protected RoleInterface $role;
 
     #[Pure] public function __construct()
     {
-        $this->roles = new ArrayCollection();
     }
 
     public function getName(): string
@@ -36,8 +46,37 @@ class RolePermission
         return $this;
     }
 
-    public function getRoles(): Collection
+    /**
+     * @return RoleInterface
+     */
+    public function getRole(): RoleInterface
     {
-        return $this->roles;
+        return $this->role;
     }
+
+    /**
+     * @param RoleInterface $role
+     */
+    public function setRole(RoleInterface $role): void
+    {
+        $this->role = $role;
+    }
+
+    /**
+     * @return PermissionInterface
+     */
+    public function getPermission(): PermissionInterface
+    {
+        return $this->permission;
+    }
+
+    /**
+     * @param PermissionInterface $permission
+     */
+    public function setPermission(PermissionInterface $permission): void
+    {
+        $this->permission = $permission;
+    }
+
+
 }

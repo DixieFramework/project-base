@@ -44,6 +44,9 @@ class PermissionService
      */
     public function getPermissions(): array
     {
+        return $this->repository->getAllAsArray();
+
+        $this->cacheAll = null;
         if ($this->cacheAll === null) {
             $this->cacheAll = $this->cache->get('permissions', function (ItemInterface $item) {
                 $item->expiresAfter(86400); // one day

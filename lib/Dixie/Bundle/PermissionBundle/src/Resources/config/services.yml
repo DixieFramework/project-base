@@ -49,3 +49,8 @@ services:
         arguments:
             $permissions: '%talav.permissions%'
             $permissionNames: '%talav.permission_names%'
+
+    Talav\PermissionBundle\Repository\RolePermissionRepository:
+        class:     Talav\PermissionBundle\Repository\RolePermissionRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['Talav\PermissionBundle\Entity\RolePermission']
