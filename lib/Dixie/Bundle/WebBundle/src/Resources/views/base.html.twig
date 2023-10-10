@@ -145,16 +145,6 @@ _______     __  _   _ _____ _____ _    _ _______
 </div>
 {% block modals %}{% endblock %}
 
-<a class="content-load-action" href="#"
-   role="button"
-   data-location="WarehouseController::showProductInBin"
-   data-content="modalContent"
-   data-name="A7"
-   data-toggle="modal"
-   data-target="#modal">
-    A7
-</a>
-
 <!-- Standard Modal -->
 <div class="modal fade" id="modal">
     <div class="modal-dialog" id="modalContent">
@@ -173,6 +163,16 @@ _______     __  _   _ _____ _____ _    _ _______
     </div>
 </div>
 <!-- ./Modals -->
+
+<a class="content-load-action" href="#"
+   role="button"
+   data-location="ProfileBundle/Controller/JsController::largeModal"
+   data-content="modalContent"
+   data-name="A7"
+   data-bs-toggle="modal"
+   data-bs-target="#modal">
+    A7
+</a>
 
 <!-- Footer -->
 {# messages #}

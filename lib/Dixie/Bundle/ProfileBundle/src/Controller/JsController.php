@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Talav\CoreBundle\Controller\AjaxController;
 use Talav\CoreBundle\Controller\BaseController;
 use Talav\CoreBundle\Traits\EntityManagerAwareTrait;
 
@@ -39,6 +40,10 @@ class JsController extends BaseController
 		return $this->js()->updateHtml('#postLikeCount'.$request->get('id'), $h);
 	}
 
+	public function largeModal(AjaxController $request)
+	{
+		return $request->renderHTML('@TalavCore/_modal.html.twig', ['product' => null]);
+	}
 
 
 

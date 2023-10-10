@@ -251,7 +251,7 @@ function removeErrorMessage(input) {
 
 function ajaxRequest(data, contentElement, form = null) {
     $.ajax({
-        url: '/ajax',
+        url: '/ajax/action',
         type: 'post',
         data: data,
         dataType: "json",

@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Talav\CoreBundle\Exception\AjaxFormExceptionManager;
 use Talav\CoreBundle\Traits\ContainerAwareTrait;
 use Talav\CoreBundle\Traits\KernelAwareTrait;
 
@@ -93,4 +94,43 @@ dd($authenticationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED'));
 
         return $this->json(['success' => 0]);
     }
+
+	#[Route('/ajax/action', name: 'core_ajax_action', methods: ['GET', 'POST'])]
+	public function ajaxAction(Request $request): Response
+	{
+		$this->request = $request;
+
+		$location = $request->request->get('location');
+
+		if (empty($location)) {
+			return new JsonResponse(['status' => 5, 'message' => 'Unknown Location']);
+		}
+
+		$response = $this->forward('Talav\\' . str_replace('/', '\\', $location));
+		if ($response->getStatusCode() == 500) {
+			//500 Error -- Validation
+			$em = AjaxFormExceptionManager::getInstance();
+			if ($em->hasErrors()) {
+				dump($em->getErrors());exit();
+				return new JsonResponse(['errors' => $em->getErrors(), 'status' => 2]);
+			}
+		}
+
+		return $response;
+	}
+
+	/**
+	 * Render Html
+	 *
+	 * @param $template
+	 * @param array $data
+	 *
+	 * @return JsonResponse|\Symfony\Component\HttpFoundation\Response
+	 *
+	 * @author AC ashwclark@outlook.com
+	 */
+	public function renderHtml($template, array $data = [])
+	{
+		return new JsonResponse(["html" => $this->renderView($template, $data), "status" => 1]);
+	}
 }
