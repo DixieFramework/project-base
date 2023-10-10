@@ -201,12 +201,13 @@ class RegistrationController extends AbstractController
 
     private function updateUser(Request $request, UserInterface $user, FormInterface $form): Response
     {
+
         $event = new UserFormEvent($user, $form, $request);
         $this->eventDispatcher->dispatch($event, TalavUserEvents::REGISTRATION_SUCCESS);
 
-        $this->userManager->update($user, true);
-
         $this->eventDispatcher->dispatch(new UserRegisteredEvent($user));
+
+        $this->userManager->update($user, true);
 
         if (null === $response = $event->getResponse()) {
             $response = new RedirectResponse($this->router->generate('nucleos_profile_registration_confirmed'));

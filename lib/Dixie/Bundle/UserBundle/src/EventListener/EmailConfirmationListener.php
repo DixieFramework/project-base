@@ -7,6 +7,7 @@ namespace Talav\UserBundle\EventListener;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Talav\Component\Resource\Manager\ManagerInterface;
+use Talav\Component\User\Canonicalizer\CanonicalizerInterface;
 use Talav\Component\User\Util\TokenGeneratorInterface;
 use Talav\UserBundle\Event\UserFormEvent;
 use Talav\UserBundle\Mailer\UserMailer;
@@ -22,6 +23,7 @@ final class EmailConfirmationListener implements EventSubscriberInterface
     public function __construct(
         private readonly UserMailer $mailer,
         private readonly TokenGeneratorInterface $tokenGenerator,
+        private readonly CanonicalizerInterface $canonicalizer,
         private readonly UrlGeneratorInterface $router,
         private readonly RequestStack $requestStack,
         private readonly ManagerInterface $roleManager,
@@ -41,6 +43,10 @@ final class EmailConfirmationListener implements EventSubscriberInterface
     public function onRegistrationSuccess(UserFormEvent $event): void
     {
         $user = $event->getUser();
+
+        $user->setEmailCanonical($this->canonicalizer->canonicalize($user->getEmail()));
+        $user->setUsernameCanonical($this->canonicalizer->canonicalize($user->getUsername()));
+
         $user->setEnabled(false);
         $user->setVerified(false);
 
