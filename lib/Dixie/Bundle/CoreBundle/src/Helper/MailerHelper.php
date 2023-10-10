@@ -91,7 +91,7 @@ final class MailerHelper
                 id: $subject,
                 parameters: $subject_parameters,
                 domain: $domain
-            ))->to(new Address($user->getEmailCanonical(), $user->getUserIdentifier()))
+            ))->to(new Address($user->getEmailCanonical(), (string)$user->getUsername()))
         );
     }
 

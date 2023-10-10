@@ -13,7 +13,7 @@ final class RegistrationMail extends TemplatedEmail
 {
     private ?string $confirmationUrl = null;
 
-    private UserInterface $user;
+    private readonly ?UserInterface $user;
 
     public function __construct(Headers $headers = null, AbstractPart $body = null)
     {

@@ -26,9 +26,9 @@ final class CreateUserHandler implements MessageHandlerInterface
     {
         $user = $this->mapper->mapToObject($message->dto, $this->userManager->create());
         $user->setPassword($this->userPasswordHasher->hashPassword($user, $message->dto->password));
-        $this->userManager->update($user, true);
-
-        $this->messageBus->dispatch(new NewUserEvent($user->getId()));
+//        $this->userManager->update($user, true);
+//
+//        $this->messageBus->dispatch(new NewUserEvent($user->getId()));
 
         return $user;
     }

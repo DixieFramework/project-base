@@ -15,6 +15,7 @@ use Talav\UserBundle\Message\Event\BadPasswordSubmittedEvent;
 use Talav\UserBundle\Message\Event\LoginAttemptsLimitReachedEvent;
 use Talav\UserBundle\Message\Event\LoginLinkRequestedEvent;
 use Talav\UserBundle\Message\Event\LoginWithAnotherIpAddressEvent;
+use Talav\UserBundle\Message\Event\UserRegisteredEvent;
 
 final class AuthenticationEventSubscriber implements EventSubscriberInterface
 {
@@ -39,7 +40,7 @@ final class AuthenticationEventSubscriber implements EventSubscriberInterface
 //            ResetPasswordRequestedEvent::class => 'onResetPasswordRequested',
 //            DefaultPasswordCreatedEvent::class => 'onDefaultPasswordCreated',
 //            PasswordUpdatedEvent::class => 'onPasswordUpdated',
-//            UserRegisteredEvent::class => 'onUserRegistered',
+            UserRegisteredEvent::class => 'onUserRegistered',
 //            UserRegistrationConfirmedEvent::class => 'onUserRegistrationConfirmed',
 //            UserEmailedEvent::class => 'onUserEmailed',
         ];
@@ -144,15 +145,15 @@ final class AuthenticationEventSubscriber implements EventSubscriberInterface
 //        );
 //    }
 //
-//    public function onUserRegistered(UserRegisteredEvent $event): void
-//    {
-//        $this->mailer->sendNotificationEmail(
-//            $event,
-//            template: '@app/domain/authentication/mail/registration_confirmation.mail.twig',
-//            subject: 'authentication.mails.subjects.registration_confirmation',
-//            domain: 'authentication'
-//        );
-//    }
+    public function onUserRegistered(UserRegisteredEvent $event): void
+    {
+        $this->mailer->sendNotificationEmail(
+            $event,
+            template: '@TalavUser/email/registration_confirmation.mail.twig',
+            subject: 'authentication.mails.subjects.registration_confirmation',
+            domain: 'authentication'
+        );
+    }
 //
 //    public function onUserRegistrationConfirmed(UserRegistrationConfirmedEvent $event): void
 //    {

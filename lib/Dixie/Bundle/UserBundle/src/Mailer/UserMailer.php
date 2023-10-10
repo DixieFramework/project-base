@@ -83,7 +83,7 @@ class UserMailer implements UserMailerInterface
         $mail = (new RegistrationMail())
             ->to(new Address($user->getEmail()))
             ->subject($this->translator->trans('talav.registration.email.subject', [
-                '%username%' => $user->getUsername(),
+                '%username%' => (string)$user->getUsername(),
             ], 'TalavUserBundle'))
             ->setUser($user)
             ->setConfirmationUrl($url)

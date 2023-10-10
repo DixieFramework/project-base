@@ -1,0 +1,22 @@
+{% extends _layout %}
+
+<twig:block name="body">
+    {% apply markdown_email %}
+        # Hey {{ user.username }},
+
+        Bienvenue dans la communauté Devscast, nous sommes très heureux de te compter parmi nos membres.
+        Mais avant d'aller plus loin, nous voudrions nous rassurez que c'est bien vous qui avez créé le compte,
+        pour ce faire vous êtes prié de tout simplement confirmer votre inscription
+
+{#        {%- if _format == 'html' -%}#}
+{#            <twig:DashliteEmailQrCode#}
+{#                src="{{ qr_code_data_uri(url('auth_register_confirm', {token: user.emailVerificationToken})) }}"#}
+{#                title="Scanner le QRCode pour confirmer votre inscription ou utiliser le lien"#}
+{#            />#}
+{#        {%- endif -%}#}
+
+        Ce lien peut être utilisé pour confirmer votre inscription Devscast. On ne le demande jamais pour autre chose.
+
+        <twig:TalavEmailButton title="Confirmer mon inscription" url="{{ url('talav_user_registration_confirm', {token: user.confirmationToken}) }}" :format="_format" />
+    {% endapply %}
+</twig:block>

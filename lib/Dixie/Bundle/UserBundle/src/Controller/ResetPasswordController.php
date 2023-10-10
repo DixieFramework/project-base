@@ -40,7 +40,7 @@ class ResetPasswordController extends AbstractController
     use ResetPasswordControllerTrait;
 
     private const ROUTE_CHECK = 'app_check_email';
-    private const ROUTE_FORGET = 'app_forgot_password_request';
+    private const ROUTE_FORGET = 'talav_user_reset_request';//'app_forgot_password_request';
     private const ROUTE_RESET = 'app_reset_password';
     private const THROTTLE_MINUTES = 5;
     private const THROTTLE_OFFSET = 'PT3300S';

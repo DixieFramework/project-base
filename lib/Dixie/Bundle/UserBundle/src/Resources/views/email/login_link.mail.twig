@@ -4,8 +4,8 @@
     {% apply markdown_email %}
         # Hey {{ user.username }},
 
-        Désolé d'apprendre que vous avez des difficultés à vous connecter à Devscast.
-        Nous pouvons vous aider à vous reconnecter directement à votre compte.
+        Sorry to hear that you are having difficulty logging into Devscast.
+        We can help you log back into your account directly.
 
 {#        {% if false and false is same as true %}#}
 {#                    {% if _format == 'html' %}#}
@@ -16,16 +16,17 @@
 {#        {% endif %}#}
 {#        {% endif %}#}
 
-        Ce lien peut être utilisé pour vous connecter à votre compte Devscast. On ne le demande jamais pour autre chose.
+        This link can be used to log into your Devscast account. We never ask for anything else.
 
 
 
-        Si vous n'avez pas demandé ce lien en essayant de vous connecter ou de réinitialiser votre mot de passe, ignorez simplement ce mail.
+        If you did not request this link when trying to log in or reset your password, simply ignore this email.
 
-        Ce lien ne sera plus valide après **10 minutes**,
-        <a href="{{ event.link.url }}" title="Login">Click Here to Log in</a>
-{#        <twig:DashliteEmailButton url="{{ event.link.url }}" title="Me connecter" :format="_format" />#}
+        This link will no longer be valid after **10 minutes**,
 
-        Vous pouvez également <a rel="noopener" href="{{ url('talav_user_reset_request') }}" title="réinitialiser votre mot de passe Devscast.">réinitialiser votre mot de passe</a>
+{#        <a href="{{ event.link.url }}" title="Login">Click Here to Log in</a>#}
+        <twig:TalavEmailButton url="{{ event.link.url }}" title="Log In" :format="_format" />
+
+        You can also <a rel="noopener" href="{{ url('talav_user_reset_request') }}" title="reset your Devscast password.">reset your password</a>.
     {% endapply %}
 </twig:block>

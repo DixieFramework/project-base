@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Talav\UserBundle\EventListener;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Talav\Component\Resource\Manager\ManagerInterface;
 use Talav\Component\User\Util\TokenGeneratorInterface;
 use Talav\UserBundle\Event\UserFormEvent;
@@ -14,6 +15,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Talav\UserBundle\Message\Event\UserRegisteredEvent;
 
 final class EmailConfirmationListener implements EventSubscriberInterface
 {
@@ -22,7 +24,8 @@ final class EmailConfirmationListener implements EventSubscriberInterface
         private readonly TokenGeneratorInterface $tokenGenerator,
         private readonly UrlGeneratorInterface $router,
         private readonly RequestStack $requestStack,
-        private readonly ManagerInterface $roleManager
+        private readonly ManagerInterface $roleManager,
+        private readonly EventDispatcherInterface $eventDispatcher
     ) { }
 
     /**
@@ -42,7 +45,7 @@ final class EmailConfirmationListener implements EventSubscriberInterface
         $user->setVerified(false);
 
         $role = $this->roleManager->getRepository()->findOneByName('ROLE_USER');
-        $user->sync('roles', new ArrayCollection([$role]));
+        $user->sync('userRoles', new ArrayCollection([$role]));
 
         if (null === $user->getConfirmationToken()) {
             $user->setConfirmationToken($this->tokenGenerator->generateToken());
