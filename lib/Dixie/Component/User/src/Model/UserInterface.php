@@ -109,6 +109,22 @@ interface UserInterface extends SymfonyUserInterface, PasswordAuthenticatedUserI
 
     public function setLastName(?string $lastName): void;
 
+    public function isBanned(): bool;
+
+    public function setIsBanned(bool $isBanned): self;
+
+    public function getBannedAt(): ?\DateTimeInterface;
+
+    public function setBannedAt(?\DateTimeInterface $bannedAt): self;
+
+    public function getLastLoginAt(): ?\DateTimeInterface;
+
+    public function setLastLoginAt(?\DateTimeInterface $lastLoginAt): self;
+
+    public function getLastLoginIp(): ?string;
+
+    public function setLastLoginIp(?string $lastLoginIp): self;
+
     public function isEnabled(): bool;
 
     public function setEnabled(bool $enabled): void;

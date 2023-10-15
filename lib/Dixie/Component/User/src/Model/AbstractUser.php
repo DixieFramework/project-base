@@ -333,10 +333,14 @@ abstract class AbstractUser implements UserInterface
 
     /**
      * @param bool $isBanned
+     *
+     * @return $this
      */
-    public function setIsBanned(bool $isBanned): void
+    public function setIsBanned(bool $isBanned): self
     {
         $this->isBanned = $isBanned;
+
+        return $this;
     }
 
     /**
@@ -348,21 +352,33 @@ abstract class AbstractUser implements UserInterface
     }
 
     /**
-     * @param \DateTimeInterface|null $bannedAt
+     * @param DateTimeInterface|null $bannedAt
+     *
+     * @return $this
      */
-    public function setBannedAt(?\DateTimeInterface $bannedAt): void
+    public function setBannedAt(?\DateTimeInterface $bannedAt): self
     {
         $this->bannedAt = match (true) {
             null !== $bannedAt => \DateTimeImmutable::createFromInterface($bannedAt),
             default => null
         };
+
+        return $this;
     }
 
+    /**
+     * @return DateTimeInterface|null
+     */
     public function getLastLoginAt(): ?\DateTimeInterface
     {
         return $this->lastLoginAt;
     }
 
+    /**
+     * @param DateTimeInterface|null $lastLoginAt
+     *
+     * @return $this
+     */
     public function setLastLoginAt(?\DateTimeInterface $lastLoginAt): self
     {
         $this->lastLoginAt = match (true) {
