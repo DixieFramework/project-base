@@ -6,6 +6,7 @@ namespace Talav\UserBundle\Message\Handler;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use Talav\Component\User\Exception\InvalidRegistrationTokenException;
 use Talav\Component\User\Model\UserInterface;
 use Talav\Component\User\Repository\UserRepositoryInterface;
 use Talav\UserBundle\Message\Command\ConfirmRegistrationCommand;

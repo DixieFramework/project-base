@@ -61,6 +61,10 @@ abstract class AbstractUser implements UserInterface
 
     protected ?string $lastName = null;
 
+    protected bool $isBanned = false;
+
+    protected ?\DateTimeImmutable $bannedAt = null;
+
     protected ?\DateTimeImmutable $lastLoginAt = null;
 
     protected ?string $lastLoginIp = null;
@@ -319,7 +323,42 @@ abstract class AbstractUser implements UserInterface
         $this->lastName = $lastName;
     }
 
-    public function getLastLoginAt(): ?\DateTimeImmutable
+    /**
+     * @return bool
+     */
+    public function isBanned(): bool
+    {
+        return $this->isBanned;
+    }
+
+    /**
+     * @param bool $isBanned
+     */
+    public function setIsBanned(bool $isBanned): void
+    {
+        $this->isBanned = $isBanned;
+    }
+
+    /**
+     * @return \DateTimeInterface|null
+     */
+    public function getBannedAt(): ?\DateTimeInterface
+    {
+        return $this->bannedAt;
+    }
+
+    /**
+     * @param \DateTimeInterface|null $bannedAt
+     */
+    public function setBannedAt(?\DateTimeInterface $bannedAt): void
+    {
+        $this->bannedAt = match (true) {
+            null !== $bannedAt => \DateTimeImmutable::createFromInterface($bannedAt),
+            default => null
+        };
+    }
+
+    public function getLastLoginAt(): ?\DateTimeInterface
     {
         return $this->lastLoginAt;
     }

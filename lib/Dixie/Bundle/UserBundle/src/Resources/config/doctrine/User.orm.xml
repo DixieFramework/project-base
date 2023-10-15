@@ -31,6 +31,13 @@
         <field name="firstName" column="first_name" nullable="true" />
         <field name="lastName" column="last_name" nullable="true" />
 
+        <field name="isBanned" column="is_banned" type="boolean">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="bannedAt" column="banned_at" type="datetime_immutable" nullable="true"/>
+
         <!-- Login History -->
         <field name="lastLoginAt" column="last_login_at" type="datetime_immutable" nullable="true"/>
         <field name="lastLoginIp" column="last_login_ip" type="string" nullable="true"/>
