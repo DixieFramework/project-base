@@ -1,0 +1,49 @@
+{% extends '@TalavAdmin/shared/layout/base.html.twig' %}
+<twig:block name="title">Users</twig:block>
+
+<twig:block name="header">
+    <twig:TalavHeader title="Users" :data="data">
+        <twig:TalavHeaderLinkButton name="Ajouter" path="{{ path('admin_auth_user_new') }}" icon="plus" />
+{#        <twig:TalavHeaderLinkButton name="Statistiques" path="{{ path('admin_auth_dashboard_index') }}" icon="bar-chart" />#}
+    </twig:TalavHeader>
+</twig:block>
+
+<twig:block name="content">
+    <div class="row g-gs mb-4">
+        <div class="col-12">
+            <twig:TalavResponsiveTable :data="data" separated>
+                <twig:block name="header">
+                    <twig:TalavResponsiveTableColumn value="utilisateur" col/>
+                    <twig:TalavResponsiveTableColumn value="firstName" col />
+                    <twig:TalavResponsiveTableColumn value="Rôles" col />
+                    <twig:TalavResponsiveTableColumn value="Confirmé" col />
+{#                    <twig:TalavResponsiveTableColumn value="Pays" col />#}
+                    <twig:TalavResponsiveTableColumn tools />
+                </twig:block>
+
+                <twig:TalavResponsiveTableColumn>
+                    <twig:TalavUserAvatarLink
+                            path="{{ path('admin_auth_user_show', {id: item.id}) }}"
+                            username="{{ item.username }}"
+                            surname="{{ item.email }}"
+                            avatarUrl="{{ item.avatar }}"
+                    />
+                </twig:TalavResponsiveTableColumn>
+                <twig:TalavResponsiveTableColumn>
+                    <a href="{{ item.firstName }}" title="github of {{ item.username }}" target="_blank">{{ item.firstName }}</a>
+                </twig:TalavResponsiveTableColumn>
+                <twig:TalavResponsiveTableColumn>{{ item.roles | join(' ') | badge }}</twig:TalavResponsiveTableColumn>
+                <twig:TalavResponsiveTableColumn>{{ item.verified | boolean }}</twig:TalavResponsiveTableColumn>
+{#                <twig:TalavResponsiveTableColumn>{{ item.country | flag }}</twig:TalavResponsiveTableColumn>#}
+                <twig:TalavResponsiveTableColumn tools>
+                    <twig:TalavResponsiveTableTools>
+                        <twig:TalavResponsiveTableAction path="{{ path('admin_auth_user_show', {id: item.id}) }}" icon="eye" />
+                        <twig:TalavResponsiveTableAction>
+                            <twig:TalavDeleteButton path="{{ path('admin_auth_user_delete', {id: item.id}) }}" :id="item.id" />
+                        </twig:TalavResponsiveTableAction>
+                    </twig:TalavResponsiveTableTools>
+                </twig:TalavResponsiveTableColumn>
+            </twig:TalavResponsiveTable>
+        </div>
+    </div>
+</twig:block>

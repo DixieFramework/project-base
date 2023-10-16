@@ -27,7 +27,7 @@ class Roles implements \Stringable
             Assert::inArray($role, self::VALUES, 'authentication.validations.invalid_roles');
         }
 
-        $roles[]           = 'ROLE_USER';
+        $roles[] = 'ROLE_USER';
         $this->roles = array_unique($roles);
     }
 
@@ -89,7 +89,7 @@ class Roles implements \Stringable
     {
         return in_array($role, $this->roles, true);
     }
-
+}
 //    public function removeElement(string $role): bool
 //    {
 //        if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
@@ -97,4 +97,4 @@ class Roles implements \Stringable
 //            $this->roles = array_values($this->roles);
 //        }
 //    }
-}
+//}

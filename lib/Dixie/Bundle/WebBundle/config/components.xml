@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+<!--        <service id="devscast_dashlite.twig.component.sidebar" class="Talav\WebBundle\Twig\Component\Sidebar\TalavSidebar" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/sidebar.html.twig"-->
+<!--            />-->
+<!--            <argument type="service" id="request_stack"/>-->
+<!--        </service>-->
+
+<!--        &lt;!&ndash; tables &ndash;&gt;-->
+<!--        <service id="devscast_dashlite.twig.component.table.responsive" class="Talav\WebBundle\Twig\Component\Table\TalavResponsiveTable" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/table/responsive.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.table.responsive.column" class="Talav\WebBundle\Twig\Component\Table\Responsive\TalavResponsiveTableColumn" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/table/responsive/column.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.table.responsive.tools" class="Talav\WebBundle\Twig\Component\Table\Responsive\TalavResponsiveTableTools" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/table/responsive/tools.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.table.responsive.action" class="Talav\WebBundle\Twig\Component\Table\Responsive\TalavResponsiveTableAction" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/table/responsive/action.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.table.bordered" class="Talav\WebBundle\Twig\Component\Table\TalavBorderedTable" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/table/responsive.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.table.transaction" class="Talav\WebBundle\Twig\Component\Table\TalavTransactionTable" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/table/responsive.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+
+<!--        &lt;!&ndash; cards &ndash;&gt;-->
+<!--        <service id="devscast_dashlite.twig.component.card.modal" class="Talav\WebBundle\Twig\Component\Card\TalavModal" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/card/modal.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.card.content_modal" class="Talav\WebBundle\Twig\Component\Card\TalavContentModal" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/card/content_modal.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.card.empty_state" class="Talav\WebBundle\Twig\Component\Card\TalavEmptyStateCard" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/card/empty_state.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.card.card" class="Talav\WebBundle\Twig\Component\Card\TalavCard" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/card/card.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.card.stretch" class="Talav\WebBundle\Twig\Component\Card\TalavStretchCard" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/card/stretch.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.card.overview" class="Talav\WebBundle\Twig\Component\Card\TalavOverviewCard" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/card/overview.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.card.income_overview" class="Talav\WebBundle\Twig\Component\Card\TalavIncomeOverviewCard" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/card/income_overview.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.card.histogram_overview" class="Talav\WebBundle\Twig\Component\Card\TalavHistogramOverviewCard" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/card/histogram_overview.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.card.aside" class="Talav\WebBundle\Twig\Component\Card\TalavAsideCard" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/card/aside.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+
+<!--        &lt;!&ndash; data &ndash;&gt;-->
+<!--        <service id="devscast_dashlite.twig.component.data.list" class="Talav\WebBundle\Twig\Component\Data\TalavDataList" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/data/list.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.data.item" class="Talav\WebBundle\Twig\Component\Data\TalavDataItem" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/data/item.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.data.meta_item" class="Talav\WebBundle\Twig\Component\Data\TalavMetaDataItem" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/data/meta_item.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.data.meta_section" class="Talav\WebBundle\Twig\Component\Data\TalavMetaDataSection" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/data/meta_section.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.data.meta_list" class="Talav\WebBundle\Twig\Component\Data\TalavMetaDataList" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/data/meta_list.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+
+<!--        &lt;!&ndash; button &ndash;&gt;-->
+<!--        <service id="devscast_dashlite.twig.component.button.delete" class="Talav\WebBundle\Twig\Component\Button\TalavDeleteButton" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/button/delete.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.button.modal" class="Talav\WebBundle\Twig\Component\Button\TalavFormModalButton" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/button/form_modal.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.button.content_modal" class="Talav\WebBundle\Twig\Component\Button\TalavContentModalButton" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/button/content_modal.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.button.link" class="Talav\WebBundle\Twig\Component\Button\TalavLinkButton" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/button/link.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.button.header_link" class="Talav\WebBundle\Twig\Component\Button\TalavHeaderLinkButton" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/button/link.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.button.user_avatar_link" class="Talav\WebBundle\Twig\Component\Button\TalavUserAvatarLink" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/button/user_avatar_link.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+
+<!--        &lt;!&ndash; layout &ndash;&gt;-->
+<!--        <service id="devscast_dashlite.twig.component.layout.header" class="Talav\WebBundle\Twig\Component\Layout\TalavHeader" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/layout/header.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.layout.footer" class="Talav\WebBundle\Twig\Component\Layout\TalavFooter" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/layout/footer.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.layout.navbar" class="Talav\WebBundle\Twig\Component\Layout\TalavNavbar" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/layout/navbar.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+
+<!--        &lt;!&ndash; generic &ndash;&gt;-->
+<!--        <service id="devscast_dashlite.twig.component.flash" class="Talav\WebBundle\Twig\Component\TalavFlashMessage" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/flash.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.form" class="Talav\WebBundle\Twig\Component\TalavForm" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/form.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.note" class="Talav\WebBundle\Twig\Component\TalavNote" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/form.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.icon" class="Talav\WebBundle\Twig\Component\TalavIcon" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/icon.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.alert" class="Talav\WebBundle\Twig\Component\TalavAlert" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/alert.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.pagination" class="Talav\WebBundle\Twig\Component\TalavPagination" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/pagination.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+
+<!--        &lt;!&ndash; mailing &ndash;&gt;-->
+<!--        <service id="devscast_dashlite.twig.component.mailing.button" class="Talav\WebBundle\Twig\Component\Mailing\TalavEmailButton" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/mailing/button.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.mailing.alert" class="Talav\WebBundle\Twig\Component\Mailing\TalavEmailAlert" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/mailing/alert.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.mailing.section" class="Talav\WebBundle\Twig\Component\Mailing\TalavEmailSection" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/mailing/section.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+<!--        <service id="devscast_dashlite.twig.component.mailing.qrcode" class="Talav\WebBundle\Twig\Component\Mailing\TalavEmailQrCode" public="true">-->
+<!--            <tag-->
+<!--                    name="twig.component"-->
+<!--                    template="@TalavWeb/components/mailing/qrcode.html.twig"-->
+<!--            />-->
+<!--        </service>-->
+    </services>
+</container>

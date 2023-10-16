@@ -1,0 +1,8 @@
+{% set data = [
+    {type: 'link', label: 'Dashboard', url: path('homepage'), icon: 'home'},
+    {type: 'header', label: 'Gestions des utilisateurs'},
+    {type: 'link', label: 'Utilisateurs', url: path('admin_auth_user_index'), icon: 'users'},
+    {type: 'header', label: 'Gestions du contenu'}
+] %}
+
+<twig:TalavSidebar :data="data" />

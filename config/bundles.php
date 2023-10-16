@@ -47,4 +47,11 @@ return [
     Talav\PostBundle\TalavPostBundle::class => ['all' => true],
     Bornfight\MabooMakerBundle\BornfightMabooMakerBundle::class => ['dev' => true, 'test' => true],
     Talav\CommentBundle\TalavCommentBundle::class => ['all' => true],
+    Sonata\Twig\Bridge\Symfony\SonataTwigBundle::class => ['all' => true],
+    Sonata\Form\Bridge\Symfony\SonataFormBundle::class => ['all' => true],
+    Sonata\Exporter\Bridge\Symfony\SonataExporterBundle::class => ['all' => true],
+    Sonata\Doctrine\Bridge\Symfony\SonataDoctrineBundle::class => ['all' => true],
+    Sonata\BlockBundle\SonataBlockBundle::class => ['all' => true],
+    Sonata\AdminBundle\SonataAdminBundle::class => ['all' => true],
+    Talav\AdminBundle\TalavAdminBundle::class => ['all' => true],
 ];

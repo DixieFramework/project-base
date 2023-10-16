@@ -4,9 +4,14 @@ declare(strict_types=1);
 
 namespace Talav\WebBundle\Twig\Component;
 
+use Symfony\Component\Form\FormView;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
-#[AsTwigComponent(template: '@TalavWeb/components/flash.html.twig')]
-final class WebFlashMessage
+/**
+ * Class Form.
+ */
+#[AsTwigComponent]
+final class TalavForm
 {
+    public FormView $form;
 }

@@ -14,8 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * class ResetLoginAttemptsController.
- *
- * @author bernard-ng <bernard@devscast.tech>
+
  */
 #[AsController]
 #[Route('/login/unlock/{token}', name: 'auth_login_attempts_reset', methods: ['GET'])]

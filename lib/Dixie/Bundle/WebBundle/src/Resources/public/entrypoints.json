@@ -1,11 +1,11 @@
 {
   "entrypoints": {
-    "admin": {
+    "web": {
       "css": [
-        "/bundles/talavweb/admin.css?bba4765cfd3411c63972"
+        "/bundles/talavweb/web.css?bba4765cfd3411c63972"
       ],
       "js": [
-        "/bundles/talavweb/admin.js?64ec45203790c56fa0bf"
+        "/bundles/talavweb/web.js?49b1229d04c5cf1f40ef"
       ]
     },
     "event_details": {
@@ -18,7 +18,12 @@
         "/bundles/talavweb/app.css?216229890b41c38acd5b"
       ],
       "js": [
-        "/bundles/talavweb/app.js?963063137c699208b438"
+        "/bundles/talavweb/app.js?3f4f32e681ab38220464"
+      ]
+    },
+    "admin": {
+      "js": [
+        "/bundles/talavweb/admin.js?880d6366108f1234c13a"
       ]
     }
   }

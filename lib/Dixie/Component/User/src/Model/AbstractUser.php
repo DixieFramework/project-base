@@ -235,11 +235,13 @@ abstract class AbstractUser implements UserInterface
 
     public function getRoles(): array
     {
-        $roles = $this->roles->toArray();
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        return $this->roles->toArray();
 
-        return array_unique($roles);
+//        $roles = $this->roles->toArray();
+//        // guarantee every user at least has ROLE_USER
+//        $roles[] = 'ROLE_USER';
+//
+//        return array_unique($roles);
 //        $roles = ['ROLE_USER'];
 //
 //        foreach ($this->getUserRoles() as $userRole) {

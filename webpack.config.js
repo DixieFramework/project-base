@@ -16,9 +16,12 @@ Encore
         umbrella_core: path.join(__dirname, '/lib/Dixie/Bundle/CoreBundle/src/Resources/public/assets/'),
         umbrella_admin: path.join(__dirname, '/lib/Dixie/Bundle/WebBundle/src/Resources/private/assets/'),
     })
-    .addEntry('admin', './lib/Dixie/Bundle/WebBundle/src/Resources/private/assets/admin.js')
+    .addEntry('web', './lib/Dixie/Bundle/WebBundle/src/Resources/private/assets/admin.js')
     .addEntry('event_details', './assets/js/pages/event_details.js')
     .addEntry('app', './assets/app.js')
+
+    .addEntry('admin', './lib/Dixie/Bundle/AdminBundle/src/Resources/private/assets/index.js')
+
     .enableSassLoader()
 
     .disableSingleRuntimeChunk()

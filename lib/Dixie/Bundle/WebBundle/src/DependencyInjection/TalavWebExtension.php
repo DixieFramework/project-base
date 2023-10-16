@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Talav\WebBundle\DependencyInjection;
 
+use Symfony\Component\Config\Loader\DelegatingLoader;
+use Symfony\Component\Config\Loader\LoaderResolver;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -21,8 +23,24 @@ class TalavWebExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
-	    $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-	    $loader->load('services.yml');
+        $locator = new FileLocator(__DIR__ . '/../Resources/config');
+
+        $loader = new DelegatingLoader(
+            new LoaderResolver(
+                [
+                    new Loader\GlobFileLoader($container, $locator),
+                    new Loader\YamlFileLoader($container, $locator),
+                    new Loader\XmlFileLoader($container, $locator),
+                ],
+            ),
+        );
+
+        $loader->load('services.yml');
+//        $loader->load('components.xml');
+
+
+//        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+//	    $loader->load('services.yml');
 
 	    $config = $this->processConfiguration(new Configuration(), $configs);
 	    $container->setParameter('talav_web.configuration', $config);

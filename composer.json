@@ -23,6 +23,7 @@
         "ramsey/uuid-doctrine": "^1.8",
         "sabre/uri": "^2.2",
         "sensio/framework-extra-bundle": "^6.1",
+        "sonata-project/admin-bundle": "*",
         "stof/doctrine-extensions-bundle": "^1.7",
         "symfony/asset": "6.3.*",
         "symfony/console": "6.3.*",
@@ -55,6 +56,7 @@
         "symfony/webpack-encore-bundle": "^1.14",
         "symfony/workflow": "6.3.*",
         "symfony/yaml": "6.3.*",
+        "talav/admin-bundle": "@dev",
         "talav/avatar-bundle": "@dev",
         "talav/bundle-generator-bundle": "@dev",
         "talav/comment-bundle": "@dev",
@@ -273,6 +275,13 @@
                 "symlink": true
             },
             "url": "lib/Dixie/Bundle/CommentBundle"
+        },
+        {
+            "type": "path",
+            "options": {
+                "symlink": true
+            },
+            "url": "lib/Dixie/Bundle/AdminBundle"
         }
     ]
 }
