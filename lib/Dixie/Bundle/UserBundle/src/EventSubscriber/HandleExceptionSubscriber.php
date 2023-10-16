@@ -36,19 +36,11 @@ class HandleExceptionSubscriber implements EventSubscriberInterface
             ]);
 
             $statusCode = 401;
-
-//            $applicationCode = $exception->getApplicationCode();
-        } elseif ($exception instanceof UserSuspendedException) {
-            $this->logger->error('Could not retrieve users', [
+		} elseif ($exception instanceof UserSuspendedException) {
+            $this->logger->error('Suspended user', [
                 'exception' => $exception,
             ]);
 
-//            $this->bugsnag->notifyException($exception, function ($report) {
-//                $report->setSeverity('error');
-//            });
-
-//            $applicationCode = $exception->getApplicationCode();
-dd($exception);
             $statusCode = 500;
         }
 
@@ -56,15 +48,7 @@ dd($exception);
             return;
         }
 
-//        if ($applicationCode) {
-//            $application = $this->getApplication($applicationCode);
-//
-//            if ($application) {
-//                $application->reset();
-//            }
-//        }
-
-        $response = new Response($this->twig->render('@TalavUser/error.html.twig', [
+        $response = new Response($this->twig->render('@TalavWeb/error.html.twig', [
             'exception' => $exception,
         ]), $statusCode);
 
@@ -78,15 +62,4 @@ dd($exception);
             KernelEvents::EXCEPTION => ['handleException', 255],
         ];
     }
-//
-//    private function getApplication(string $code): ?ApplicationInterface
-//    {
-//        foreach ($this->applications as $application) {
-//            if ($application->getCode() === $code) {
-//                return $application;
-//            }
-//        }
-//
-//        return null;
-//    }
 }

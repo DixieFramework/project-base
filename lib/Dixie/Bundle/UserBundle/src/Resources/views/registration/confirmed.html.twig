@@ -1,0 +1,12 @@
+{% extends "@TalavUser/layout.html.twig" %}
+
+{% trans_default_domain 'TalavUserBundle' %}
+
+{% block titre 'E-mail Confirmed!' %}
+
+{% block talav_user_content %}
+    <p>{{ 'registration.confirmed'|trans({'%username%': user.username})|raw }}</p>
+    {% if targetUrl %}
+        <p><a href="{{ targetUrl }}">{{ 'common.button_back'|trans({}, 'TalavWebBundle') }}</a></p>
+    {% endif %}
+{% endblock talav_user_content %}

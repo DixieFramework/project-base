@@ -1,0 +1,14 @@
+{% extends _layout %}
+
+<twig:block name="body">
+    {% apply markdown_email %}
+        # Hey {{ user.username }},
+
+        Welcome to the Devscast community, we are very happy to have you
+
+        {% if event.is_oauth %}
+            Votre compte a été créé via {{ event.oauth_type }}, utiliser la même methode pour vous connecter prochainement,
+            si vous ne définissez pas un mot de passe.
+        {% endif %}
+    {% endapply %}
+</twig:block>

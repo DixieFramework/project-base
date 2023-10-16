@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Exception\AccountStatusException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\RememberMe\RememberMeHandlerInterface;
@@ -27,6 +28,13 @@ class LoginManager implements LoginManagerInterface
     final public function logInUser(string $firewallName, UserInterface $user, Response $response = null): void
     {
         $this->userChecker->checkPreAuth($user);
+//	    try {
+//		    $this->userChecker->checkPreAuth($user);
+//		    $this->userChecker->checkPostAuth($user);
+//	    } catch (AccountStatusException $e) {
+//			dd($e);
+//		    return;
+//	    }
 
         $token = $this->createToken($firewallName, $user);
         $request = $this->requestStack->getCurrentRequest();

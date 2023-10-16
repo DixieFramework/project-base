@@ -161,7 +161,7 @@ class RegistrationController extends AbstractController
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
-        return $this->render('@TalavUser/registration/check_email.html.twig', [
+        return $this->render('@TalavUser/registration/confirmed.html.twig', [
             'user' => $user,
             'targetUrl' => $this->getTargetUrlFromSession($request->getSession())
         ]);
@@ -190,10 +190,6 @@ class RegistrationController extends AbstractController
         if (null === $user) {
             return new RedirectResponse($this->router->generate('talav_user_login'));
         }
-
-        $this->render('@TalavUser/registration/check_email.html.twig', [
-            'user' => $user
-        ]);
 
         return $this->render('@TalavUser/registration/check_email.html.twig', [
             'user' => $user,

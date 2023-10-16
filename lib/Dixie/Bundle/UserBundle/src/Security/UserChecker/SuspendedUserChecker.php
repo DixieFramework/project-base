@@ -41,10 +41,10 @@ final class SuspendedUserChecker implements UserCheckerInterface
             /** @var Suspension $suspension */
             $suspension = $suspensions->last();
 
-            $ex = new LockedException('User account is locked.');
-            $ex->setUser($user);
-
-            throw $ex;
+//            $ex = new LockedException('User account is locked.');
+//            $ex->setUser($user);
+//
+//            throw $ex;
 
             $this->throwException(UserSuspendedException::create($user, $suspension));
             throw UserSuspendedException::create($user, $suspension);

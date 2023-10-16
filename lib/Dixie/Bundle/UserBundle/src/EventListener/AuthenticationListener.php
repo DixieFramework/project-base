@@ -48,9 +48,12 @@ final class AuthenticationListener implements EventSubscriberInterface
                 new UserEvent($event->getUser(), $event->getRequest()),
                 TalavUserEvents::SECURITY_IMPLICIT_LOGIN
             );
-        } catch (SafeMessageException) {
+        } catch (AccountStatusException $exception) {
+//			dd($exception);
         //} catch (AccountStatusException) {
             // We simply do not authenticate users which do not pass the user checker (not enabled, expired, etc.).
+        } catch (SafeMessageException $e) {
+			dd($e);
         }
     }
 }

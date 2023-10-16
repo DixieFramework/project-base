@@ -123,12 +123,12 @@ registration:
   agreeTerms:
     error: You must accept the general conditions of use.
     label: I accept the <a href="%link%">Terms & Conditions</a>
-  confirmed: Félicitations <b>%username%</b>, votre compte est maintenant activé.
+  confirmed: Congratulations <b>%username%</b>, your e-mail address is now verified and you can now start using your account.
   register:
     title: Create Account
     submit: Submit
-  subject: Création d'un compte
-  action: Confirmer
+  subject: Creating an account
+  action: Confirm
 
 resetting:
   link: Forgot your password ?

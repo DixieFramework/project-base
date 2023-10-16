@@ -11,12 +11,14 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Talav\Component\Resource\Manager\ManagerInterface;
 use Talav\Component\User\Canonicalizer\CanonicalizerInterface;
 use Talav\Component\User\Model\UserInterface;
 use Talav\Component\User\Util\TokenGeneratorInterface;
 use Talav\CoreBundle\Helper\MailerHelper;
 use Talav\UserBundle\Event\TalavUserEvents;
+use Talav\UserBundle\Event\UserEvent;
 use Talav\UserBundle\Event\UserFormEvent;
 use Talav\UserBundle\Message\Command\RegisterLoginAttemptCommand;
 use Talav\UserBundle\Message\Command\RegisterLoginIpAddressCommand;
@@ -58,6 +60,7 @@ final class AuthenticationEventSubscriber implements EventSubscriberInterface
 //            UserRegistrationConfirmedEvent::class => 'onUserRegistrationConfirmed',
 //            UserEmailedEvent::class => 'onUserEmailed',
             TalavUserEvents::REGISTRATION_SUCCESS => 'onRegistrationSuccess',
+            TalavUserEvents::PROFILE_EDIT_SUCCESS => 'onProfileEditSuccess',
         ];
     }
 
@@ -210,4 +213,32 @@ final class AuthenticationEventSubscriber implements EventSubscriberInterface
             new RedirectResponse($this->urlGenerator->generate('talav_user_registration_check_email'))
         );
     }
+
+	public function onProfileEditSuccess(UserFormEvent $event)
+	{
+		$user = $event->getUser();
+		if (!($user instanceof UserInterface)) {
+			return;
+		}
+
+		$user->setEnabled(false);
+		$user->setVerified(false);
+
+		if (null === $user->getConfirmationToken()) {
+			$user->setConfirmationToken($this->tokenGenerator->generateToken());
+		}
+
+		$this->mailer->sendNotificationEmail(
+			$event,
+			template: '@TalavUser/email/registration_confirmation.mail.twig',
+			subject: 'authentication.mails.subjects.registration_confirmation',
+			domain: 'authentication'
+		);
+
+		$this->requestStack->getSession()->set('talav_user_send_confirmation_email/email', $user->getEmail());
+
+		$event->setResponse(
+			new RedirectResponse($this->urlGenerator->generate('talav_user_registration_check_email'))
+		);
+	}
 }
