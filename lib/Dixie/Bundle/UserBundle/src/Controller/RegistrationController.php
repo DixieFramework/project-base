@@ -63,6 +63,7 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request): Response
     {
+        /** @var UserInterface $user */
         $user = $this->userManager->create();
 
         $event = new GetResponseRegistrationEvent($user, $request);
@@ -96,27 +97,27 @@ class RegistrationController extends AbstractController
             'form' => $form->createView(),
         ]);
 
-        $form = $this->createForm($this->parameters['form_type'], new $this->parameters['form_model'](), ['validation_groups' => $this->parameters['form_validation_groups']]);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $dto = $this->mapper->map($form->getData(), CreateUserDto::class);
-                $user = $this->bus->dispatch(new CreateUserCommand($dto))->last(HandledStamp::class)->getResult();
-
-                $this->eventDispatcher->dispatch(new UserEvent($user), TalavUserEvents::REGISTRATION_COMPLETED);
-
-                return $this->userAuthenticator->authenticateUser(
-                    $user,
-                    $this->formLoginAuthenticator,
-                    $request
-                );
-            }
-        }
-
-        return $this->render('@TalavUser/registration/register.html.twig', [
-            'form' => $form->createView(),
-        ]);
+//        $form = $this->createForm($this->parameters['form_type'], new $this->parameters['form_model'](), ['validation_groups' => $this->parameters['form_validation_groups']]);
+//
+//        $form->handleRequest($request);
+//        if ($form->isSubmitted()) {
+//            if ($form->isValid()) {
+//                $dto = $this->mapper->map($form->getData(), CreateUserDto::class);
+//                $user = $this->bus->dispatch(new CreateUserCommand($dto))->last(HandledStamp::class)->getResult();
+//
+//                $this->eventDispatcher->dispatch(new UserEvent($user), TalavUserEvents::REGISTRATION_COMPLETED);
+//
+//                return $this->userAuthenticator->authenticateUser(
+//                    $user,
+//                    $this->formLoginAuthenticator,
+//                    $request
+//                );
+//            }
+//        }
+//
+//        return $this->render('@TalavUser/registration/register.html.twig', [
+//            'form' => $form->createView(),
+//        ]);
     }
     #[Route('/confirm/{token}', name: 'talav_user_registration_confirm')]
     public function confirm(Request $request, string $token): Response
@@ -180,7 +181,7 @@ class RegistrationController extends AbstractController
         $email   = $session->get('talav_user_send_confirmation_email/email', '');
 
         if ('' === $email) {
-            return new RedirectResponse($this->router->generate('talav_user_registration_register'));
+            return new RedirectResponse($this->router->generate('talav_user_register'));
         }
 
         $session->remove('talav_user_send_confirmation_email/email');
@@ -201,16 +202,15 @@ class RegistrationController extends AbstractController
 
     private function updateUser(Request $request, UserInterface $user, FormInterface $form): Response
     {
-
         $event = new UserFormEvent($user, $form, $request);
         $this->eventDispatcher->dispatch($event, TalavUserEvents::REGISTRATION_SUCCESS);
 
-        $this->eventDispatcher->dispatch(new UserRegisteredEvent($user));
+//        $this->eventDispatcher->dispatch(new UserRegisteredEvent($user));
 
         $this->userManager->update($user, true);
 
         if (null === $response = $event->getResponse()) {
-            $response = new RedirectResponse($this->router->generate('nucleos_profile_registration_confirmed'));
+            $response = new RedirectResponse($this->router->generate('talav_user_registration_confirmed'));
         }
 
         $this->eventDispatcher->dispatch(

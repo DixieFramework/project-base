@@ -27,6 +27,9 @@ final class BannedUserChecker implements UserCheckerInterface
 
     public function checkPreAuth(SymfonyUserInterface $user)
     {
+        if ($user instanceof User && $user->isBanned()) {
+            $this->throwException(new UserBannedException());
+        }
     }
 
     public function checkPostAuth(SymfonyUserInterface|User $user)

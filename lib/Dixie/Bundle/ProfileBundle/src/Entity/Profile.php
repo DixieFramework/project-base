@@ -24,7 +24,7 @@ class Profile implements ProfileInterface
     protected ?string $lastName = null;
 
 //    #[ORM\Column(type: 'string', enumType: Gender::class)]
-    protected Gender $gender;
+    protected Gender $gender = Gender::X;
 
     protected ?\DateTimeInterface $birthdate = null;
 

@@ -1,1 +1,1 @@
-authentication.exceptions.user_suspended: This account has been suspended.
+authentication.exceptions.user_suspended: "This account has been suspended."

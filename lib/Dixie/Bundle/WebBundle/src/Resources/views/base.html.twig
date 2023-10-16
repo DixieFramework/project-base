@@ -15,6 +15,7 @@
 {%- set page_title = app_name ~ (title is defined ? ' - ' ~ title|trans(title_parameters, title_domain) : '') -%}
 {%- set sidebar_hide = is_remembered and is_actived ? app.request.cookies.get('SIDEBARHIDE', true) : true -%}
 {%- set sidebar_class = sidebar_hide ? ' sidebar-hide' : '' -%}
+{%- set main_wrapper_class = main_wrapper_class|default(null) -%}
 {%- set status_bar = status_bar is defined ? status_bar : true and is_remembered and is_actived -%}
 <!DOCTYPE HTML>
 <!--
@@ -106,7 +107,7 @@ _______     __  _   _ _____ _____ _    _ _______
     {{- include('@TalavWeb/navigation/vertical/navigation.html.twig') }}
 {%- endblock %}
 {# main content #}
-<div class="page-content{{ sidebar_class }}">
+<div class="page-content{{ sidebar_class }} {{ main_wrapper_class }}">
 {#    <header>#}
 {#        <!-- Menu -->#}
 {#        {% if location is defined and location.isCity %}#}

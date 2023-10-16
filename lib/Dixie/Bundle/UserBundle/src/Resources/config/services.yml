@@ -71,6 +71,24 @@ services:
             - '@app.manager.user_oauth'
         public: true
 
+#    talav_user.security.login_manager:
+#        class: Talav\Component\User\Manager\LoginManager
+
+    talav_user.security.login_manager:
+        class: Talav\Component\User\Manager\LoginManager
+        public: true
+        arguments:
+            - '@security.token_storage'
+            - '@talav.user.security.user_checker_observer'
+#            - ~ # UserCheckerInterface $userChecker
+            - '@security.authentication.session_strategy'
+            - '@request_stack'
+#            - '@event_dispatcher'
+            - ~ # remember-me services
+
+    Talav\Component\User\Manager\LoginManager:
+        alias: 'talav_user.security.login_manager'
+
     talav.user.security.user_checker_observer:
         class: Talav\UserBundle\Security\UserChecker\UserCheckerObserver
 
@@ -123,6 +141,14 @@ services:
     Talav\UserBundle\EventListener\RedirectUserListener:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    Talav\UserBundle\EventListener\AuthenticationListener:
+        class: Talav\UserBundle\EventListener\AuthenticationListener
+        arguments:
+            $loginManager: '@talav_user.security.login_manager'
+            $firewallName: '%talav_user.firewall_name%'
+        tags:
+            - { name: kernel.event_subscriber }
 
 #    talav_user.authentication_handler:
 #        class: '%talav_user.authentication_handler.class%'

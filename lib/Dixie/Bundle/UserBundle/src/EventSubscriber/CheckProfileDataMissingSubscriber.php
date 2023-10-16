@@ -7,6 +7,7 @@ namespace Talav\UserBundle\EventSubscriber;
 use demosplan\DemosPlanCoreBundle\Entity\User\Role;
 use demosplan\DemosPlanCoreBundle\Logic\User\CurrentUserInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Talav\CoreBundle\Interfaces\DisableListenerInterface;
 use Talav\CoreBundle\Traits\DisableListenerTrait;
 use Talav\CoreBundle\Traits\TranslatorFlashMessageAwareTrait;
@@ -47,7 +48,7 @@ class CheckProfileDataMissingSubscriber implements EventSubscriberInterface, Ser
      */
     private $router;
 
-    public function __construct(private Security $security, LoggerInterface $logger, RouterInterface $router)
+    public function __construct(private Security $security, LoggerInterface $logger, RouterInterface $router, private readonly UrlGeneratorInterface $urlGenerator)
     {
         $this->logger = $logger;
         $this->router = $router;
@@ -88,7 +89,7 @@ class CheckProfileDataMissingSubscriber implements EventSubscriberInterface, Ser
 
             $this->notify($user);
 
-            $event->setResponse(new RedirectResponse($this->router->generate('user_profile_edit')));
+            $event->setResponse(new RedirectResponse($this->urlGenerator->generate('user_profile_edit')));
         }
     }
 

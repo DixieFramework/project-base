@@ -6,6 +6,7 @@ namespace Talav\UserBundle\Security\UserChecker;
 
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAccountStatusException;
+use Symfony\Component\Security\Core\Exception\LockedException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface as SymfonyUserInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -39,6 +40,11 @@ final class SuspendedUserChecker implements UserCheckerInterface
             $suspensions = $user->getProfile()->getSuspensions();
             /** @var Suspension $suspension */
             $suspension = $suspensions->last();
+
+            $ex = new LockedException('User account is locked.');
+            $ex->setUser($user);
+
+            throw $ex;
 
             $this->throwException(UserSuspendedException::create($user, $suspension));
             throw UserSuspendedException::create($user, $suspension);

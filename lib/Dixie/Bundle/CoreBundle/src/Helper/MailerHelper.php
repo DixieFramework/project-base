@@ -79,7 +79,7 @@ final class MailerHelper
         }
 
         /** @var UserInterface $user */
-        $user = $event->user;
+        $user = $event->getUser();
         $this->send(
             $this->createEmail(
                 template: $template,
@@ -91,7 +91,7 @@ final class MailerHelper
                 id: $subject,
                 parameters: $subject_parameters,
                 domain: $domain
-            ))->to(new Address($user->getEmailCanonical(), (string)$user->getUsername()))
+            ))->to(new Address($user->getEmail(), (string)$user->getUsername()))
         );
     }
 

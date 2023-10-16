@@ -8,6 +8,7 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Talav\Component\User\Canonicalizer\Canonicalizer;
+use Talav\Component\User\Manager\LoginManager;
 use Talav\Component\User\Manager\UserManager;
 use Talav\Component\User\Manager\UserOAuthManager;
 use Talav\Component\User\Repository\LoginAttemptRepository;
@@ -34,7 +35,7 @@ final class Configuration implements ConfigurationInterface
                 ->scalarNode('login_route')->defaultValue('talav_user_login')->end()
                 ->scalarNode('login_redirect_route')->defaultValue('parthenon_user_profile')->end()
                 ->scalarNode('signup_success_route')->defaultValue('parthenon_user_signed_up')->end()
-                ->scalarNode('firewall_name')->end()
+                ->scalarNode('firewall_name')->defaultValue('main')->end()
                 ->arrayNode('class')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -45,6 +46,12 @@ final class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('class')->defaultValue(UserMailer::class)->end()
+                    ->end()
+                ->end()
+                ->arrayNode('login_manager')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('class')->defaultValue(LoginManager::class)->end()
                     ->end()
                 ->end()
                 ->arrayNode('canonicalizer')

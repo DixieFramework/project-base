@@ -8,7 +8,10 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\DependencyInjection\Reference;
 use Talav\Component\User\Canonicalizer\CanonicalizerInterface;
+use Talav\Component\User\Manager\LoginManager;
+use Talav\Component\User\Manager\LoginManagerInterface;
 use Talav\Component\User\Util\PasswordUpdaterInterface;
 use Talav\Component\User\Util\TokenGeneratorInterface;
 use Talav\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
@@ -32,6 +35,7 @@ class TalavUserExtension extends AbstractResourceExtension implements PrependExt
 
         $container->autowire(UserMailerInterface::class, $config['mailer']['class']);
         $container->autowire(CanonicalizerInterface::class, $config['canonicalizer']['class']);
+        $container->autowire(LoginManagerInterface::class, $config['login_manager']['class']);
         $container->autowire(PasswordUpdaterInterface::class, $config['password_updater']['class']);
         $container->autowire(TokenGeneratorInterface::class, $config['token_generator']['class']);
 
@@ -43,6 +47,24 @@ class TalavUserExtension extends AbstractResourceExtension implements PrependExt
             ]);
             $container->setParameter('talav_user.mailer.parameters', $config['email']['from']);
         }
+
+//        if (LoginManager::class == $config['login_manager']['class']) {
+//            $definition = $container->getDefinition(LoginManagerInterface::class);
+//            $definition->setArguments([
+//                new Reference('security.token_storage'),
+//                new Reference('security.user_checker'),
+//                new Reference('security.authentication.session_strategy'),
+//                new Reference('request_stack'),
+//                null
+//            ]);
+//
+//            $container->setAlias('talav_user.security.login_manager', $config['login_manager']['class']);
+//
+//            $listenerDefinition = $container->getDefinition('Talav\UserBundle\EventListener\AuthenticationListener');
+//            $listenerDefinition->setArgument(0, new Reference(LoginManagerInterface::class));
+//            $listenerDefinition->setArgument(1, $config['firewall_name']);
+//            $listenerDefinition->addTag('kernel.event_subscriber');
+//        }
 
         // WelcomeEmailSubscriber is registered by default, remove it if config does not require confirmation email
         if (!$config['registration']['email']) {

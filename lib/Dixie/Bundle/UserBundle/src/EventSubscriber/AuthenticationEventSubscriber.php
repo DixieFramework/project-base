@@ -4,11 +4,20 @@ declare(strict_types=1);
 
 namespace Talav\UserBundle\EventSubscriber;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+use Talav\Component\Resource\Manager\ManagerInterface;
+use Talav\Component\User\Canonicalizer\CanonicalizerInterface;
 use Talav\Component\User\Model\UserInterface;
+use Talav\Component\User\Util\TokenGeneratorInterface;
 use Talav\CoreBundle\Helper\MailerHelper;
+use Talav\UserBundle\Event\TalavUserEvents;
+use Talav\UserBundle\Event\UserFormEvent;
 use Talav\UserBundle\Message\Command\RegisterLoginAttemptCommand;
 use Talav\UserBundle\Message\Command\RegisterLoginIpAddressCommand;
 use Talav\UserBundle\Message\Event\BadPasswordSubmittedEvent;
@@ -21,7 +30,12 @@ final class AuthenticationEventSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private readonly MailerHelper $mailer,
-        private readonly MessageBusInterface $bus
+        private readonly MessageBusInterface $bus,
+        private readonly ManagerInterface $profileManager,
+        private readonly RequestStack $requestStack,
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly CanonicalizerInterface $canonicalizer,
+        private readonly TokenGeneratorInterface $tokenGenerator
     ) {
     }
 
@@ -43,6 +57,7 @@ final class AuthenticationEventSubscriber implements EventSubscriberInterface
             UserRegisteredEvent::class => 'onUserRegistered',
 //            UserRegistrationConfirmedEvent::class => 'onUserRegistrationConfirmed',
 //            UserEmailedEvent::class => 'onUserEmailed',
+            TalavUserEvents::REGISTRATION_SUCCESS => 'onRegistrationSuccess',
         ];
     }
 
@@ -164,4 +179,35 @@ final class AuthenticationEventSubscriber implements EventSubscriberInterface
 //            domain: 'authentication'
 //        );
 //    }
+
+    public function onRegistrationSuccess(UserFormEvent $event): void
+    {
+        $user = $event->getUser();
+
+        $user->setEnabled(false);
+        $user->setVerified(false);
+
+//        $user->setEmailCanonical($this->canonicalizer->canonicalize($user->getEmail()));
+//        $user->setUsernameCanonical($this->canonicalizer->canonicalize($user->getUsername()));
+
+        $profile = $this->profileManager->create();
+        $profile->setUser($user);
+
+        if (null === $user->getConfirmationToken()) {
+            $user->setConfirmationToken($this->tokenGenerator->generateToken());
+        }
+
+        $this->mailer->sendNotificationEmail(
+            $event,
+            template: '@TalavUser/email/registration_confirmation.mail.twig',
+            subject: 'authentication.mails.subjects.registration_confirmation',
+            domain: 'authentication'
+        );
+
+        $this->requestStack->getSession()->set('talav_user_send_confirmation_email/email', $user->getEmail());
+
+        $event->setResponse(
+            new RedirectResponse($this->urlGenerator->generate('talav_user_registration_check_email'))
+        );
+    }
 }

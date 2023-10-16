@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
@@ -55,6 +56,7 @@ class UserFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public function __construct(
         private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly RouterInterface $router,
         private readonly TranslatorInterface $translator,
 	    private readonly EventDispatcherInterface $dispatcher,
         private readonly UserAuthenticatorInterface $userAuthenticator,
@@ -200,7 +202,7 @@ class UserFormAuthenticator extends AbstractLoginFormAuthenticator
 
             if ($this->userNeedsProfileCompletion($user)) {
                 $request->getSession()->getFlashBag()->add('info', 'Please complete your profile.');
-                return new RedirectResponse('user_profile_edit');
+                return new RedirectResponse($this->urlGenerator->generate('user_profile_edit'));
             }
 
 //            if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {

@@ -23,7 +23,7 @@ Modal.prototype.getBody = function () {
     return element.find('.modal-body');
 };
 Modal.prototype.setErreur = function (msg) {
-    this.setTitle('Une erreur est survenue');
+    this.setTitle('An error has occurred');
     this.setBody(msg);
     this.hideButtons();
 };
@@ -33,7 +33,7 @@ Modal.prototype.setLittleErreur = function (msg) {
 
     element.find('.alert_little').remove();
 
-    const flashMessage = $('<div class="alert alert-danger"><i class="fa fa-warning"></i> </div>').append(msg).hide();
+    const flashMessage = $('<div class="alert alert-danger alert_little"><i class="fa fa-warning me-2"></i> </div>').append(msg).hide();
     element.find('.modal-body').prepend(flashMessage);
     flashMessage.slideDown('normal');
 };
