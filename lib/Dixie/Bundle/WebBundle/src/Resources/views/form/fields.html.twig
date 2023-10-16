@@ -275,6 +275,252 @@
     {%- endif %}
 {%- endblock form_errors %}
 
+{# Output label as HTML #}
+{#{%- block form_label -%}#}
+{#    {%- if label is not same as(false) -%}#}
+{#        {%- set label %}zzz{{ label|raw }}{% endset -%}#}
+{#        {{ parent() }}#}
+{#    {%- endif -%}#}
+{#{%- endblock form_label -%}#}
+
+{#{% block form_label -%}#}
+{#    {%- set label_attr = label_attr|merge({class: (label_attr.class|default(''))|trim}) -%}#}
+{#    {{- parent() -}}#}
+{#{%- endblock form_label %}#}
+
+{#{% block checkbox_row -%}#}
+{#    <div class="mb-3 form-group mb-0{% if not valid %} has-error{% endif %}">#}
+{#        {{- form_widget(form) -}}#}
+{#        {{- form_label(form) -}}#}
+{#        {{- form_errors(form) -}}#}
+{#    </div>#}
+{#{%- endblock checkbox_row %}#}
+
+{#{% block checkbox_widget -%}#}
+{#    <div class="form-check form-switch">#}
+{#    <input type="checkbox" class="form-check-input"{{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} {% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}/>#}
+{#{%- endblock checkbox_widget %}#}
+
+{# Checkbox label is raw here #}
+{#{%- block checkbox_label -%}#}
+{#    {% if label is not same as(false) -%}#}
+{#        {% if not compound -%}#}
+{#            {% set label_attr = label_attr|merge({'for': id}) %}#}
+{#        {%- endif -%}#}
+{#        {% if required -%}#}
+{#            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}#}
+{#        {%- endif -%}#}
+{#        {% if label is empty -%}#}
+{#            {%- if label_format is not empty -%}#}
+{#                {% set label = label_format|replace({#}
+{#                    '%name%': name,#}
+{#                    '%id%': id,#}
+{#                }) %}#}
+{#            {%- else -%}#}
+{#                {% set label = name|humanize %}#}
+{#            {%- endif -%}#}
+{#        {%- endif -%}#}
+{#        <span>{{ translation_domain is same as(false) ? label|raw : label|trans({}, translation_domain)|raw }}</span>#}
+{#    {%- endif -%}#}
+{#{%- endblock -%}#}
+
+{#{% block switch_label -%}#}
+{#    #}{#- Do not display the label if widget is not defined in order to prevent double label rendering -#}
+{#    {%- if widget is defined -%}#}
+{#        {%- if checked and form.parent.vars.valid == false -%}#}
+{#            {%- set valid = false -%}#}
+{#        {%- endif -%}#}
+{#        {%- set label_attr_class = (valid ? block('class_input_radio_label') : block('class_input_radio_label_error')) ~ ' ' ~ label_attr.class|default('') -%}#}
+{#        {%- set label_attr = label_attr|merge({class: block('class_input_switch_label')}) -%}#}
+{#        {%- if not compound -%}#}
+{#            {%- set label_attr = label_attr|merge({'for': id}) -%}#}
+{#        {%- endif -%}#}
+{#        <label{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}>#}
+{#            {{ widget|raw }}#}
+{#            <div class="{{ block('class_input_switch') }}"></div>#}
+{#            {%- if label is not same as(false) -%}#}
+{#                <span class="{{ label_attr_class|trim }}">#}
+{#                    {{- block('form_label_content') -}}#}
+{#                </span>#}
+{#            {%- endif -%}#}
+{#        </label>#}
+{#    {%- endif -%}#}
+{#{%- endblock switch_label %}#}
+
+
+{# Labels #}
+
+{%- block form_label -%}
+    {% if label is not same as(false) -%}
+        {%- set label_attr_class = (valid ? block('class_label') : block('class_label_error')) ~ ' ' ~ label_attr.class|default('') -%}
+        {%- set label_attr = label_attr|merge({class: label_attr_class|trim}) -%}
+        {% if not compound -%}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif -%}
+        <{{ element|default('label') }}{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}>
+        {{- block('form_label_content') -}}
+        </{{ element|default('label') }}>
+    {%- endif -%}
+{%- endblock form_label -%}
+
+{%- block checkbox_radio_label -%}
+    {#- Do not display the label if widget is not defined in order to prevent double label rendering -#}
+    {%- if widget is defined -%}
+        {%- if checked and form.parent.vars.valid == false -%}
+            {%- set valid = false -%}
+        {%- endif -%}
+        {%- set label_attr_class = (valid ? block('class_input_radio_label') : block('class_input_radio_label_error')) ~ ' ' ~ label_attr.class|default('') -%}
+        {%- set label_attr = label_attr|merge({'class': label_attr_class|trim}) -%}
+        {%- if not compound -%}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif -%}
+        <div class="flex items-center mr-4">
+            {{ widget|raw }}
+            <label{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}>
+                {%- if label is not same as(false) -%}
+                    {{ translation_domain is same as(false) ? label|raw : label|trans({}, translation_domain)|raw }}
+                {%- endif -%}
+            </label>
+        </div>
+    {%- endif -%}
+{%- endblock checkbox_radio_label %}
+
+{% block checkbox_label -%}
+    {{- block('checkbox_radio_label') -}}
+{%- endblock checkbox_label %}
+
+{% block radio_label -%}
+    {{- block('checkbox_radio_label') -}}
+{%- endblock radio_label %}
+
+{% block switch_label -%}
+    {#- Do not display the label if widget is not defined in order to prevent double label rendering -#}
+    {%- if widget is defined -%}
+        {%- if checked and form.parent.vars.valid == false -%}
+            {%- set valid = false -%}
+        {%- endif -%}
+        {%- set label_attr_class = (valid ? block('class_input_radio_label') : block('class_input_radio_label_error')) ~ ' ' ~ label_attr.class|default('') -%}
+        {%- set label_attr = label_attr|merge({class: block('class_input_switch_label')}) -%}
+        {%- if not compound -%}
+            {%- set label_attr = label_attr|merge({'for': id}) -%}
+        {%- endif -%}
+        <label{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}>
+            {{ widget|raw }}
+            <div class="{{ block('class_input_switch') }}"></div>
+            {%- if label is not same as(false) -%}
+                <span class="{{ label_attr_class|trim }}">
+                    {{- block('form_label_content') -}}zzz
+                </span>
+            {%- endif -%}
+        </label>
+    {%- endif -%}
+{%- endblock switch_label %}
+
+
+
+
+
+{# Class #}
+
+{% block class_label -%}
+    block mb-2 text-sm font-medium text-gray-900 dark:text-white
+{%- endblock class_label %}
+
+{% block class_input_radio_label -%}
+    ml-2 text-sm font-medium text-gray-900 dark:text-gray-300
+{%- endblock class_input_radio_label %}
+
+{% block class_input_switch_label -%}
+    relative inline-flex items-center cursor-pointer
+{%- endblock class_input_switch_label %}
+
+{% block class_input_text -%}
+    text-gray-900 bg-gray-50 rounded-lg text-sm block w-full p-2.5 border border-gray-300 focus:z-10 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500
+{%- endblock class_input_text %}
+
+{% block class_input_range -%}
+    w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700
+{%- endblock class_input_range %}
+
+{% block class_input_file -%}
+    block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+{%- endblock class_input_file %}
+
+{% block class_input_radio -%}
+    w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600
+{%- endblock class_input_radio %}
+
+{% block class_input_checkbox -%}
+    rounded {{ block('class_input_radio') }}
+{%- endblock class_input_checkbox %}
+
+{% block class_input_switch -%}
+    w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-2 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 dark:border-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600
+{%- endblock class_input_switch %}
+
+{% block class_select -%}
+    {{ block('class_input_text') }}
+{%- endblock class_select %}
+
+{% block class_textarea -%}
+    {{ block('class_input_text') }}
+{%- endblock class_textarea %}
+
+{% block class_button -%}
+    text-gray-900 bg-white font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 border border-gray-200 hover:text-blue-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:bg-gray-800 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700
+{%- endblock class_button %}
+
+{% block class_submit -%}
+    text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
+{%- endblock class_submit %}
+
+{% block class_time_separator -%}
+    inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-x-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600
+{%- endblock class_time_separator %}
+
+{% block class_addon -%}
+    inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600
+{%- endblock class_addon %}
+
+{% block class_widget_addon_prepend -%}
+    rounded-none rounded-l-lg
+{%- endblock class_widget_addon_prepend %}
+
+{% block class_widget_addon_append -%}
+    rounded-none rounded-r-lg
+{%- endblock class_widget_addon_append %}
+
+{% block class_addon_prepend -%}
+    border-r-0 rounded-l-md
+{%- endblock class_addon_prepend %}
+
+{% block class_addon_append -%}
+    border-l-0 rounded-r-md
+{%- endblock class_addon_append %}
+
+{% block class_help_text -%}
+    mt-2 text-sm text-gray-500 dark:text-gray-400
+{%- endblock class_help_text %}
+
+{% block class_label_error -%}
+    block mb-2 text-sm font-medium text-red-600 dark:text-red-500
+{%- endblock class_label_error %}
+
+{% block class_input_radio_label_error -%}
+    ml-2 text-sm font-medium text-red-600 dark:text-red-500
+{%- endblock class_input_radio_label_error %}
+
+{% block class_input_error -%}
+    text-red-900 bg-red-50 border-red-500 placeholder-red-700 dark:bg-red-100 dark:border-red-400 dark:text-red-900 focus:z-10 focus:ring-red-500 focus:border-red-500 dark:focus:ring-red-500 dark:focus:border-red-500
+{%- endblock class_input_error %}
+
+{% block class_text_error -%}
+    mt-2 text-sm text-red-600 dark:text-red-500
+{%- endblock class_text_error %}
+
+
+
+
 {#{% block radio_widget %}#}
 {#        <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} title="" />#}
 {#{% endblock radio_widget %}#}

@@ -1,5 +1,8 @@
+{# parameters #}
+{%- set form_attr = form_attr|default({})|merge({'id': 'edit-form', 'data-save': 'common.save_data'|trans, 'class': 'position-relative', 'novalidate': 'novalidate'}) -%}
+
 {%- block modal -%}
-    <form action="{% block form_action'#' %}" method="POST">
+    <form action="{% block form_action'#' %}" {% for attrname, attrvalue in form_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %} method="POST">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">

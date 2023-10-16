@@ -19,6 +19,7 @@
 {#    </div>#}
 {#</div>#}
 
+{% form_theme form '@TalavWeb/form/fields.html.twig' %}
 <div class="no-margin-form mt-4">
     {% if error is defined and error %}
         <div class="alert alert-danger">
@@ -27,7 +28,12 @@
         </div>
     {% endif %}
 
-    {{ form_widget(form) }}
+{#    {{ form_start(form, {'action': path('talav_user_register'), 'attr': {'id': 'form_person_edit'}}) }}#}
+    {{ form_row(form.username) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.plainPassword.first) }}
+    {{ form_row(form.plainPassword.second) }}
+    {{ form_row(form.agreeTerms) }}
 {#    {{ form_row(form.username, { 'help': '2 caractères au minimum, sans espace'}) }}#}
 {#    {{ form_row(form.email, { 'help': 'Veuillez saisir une adresse mail valide'}) }}#}
 {#    {{ form_row(form.password.first, { 'help': 'Soyez malin et adoptez un mot de passe sûr'}) }}#}
@@ -64,5 +70,5 @@
 {#        }#}
 {#    </script>#}
 
-    {{ form_rest(form) }}
+{#    {{ form_end(form) }}#}
 </div>

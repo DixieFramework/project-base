@@ -94,7 +94,7 @@ class RegistrationController extends AbstractController
         }
 
         return $this->render('@TalavUser/registration/register.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
 
 //        $form = $this->createForm($this->parameters['form_type'], new $this->parameters['form_model'](), ['validation_groups' => $this->parameters['form_validation_groups']]);
@@ -233,9 +233,9 @@ class RegistrationController extends AbstractController
             ->create(UserRegistrationType::class, $user, [
                 'validation_groups' => ['Registration', 'User', 'Default'],
             ])
-            ->add('save', SubmitType::class, [
-                'label'  => 'registration.submit',
-            ])
+//            ->add('save', SubmitType::class, [
+//                'label'  => 'registration.submit',
+//            ])
             ;
     }
 }

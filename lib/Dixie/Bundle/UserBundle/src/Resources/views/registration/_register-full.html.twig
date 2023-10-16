@@ -13,7 +13,7 @@
 {% block meta_description 'Devenez membre de By Night, créez vos événements et partagez les avec vos amis sur les réseaux sociaux !' %}
 
 {% block body %}
-    {{ form_start(form, {'action': path('talav_user_register')}) }}
+    {{ form_start(form, {'action': path('talav_user_register'), 'attr': {'id': 'edit-form'}}) }}
     <div class="card">
         <div class="card-body">
             {% include '@TalavUser/registration/register-content.html.twig' with({'partial': false}) %}
@@ -30,5 +30,24 @@
             Connectez-vous !
         </a>
     </p>
-    {{ form_end(form) }}
+    {{ form_end(form, {'render_rest': false}) }}
 {% endblock %}
+
+{# javascripts #}
+{% block javascripts -%}
+    {% if app.debug %}
+        {{ parent() }}
+        {{- asset_js('js/vendor/jquery-validation/jquery.validate.js') }}
+        {{- asset_js('js/vendor/jquery-validation/additional-methods.js') }}
+        {{- asset_js('js/vendor/jquery-validation/localization/messages_fr.js') }}
+        {{- asset_js('js/extensions/validator-extensions.js') }}
+        {{- asset_js('js/extensions/validator-extensions-en.js') -}}
+        {{ asset_js('js/vendor/zxcvbn/zxcvbn.js') }}
+        {{ asset_js('js/plugins/plugin-password-strength.js') }}
+        {{ asset_js('js/extensions/password-extensions.js') }}
+        {{ asset_js('js/application/user_register.js') }}
+    {% else %}
+        {{- asset_js('js/core_edit.js') }}
+        {{ asset_js('js/user_register.js') }}
+    {% endif %}
+{%- endblock %}

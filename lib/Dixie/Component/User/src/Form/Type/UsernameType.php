@@ -21,6 +21,7 @@ final class UsernameType extends AbstractType implements DataMapperInterface
             'label' => 'authentication.forms.labels.username',
             //'authentication.forms.labels.username',
             'translation_domain' => 'TalavUserBundle',
+            'prepend_icon' => 'fa-fw fa-regular fa-user',
             'attr' => [
                 'placeholder' => 'authentication.forms.labels.placeholders.username',
             ],
