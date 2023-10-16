@@ -32,3 +32,27 @@
         </p>
 {#    </form>#}
 {% endblock %}
+
+{# javascripts #}
+{% block javascripts -%}
+    {% if app.debug %}
+        <script>
+            document.querySelectorAll('.auto-connect').forEach((element) => {
+                element.addEventListener('click', (event) => {
+                    const target = event.currentTarget
+
+                    document.querySelector('#talav_type_user_user_login_username').value = target.dataset.username
+                    document.querySelector('#talav_type_user_user_login_password').value = target.dataset.password
+                })
+            })
+        </script>
+    {% endif %}
+    {% if app.debug %}
+        {{ parent() }}
+        {{ asset_js('js/extensions/password-extensions.js') }}
+        {{ asset_js('js/application/user_recaptcha.js') }}
+        {{ asset_js('js/application/user_login.js') }}
+    {% else %}
+        {{ asset_js('js/user_login.js') }}
+    {%- endif %}
+{% endblock %}

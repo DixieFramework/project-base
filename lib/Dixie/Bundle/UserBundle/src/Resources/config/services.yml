@@ -91,6 +91,18 @@ services:
             - { name: talav.user.security.user_checker }
             - { name: container.preload, class: Talav\UserBundle\Security\UserChecker\ConfirmedUserChecker }
 
+    Talav\UserBundle\Security\UserChecker\SuspendedUserChecker:
+        class: Talav\UserBundle\Security\UserChecker\SuspendedUserChecker
+        tags:
+            - { name: talav.user.security.user_checker }
+            - { name: container.preload, class: Talav\UserBundle\Security\UserChecker\SuspendedUserChecker }
+
+    Talav\UserBundle\Security\UserChecker\BannedUserChecker:
+        class: Talav\UserBundle\Security\UserChecker\BannedUserChecker
+        tags:
+            - { name: talav.user.security.user_checker }
+            - { name: container.preload, class: Talav\UserBundle\Security\UserChecker\BannedUserChecker }
+
     Talav\Component\User\Message\CommandHandler\:
         resource: '%kernel.project_dir%/vendor/talav/user/src/Message/CommandHandler/*'
 

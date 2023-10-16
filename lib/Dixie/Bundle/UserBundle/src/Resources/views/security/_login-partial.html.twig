@@ -1,5 +1,7 @@
 {% extends '@TalavWeb/layouts/modal-form.html.twig' %}
 
+{% block modal_id 'login-dialog' %}
+
 {% block titre 'Sign In' %}
 
 {% block body -%}
@@ -14,6 +16,17 @@
     <button class="btn btn-primary" type="submit" id="_submit" name="_submit" data-loading-text="Please wait...">
         Sign In
     </button>
+
+    <script>
+        document.querySelectorAll('.auto-connect').forEach((element) => {
+            element.addEventListener('click', (event) => {
+                const target = event.currentTarget
+
+                document.querySelector('#talav_type_user_user_login_username').value = target.dataset.username
+                document.querySelector('#talav_type_user_user_login_password').value = target.dataset.password
+            })
+        })
+    </script>
 {%- endblock %}
 
 {% block form_action path('talav_user_login') %}

@@ -19,6 +19,8 @@
         <one-to-many field="requestee" target-entity="Talav\ProfileBundle\Entity\FriendshipRequest" mapped-by="requestee">
         </one-to-many>
 
+        <one-to-many field="suspensions" target-entity="Talav\ProfileBundle\Entity\Suspension" orphan-removal="true" mapped-by="profile"/>
+
         <one-to-many field="friendships" target-entity="Talav\ProfileBundle\Entity\Friendship" mapped-by="profile">
         </one-to-many>
 

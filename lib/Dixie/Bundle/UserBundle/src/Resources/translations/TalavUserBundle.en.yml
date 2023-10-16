@@ -192,3 +192,24 @@ authentication.forms.labels.placeholders.email: Your email address...
 
 # safe massages exceptions
 authentication.exceptions.user_not_found: This e-mail address does not match any of our records.
+authentication.exceptions.user_banned: Désolé ce compte a été bloqué.
+authentication.exceptions.user_suspended: This account has been blocked.
+authentication.exceptions.reset_password_ongoing_request: |
+  Désolé une demande de réinitialisation de mot de passe est déjà en cours,
+  Veuillez poursuivre avec les instructions qui vous ont été envoyées par email.
+
+authentication.exceptions.reset_password_token_expired: Désolé le lien que vous avez utilisé n'est plus valide.
+authentication.exceptions.oauth_unsupported_service: "Désolé le service oauth %service% n'est pas supporté"
+authentication.exceptions.oauth_verified_email_not_found: Aucune adresse email vérifiée n'est associée.
+authentication.exceptions.oauth_email_already_used: Cette adresse email est déjà utilisé, essayez plutôt de vous connecter
+authentication.exceptions.oauth_authenticated: Oh non, mais vous êtes déjà connecté !
+authentication.exceptions.oauth_user_not_found: ce service n'est associé à votre compte, essayez plutôt de vous connecter ou créer un compte
+authentication.exceptions.too_many_login_attempts: Plusieurs tentatives de connexion erronées, réessayez plus tard !
+authentication.exceptions.invalid_current_password: le mot de passe actuel est incorrecte.
+authentication.exceptions.email_already_used: Cette adresse email est déjà utilisée par un autre compte.
+authentication.exceptions.username_already_used: Désolé ce nom d'utilisateur n'est pas disponible.
+authentication.exceptions.invalid_registration_confirmation_token: Désolé ce lien de confirmation n'est pas valide !
+authentication.exceptions.user_registration_not_confirmed: Désolé nous ne pouvons vous connecter car, votre inscription n'a pas encore été confirmée
+authentication.exceptions.invalid_reset_login_attempts_token: Impossible de déverrouiller votre compte, le jeton de sécurité n'est pas valide !
+authentication.exceptions.password_not_set: Vous devez rajouter un mot de passe à votre compte pour finaliser cette action.
+authentication.exceptions.user_email_not_found: L'utilisateur n'as pas défini une adresse email.

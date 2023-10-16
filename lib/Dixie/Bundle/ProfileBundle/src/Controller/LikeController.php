@@ -51,7 +51,7 @@ class LikeController extends AbstractController
 			$response = ['status' => 'removed'];
 		} else {
 			$like = $this->likeManager->create();
-			$like->setUser($this->getUser());
+			$like->setProfile($this->getUser());
 			$like->setPost($post);
 			$this->likeManager->update($like, true);
 			$response = ['status' => 'added'];
@@ -106,7 +106,7 @@ class LikeController extends AbstractController
 			$response = ['status' => 'removed'];
 		} else {
 			$like = $likeManager->create();
-			$like->setUser($this->getUser());
+			$like->setProfile($this->getUser());
 			$like->setComment($comment);
 			$likeManager->update($like, true);
 			$response = ['status' => 'added'];

@@ -51,6 +51,34 @@
 {{ form_widget(form) }}
 {{ form_end(form) }}
 
+                    {% if 'dev' == app_mode %}
+                        {#                        <div class="d-flex align-items-center py-3 mb-0">#}
+                        <hr class="w-100">
+                        {#                        </div>#}
+                        <div class="d-flex justify-content-start flex-wrap {# btn-group #}">
+                            <button type="button" class="btn btn-secondary auto-connect d-block me-2" data-username="user" data-password="123456">User</button>
+                            <button type="button" class="btn btn-secondary auto-connect d-block me-2" data-username="moderator" data-password="123456">Editor</button>
+                            <button type="button" class="btn btn-secondary auto-connect d-block me-2" data-username="admin" data-password="123456">Admin</button>
+                            <button type="button" class="btn btn-secondary auto-connect d-block" data-username="root" data-password="123456">Root</button>
+                            {#                            <button type="button" class="btn btn-primary-soft auto-connect btn-block" style="width:23%" data-username="dev" data-password="123456">Developer</button>#}
+                            {#            <button type="button" class="btn btn-secondary auto-connect" data-username="archer@archers-caen.fr" data-password="Pwd123">Archer</button>#}
+                            {#            <button type="button" class="btn btn-secondary auto-connect" data-username="editor@archers-caen.fr" data-password="Pwd123">Editor</button>#}
+                            {#            <button type="button" class="btn btn-secondary auto-connect" data-username="admin@archers-caen.fr" data-password="Pwd123">Admin</button>#}
+                            {#            <button type="button" class="btn btn-secondary auto-connect" data-username="dev@archers-caen.fr" data-password="Pwd123">Developer</button>#}
+                        </div>
+
+                        {#                        <div class="d-flex justify-content-between flex-wrap #}{# btn-group #}{#">#}
+                        {#                            <button type="button" class="btn btn-primary-soft auto-connect col-3 me-1" data-username="user" data-password="123456">User</button>#}
+                        {#                            <button type="button" class="btn btn-primary-soft auto-connect col-3 me-1" data-username="editor" data-password="123456">Editor</button>#}
+                        {#                            <button type="button" class="btn btn-primary-soft auto-connect col-3 me-1" data-username="admin" data-password="123456">Admin</button>#}
+                        {#                            <button type="button" class="btn btn-primary-soft auto-connect col-3" data-username="dev" data-password="123456">Developer</button>#}
+                        {#                            #}{#            <button type="button" class="btn btn-secondary auto-connect" data-username="archer@archers-caen.fr" data-password="Pwd123">Archer</button>#}
+                        {#                            #}{#            <button type="button" class="btn btn-secondary auto-connect" data-username="editor@archers-caen.fr" data-password="Pwd123">Editor</button>#}
+                        {#                            #}{#            <button type="button" class="btn btn-secondary auto-connect" data-username="admin@archers-caen.fr" data-password="Pwd123">Admin</button>#}
+                        {#                            #}{#            <button type="button" class="btn btn-secondary auto-connect" data-username="dev@archers-caen.fr" data-password="Pwd123">Developer</button>#}
+                        {#                        </div>#}
+                    {% endif %}
+
 {#<input type="hidden" name="talav_type_user_user_login[_csrf_token]" value="{{ csrf_token('authenticate') }}" />#}
 
 {#<div class="mb-3">#}

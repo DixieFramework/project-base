@@ -11,12 +11,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
 use Talav\Component\User\Model\UserInterface;
 use Talav\Component\User\Repository\UserRepositoryInterface;
+use Talav\UserBundle\Message\Command\BanUserCommand;
+use Talav\UserBundle\Message\Command\UnbanUserCommand;
 
 #[AsController]
 #[Route('/admin/authentication/users', name: 'admin_auth_user_')]
 final class UserController extends AbstractCrudController
 {
-    protected const DOMAIN = 'authentication';
+    protected const DOMAIN = 'auth';
     protected const ENTITY = 'user';
 
     #[Route('', name: 'index', methods: ['GET'])]
@@ -64,16 +66,14 @@ final class UserController extends AbstractCrudController
 
     #[Route('/ban/{id}', name: 'ban', requirements: [
         'id' => Requirement::UUID,
-    ], methods: ['POST'])]
-    public function ban(User $item): Response
+    ], methods: ['POST', 'GET'])]
+    public function ban(\Symfony\Component\Security\Core\User\UserInterface $item): Response
     {
         return $this->handleCommand(new BanUserCommand($item), new CrudParams(item: $item));
     }
 
-    #[Route('/unban/{id}', name: 'unban', requirements: [
-        'id' => Requirement::UUID,
-    ], methods: ['POST'])]
-    public function unban(User $item): Response
+    #[Route('/unban/{id}', name: 'unban', requirements: ['id' => Requirement::UUID], methods: ['GET', 'POST'])]
+    public function unban(\Symfony\Component\Security\Core\User\UserInterface $item): Response
     {
         return $this->handleCommand(new UnbanUserCommand($item), new CrudParams(item: $item));
     }

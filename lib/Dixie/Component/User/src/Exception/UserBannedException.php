@@ -2,15 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Domain\Authentication\Exception;
+namespace Talav\Component\User\Exception;
 
-use Devscast\Bundle\DddBundle\Domain\Exception\SafeMessageException;
+use Talav\Component\Resource\Exception\SafeMessageException;
 
-/**
- * Class UserBannedException.
- *
- * @author bernard-ng <bernard@devscast.tech>
- */
 final class UserBannedException extends SafeMessageException
 {
     protected string $messageDomain = 'authentication';

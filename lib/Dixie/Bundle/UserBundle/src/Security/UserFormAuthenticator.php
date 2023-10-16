@@ -200,14 +200,17 @@ class UserFormAuthenticator extends AbstractLoginFormAuthenticator
 
             if ($this->userNeedsProfileCompletion($user)) {
                 $request->getSession()->getFlashBag()->add('info', 'Please complete your profile.');
-                $url = $this->urlGenerator->generate('user_profile_edit');
+                return new RedirectResponse('user_profile_edit');
             }
 
-            if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
-                $url = $targetPath;
+//            if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
+//                $url = $targetPath;
+//            }
+            // redirect user
+            $targetPath = $this->getTargetPath($request->getSession(), $firewallName);
+            if (null !== $targetPath) {
+                return new RedirectResponse($targetPath);
             }
-
-            return new RedirectResponse($url);
         }
 
         return new RedirectResponse($this->urlGenerator->generate(AbstractController::HOME_PAGE));

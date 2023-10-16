@@ -47,30 +47,20 @@
         <twig:block name="content">
             <div class="nk-block">
                 <twig:TalavDataList title="Informations personnelles" :description="data.profile.bio">
-                    <twig:DataItem label="Nom complet" :value="data.name" />
-                    <twig:DataItem label="Nom d'utilisateur" :value="data.username" />
-                    <twig:DataItem label="Email" :value="data.email" />
-                    <twig:DataItem label="Pronoms" :value="data.pronouns" />
-                    <twig:DataItem label="Poste" :value="data.jobTitle" />
-                    <twig:DataItem label="Genre" :value="data.gender.translationKey | trans([], 'authentication')" />
-                    <twig:DataItem label="Pays" :value="data.country | flag" />
-                    <twig:DataItem label="Rôle" :value="data.roles | last | badge " />
-                    <twig:DataItem label="Linkedin" :value="data.linkedinUrl" link="true" />
-                    <twig:DataItem label="Twitter" :value="data.twitterUrl" link="true" />
-                    <twig:DataItem label="Github" :value="data.githubUrl" link="true" />
-                    <twig:DataItem label="Site Internet" :value="data.githubUrl" link="true"/>
-                    <twig:DataItem label="Flux Rss" :value="data.rssUrl" link="true" />
+                    <twig:TalavDataItem label="Full Name" :value="data.profile.firstName ~ ' ' ~ data.profile.lastName" />
+                    <twig:TalavDataItem label="Username" :value="data.username" />
+                    <twig:TalavDataItem label="Email" :value="data.email" />
+                    <twig:TalavDataItem label="Genre" :value="data.profile.gender.value | trans([], 'enums')" />
+{#                    <twig:TalavDataItem label="Pays" :value="data.country | flag" />#}
+                    <twig:TalavDataItem label="Role" :value="data.roles | last | badge " />
                 </twig:TalavDataList>
                 <div class="nk-divider divider md"></div>
                 <twig:TalavDataList title="Informations supplémentaires">
-                    <twig:DataItem label="Bannis" :value="data.banned | boolean" />
-                    <twig:DataItem label="Email vérifié" :value="data.isEmailVerified | boolean" />
-                    <twig:DataItem label="Thème sombre" :value="data.isDarkTheme | boolean" />
-                    <twig:DataItem label="Téléphone vérifié" :value="data.isPhoneNumberVerified | boolean" />
-                    <twig:DataItem label="Newsletter" :value="data.isSubscribedNewsletter | boolean" />
-                    <twig:DataItem label="Marketing" :value="data.isSubscribedMarketing | boolean" />
-                    <twig:DataItem label="2FA activé" :value="data.twoFactorEnabled | boolean" />
-                    <twig:DataItem label="Date de bannissement" :value="data.bannedAt ? data.bannedAt | date : '-'" />
+                    <twig:TalavDataItem label="Bannis" :value="data.banned | boolean" />
+                    <twig:TalavDataItem label="Email vérifié" :value="data.verified | boolean" />
+{#                    <twig:TalavDataItem label="Newsletter" :value="data.isSubscribedNewsletter | boolean" />#}
+{#                    <twig:TalavDataItem label="2FA activé" :value="data.twoFactorEnabled | boolean" />#}
+                    <twig:TalavDataItem label="Date de bannissement" :value="data.bannedAt ? data.bannedAt | date : '-'" />
                 </twig:TalavDataList>
             </div>
         </twig:block>
@@ -84,7 +74,7 @@
                                 {% if data.avatar %}
                                     <img src="{{ media_thumb_reference( data.avatar, 'square_small') }}" alt="avatar {{ data.username }}">
                                 {% else %}
-                                    <span>{{ data.initials }}</span>
+                                    <span>{{ data.username }} {{ asset('images/avatar.png') }}</span>
                                 {% endif %}
                             </div>
                             <div class="user-info">
@@ -105,7 +95,7 @@
                                         redirect="{{ path('admin_auth_user_show', {id: data.id}) }}"
                                         title="{{ 'global.ban' | trans([], 'messages') }}"
                                     >
-                                        <twig:Icon name="shield" />
+                                        <twig:TalavIcon name="shield" />
                                     </button>
                                 {% else %}
                                     <button
@@ -115,11 +105,11 @@
                                         redirect="{{ path('admin_auth_user_show', {id: data.id}) }}"
                                         title="{{ 'global.unban' | trans([], 'messages') }}"
                                     >
-                                        <twig:Icon name="shield-off" />
+                                        <twig:TalavIcon name="shield-off" />
                                     </button>
                                 {% endif %}
                             </li>
-                            <li><a href="{{ path('admin_auth_user_email', {id: data.id}) }}" class="btn text-soft btn-trigger btn-icon"><twig:Icon name="mail"/></a></li>
+                            <li><a href="{{ path('admin_auth_user_email', {id: data.id}) }}" class="btn text-soft btn-trigger btn-icon"><twig:TalavIcon name="mail"/></a></li>
                         </ul>
                     </div>
                     <div class="card-inner"><h6 class="overline-title-alt mb-2">Additional</h6>
@@ -134,10 +124,10 @@
                             </div>
                             <div class="col-6">
                                 <span class="sub-text">Account Status:</span>
-                                {% if data.confirmed %}
-                                    <span class="lead-text text-success">confirmed</span>
+                                {% if data.enabled %}
+                                    <span class="lead-text text-success">enabled</span>
                                 {% else %}
-                                    <span class="lead-text text-danger">unconfirmed</span>
+                                    <span class="lead-text text-danger">disabled</span>
                                 {% endif %}
                             </div>
                             <div class="col-6">

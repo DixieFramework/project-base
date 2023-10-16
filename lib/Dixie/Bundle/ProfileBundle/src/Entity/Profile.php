@@ -52,6 +52,9 @@ class Profile implements ProfileInterface
     #[ORM\OrderBy(['createdAt' => 'DESC'])]
     public ?Collection $blockers;
 
+    #[ORM\OneToMany(mappedBy: 'profile', targetEntity: Suspension::class, orphanRemoval: true)]
+    protected ?Collection $suspensions = null;
+
     /**
      * @var ArrayCollection
      */
@@ -66,6 +69,7 @@ class Profile implements ProfileInterface
         $this->blocks = new ArrayCollection();
         $this->blockers = new ArrayCollection();
 
+        $this->suspensions = new ArrayCollection();
         $this->relationships = new ArrayCollection();
     }
 
@@ -352,8 +356,74 @@ class Profile implements ProfileInterface
         }
     }
 
+    public function isSuspended(): bool
+    {
+        /** @var Collection<int, Suspension>|null $suspensions */
+        $suspensions = $this->getSuspensions();
+
+        if (null === $suspensions) {
+            return false;
+        }
+
+        $suspension = $suspensions->last();
+
+        if (!$suspension) {
+            return false;
+        }
+
+        return $suspension->isActive();
+    }
+
+    /**
+     * @return Collection<int, Suspension>|null
+     */
+    public function getSuspensions(): ?Collection
+    {
+        return $this->suspensions;
+    }
+
+    public function addSuspension(Suspension $suspension): self
+    {
+//        Psl\invariant(!$this->isSuspended(), 'Unable to suspend an already suspended user.');
+
+        if (null !== $this->suspensions && !$this->suspensions->contains($suspension)) {
+            $this->suspensions[] = $suspension;
+            $suspension->setProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSuspension(Suspension $suspension): self
+    {
+        if (null !== $this->suspensions && $this->suspensions->contains($suspension)) {
+            $this->suspensions->removeElement($suspension);
+            // set the owning side to null (unless already changed)
+            if ($suspension->getProfile() === $this) {
+                $suspension->setProfile(null);
+            }
+        }
+
+        return $this;
+    }
+
     public function getRelationships(): Collection
     {
         return $this->relationships;
+    }
+
+    /**
+     * Checks whether the user is suspended.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw a LockedException and prevent login.
+     *
+     * @return bool true if the user is not suspended, false otherwise
+     *
+     * @see LockedException
+     */
+    public function isAccountNonLocked(): bool
+    {
+        return !($this->isSuspended() || !$this->getUser()->isEnabled() || !$this->getUser()->isBanned());
     }
 }
