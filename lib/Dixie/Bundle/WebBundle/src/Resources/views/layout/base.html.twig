@@ -23,11 +23,14 @@
         <twig:block name="meta"></twig:block>
 
         <twig:block name="assets">
-            <script defer src="{{ asset('admin/assets/bundle.js') }}"></script>
-            <script defer src="{{ asset('admin/assets/scripts.js') }}"></script>
+            {% include "@TalavAdmin/shared/_scripts.html.twig" %}
+            {% include "@TalavAdmin/shared/_stylesheets.html.twig" %}
 
-            {{ encore_entry_link_tags('admin') }}
-            {{ encore_entry_script_tags('admin') }}
+            {#            <script defer src="{{ asset('admin/assets/bundle.js') }}"></script>#}
+{#            <script defer src="{{ asset('admin/assets/scripts.js') }}"></script>#}
+
+            {{ encore_entry_link_tags('admin_index') }}
+            {{ encore_entry_script_tags('admin_index') }}
 
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/dracula.min.css">

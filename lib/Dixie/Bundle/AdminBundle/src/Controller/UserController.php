@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Talav\AdminBundle\Controller;
 
+use Groshy\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,11 +26,13 @@ final class UserController extends AbstractCrudController
     }
 
     #[Route('/{id}', name: 'show', requirements: ['id' => Requirement::UUID], methods: ['GET'])]
-    public function show(UserInterface $item): Response
+    public function show(User $item): Response
+//    public function show(\Symfony\Component\Security\Core\User\UserInterface $item): Response
     {
         return $this->render(
             view: $this->getViewPath('show'),
             parameters: [
+				'data_id' => $item->getId()->__toString(),
                 'data' => $item,
             ]
         );

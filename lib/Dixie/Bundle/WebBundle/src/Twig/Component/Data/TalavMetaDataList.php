@@ -9,7 +9,7 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 /**
  * Class MetaDataList.
  */
-#[AsTwigComponent]
+#[AsTwigComponent(template: '@TalavWeb/components/data/meta_list.html.twig')]
 final class TalavMetaDataList
 {
 }

@@ -9,7 +9,7 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 /**
  * Class MetaDataSection.
  */
-#[AsTwigComponent]
+#[AsTwigComponent(template: '@TalavWeb/components/data/meta_section.html.twig')]
 final class TalavMetaDataSection
 {
     public ?string $title = null;

@@ -70,10 +70,10 @@ class ProfileController extends AbstractController
     #[Route(path: '/change-password', name: 'user_profile_change_password')]
     public function changePassword(Request $request, #[CurrentUser] UserInterface $user, EntityManagerInterface $manager, RolePermissionManager $rolePermissionManager): Response
     {
-		dd($rolePermissionManager->hasPermission('ROLE_MODERATOR', 'IMAGE_DELETE'));
+//		dd($rolePermissionManager->hasPermission('ROLE_MODERATOR', 'IMAGE_DELETE'));
 //		dd($this->entityManager->getRepository(RolePermission::class)->findAll());
 
-        dd($this->userManager->getRepository()->findUserByIdentifier('user@local.dev'));
+//        dd($this->userManager->getRepository()->findUserByIdentifier('user@local.dev'));
 
         $form = $this->createForm(ProfileChangePasswordType::class, $user);
         if ($this->handleRequestForm($request, $form)) {

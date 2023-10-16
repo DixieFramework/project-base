@@ -21,9 +21,12 @@
         "/bundles/talavweb/app.js?3f4f32e681ab38220464"
       ]
     },
-    "admin": {
+    "admin_index": {
+      "css": [
+        "/bundles/talavweb/admin_index.css?4262ea8b5a3c004b3b39"
+      ],
       "js": [
-        "/bundles/talavweb/admin.js?880d6366108f1234c13a"
+        "/bundles/talavweb/admin_index.js?7d1ebca3e6f929102fae"
       ]
     }
   }

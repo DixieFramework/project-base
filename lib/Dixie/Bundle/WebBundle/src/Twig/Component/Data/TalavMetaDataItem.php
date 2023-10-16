@@ -9,7 +9,7 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 /**
  * Class MetaDataItem.
  */
-#[AsTwigComponent]
+#[AsTwigComponent(template: '@TalavWeb/components/data/meta_item.html.twig')]
 final class TalavMetaDataItem
 {
     public ?string $label = null;

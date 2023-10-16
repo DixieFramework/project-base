@@ -6,7 +6,7 @@ namespace Talav\WebBundle\Twig\Component\Data;
 
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
-#[AsTwigComponent]
+#[AsTwigComponent(template: '@TalavWeb/components/data/list.html.twig')]
 final class TalavDataList
 {
     public string $title = '';

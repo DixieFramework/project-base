@@ -9,6 +9,7 @@ use Talav\Component\User\Model\UserInterface;
 use Talav\CoreBundle\Entity\User;
 use Talav\CoreBundle\Form\AbstractEntityType;
 use Talav\CoreBundle\Form\FormHelper;
+use Talav\UserBundle\Form\EventListener\DisableFieldsOnUserEdit;
 
 /**
  * Type to update the user profile.
@@ -20,7 +21,7 @@ class ProfileEditType extends AbstractEntityType
     /**
      * Constructor.
      */
-    public function __construct()
+    public function __construct(private readonly DisableFieldsOnUserEdit $disableFieldsOnUserEdit)
     {
         parent::__construct(\Talav\UserBundle\Entity\User::class);
     }
@@ -66,6 +67,8 @@ class ProfileEditType extends AbstractEntityType
         $helper->field('id')
 //            ->notMapped()
             ->addHiddenType();
+
+		$helper->getBuilder()->addEventSubscriber($this->disableFieldsOnUserEdit);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

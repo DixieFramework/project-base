@@ -20,7 +20,7 @@ Encore
     .addEntry('event_details', './assets/js/pages/event_details.js')
     .addEntry('app', './assets/app.js')
 
-    .addEntry('admin', './lib/Dixie/Bundle/AdminBundle/src/Resources/private/assets/index.js')
+    .addEntry('admin_index', './lib/Dixie/Bundle/AdminBundle/src/Resources/private/assets/index.js')
 
     .enableSassLoader()
 
