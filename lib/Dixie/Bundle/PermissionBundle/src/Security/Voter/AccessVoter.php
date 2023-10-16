@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Talav\PermissionBundle\Security\Voter;
 
-use RunOpenCode\ExchangeRate\Contract\RateInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Role\Role;
