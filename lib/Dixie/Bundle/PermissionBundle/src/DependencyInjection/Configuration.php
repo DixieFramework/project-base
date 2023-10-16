@@ -10,8 +10,10 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Talav\Component\Resource\Manager\ResourceManager;
 use Talav\PermissionBundle\Entity\Permission;
 use Talav\PermissionBundle\Entity\RoleInterface;
+use Talav\PermissionBundle\Enum\Role;
 use Talav\PermissionBundle\Repository\PermissionRepository;
 use Talav\PermissionBundle\Repository\RoleRepository;
+use Talav\PermissionBundle\Security\Voter\AccessVoter;
 
 final class Configuration implements ConfigurationInterface
 {
@@ -35,11 +37,52 @@ final class Configuration implements ConfigurationInterface
 
 		$rootNode
 			->children()
+                ->append($this->getAccessRolesDefinition())
 				->append($this->getPermissionsNode())
 			->end()
 		->end();
 
         return $treeBuilder;
+    }
+
+    /**
+     * Build configuration tree for access roles.
+     *
+     * @return ArrayNodeDefinition
+     */
+    protected function getAccessRolesDefinition()
+    {
+        $node = new ArrayNodeDefinition('security');
+
+        $node
+            ->info('Configuration of security voter access roles.')
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->booleanNode('enabled')
+                    ->info('Enables or disables access controll.')
+                    ->defaultTrue()
+                ->end()
+                ->arrayNode(AccessVoter::VIEW)
+                    ->defaultValue(array(Role::MANAGE_RATE, Role::VIEW_RATE))
+                    ->prototype('scalar')->end()
+                ->end()
+                ->arrayNode(AccessVoter::CREATE)
+                    ->defaultValue(array(Role::MANAGE_RATE, Role::CREATE_RATE))
+                    ->prototype('scalar')->end()
+                ->end()
+                ->arrayNode(AccessVoter::EDIT)
+                    ->defaultValue(array(Role::MANAGE_RATE, Role::EDIT_RATE))
+                    ->prototype('scalar')->end()
+                ->end()
+                ->arrayNode(AccessVoter::DELETE)
+                    ->defaultValue(array(Role::MANAGE_RATE, Role::DELETE_RATE))
+                    ->prototype('scalar')->end()
+                ->end()
+            ->end()
+        ->end();
+
+
+        return $node;
     }
 
     private function addResourceSection(ArrayNodeDefinition $node)

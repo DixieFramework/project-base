@@ -33,6 +33,10 @@ services:
         class: Talav\PermissionBundle\Security\Voter\RolePermissionVoter
         tags: ['security.voter']
 
+    talav_permission.security.voter.access_voter:
+        class: Talav\PermissionBundle\Security\Voter\AccessVoter
+        tags: ['security.voter']
+
     # LEGACY-AUTH END
 
     Talav\PermissionBundle\Voter\AccessVoter:

@@ -8,6 +8,7 @@ use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Talav\PermissionBundle\Security\Voter\AccessVoter;
 use Talav\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
 
 final class TalavPermissionExtension extends AbstractResourceExtension
@@ -19,6 +20,9 @@ final class TalavPermissionExtension extends AbstractResourceExtension
         $loader->load('services.yml');
 
         $config = $this->processConfiguration(new Configuration(), $configs);
+
+		$this
+			->configureAccessVoter($config, $container);
 
 	    $this->createPermissionParameter($config['permissions'], $container);
 
@@ -32,6 +36,31 @@ final class TalavPermissionExtension extends AbstractResourceExtension
 
         $this->registerResources('app', $config['resources'], $container);
     }
+
+	/**
+	 * Configure access voter.
+	 *
+	 * @param array $config Configuration parameters.
+	 * @param ContainerBuilder $container Service container.
+	 *
+	 * @return TalavPermissionExtension $this Fluent interface.
+	 */
+	protected function configureAccessVoter(array $config, ContainerBuilder $container)
+	{
+		$container
+			->getDefinition('talav_permission.security.voter.access_voter')
+			->setArguments([
+				[
+					AccessVoter::VIEW => $config['security'][AccessVoter::VIEW],
+					AccessVoter::CREATE => $config['security'][AccessVoter::CREATE],
+					AccessVoter::EDIT => $config['security'][AccessVoter::EDIT],
+					AccessVoter::DELETE => $config['security'][AccessVoter::DELETE],
+				],
+				$config['security']['enabled']
+			]);
+
+		return $this;
+	}
 
 	/**
 	 * Performs some pre-compilation on the configured permissions from kimai.yaml
