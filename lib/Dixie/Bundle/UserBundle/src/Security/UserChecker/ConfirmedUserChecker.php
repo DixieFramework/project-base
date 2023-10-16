@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Talav\UserBundle\Security\UserChecker;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAccountStatusException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface as SymfonyUserInterface;
@@ -22,7 +23,7 @@ final class ConfirmedUserChecker implements UserCheckerInterface
         }
 
         if (!$user->isVerified()) {
-            $this->throwException(new UserRegistrationNotConfirmedException());
+            $this->throwException(new UserRegistrationNotConfirmedException('authentication.exceptions.user_registration_not_confirmed', [], Response::HTTP_UNAUTHORIZED));
         }
     }
 
