@@ -165,13 +165,6 @@ class RegistrationController extends AbstractController
             'user' => $user,
             'targetUrl' => $this->getTargetUrlFromSession($request->getSession())
         ]);
-
-        return new Response(
-            $this->twig->render('@TalavUser/registration/confirmed.html.twig', [
-                'user'      => $user,
-                'targetUrl' => $this->getTargetUrlFromSession($request->getSession()),
-            ])
-        );
     }
 
     #[Route('/check-email', name: 'talav_user_registration_check_email')]

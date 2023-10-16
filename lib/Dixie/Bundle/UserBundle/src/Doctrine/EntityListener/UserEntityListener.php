@@ -72,8 +72,8 @@ class UserEntityListener implements EventSubscriberInterface
 		}
 
 		foreach ($this->queue as $user) {
-			$event = new UserEvent($user);
-			$this->eventDispatcher->dispatch($event, TalavUserEvents::PROFILE_EDIT_SUCCESS);
+//			$event = new UserFormEvent($user);
+//			$this->eventDispatcher->dispatch($event, TalavUserEvents::PROFILE_EDIT_SUCCESS);
 
 //			$email = $this->createEmail($user);
 //			$this->emailVerifier->sendEmail('talav_user_registration_user_verify', $user, $email);

@@ -67,7 +67,7 @@
 
         <field name="lastActivityAt" column="last_activity_at" type="datetimetz_immutable" column-definition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP"/>
 
-        <many-to-many field="userRoles" target-entity="Talav\PermissionBundle\Entity\RoleInterface">
+        <many-to-many field="userRoles" target-entity="Talav\PermissionBundle\Entity\RoleInterface" fetch="EAGER">
             <join-table name="user_role">
                 <join-columns>
                     <join-column name="user_id" referenced-column-name="id"/>

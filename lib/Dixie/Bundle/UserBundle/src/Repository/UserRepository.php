@@ -12,12 +12,23 @@ class UserRepository extends TalavUserRepository
     public function findUserByIdentifier($identifier)
     {
         $qb = $this->getUserWithPermissionsQuery()
-            ->where('u.email=:email');
-//            ->orWhere('u.username=:username');
+            ->where('u.emailCanonical=:email')
+            ->orWhere('u.usernameCanonical=:username');
 
         $query = $qb->getQuery();
         $query->setParameter('email', $identifier);
-//        $query->setParameter('username', $identifier);
+        $query->setParameter('username', $identifier);
+
+        return $query->getSingleResult();
+    }
+
+    public function findUserWithSecurityById($id)
+    {
+        $queryBuilder = $this->getUserWithPermissionsQuery()
+            ->where('u.id = :id');
+
+        $query = $queryBuilder->getQuery();
+        $query->setParameter('id', $id);
 
         return $query->getSingleResult();
     }

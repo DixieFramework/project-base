@@ -72,6 +72,7 @@
         "talav/web-bundle": "@dev",
         "twig/extra-bundle": "^3.0",
         "twig/html-extra": "^3.5",
+        "twig/markdown-extra": "^3.0",
         "twig/string-extra": "^3.7",
         "twig/twig": "^2.12|^3.0",
         "xemlock/htmlpurifier-html5": "^0.1.10"

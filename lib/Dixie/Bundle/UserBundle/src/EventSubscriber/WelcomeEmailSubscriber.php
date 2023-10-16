@@ -9,10 +9,12 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Talav\Component\Resource\Manager\ManagerInterface;
 use Talav\Component\User\Manager\UserManagerInterface;
 use Talav\Component\User\Model\UserInterface;
 use Talav\Component\User\Util\TokenGeneratorInterface;
+use Talav\UserBundle\Event\FilterUserResponseEvent;
 use Talav\UserBundle\Event\TalavUserEvents;
 use Talav\UserBundle\Event\UserEvent;
 use Talav\UserBundle\Mailer\UserMailer;
@@ -48,26 +50,27 @@ final class WelcomeEmailSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onRegistrationComplete(UserEvent $event): void
+    public function onRegistrationComplete(FilterUserResponseEvent $event, string $eventName, EventDispatcherInterface $eventDispatcher): void
     {
         $user = $event->getUser();
-        $user->setEnabled(false);
-        $user->setVerified(false);
+//
+//        $user->setEnabled(false);
+//        $user->setVerified(false);
 
-        $role = $this->roleManager->getRepository()->findOneByName('ROLE_USER');
-        $user->sync('userRoles', new ArrayCollection([$role]));
+//        $role = $this->roleManager->getRepository()->findOneByName('ROLE_USER');
+//        $user->sync('userRoles', new ArrayCollection([$role]));
 
-        if (null === $user->getConfirmationToken()) {
-            $user->setConfirmationToken($this->tokenGenerator->generateToken());
-        }
-
-        $this->mailer->sendConfirmationEmailMessage($user);
-
-        $this->requestStack->getSession()->set('talav_user_send_confirmation_email/email', $user->getEmail());
-
-        $event->setResponse(
-            new RedirectResponse($this->router->generate('talav_user_registration_check_email'))
-        );
+//        if (null === $user->getConfirmationToken()) {
+//            $user->setConfirmationToken($this->tokenGenerator->generateToken());
+//        }
+//
+//        $this->mailer->sendConfirmationEmailMessage($user);
+//
+//        $this->requestStack->getSession()->set('talav_user_send_confirmation_email/email', $user->getEmail());
+//
+//        $event->setResponse(
+//            new RedirectResponse($this->router->generate('talav_user_registration_check_email'))
+//        );
 //        $user = $event->getUser();
 //        $supportedClass = $this->userManager->getClassName();
 //        if (!$user instanceof $supportedClass) {

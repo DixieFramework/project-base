@@ -34,6 +34,7 @@ final class AuthenticationEventSubscriber implements EventSubscriberInterface
         private readonly MailerHelper $mailer,
         private readonly MessageBusInterface $bus,
         private readonly ManagerInterface $profileManager,
+        private readonly ManagerInterface $roleManager,
         private readonly RequestStack $requestStack,
         private readonly UrlGeneratorInterface $urlGenerator,
         private readonly CanonicalizerInterface $canonicalizer,

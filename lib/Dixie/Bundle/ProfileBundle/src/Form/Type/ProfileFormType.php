@@ -19,6 +19,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Talav\ProfileBundle\Model\ProfileInterface;
 use Talav\ProfileBundle\Validator\Constraints\AgeVerification;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
@@ -124,7 +125,8 @@ class ProfileFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'    => $this->class,
+//            'data_class'    => $this->class,
+            'data_class' => ProfileInterface::class,
             'translation_domain' => 'TalavProfileBundle',
             'csrf_token_id' => 'profile'
         ]);

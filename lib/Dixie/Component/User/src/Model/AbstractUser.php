@@ -76,7 +76,7 @@ abstract class AbstractUser implements UserInterface
 
     public function __construct()
     {
-        $this->userRoles = new ArrayCollection();
+//        $this->userRoles = new ArrayCollection();
         $this->roles = Roles::developer();
 
         $this->oauthAccounts = new ArrayCollection();

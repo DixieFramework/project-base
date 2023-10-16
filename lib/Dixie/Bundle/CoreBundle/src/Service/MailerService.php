@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Talav\CoreBundle\Service;
 
+use Talav\Component\User\Model\UserInterface;
 use Talav\CoreBundle\Controller\AbstractController;
 use Talav\CoreBundle\Entity\User;
 use Talav\CoreBundle\Enums\Importance;
@@ -65,12 +66,12 @@ class MailerService implements ServiceSubscriberInterface
      *
      * @throws TransportExceptionInterface if an exception occurs while sending the notification
      */
-    public function sendNotification(string $fromEmail, User $toUser, string $message, Importance $importance = Importance::LOW, array $attachments = []): void
+    public function sendNotification(string $fromEmail, UserInterface $toUser, string $message, Importance $importance = Importance::LOW, array $attachments = []): void
     {
         $notification = $this->createNotification($importance)
             ->from($fromEmail)
-            ->to($toUser->getEmailAddress())
-            ->subject($this->trans('user.comment.title'))
+            ->to($toUser->getEmail())
+            ->subject($this->trans('talav.mailer.notification.title', [], 'TalavCoreBundle'))
             ->markdown($this->convert($message));
         foreach ($attachments as $attachment) {
             $notification->attachFromUploadedFile($attachment);

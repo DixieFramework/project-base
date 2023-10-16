@@ -9,6 +9,8 @@ use Doctrine\Common\Collections\
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
+use Symfony\Component\Security\Core\User\UserInterface as SymfonyUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Talav\AvatarBundle\Model\UserAvatarInterface;
 use Talav\AvatarBundle\Model\UserCoverInterface;
@@ -46,12 +48,13 @@ use Talav\UserBundle\Model\UserRolesTrait;
 //#[UniqueEntity(fields: ['username'], message: 'username.already_used')]
 //#[ORM\EntityListeners([UserEmailEntityListener::class, UserEntityListener::class])]
 #[ORM\MappedSuperclass]
-abstract class User extends AbstractUser implements UserInterface, UserAvatarInterface, UserCoverInterface, UserRolesInterface, \Serializable
+abstract class User extends AbstractUser implements UserInterface, UserAvatarInterface, UserCoverInterface, UserRolesInterface, EquatableInterface, \Serializable
 {
     use ResourceTrait;
+    use UserRolesTrait;
+
     use HasRoles, HasRelations;
 
-    use UserRolesTrait;
 	//use RolesTrait;
 
 	/**
@@ -103,7 +106,7 @@ abstract class User extends AbstractUser implements UserInterface, UserAvatarInt
 	protected $likes;
 
 //    #[ORM\Column(type: 'json', nullable: false)]
-    protected array $flags;
+    protected array $flags = [];
 
     #[ORM\Column(nullable: true)]
     private null|string $state = null;
@@ -144,6 +147,7 @@ abstract class User extends AbstractUser implements UserInterface, UserAvatarInt
         $this->flags = [];
 
         parent::__construct();
+
     }
 
     /**
@@ -652,6 +656,52 @@ abstract class User extends AbstractUser implements UserInterface, UserAvatarInt
         $this->state = $state;
     }
 
+    public function isEqualTo(SymfonyUserInterface $user): bool
+    {
+        if (!$user instanceof self) {
+            return false;
+        }
+
+        return $this->id->__toString() === $user->getId()->__toString()
+            && $this->password === $user->getPassword()
+            && $this->salt === $user->getSalt()
+            && (string)$this->username === (string)$user->getUsername()
+            && $this->enabled === $user->isEnabled();
+    }
+//    public function isEqualTo(\Symfony\Component\Security\Core\User\UserInterface $user): bool
+//    {
+//        if (!$user instanceof self) {
+//            return false;
+//        }
+//
+//        if ($this->id !== $user->getId()) {
+//            return false;
+//        }
+//
+//        if ($this->password !== $user->getPassword()) {
+//            return false;
+//        }
+//
+//        if ($this->salt !== $user->getSalt()) {
+//            return false;
+//        }
+//
+//        if ($this->username !== $user->getUsername()) {
+//            return false;
+//        }
+//
+//        if ($this->isEnabled() !== $user->isEnabled()) {
+//            return false;
+//        }
+//
+//        if ($this->isVerified() !== $user->isVerified()) {
+//            return false;
+//        }
+//
+//        return true;
+//    }
+
+
 
     /**
      * Serializes the user just with the id, as it is enough.
@@ -669,7 +719,10 @@ abstract class User extends AbstractUser implements UserInterface, UserAvatarInt
                 $this->salt,
                 $this->username,
                 $this->usernameCanonical,
+                $this->email,
+                $this->emailCanonical,
                 $this->enabled,
+                $this->state
             ]
         );
     }
@@ -684,7 +737,7 @@ abstract class User extends AbstractUser implements UserInterface, UserAvatarInt
     public function unserialize($serialized): void
     {
         list(
-            $this->id, $this->password, $this->salt, $this->username, $this->usernameCanonical, $this->enabled
+            $this->id, $this->password, $this->salt, $this->username, $this->usernameCanonical, $this->email, $this->emailCanonical, $this->enabled, $this->state
             ) = \unserialize($serialized);
     }
 }

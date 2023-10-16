@@ -58,13 +58,13 @@ framework:
             initial_marking: !php/enum Talav\UserBundle\Enum\RegistrationWorkflowEnum::STATE_PERSONAL_INFO->value
             places:
                 - !php/enum Talav\UserBundle\Enum\RegistrationWorkflowEnum::STATE_PERSONAL_INFO->value
-                - !php/enum Talav\UserBundle\Enum\RegistrationWorkflowEnum::STATE_PAYMENT_INFO->value
+                - !php/enum Talav\UserBundle\Enum\RegistrationWorkflowEnum::STATE_ACCOUNT_INFO->value
                 - !php/enum Talav\UserBundle\Enum\RegistrationWorkflowEnum::STATE_COMPLETE->value
             transitions:
-                to_payment:
+                to_account:
                     from: !php/enum Talav\UserBundle\Enum\RegistrationWorkflowEnum::STATE_PERSONAL_INFO->value
-                    to: !php/enum Talav\UserBundle\Enum\RegistrationWorkflowEnum::STATE_PAYMENT_INFO->value
+                    to: !php/enum Talav\UserBundle\Enum\RegistrationWorkflowEnum::STATE_ACCOUNT_INFO->value
                 to_complete:
-                    from: !php/enum Talav\UserBundle\Enum\RegistrationWorkflowEnum::STATE_PAYMENT_INFO->value
+                    from: !php/enum Talav\UserBundle\Enum\RegistrationWorkflowEnum::STATE_ACCOUNT_INFO->value
                     to: !php/enum Talav\UserBundle\Enum\RegistrationWorkflowEnum::STATE_COMPLETE->value
 

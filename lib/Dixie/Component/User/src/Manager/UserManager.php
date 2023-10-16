@@ -35,6 +35,11 @@ class UserManager extends ResourceManager implements UserManagerInterface
         return $repository;
     }
 
+    public function getEntityManager(): EntityManagerInterface
+    {
+        return $this->em;
+    }
+
     public function findUserByEmail(string $email): ?UserInterface
     {
         return $this->getTypedRepository()->findOneByEmail($this->canonicalizer->canonicalize($email));

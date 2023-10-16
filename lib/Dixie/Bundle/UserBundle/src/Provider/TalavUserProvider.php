@@ -4,9 +4,15 @@ declare(strict_types=1);
 
 namespace Talav\UserBundle\Provider;
 
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\ORMInvalidArgumentException;
+use Groshy\Entity\User;
 use HWI\Bundle\OAuthBundle\Connect\AccountConnectorInterface;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthAwareUserProviderInterface;
+use Symfony\Component\Security\Core\Exception\DisabledException;
+use Symfony\Component\Security\Core\Exception\LockedException;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -62,6 +68,98 @@ class TalavUserProvider extends UserProvider implements UserProviderInterface, A
     public function connect(UserInterface $user, UserResponseInterface $response): void
     {
         $this->updateUserByOAuthUserResponse($user, $response);
+    }
+
+    /**
+     * @return UserInterface
+     */
+    public function loadUserByUsername($username)
+    {
+        return $this->loadUserByIdentifier($username);
+    }
+
+    public function loadUserByIdentifier(string $identifier): UserInterface
+    {
+        $exceptionMessage = \sprintf(
+            'Unable to find an Sulu\Component\Security\Authentication\UserInterface object identified by %s',
+            $identifier
+        );
+
+        try {
+            $user = $this->userManager->getRepository()->findUserByIdentifier($identifier);
+
+            if (!$user->getEnabled()) {
+                throw new DisabledException('User is not enabled yet.');
+            }
+
+            if ($user->getLocked()) {
+                throw new LockedException('User is locked.');
+            }
+
+            return $user;
+        } catch (NoResultException $e) {
+            throw new UserNotFoundException($exceptionMessage, 0, $e);
+        }
+    }
+
+    public function refreshUser(UserInterface $user)
+    {
+        $userClass = $this->userManager->getClassName();
+        if (!$user instanceof $userClass) {
+            throw new UnsupportedUserException(sprintf(
+                'Expected an instance of %s, but got "%s".',
+                $userClass,
+                get_class($user)
+            ));
+        }
+
+        // Refresh user should revert entity back to it's initial state using non changed field;
+        // otherwise, entity may be replaced with another as some field may be changed in memory.
+        // Example: a user changed username, the change was rejected by validation but in memory value was changed.
+        // Calling to refreshUser and using username as criteria will lead to user replacing with another user.
+        // UoW has internal identity cache which will not actually reload user just by calling to findOneBy.
+        try {
+            // try to reload existing entity to revert it's state to initial
+            $this->userManager->getEntityManager()->refresh($user);
+        } catch (ORMInvalidArgumentException $e) {
+            // if entity is not managed and can not be reloaded - load it by ID from the database
+            $user = $this->userManager->getEntityManager()->find($userClass, $user->getId());
+        }
+
+        if (null === $user) {
+            throw new UserNotFoundException('User can not be loaded.');
+        }
+
+        return $user;
+
+
+
+        $class = \get_class($user);
+        if (!$this->supportsClass($class)) {
+            throw new UnsupportedUserException(
+                \sprintf(
+                    'Instance of "%s" are not supported.',
+                    $class
+                )
+            );
+        }
+
+        $user = $this->userManager->getRepository()->findUserWithSecurityById($user->getId());
+
+        if (!$user->isEnabled()) {
+            throw new DisabledException('User is not enabled yet.');
+        }
+
+        if (!$user->isVerified()) {
+            throw new LockedException('User is locked.');
+        }
+
+        return $user;
+    }
+
+    public function supportsClass($class): bool
+    {
+        return \is_subclass_of($class, UserInterface::class);
     }
 
     /**

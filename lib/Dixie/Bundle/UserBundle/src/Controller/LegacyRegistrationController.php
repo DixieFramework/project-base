@@ -22,6 +22,7 @@ use Talav\Component\Resource\Manager\ManagerInterface;
 use Talav\Component\User\Manager\UserManagerInterface;
 use Talav\Component\User\Model\UserInterface;
 use Talav\Component\User\Repository\UserRepositoryInterface;
+use Talav\Component\User\ValueObject\Roles;
 use Talav\CoreBundle\Controller\AbstractController;
 use Talav\CoreBundle\Enums\Importance;
 use Talav\CoreBundle\Form\User\ProfileEditType;
@@ -106,7 +107,7 @@ class LegacyRegistrationController extends AbstractController
 
         if ($userForm->isSubmitted()) {
 			if ($userForm->isValid()) {
-				$this->registrationStateMachine->apply($user, RegistrationWorkflowEnum::TRANSITION_TO_PAYMENT_FORM->value);
+				$this->registrationStateMachine->apply($user, RegistrationWorkflowEnum::TRANSITION_TO_ACCOUNT_FORM->value);
 
 				$user->setPassword($userPasswordHasher->hashPassword($user, $userForm->get('plainPassword')->getData()));
 				$session->set('user_data', $user);
@@ -153,6 +154,7 @@ class LegacyRegistrationController extends AbstractController
 
         if ($profileForm->isSubmitted()) {
 			if ($profileForm->isValid()) {
+                $user->setRoles(Roles::developer());
 				$user->setProfile($profile);
 
 				$this->registrationStateMachine->apply($user, RegistrationWorkflowEnum::TRANSITION_TO_COMPLETE->value);
@@ -163,7 +165,7 @@ class LegacyRegistrationController extends AbstractController
 
         return $this->render('@TalavUser/registration/workflow/register_profile.html.twig', [
             'user' => $user,
-            'form' => $profileForm,
+            'form' => $profileForm->createView(),
         ]);
     }
 

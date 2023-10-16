@@ -96,42 +96,7 @@ class ProfileController extends AbstractController
     #[Route(path: '/edit', name: 'user_profile_edit')]
     public function editProfil(Request $request, #[CurrentUser] UserInterface $user, EntityManagerInterface $manager, ManagerInterface $userPropertyManager): Response
     {
-//        dd($user->getProfile()->isBlocked($this->userManager->findUserByUsername('user')->getProfile()));
-
-		if (false) {
-            //        $userProperty = $userPropertyManager->create();
-//        $userProperty->setUser($this->getUser());
-//        $userProperty->setName('Lolz');
-//        $userProperty->setString('Haha');
-//        $userPropertyManager->update($userProperty, true);
-//        $property = $userPropertyManager->getRepository()->findOneByUserAndName($this->getUser(), 'Lolz');
-//		$property->setBoolean(true);
-//		$userPropertyManager->update($property, true);
-//	    $property = $userPropertyManager->getRepository()->findOneByUserAndName($this->getUser(), 'Lolz');
-//
-//	    dd($property);
-
-            if (false) {
-                $user1 = $this->userManager->findUserByUsername('root');
-                $user2 = $this->userManager->findUserByUsername('user0');
-                dd($this->entityManager->getRepository(UserRelation::class)->findRelationBetween($user1, $user2));
-            }
-
-            if (false) {
-
-                /** @var \Talav\UserBundle\Model\UserInterface $user */
-                $user = $this->userManager->findUserByUsername('root');
-//        $user->setMetadata('PROFILE_COMPLETED','0');
-//        $this->userManager->update($user);
-
-                dd(TypeCast::try($user->getMetadataValue('PROFILE_COMPLETED'), 'string'));
-
-                $user1 = $this->userManager->findUserByUsername('root');
-                $user2 = $this->userManager->findUserByUsername('user0');
-
-                dd($this->entityManager->getRepository(UserRelation::class)->findUnconfirmedRelationBetween($user1, $user2));
-            }
-        }
+        $user = $this->getUser();
 
         if (!$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
@@ -146,16 +111,7 @@ class ProfileController extends AbstractController
 
 	    $form = $this->createForm(ProfileEditType::class, $user);
         if ($this->handleRequestForm($request, $form)) {
-//            $event = new FormEvent($form, $request);
-//            $this->eventDispatcher->dispatch($event, TalavUserEvents::COMPLETE_PROFILE_SUCCESS);
-
-            $this->userManager->update($user, true);
-
-            $message = $this->trans('profile.edit.success', ['%username%' => $user->getUserIdentifier()], null, null);
-            $this->addFlashMessage(FlashType::SUCCESS, $message);
-
             return $this->updateUser($request, $form, $user);
-            //return $this->redirectToRoute('user_profile_edit');
         }
 
         return $this->render('@TalavUser/profile/profile_edit.html.twig', [

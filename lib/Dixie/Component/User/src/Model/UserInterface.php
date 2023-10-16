@@ -38,7 +38,7 @@ interface UserInterface extends SymfonyUserInterface, PasswordAuthenticatedUserI
     /**
      * Sets the email.
      */
-    public function setEmail(?string $username): void;
+    public function setEmail(?string $email): void;
 
     /**
      * Gets the email.
@@ -46,14 +46,14 @@ interface UserInterface extends SymfonyUserInterface, PasswordAuthenticatedUserI
     public function getEmail(): ?string;
 
     /**
-     * Gets the canonical username in search and sort queries.
+     * Gets the canonical email in search and sort queries.
      */
     public function getEmailCanonical(): ?string;
 
     /**
-     * Sets the canonical username.
+     * Sets the canonical email.
      */
-    public function setEmailCanonical(?string $usernameCanonical): void;
+    public function setEmailCanonical(?string $emailCanonical): void;
 
     public function getLastLogin(): ?DateTimeInterface;
 
