@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Talav\GalleryBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Talav\Component\Resource\Manager\ManagerInterface;
+use Talav\Component\User\Manager\UserManagerInterface;
 use Talav\Component\User\Model\UserInterface;
+use Talav\Component\User\ValueObject\Roles;
 use Talav\CoreBundle\Controller\AbstractController;
 use Talav\CoreBundle\Interfaces\RoleInterface;
 use Talav\GalleryBundle\Entity\Gallery;
@@ -69,8 +72,16 @@ class GalleryController extends AbstractController
      * @return Response HTTP response
      */
     #[Route(name: 'index', methods: 'GET')]
-    public function index(Request $request, ManagerInterface $galleryManager): Response
+    public function index(Request $request, ManagerInterface $galleryManager, UserManagerInterface $userManager, ManagerInterface $roleManager): Response
     {
+//        $user = $this->getUser()->setRoles(Roles::admin());
+//        $user = $this->getUser();
+//
+//        $role = $roleManager->getRepository()->findOneByName('ROLE_SUPER_ADMIN');
+//
+//        $user->sync('userRoles', new ArrayCollection([$role]));
+//        $userManager->update($user, true);
+
         $this->denyAccessUnlessGranted(GalleryVoter::LIST);
 
         /** @var UserInterface $user */

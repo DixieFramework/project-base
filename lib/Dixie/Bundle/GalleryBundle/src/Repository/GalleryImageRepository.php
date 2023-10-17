@@ -115,4 +115,45 @@ class GalleryImageRepository extends ResourceRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * Get matches by complex filter criteria -
+     * a custom query based on various parameters passed
+     *
+     * @param $params
+     * @return array
+     */
+    public function findFiltered($params)
+    {
+        $query = $this->createQueryBuilder('gi')
+            ->leftJoin('User:User', 'u', 'WITH', 'gi.user = u.id')
+            ->leftJoin('Gallery:Gallery', 'g', 'WITH', 'gi.gallery = g.id')
+
+            ->orderBy('gi.createdAt', self::ORDER_DESCENDING);
+
+        if (key_exists('date_from', $params)) {
+            $query->andWhere('gi.createdAt >= :date_from')
+                ->setParameter('date_from', $params['date_from']);
+        }
+
+        if (key_exists('date_to', $params)) {
+            $query->andWhere('gi.createdAt <= :date_to')
+                ->setParameter('date_to', $params['date_to']);
+        }
+
+        if (key_exists('tournament', $params)) {
+            $query->andWhere('m.tournamentId = :tournament_id')
+                ->setParameter('tournament_id', $params['tournament']);
+        }
+
+        if (key_exists('team', $params)) {
+            $query->andWhere($query->expr()->orX(
+                $query->expr()->like('h_tm.name', ':team_string'),
+                $query->expr()->like('a_tm.name', ':team_string')
+            ))
+                ->setParameter('team_string', '%' . $params['team'] . '%');
+        }
+
+        return $query->getQuery()->getResult();
+    }
 }
