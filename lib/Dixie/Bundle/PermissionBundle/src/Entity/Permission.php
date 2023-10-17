@@ -17,6 +17,10 @@ class Permission implements PermissionInterface
 
     protected string $name;
 
+    #[ORM\ManyToMany(targetEntity: 'Talav\PermissionBundle\Entity\RoleInterface', inversedBy: 'permissions')]
+    #[ORM\JoinTable(name: 'roles_permissions')]
+    #[ORM\JoinColumn(name: 'permission_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\InverseJoinColumn(name: 'role_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     protected Collection $roles;
 
     #[Pure] public function __construct()

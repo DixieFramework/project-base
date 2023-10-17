@@ -15,8 +15,8 @@
         <field name="email" column="email" type="string" length="180" />
         <field name="emailCanonical" column="email_canonical" type="string" length="180" unique="true" />
         <field name="enabled" column="is_enabled" type="boolean" />
-        <field name="salt" column="salt" type="string" nullable="false" />
-        <field name="password" column="password" type="string" />
+        <field name="password" type="string" column="password" length="128"/>
+        <field name="salt" type="string" column="salt" length="60"/>
         <field name="lastLogin" column="last_login" type="datetime" nullable="true" />
         <field name="loginAttemptsResetToken" column="login_attempts_reset_token" type="string" length="180" unique="true" nullable="true" />
         <field name="passwordResetToken" column="password_reset_token" type="string" length="180" unique="true" nullable="true" />

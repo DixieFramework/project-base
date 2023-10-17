@@ -91,7 +91,7 @@ abstract class User extends AbstractUser implements UserInterface, UserAvatarInt
     protected Collection $metadata;
 
 //    #[ORM\ManyToMany(targetEntity: 'Talav\PermissionBundle\Entity\Role')]
-//    protected Collection $roles;
+    protected Collection $userRoles;
 
 //    #[ORM\ManyToMany(targetEntity: 'Talav\PermissionBundle\Entity\Permission', indexBy: 'name')]
     protected Collection $permissions;
@@ -414,17 +414,17 @@ abstract class User extends AbstractUser implements UserInterface, UserAvatarInt
 //		}
 //	}
 
-	public function findUserRole(string $role): ?RoleInterface
-	{
-		/** @var RoleInterface $item */
-		foreach ($this->roles as $item) {
-			if ($role == $item->getName()) {
-				return $item;
-			}
-		}
-
-		return null;
-	}
+//	public function findUserRole(string $role): ?RoleInterface
+//	{
+//		/** @var RoleInterface $item */
+//		foreach ($this->roles as $item) {
+//			if ($role == $item->getName()) {
+//				return $item;
+//			}
+//		}
+//
+//		return null;
+//	}
 
     /**
      * @see RoleInterface
@@ -662,7 +662,7 @@ abstract class User extends AbstractUser implements UserInterface, UserAvatarInt
             return false;
         }
 
-        return $this->id->__toString() === $user->getId()->__toString()
+        return (string)$this->id === (string)$user->getId()
             && $this->password === $user->getPassword()
             && $this->salt === $user->getSalt()
             && (string)$this->username === (string)$user->getUsername()

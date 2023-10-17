@@ -23,7 +23,7 @@ class ProfileEditType extends AbstractEntityType
      */
     public function __construct(private readonly DisableFieldsOnUserEdit $disableFieldsOnUserEdit)
     {
-        parent::__construct(\Talav\UserBundle\Entity\User::class);
+        parent::__construct(UserInterface::class);
     }
 
     public function getBlockPrefix(): string

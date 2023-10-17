@@ -159,7 +159,8 @@ class TalavUserProvider extends UserProvider implements UserProviderInterface, A
 
     public function supportsClass($class): bool
     {
-        return \is_subclass_of($class, UserInterface::class);
+        return is_a($class, TalavUserInterface::class, true);
+//        return \is_subclass_of($class, UserInterface::class);
     }
 
     /**

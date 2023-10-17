@@ -237,6 +237,8 @@ abstract class AbstractUser implements UserInterface
     {
         return $this->roles->toArray();
 
+        return array_map(static fn (Role $role) => (string) $role, $this->getUserRoles());
+
 //        $roles = $this->roles->toArray();
 //        // guarantee every user at least has ROLE_USER
 //        $roles[] = 'ROLE_USER';
@@ -264,6 +266,7 @@ abstract class AbstractUser implements UserInterface
 
     public function addRole(string $role): void
     {
+        throw new \BadMethodCallException();
         $role = strtoupper($role);
         if (!$this->hasRole($role)) {
             $this->userRoles[] = $role;
@@ -282,6 +285,8 @@ abstract class AbstractUser implements UserInterface
 
     public function setSuperAdmin(): void
     {
+        throw new \BadMethodCallException();
+
         $this->addRole(static::ROLE_SUPER_ADMIN);
     }
 
