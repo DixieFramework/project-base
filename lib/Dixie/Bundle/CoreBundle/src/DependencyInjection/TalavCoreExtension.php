@@ -26,5 +26,10 @@ class TalavCoreExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yaml');
+
+	    // bundle manager/locator config
+	    $container->setParameter('talav_core.bundles.search_paths', $config['bundles']['search_paths']);
+	    $container->setParameter('talav_core.bundles.handle_composer', $config['bundles']['handle_composer']);
+
     }
 }

@@ -14,16 +14,39 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
+    final public const ROOT_NODE = 'talav_core';
+
     /**
      * {@inheritdoc}
      */
-    public function getConfigTreeBuilder(): TreeBuilder
+    public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder('talav_core');
+	    $treeBuilder = new TreeBuilder(static::ROOT_NODE);
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+	    // BC layer for symfony/config 4.1 and older
+	    if (! \method_exists($treeBuilder, 'getRootNode')) {
+		    $rootNode = $treeBuilder->root(static::ROOT_NODE);
+	    } else {
+		    $rootNode = $treeBuilder->getRootNode();
+	    }
+
+	    $rootNode->addDefaultsIfNotSet();
+
+		$rootNode
+			->children()
+                ->arrayNode('bundles')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('search_paths')
+                            ->prototype('scalar')->end()
+                        ->end()
+                        ->booleanNode('handle_composer')
+                            ->defaultTrue()
+                        ->end()
+                    ->end()
+                ->end()
+			->end()
+		->end();
 
         return $treeBuilder;
     }

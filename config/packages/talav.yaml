@@ -1,3 +1,9 @@
+talav_core:
+    bundles:
+        search_paths:
+            - src
+            - vendor/talav
+
 talav_user:
     login_route: talav_user_login
     signup_success_route: user_profile_edit

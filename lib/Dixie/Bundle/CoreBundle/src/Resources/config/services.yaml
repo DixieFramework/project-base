@@ -48,3 +48,15 @@ services:
     Talav\CoreBundle\DataTable\DataTableConfiguration:
         arguments:
             $config: []
+
+    #
+    # TALAV BUNDLES
+    #
+
+    Talav\CoreBundle\HttpKernel\Bundle\TalavBundleLocator:
+        arguments:
+            $paths: '%talav_core.bundles.search_paths%'
+            $handleComposer: '%talav_core.bundles.handle_composer%'
+
+    Talav\CoreBundle\HttpKernel\Bundle\TalavBundleManager:
+        public: true
