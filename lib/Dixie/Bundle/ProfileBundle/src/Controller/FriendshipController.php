@@ -17,7 +17,7 @@ use Talav\CoreBundle\Interfaces\RoleInterface;
 use Talav\CoreBundle\Utils\StringUtils;
 use Talav\ProfileBundle\Entity\Friendship;
 use Talav\ProfileBundle\Entity\FriendshipRequest;
-use Talav\ProfileBundle\Model\ProfileInterface;
+use Talav\ProfileBundle\Entity\ProfileInterface;
 use Talav\WebBundle\Form\Type\SearchFormType;
 use Talav\ProfileBundle\Repository\FriendshipRepository;
 use Talav\ProfileBundle\Repository\FriendshipRequestRepository;

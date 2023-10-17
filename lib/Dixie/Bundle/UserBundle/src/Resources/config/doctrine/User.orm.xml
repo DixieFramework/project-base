@@ -56,7 +56,7 @@
             </cascade>
         </one-to-many>
 
-        <one-to-one field="profile" target-entity="Talav\ProfileBundle\Model\ProfileInterface" inversed-by="user" fetch="EAGER">
+        <one-to-one field="profile" target-entity="Talav\ProfileBundle\Entity\ProfileInterface" inversed-by="user" fetch="EAGER">
             <cascade>
                 <cascade-remove />
                 <cascade-persist />

@@ -35,6 +35,6 @@ services:
     #
     Talav\ProfileBundle\Form\Type\ProfileFormType:
         arguments:
-            - '\Talav\ProfileBundle\Model\ProfileInterface'
+            - '\Talav\ProfileBundle\Entity\ProfileInterface'
         tags:
             - { name: form.type }

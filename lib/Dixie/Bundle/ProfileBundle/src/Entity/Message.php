@@ -10,7 +10,7 @@ use Talav\ProfileBundle\Repository\MessageRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
-use Talav\ProfileBundle\Model\ProfileInterface;
+use Talav\ProfileBundle\Entity\ProfileInterface;
 use Talav\UserBundle\Model\UserInterface;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 

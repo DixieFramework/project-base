@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Talav\CoreBundle\Doctrine\Entity\Traits\CreatedAtTzTrait;
-use Talav\ProfileBundle\Model\ProfileInterface;
+use Talav\ProfileBundle\Entity\ProfileInterface;
 
 #[Entity(repositoryClass: 'Talav\ProfileBundle\Repository\ProfileBlockRepository')]
 #[Table('profile_block')]

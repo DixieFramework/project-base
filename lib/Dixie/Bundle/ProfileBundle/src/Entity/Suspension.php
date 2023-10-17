@@ -13,7 +13,7 @@ use Talav\Component\Resource\Model\ResourceTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Talav\Component\Resource\Model\TimestampableTrait;
 use Talav\Component\User\Model\UserInterface;
-use Talav\ProfileBundle\Model\ProfileInterface;
+use Talav\ProfileBundle\Entity\ProfileInterface;
 
 //#[ORM\Table(name: 'suspension')]
 //#[ORM\Entity(repositoryClass: SuspensionRepository::class)]

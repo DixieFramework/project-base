@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Talav\ProfileBundle\Model;
+namespace Talav\ProfileBundle\Entity;
 
 use Talav\Component\Resource\Model\ResourceInterface;
 use Talav\Component\User\Model\UserInterface;

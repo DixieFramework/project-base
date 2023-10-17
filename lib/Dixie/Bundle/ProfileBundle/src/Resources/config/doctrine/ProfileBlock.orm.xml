@@ -7,11 +7,11 @@
 
     <field name="createdAt" column="created_at" type="datetimetz_immutable" />
 
-    <many-to-one field="blocker" target-entity="Talav\ProfileBundle\Model\ProfileInterface" inversed-by="blocks">
+    <many-to-one field="blocker" target-entity="Talav\ProfileBundle\Entity\ProfileInterface" inversed-by="blocks">
       <join-column name="blocker_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" />
     </many-to-one>
 
-    <many-to-one field="blocked" target-entity="Talav\ProfileBundle\Model\ProfileInterface" inversed-by="blockers">
+    <many-to-one field="blocked" target-entity="Talav\ProfileBundle\Entity\ProfileInterface" inversed-by="blockers">
       <join-column name="blocked_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" />
     </many-to-one>
 

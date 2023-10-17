@@ -5,37 +5,38 @@ declare(strict_types=1);
 namespace Talav\ProfileBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Talav\Component\Resource\Repository\ResourceRepository;
 use Talav\ProfileBundle\Entity\Report;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-class ReportRepository extends EntityRepository
+class ReportRepository extends ResourceRepository
 {
-    public function flush(): void
-    {
-        $this->_em->flush();
-    }
-
-    public function persist(Report $entity): void
-    {
-        $this->_em->persist($entity);
-    }
-
-    public function add(Report $entity, bool $flush = true): void
-    {
-        $this->_em->persist($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
-    }
-
-    public function remove(Report $entity, bool $flush = true): void
-    {
-        $this->_em->remove($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
-    }
+//    public function flush(): void
+//    {
+//        $this->_em->flush();
+//    }
+//
+//    public function persist(Report $entity): void
+//    {
+//        $this->_em->persist($entity);
+//    }
+//
+//    public function add(Report $entity, bool $flush = true): void
+//    {
+//        $this->_em->persist($entity);
+//        if ($flush) {
+//            $this->_em->flush();
+//        }
+//    }
+//
+//    public function remove(Report $entity, bool $flush = true): void
+//    {
+//        $this->_em->remove($entity);
+//        if ($flush) {
+//            $this->_em->flush();
+//        }
+//    }
 
     // /**
     //  * @return Report[] Returns an array of Report objects

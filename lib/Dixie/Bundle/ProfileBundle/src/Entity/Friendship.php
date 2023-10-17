@@ -6,7 +6,7 @@ namespace Talav\ProfileBundle\Entity;
 
 use Talav\Component\Resource\Model\ResourceInterface;
 use Talav\Component\Resource\Model\ResourceTrait;
-use Talav\ProfileBundle\Model\ProfileInterface;
+use Talav\ProfileBundle\Entity\ProfileInterface;
 use Talav\ProfileBundle\Repository\FriendshipRepository;
 use Doctrine\ORM\Mapping as ORM;
 

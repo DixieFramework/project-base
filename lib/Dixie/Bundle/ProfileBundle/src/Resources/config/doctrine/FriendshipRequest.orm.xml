@@ -6,11 +6,11 @@
       <generator strategy="IDENTITY"/>
     </id>
 
-    <many-to-one field="requester" target-entity="Talav\ProfileBundle\Model\ProfileInterface" inversed-by="requester">
+    <many-to-one field="requester" target-entity="Talav\ProfileBundle\Entity\ProfileInterface" inversed-by="requester">
       <join-column referenced-column-name="id" nullable="false" />
     </many-to-one>
 
-    <many-to-one field="requestee" target-entity="Talav\ProfileBundle\Model\ProfileInterface" inversed-by="requestee">
+    <many-to-one field="requestee" target-entity="Talav\ProfileBundle\Entity\ProfileInterface" inversed-by="requestee">
       <join-column referenced-column-name="id" nullable="false" />
     </many-to-one>
 

@@ -43,7 +43,7 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use Symfony\Component\Workflow\WorkflowInterface;
 use Talav\CoreBundle\Traits\SecurityAwareTrait;
 use Talav\ProfileBundle\Form\Type\ProfileFormType;
-use Talav\ProfileBundle\Model\ProfileInterface;
+use Talav\ProfileBundle\Entity\ProfileInterface;
 use Talav\UserBundle\Enum\RegistrationWorkflowEnum;
 use Talav\UserBundle\Event\FilterUserResponseEvent;
 use Talav\UserBundle\Event\FormEvent;

@@ -12,9 +12,10 @@ use Talav\Component\Resource\Model\ResourceTrait;
 use Talav\Component\Resource\Model\TimestampableTrait;
 use Talav\Component\User\Model\UserInterface;
 use Talav\ProfileBundle\Enum\Gender;
-use Talav\ProfileBundle\Model\ProfileInterface;
+use Talav\ProfileBundle\Entity\ProfileInterface;
 
-class Profile implements ProfileInterface
+#[ORM\MappedSuperclass]
+abstract class Profile implements ProfileInterface
 {
     use ResourceTrait;
     use TimestampableTrait;
@@ -52,6 +53,12 @@ class Profile implements ProfileInterface
     #[ORM\OrderBy(['createdAt' => 'DESC'])]
     public ?Collection $blockers;
 
+	#[ORM\OneToMany(mappedBy: 'sender', targetEntity: ReportInterface::class, orphanRemoval: true)]
+	protected ?Collection $reports;
+
+	#[ORM\OneToMany(mappedBy: 'accused', targetEntity: ReportInterface::class, orphanRemoval: true)]
+	protected ?Collection $accusations;
+
     #[ORM\OneToMany(mappedBy: 'profile', targetEntity: Suspension::class, orphanRemoval: true)]
     protected ?Collection $suspensions = null;
 
@@ -69,6 +76,8 @@ class Profile implements ProfileInterface
         $this->blocks = new ArrayCollection();
         $this->blockers = new ArrayCollection();
 
+	    $this->reports = new ArrayCollection();
+	    $this->accusations = new ArrayCollection();
         $this->suspensions = new ArrayCollection();
         $this->relationships = new ArrayCollection();
     }
@@ -355,6 +364,60 @@ class Profile implements ProfileInterface
             }
         }
     }
+
+	public function getReports(): Collection
+	{
+		return $this->reports;
+	}
+
+	public function addReport(ReportInterface $report): self
+	{
+		if (!$this->reports->contains($report)) {
+			$this->reports[] = $report;
+			$report->setSender($this);
+		}
+
+		return $this;
+	}
+
+	public function removeReport(ReportInterface $report): self
+	{
+		if ($this->reports->contains($report)) {
+			$this->reports->removeElement($report);
+			if ($report->getSender() === $this) {
+				$report->setSender(null);
+			}
+		}
+
+		return $this;
+	}
+
+	public function getAccusations(): Collection
+	{
+		return $this->accusations;
+	}
+
+	public function addAccusation(ReportInterface $accusation): self
+	{
+		if (!$this->accusations->contains($accusation)) {
+			$this->accusations[] = $accusation;
+			$accusation->setSender($this);
+		}
+
+		return $this;
+	}
+
+	public function removeAccusation(ReportInterface $accusation): self
+	{
+		if ($this->accusations->contains($accusation)) {
+			$this->accusations->removeElement($accusation);
+			if ($accusation->getSender() === $this) {
+				$accusation->setSender(null);
+			}
+		}
+
+		return $this;
+	}
 
     public function isSuspended(): bool
     {

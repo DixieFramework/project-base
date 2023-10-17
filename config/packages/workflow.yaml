@@ -54,7 +54,7 @@ framework:
             supports:
                 - Groshy\Entity\User
                 - Groshy\Entity\Profile
-                - Talav\ProfileBundle\Model\ProfileInterface
+                - Talav\ProfileBundle\Entity\ProfileInterface
             initial_marking: !php/enum Talav\UserBundle\Enum\RegistrationWorkflowEnum::STATE_PERSONAL_INFO->value
             places:
                 - !php/enum Talav\UserBundle\Enum\RegistrationWorkflowEnum::STATE_PERSONAL_INFO->value

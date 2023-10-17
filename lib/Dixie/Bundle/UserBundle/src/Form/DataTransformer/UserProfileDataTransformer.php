@@ -7,7 +7,7 @@ namespace Talav\UserBundle\Form\DataTransformer;
 use Doctrine\ORM\EntityManagerInterface;
 use Groshy\Entity\Profile;
 use Symfony\Component\Form\DataTransformerInterface;
-use Talav\ProfileBundle\Model\ProfileInterface;
+use Talav\ProfileBundle\Entity\ProfileInterface;
 
 class UserProfileDataTransformer implements DataTransformerInterface
 {

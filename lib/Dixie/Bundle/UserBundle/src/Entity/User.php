@@ -26,7 +26,7 @@ use Talav\PermissionBundle\Traits\HasRoles;
 use Talav\PostBundle\Entity\Bookmark;
 use Talav\PostBundle\Entity\PostInterface;
 use Talav\ProfileBundle\Entity\LikeInterface;
-use Talav\ProfileBundle\Model\ProfileInterface;
+use Talav\ProfileBundle\Entity\ProfileInterface;
 use Talav\ProfileBundle\Entity\UserFriend;
 use Talav\ProfileBundle\Entity\UserMetadata;
 use Talav\ProfileBundle\Entity\UserProfileRelation;

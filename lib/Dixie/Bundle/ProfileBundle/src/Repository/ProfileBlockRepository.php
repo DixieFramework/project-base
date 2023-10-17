@@ -9,7 +9,7 @@ use Talav\Component\User\Model\UserInterface;
 use Talav\ProfileBundle\Entity\ProfileBlock;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Talav\ProfileBundle\Model\ProfileInterface;
+use Talav\ProfileBundle\Entity\ProfileInterface;
 
 /**
  * @extends ServiceEntityRepository<ProfileBlock>

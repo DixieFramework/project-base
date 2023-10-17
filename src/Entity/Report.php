@@ -12,10 +12,10 @@ use Talav\ProfileBundle\Repository\ReportRepository;
 #[ORM\Table(name: 'report')]
 class Report extends BaseReport
 {
-	#[ORM\Id]
-	#[ORM\Column(type: 'integer')]
-	#[ORM\GeneratedValue(strategy: 'AUTO')]
-	protected mixed $id;
+//	#[ORM\Id]
+//	#[ORM\Column(type: 'integer')]
+//	#[ORM\GeneratedValue(strategy: 'AUTO')]
+//	protected mixed $id;
 //    #[Id]
 //    #[Column(type: 'uuid', unique: true)]
 //    #[GeneratedValue(strategy: 'CUSTOM')]

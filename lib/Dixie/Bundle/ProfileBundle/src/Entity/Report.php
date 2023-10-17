@@ -9,38 +9,40 @@ use Talav\Component\Resource\Model\ResourceInterface;
 use Talav\Component\Resource\Model\ResourceTrait;
 use Talav\PostBundle\Entity\Comment;
 use Talav\ProfileBundle\Entity\MessageInterface;
+use Talav\ProfileBundle\Entity\ProfileInterface;
 use Talav\ProfileBundle\Repository\ReportRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Talav\UserBundle\Model\UserInterface;
 
 //#[ORM\Entity(repositoryClass: ReportRepository::class)]
 //#[ORM\Table('report')]
+#[ORM\MappedSuperclass]
 #[ORM\HasLifecycleCallbacks]
-class Report implements ReportInterface
+abstract class Report implements ReportInterface
 {
     use ResourceTrait;
 
-    #[ORM\OneToOne(targetEntity: MessageInterface::class, cascade: ['persist', 'remove'])]
+//    #[ORM\OneToOne(targetEntity: MessageInterface::class, cascade: ['persist', 'remove'])]
     protected ?MessageInterface $message;
 
-    #[ORM\OneToOne(targetEntity: UserInterface::class, cascade: ['persist', 'remove'])]
-    protected ?UserInterface $profile;
+//    #[ORM\OneToOne(targetEntity: UserInterface::class, cascade: ['persist', 'remove'])]
+    protected ?ProfileInterface $profile;
 
-    #[ORM\OneToOne(inversedBy: 'report', targetEntity: CommentInterface::class, cascade: ['persist', 'remove'])]
+//    #[ORM\OneToOne(inversedBy: 'report', targetEntity: CommentInterface::class, cascade: ['persist', 'remove'])]
     protected ?CommentInterface $comment;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+//    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $content;
 
-    #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'reports')]
-    #[ORM\JoinColumn(nullable: false)]
-    protected UserInterface $sender;
+//    #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'reports')]
+//    #[ORM\JoinColumn(nullable: false)]
+    protected ProfileInterface $sender;
 
-    #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'accusations')]
-    #[ORM\JoinColumn(nullable: false)]
-    protected UserInterface $accused;
+//    #[ORM\ManyToOne(targetEntity: UserInterface::class, inversedBy: 'accusations')]
+//    #[ORM\JoinColumn(nullable: false)]
+    protected ProfileInterface $accused;
 
-    #[ORM\Column(type: 'boolean')]
+//    #[ORM\Column(type: 'boolean')]
     protected ?bool $seen = false;
 
     #[ORM\PrePersist]
@@ -61,24 +63,24 @@ class Report implements ReportInterface
         return $this;
     }
 
-    public function getProfile(): ?UserInterface
+    public function getProfile(): ?ProfileInterface
     {
         return $this->profile;
     }
 
-    public function setProfile(?UserInterface $profile): self
+    public function setProfile(?ProfileInterface $profile): self
     {
         $this->profile = $profile;
 
         return $this;
     }
 
-    public function getComment(): ?Comment
+    public function getComment(): ?CommentInterface
     {
         return $this->comment;
     }
 
-    public function setComment(?Comment $comment): self
+    public function setComment(?CommentInterface $comment): self
     {
         $this->comment = $comment;
 
@@ -97,24 +99,24 @@ class Report implements ReportInterface
         return $this;
     }
 
-    public function getSender(): ?UserInterface
+    public function getSender(): ?ProfileInterface
     {
         return $this->sender;
     }
 
-    public function setSender(?UserInterface $sender): self
+    public function setSender(?ProfileInterface $sender): self
     {
         $this->sender = $sender;
 
         return $this;
     }
 
-    public function getAccused(): ?UserInterface
+    public function getAccused(): ?ProfileInterface
     {
         return $this->accused;
     }
 
-    public function setAccused(?UserInterface $accused): self
+    public function setAccused(?ProfileInterface $accused): self
     {
         $this->accused = $accused;
 

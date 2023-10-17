@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <mapped-superclass name="Talav\ProfileBundle\Entity\Report">
+    <unique-constraints>
+      <unique-constraint name="profile_report_idx" columns="sender_id,accused_id"/>
+    </unique-constraints>
+
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+
+    <one-to-one field="message" target-entity="Talav\ProfileBundle\Entity\MessageInterface">
+      <cascade>
+        <cascade-remove />
+        <cascade-persist />
+      </cascade>
+    </one-to-one>
+
+    <one-to-one field="profile" target-entity="Talav\ProfileBundle\Entity\ProfileInterface">
+      <cascade>
+        <cascade-remove />
+        <cascade-persist />
+      </cascade>
+    </one-to-one>
+
+    <one-to-one field="comment" target-entity="Talav\CommentBundle\Entity\CommentInterface" inversed-by="report">
+      <cascade>
+        <cascade-remove />
+        <cascade-persist />
+      </cascade>
+    </one-to-one>
+
+    <field name="content" type="string" column="content" length="255" nullable="true"/>
+
+    <many-to-one field="sender" target-entity="Talav\ProfileBundle\Entity\ProfileInterface" inversed-by="reports">
+      <join-column nullable="false"/>
+    </many-to-one>
+
+    <many-to-one field="accused" target-entity="Talav\ProfileBundle\Entity\ProfileInterface" inversed-by="accusations">
+      <join-column nullable="false"/>
+    </many-to-one>
+
+    <field name="seen" type="boolean" column="seen">
+      <options>
+        <option name="default">0</option>
+      </options>
+    </field>
+
+  </mapped-superclass>
+</doctrine-mapping>
