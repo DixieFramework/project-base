@@ -30,3 +30,56 @@ services:
 #    Ria\Bundle\WebBundle\Command\:
 #        resource: '../../Command'
 #        tags: ['console.command']
+
+
+    talav_web.theme.assets_js:
+        class: Talav\WebBundle\Engine\AssetBag
+    # public because AbstractExtension accesses this using container
+    talav_web.theme.assets_css:
+        class: Talav\WebBundle\Engine\AssetBag
+        public: true
+    talav_web.theme.assets_header:
+        class: Talav\WebBundle\Engine\AssetBag
+    talav_web.theme.assets_footer:
+        class: Talav\WebBundle\Engine\AssetBag
+
+    Talav\WebBundle\Engine\AssetFilter:
+        arguments:
+            $headers: '@talav_web.theme.assets_header'
+            $footers: '@talav_web.theme.assets_footer'
+            $js: '@Talav\WebBundle\Engine\Asset\JsResolver'
+            $css: '@Talav\WebBundle\Engine\Asset\CssResolver'
+            $scriptPosition: 'foot'
+
+    Talav\WebBundle\Engine\Asset\Merger:
+        arguments:
+            $skipFiles:
+                - '/jquery/jquery.min.js'
+                - '/mmenu/css/mmenu.css'
+                - '/mmenu/js/mmenu.js'
+
+    Talav\WebBundle\Engine\Asset\JsResolver:
+        arguments:
+            $env: '%env(APP_ENV)%'
+            $bag: '@talav_web.theme.assets_js'
+            $combine: false
+
+    Talav\WebBundle\Engine\Asset\CssResolver:
+        arguments:
+            $env: '%env(APP_ENV)%'
+            $bag: '@talav_web.theme.assets_css'
+            $combine: false
+
+#    talav_web.event_listener.response:
+#        class: Talav\WebBundle\EventListener\KernelResponseListener
+##        arguments: ['@phpdish_core.pjax.helper']
+#        public: false
+#        tags:
+#            - { name: kernel.event_listener, event: 'kernel.response', method: 'onKernelResponse', priority: 30 }
+#
+#    talav_web.event_listener.js_config:
+#        class: Talav\WebBundle\EventListener\AddJSConfigListener
+#        #        arguments: ['@phpdish_core.pjax.helper']
+#        public: false
+#        tags:
+#            - { name: kernel.event_listener, event: 'kernel.response', method: 'addJSConfig', priority: -1 }

@@ -129,6 +129,7 @@ class SearchGalleryImageFormType extends AbstractType
 			'search_options' => null,
 			'translation_domain' => 'TalavGalleryBundle',
 			'allow_extra_fields' => true,
+            'block_prefix' => 'lol'
 		]);
 	}
 

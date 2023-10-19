@@ -23,6 +23,7 @@ use Talav\ProfileBundle\Repository\FriendshipRequestRepository;
 use Talav\ProfileBundle\Repository\LikeRepository;
 use Talav\ProfileBundle\Repository\MessageRepository;
 use Talav\ProfileBundle\Repository\NotificationRepository;
+use Talav\ProfileBundle\Repository\ProfileRepository;
 use Talav\ProfileBundle\Repository\ReportRepository;
 use Talav\ProfileBundle\Repository\UserFriendRepository;
 use Talav\ProfileBundle\Repository\UserPropertyRepository;
@@ -70,7 +71,7 @@ class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode('model')->defaultValue(Profile::class)->end()
-//                                        ->scalarNode('repository')->defaultValue(EntityRepository::class)->end()
+                                        ->scalarNode('repository')->defaultValue(ProfileRepository::class)->end()
                                     ->end()
                                 ->end()
                             ->end()

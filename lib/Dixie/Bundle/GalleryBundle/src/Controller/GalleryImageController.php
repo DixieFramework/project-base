@@ -45,8 +45,12 @@ class GalleryImageController extends AbstractController
     }
 
 	#[Route('', name: 'index', methods: 'GET|POST')]
-	public function indexAction(Request $request): Response
+	public function indexAction(Request $request, ManagerInterface $profileManager): Response
 	{
+        $profileRepo = $profileManager->getRepository();
+
+        dd($profileRepo->findByProfileInfoStartsWith('11'));
+
 		$searchOptions = [];
 
 		$searchFormRequest = new SearchFormModel();

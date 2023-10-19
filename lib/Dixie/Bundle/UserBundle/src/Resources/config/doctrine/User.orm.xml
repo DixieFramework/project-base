@@ -61,6 +61,7 @@
                 <cascade-remove />
                 <cascade-persist />
             </cascade>
+            <join-column name="profile_id" />
         </one-to-one>
 
         <one-to-one field="avatar" target-entity="Talav\Component\Media\Model\MediaInterface"/>

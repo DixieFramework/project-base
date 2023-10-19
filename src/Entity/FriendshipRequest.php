@@ -10,6 +10,6 @@ use Talav\ProfileBundle\Repository\FriendshipRequestRepository;
 
 #[ORM\Entity(repositoryClass: FriendshipRequestRepository::class)]
 #[ORM\Table(name: 'friendship_request')]
-class FriendshipRequest extends BaseFriendshipRequest
+abstract class FriendshipRequest extends BaseFriendshipRequest
 {
 }

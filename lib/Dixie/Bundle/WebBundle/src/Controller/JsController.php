@@ -7,15 +7,36 @@ namespace Talav\WebBundle\Controller;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Talav\CoreBundle\Controller\BaseController;
+use Talav\CoreBundle\Traits\EventDispatcherAwareTrait;
+use Talav\CoreBundle\Traits\KernelAwareTrait;
+use Talav\WebBundle\Event\BuildJsEvent;
+use Talav\WebBundle\TalavWebEvents;
 
 #[Route('/js')]
 class JsController extends BaseController
 {
-    #[Route('')]
+    use KernelAwareTrait;
+    use EventDispatcherAwareTrait;
+
+    #[Route('/idx')]
     public function index()
     {
+        // Don't store a visitor with this request
+        defined('MAUTIC_NON_TRACKABLE_REQUEST') || define('MAUTIC_NON_TRACKABLE_REQUEST', 1);
+
+        $dispatcher = $this->dispatcher;
+        $debug      = $this->kernel->isDebug();
+        $event      = new BuildJsEvent($this->getJsHeader(), $debug);
+
+        if ($dispatcher->hasListeners(TalavWebEvents::BUILD_TALAV_JS)) {
+            $dispatcher->dispatch($event, TalavWebEvents::BUILD_TALAV_JS);
+        }
+
+        return new Response($event->getJs(), 200, ['Content-Type' => 'application/javascript']);
+
         return $this->render('js/index.html.twig');
     }
 
@@ -156,5 +177,25 @@ class JsController extends BaseController
     public function custom()
     {
         return $this->js()->add('alert', ['text' => '...']);
+    }
+
+    /**
+     * Build a JS header for the Mautic embedded JS.
+     *
+     * @return string
+     */
+    protected function getJsHeader()
+    {
+        $year = date('Y');
+
+        return <<<JS
+/**
+ * @package     MauticJS
+ * @copyright   {$year} Mautic Contributors. All rights reserved.
+ * @author      Mautic
+ * @link        http://mautic.org
+ * @license     GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
+ */
+JS;
     }
 }

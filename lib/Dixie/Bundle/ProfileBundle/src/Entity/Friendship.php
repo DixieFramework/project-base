@@ -11,7 +11,8 @@ use Talav\ProfileBundle\Repository\FriendshipRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 //#[ORM\Entity(repositoryClass: FriendshipRepository::class)]
-class Friendship implements ResourceInterface
+#[ORM\MappedSuperclass]
+class Friendship implements FriendshipInterface
 {
 	use ResourceTrait;
 //    #[ORM\Id]
