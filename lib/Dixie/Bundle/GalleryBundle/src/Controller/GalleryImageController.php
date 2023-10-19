@@ -8,7 +8,9 @@ use Talav\Component\Resource\Manager\ManagerInterface;
 use Talav\CoreBundle\Controller\AbstractController;
 use Talav\GalleryBundle\Entity\Gallery;
 use Talav\GalleryBundle\Entity\GalleryImage;
+use Talav\GalleryBundle\Form\Model\SearchFormModel;
 use Talav\GalleryBundle\Form\Type\GalleryImageType;
+use Talav\GalleryBundle\Form\Type\SearchGalleryImageFormType;
 use Talav\GalleryBundle\Voter\ImageVoter;
 use Talav\GalleryBundle\Service\ImageServiceInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -41,6 +43,32 @@ class GalleryImageController extends AbstractController
     {
         $this->imageRepository = $galleryImageManager->getRepository();
     }
+
+	#[Route('', name: 'index', methods: 'GET|POST')]
+	public function indexAction(Request $request): Response
+	{
+		$searchOptions = [];
+
+		$searchFormRequest = new SearchFormModel();
+		$searchFormRequest->overrideFromRequest($request);
+
+		$formFactory = $this->container->get('form.factory');
+		$search = $formFactory->createNamed('search', SearchGalleryImageFormType::class, $searchFormRequest, [
+			'search_options' => $searchOptions,
+		]);
+
+		$search->handleRequest($request);
+		if ($search->isSubmitted() && $search->isValid()) {
+			$data = $search->getData();
+dd($data);
+		}
+
+		return $this->render('@TalavGallery/image/index.html.twig', [
+			'form' => $search->createView()
+		]);
+
+		return new Response('Hello world from talav_gallery');
+	}
 
     /**
      * Create action.

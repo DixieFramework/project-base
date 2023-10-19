@@ -1,0 +1,42 @@
+{% extends '@TalavWeb/layouts/default.html.twig' %}
+
+{% trans_default_domain 'TalavGalleryBundle' %}
+
+{%- block titre '' -%}
+
+{% block body %}
+{#    {% if block('page_title') is defined %}#}
+    <!-- Author list title START -->
+    <div class="row g-4 pb-4">
+        <div class="col-12">
+            <div class="d-sm-flex justify-content-between align-items-center">
+                <h1 class="mb-sm-0 h2">Galleries</h1>
+{#                {% if is_granted('GALLERY_CREATE') %}#}
+{#                <a href="{{ url('talav_gallery_create') }}" class="btn btn-sm btn-primary mb-0"><i class="fas fa-plus fa-fw">&nbsp;</i>{{ 'talav.gallery.create.link'|trans }}</a>#}
+{#                {% endif %}#}
+
+                <div class="d-block d-flex gap-2 flex-wrap">
+                    {% if is_granted('GALLERY_CREATE') %}
+{#                    <a href="{{ url('talav_gallery_create') }}" class="btn btn-sm btn-primary mb-0"><i class="fas fa-plus fa-fw"></i>{{ 'talav.gallery.create.link'|trans }}</a>#}
+                    <a href="{{ url('talav_gallery_create') }}" class="btn btn-sm btn-primary mb-0"><i class="fas fa-plus fa-fw"></i>{{ 'talav.gallery.create.link'|trans }}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Author list title START -->
+{#    {% endif %}#}
+
+    <div class="row g-4">
+        <div class="col-md-8 col-lg-6 vstack gap-4">
+            <div class="row g-3">
+
+            </div>
+        </div>
+        <div class="col-lg-3">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
