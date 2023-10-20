@@ -55,4 +55,42 @@ class ProfileRepository extends ResourceRepository
         $qb->setMaxResults(1);
         return $qb->getQuery()->getOneOrNullResult();
     }
+
+	/**
+	 * Get matches by complex filter criteria -
+	 * a custom query based on various parameters passed
+	 *
+	 * @param $params
+	 * @return array
+	 */
+	public function findFiltered($params)
+	{
+		$query = $this->getEntityManager()->createQueryBuilder()
+			->select('p as profile, u.username.username as username, TIMESTAMP_DIFF (YEAR, p.birthdate, NOW()) as age')
+			->from(ProfileInterface::class, 'p')
+			->leftJoin('p.user', 'u')
+			->orderBy('u.usernameCanonical', 'DESC');
+
+		if (key_exists('min_age', $params) && !is_null($params['min_age'])) {
+			$query->andWhere('TIMESTAMP_DIFF (YEAR, p.birthdate, NOW()) >= :min_age')
+				->setParameter('min_age', $params['min_age']);
+		}
+
+		if (key_exists('max_age', $params) && !is_null($params['max_age'])) {
+			$query->andWhere('TIMESTAMP_DIFF (YEAR, p.birthdate, NOW()) <= :max_age')
+				->setParameter('max_age', $params['max_age']);
+		}
+
+		if (key_exists('interests', $params) && !is_null($params['interests'])) {
+			$query->andWhere('p.interests = :interests')
+				->setParameter('interests', $params['interests']);
+		}
+
+		if (key_exists('username', $params) && !is_null($params['username'])) {
+			$query->andWhere('u.usernameCanonical LIKE :username')
+				->setParameter('username', '%' . $params['username'] . '%');
+		}
+
+		return $query->getQuery()->getResult();
+	}
 }

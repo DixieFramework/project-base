@@ -30,6 +30,10 @@ doctrine:
 
         dql:
             datetime_functions:
+#                DATE_FORMAT: Cocorico\CoreBundle\DQL\DateFormatFunction
+#                TIME_DIFF: Cocorico\CoreBundle\DQL\TimeDiffFunction
+                TIMESTAMP_DIFF: Talav\CoreBundle\Doctrine\DQL\TimestampDiffFunction
+                NOW: DoctrineExtensions\Query\Mysql\Now
                 MONTH: DoctrineExtensions\Query\Mysql\Month
                 YEAR: DoctrineExtensions\Query\Mysql\Year
 

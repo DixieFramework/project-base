@@ -47,6 +47,16 @@
 
             {{ form_widget(form) }}
 
+            {% if profiles is defined %}
+
+                {% for profile in profiles %}
+
+                    {{ profile.username }}
+
+                {% endfor %}
+
+            {% endif %}
+
         </div>
         <!-- Card body END -->
 

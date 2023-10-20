@@ -83,10 +83,17 @@ class ProfileSearchController extends AbstractController
 		    return new RedirectResponse($this->generateUrl('profile_search_index'));
 	    }
 
-//        dd($filter);
+		$profiles = $this->profileManager->getRepository()->findFiltered([
+			'region' => empty($filter->getRegion()) ? null : $filter->getRegion()->getId(),
+			'min_age' => $filter->getMinAge(),
+			'max_age' => $filter->getMaxAge(),
+		]);
+
+		//        dd($filter);
 
         return $this->render('@TalavProfile/search/profiles.html.twig', [
             'form' => $filterFormType->createView(),
+	        'profiles' => $profiles
         ]);
     }
 }
