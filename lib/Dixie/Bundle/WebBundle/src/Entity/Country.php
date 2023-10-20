@@ -4,148 +4,64 @@ declare(strict_types=1);
 
 namespace Talav\WebBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
+use Doctrine\ORM\Mapping\OneToMany;
+use Talav\WebBundle\Repository\CityRepository;
+use Talav\WebBundle\Repository\CountryRepository;
 
-/**
- * Country.
- *
- * @ORM\Table(name="geo_names_countries")
- * @ORM\Entity
- *
- * @SuppressWarnings(PHPMD)
- * Auto generated class do not check mess
- */
+#[ORM\Entity(repositoryClass: CountryRepository::class)]
+#[ORM\Table('country')]
 class Country
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="geonameId", type="integer", nullable=true)
-     *
-     * @Groups({"Member:Read"})
-     */
-    private $geonameId;
+    public const NAME = 'name';
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=200, nullable=true)
-     *
-     * @Groups({"Member:Read"})
-     */
-    private $name;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    protected mixed $id = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="continent", type="string", length=2, nullable=true)
-     *
-     * @Groups({"Member:Read"})
-     */
-    private $continent;
+    #[ORM\Column(name: 'name', type: 'string')]
+    protected string $name;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="country", type="string", length=2)
-     * @ORM\Id
-     */
-    private $country;
+    #[ORM\OneToMany(mappedBy: 'country', targetEntity: Region::class)]
+    protected Collection $regions;
 
-    /**
-     * Set geonameId.
-     *
-     * @param int $geonameId
-     *
-     * @return Country
-     */
-    public function setGeonameId($geonameId)
+    public function __construct()
     {
-        $this->geonameId = $geonameId;
-
-        return $this;
+        $this->regions = new ArrayCollection();
     }
 
-    /**
-     * Get geonameId.
-     *
-     * @return int
-     */
-    public function getGeonameId()
+    public function setId(mixed $id): void
     {
-        return $this->geonameId;
+        $this->id = $id;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return Country
-     */
-    public function setName($name)
+    public function getId(): mixed
+    {
+        return $this->id;
+    }
+
+    public function setName(string $name): Country
     {
         $this->name = $name;
-
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * Set continent.
-     *
-     * @param string $continent
-     *
-     * @return Country
-     */
-    public function setContinent($continent)
+    public function setRegions($regions): self
     {
-        $this->continent = $continent;
-
+        $this->regions = $regions;
         return $this;
     }
 
-    /**
-     * Get continent.
-     *
-     * @return string
-     */
-    public function getContinent()
+    public function getRegions(): Collection
     {
-        return $this->continent;
-    }
-
-    /**
-     * Get country.
-     *
-     * @return string
-     */
-    public function getCountry()
-    {
-        return $this->country;
-    }
-
-    /**
-     * Set country.
-     *
-     * @param string $country
-     *
-     * @return string
-     */
-    public function setCountry($country)
-    {
-        $this->country = $country;
-
-        return $this;
+        return $this->regions;
     }
 }

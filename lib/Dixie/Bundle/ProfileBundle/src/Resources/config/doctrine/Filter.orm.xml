@@ -7,10 +7,15 @@
       <join-column name="profile_id" referenced-column-name="id"/>
     </one-to-one>
 
-    <one-to-one field="attribute" target-entity="Talav\ProfileBundle\Entity\Attribute">
-      <join-column name="attribute_id" referenced-column-name="id"/>
+    <one-to-one field="region" target-entity="Talav\WebBundle\Entity\Region">
+      <join-column name="region_id" referenced-column-name="id"/>
     </one-to-one>
 
+    <field name="distance" type="integer" column="distance"/>
+
+    <field name="minAge" type="integer" column="min_age"/>
+
+    <field name="maxAge" type="integer" column="max_age"/>
 
   </entity>
 </doctrine-mapping>

@@ -69,9 +69,9 @@ class Location
     private $fcode;
 
     /**
-     * @var Country
+     * @var GeoCountry
      *
-     * @ORM\ManyToOne(targetEntity="Country")
+     * @ORM\ManyToOne(targetEntity="GeoCountry")
      * @ORM\JoinColumn(name="country", referencedColumnName="country")
      *
      * @Groups({"Member:Read"})
