@@ -28,9 +28,7 @@ class FormTest extends WebTestCase
         $this->mediaManager = self::$kernel->getContainer()->get('app.manager.media');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_allows_to_submit_form_without_file(): void
     {
         $crawler = $this->submitMediaTypeForm('/test1', 'Test name');
@@ -39,9 +37,7 @@ class FormTest extends WebTestCase
         self::assertNotNull($author);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_allows_to_submit_form_with_file(): void
     {
         $filename = tempnam(sys_get_temp_dir(), 'test').'.txt';
@@ -56,9 +52,7 @@ class FormTest extends WebTestCase
         unlink($filename);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_correctly_stores_file(): void
     {
         $filename = tempnam(sys_get_temp_dir(), 'test').'.txt';
@@ -75,9 +69,7 @@ class FormTest extends WebTestCase
         unlink($filename);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_errors_if_media_required_not_provided(): void
     {
         $crawler = $this->submitMediaTypeForm('/test2', 'Test name');
@@ -85,9 +77,7 @@ class FormTest extends WebTestCase
         self::assertStringContainsStringIgnoringCase('This value should not be blank.', $crawler->html());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_errors_if_file_is_too_large(): void
     {
         $filename = tempnam(sys_get_temp_dir(), 'test').'.txt';
@@ -97,9 +87,7 @@ class FormTest extends WebTestCase
         unlink($filename);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_errors_if_file_has_incorrect_mime_type(): void
     {
         $filename = tempnam(sys_get_temp_dir(), 'test').'.php';
@@ -109,9 +97,7 @@ class FormTest extends WebTestCase
         unlink($filename);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_errors_if_file_has_incorrect_extension(): void
     {
         $filename = tempnam(sys_get_temp_dir(), 'test').'.bla';
@@ -121,9 +107,7 @@ class FormTest extends WebTestCase
         unlink($filename);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_does_not_modify_media_if_file_is_not_selected(): void
     {
         $author = $this->createAuthorWithMedia();
@@ -147,9 +131,7 @@ class FormTest extends WebTestCase
         self::assertEquals($previousMedia->getName(), $author->getMedia()->getName());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_modifies_media_if_file_is_selected(): void
     {
         $author = $this->createAuthorWithMedia();
@@ -179,9 +161,7 @@ class FormTest extends WebTestCase
         self::assertEquals($previousMedia->getId(), $author->getMedia()->getId());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_unlinks_and_deletes_media(): void
     {
         $author = $this->createAuthorWithMedia();

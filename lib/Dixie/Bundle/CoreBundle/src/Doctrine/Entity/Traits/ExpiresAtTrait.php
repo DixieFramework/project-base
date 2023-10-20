@@ -9,10 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait ExpiresAtTrait
 {
-    /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
-     */
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected ?\DateTimeImmutable $expires_at = null;
 
     public function getExpiresAt(): ?\DateTimeImmutable

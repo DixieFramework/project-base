@@ -10,13 +10,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 trait Ipv4Trait
 {
-    /**
-     * @ORM\Column(type="string", length=15, nullable=true)
-     *
-     * @Assert\Ip(version="4")
-     * @Assert\Length(max=15)
-     */
+    
     #[ORM\Column(type: Types::STRING, length: 15, nullable: true)]
+    #[Assert\Ip(version: '4')]
+    #[Assert\Length(max: 15)]
+    #[ORM\Column(type: 'string', length: 15, nullable: true)]
     #[Assert\Ip(version: '4')]
     #[Assert\Length(max: 15)]
     protected ?string $ipv4 = null;

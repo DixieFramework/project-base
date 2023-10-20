@@ -42,8 +42,8 @@ return static function (RectorConfig $rectorConfig): void {
     // rules to apply
     $rectorConfig->sets([
         // global
-        SetList::PHP_81,
-        SetList::CODE_QUALITY,
+        ///SetList::PHP_81,
+        ///SetList::CODE_QUALITY,
 
         // Doctrine
 //        DoctrineSetList::DOCTRINE_DBAL_30,

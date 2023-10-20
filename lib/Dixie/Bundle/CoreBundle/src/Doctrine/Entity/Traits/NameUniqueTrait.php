@@ -10,12 +10,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 trait NameUniqueTrait
 {
-    /**
-     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
-     *
-     * @Assert\Length(max=255)
-     */
+    
     #[ORM\Column(type: Types::STRING, length: 255, nullable: false, unique: true)]
+    #[Assert\Length(max: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: false, unique: true)]
     #[Assert\Length(max: 255)]
     protected string $name;
 

@@ -8,7 +8,6 @@ use Talav\WebBundle\Entity\Region;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\Uid\Uuid;
 
 /**
  * @method Region|null findOneBy(array $criteria, array $orderBy = null)
@@ -34,7 +33,7 @@ class RegionRepository extends ServiceEntityRepository
         return $query->getOneOrNullResult();
     }
 
-    public function findByCountry(Uuid $countryId): array
+    public function findByCountry(mixed $countryId): array
     {
         $query = $this->getEntityManager()
             ->createQuery('SELECT r FROM Talav\WebBundle\Entity\Region r
@@ -50,7 +49,7 @@ class RegionRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findByCity(Uuid $cityId): array
+    public function findByCity(mixed $cityId): array
     {
         $rsm = new ResultSetMapping();
         $rsm->addEntityResult('Talav\WebBundle\Entity\Region', 'r');
@@ -62,10 +61,10 @@ class RegionRepository extends ServiceEntityRepository
 SELECT region.id AS id,
        region.name AS name,
        region.country_id AS country_id
-FROM datinglibre.regions region
-WHERE region.country_id = (SELECT country.id FROM datinglibre.cities city
-    INNER JOIN datinglibre.regions region ON city.region_id = region.id
-    INNER JOIN datinglibre.countries country ON country.id = region.country_id
+FROM region region
+WHERE region.country_id = (SELECT country.id FROM city city
+    INNER JOIN region region ON city.region_id = region.id
+    INNER JOIN country country ON country.id = region.country_id
     WHERE city.id = :cityId);
 EOD, $rsm);
         $query->setParameter('cityId', $cityId);

@@ -22,9 +22,7 @@ class ChangePasswordControllerTest extends WebTestCase
         $this->client->getContainer()->get(DatabaseToolCollection::class)->get()->loadFixtures([UserFixtures::class]);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_redirects_to_login_form_for_non_authorized_user(): void
     {
         $this->client->request('GET', '/user/change-password');
@@ -36,9 +34,7 @@ class ChangePasswordControllerTest extends WebTestCase
         $this->assertStringContainsStringIgnoringCase('Log in', $crawler->html());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_shows_change_password_form(): void
     {
         $this->login();
@@ -46,9 +42,7 @@ class ChangePasswordControllerTest extends WebTestCase
         $this->assertStringContainsStringIgnoringCase('Change password', $crawler->html());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_shows_error_if_current_password_invalid(): void
     {
         $crawler = $this->submitChangePasswordForm([
@@ -57,9 +51,7 @@ class ChangePasswordControllerTest extends WebTestCase
         $this->assertStringContainsStringIgnoringCase('The entered password is invalid.', $crawler->html());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_shows_error_if_new_passwords_mismatch(): void
     {
         $crawler = $this->submitChangePasswordForm([
@@ -70,9 +62,7 @@ class ChangePasswordControllerTest extends WebTestCase
         $this->assertStringContainsStringIgnoringCase("The entered passwords don't match", $crawler->html());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_shows_error_if_new_password_is_too_short(): void
     {
         $crawler = $this->submitChangePasswordForm([
@@ -83,9 +73,7 @@ class ChangePasswordControllerTest extends WebTestCase
         $this->assertStringContainsStringIgnoringCase('The password is too short.', $crawler->html());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_shows_error_if_new_password_is_too_long(): void
     {
         $crawler = $this->submitChangePasswordForm([
@@ -96,9 +84,7 @@ class ChangePasswordControllerTest extends WebTestCase
         $this->assertStringContainsStringIgnoringCase('The password is too long.', $crawler->html());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_shows_error_if_new_password_is_not_provided(): void
     {
         $crawler = $this->submitChangePasswordForm([
@@ -107,9 +93,7 @@ class ChangePasswordControllerTest extends WebTestCase
         $this->assertStringContainsStringIgnoringCase('Please enter a password.', $crawler->html());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_allows_to_change_password(): void
     {
         $crawler = $this->submitChangePasswordForm([

@@ -9,10 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait IsPrivateTrait
 {
-    /**
-     * @ORM\Column(type="boolean", nullable=false, options={"default":0})
-     */
     #[ORM\Column(type: Types::BOOLEAN, nullable: false, options: ['default' => 0])]
+    #[ORM\Column(type: 'boolean', nullable: false, options: ['default' => 0])]
     protected bool $is_private = false;
 
     public function getIsPrivateAsText(): string

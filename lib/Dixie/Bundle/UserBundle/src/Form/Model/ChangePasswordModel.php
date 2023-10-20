@@ -12,9 +12,7 @@ class ChangePasswordModel
     /** @UserPassword(message="talav.current_password.invalid") */
     public ?string $currentPassword = null;
 
-    /**
-     * @Assert\NotBlank(message="talav.password.blank")
-     * @Assert\Length(min=4, minMessage="talav.password.short", max=254, maxMessage="talav.password.long")
-     */
+    #[Assert\NotBlank(message: 'talav.password.blank')]
+    #[Assert\Length(min: 4, minMessage: 'talav.password.short', max: 254, maxMessage: 'talav.password.long')]
     public ?string $newPassword = null;
 }

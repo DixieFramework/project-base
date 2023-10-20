@@ -9,10 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait IsEnabledTrait
 {
-    /**
-     * @ORM\Column(type="boolean", nullable=false, options={"default":1})
-     */
     #[ORM\Column(type: Types::BOOLEAN, nullable: false, options: ['default' => 1])]
+    #[ORM\Column(type: 'boolean', nullable: false, options: ['default' => 1])]
     protected bool $is_enabled;
 
     public function isIsEnabled(): bool

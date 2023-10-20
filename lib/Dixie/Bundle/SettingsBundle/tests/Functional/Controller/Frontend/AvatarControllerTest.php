@@ -25,18 +25,14 @@ class AvatarControllerTest extends WebTestCase
         $this->client->loginUser($this->userRepository->findOneByEmail('tester@test.com'));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_shows_update_avatar_page()
     {
         $this->client->request('GET', '/user/profile/avatar');
         self::assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_allows_to_add_avatar()
     {
         $crawler = $this->client->request('GET', '/user/profile/avatar');

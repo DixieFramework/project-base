@@ -9,10 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait TypeIntTrait
 {
-    /**
-     * @ORM\Column(type="smallint", nullable=false, options={"default":0})
-     */
     #[ORM\Column(type: Types::SMALLINT, nullable: false, options: ['default' => 0])]
+    #[ORM\Column(type: 'smallint', nullable: false, options: ['default' => 0])]
     protected int $type;
 
     public function getType(): int

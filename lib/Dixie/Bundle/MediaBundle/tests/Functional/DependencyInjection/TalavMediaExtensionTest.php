@@ -9,18 +9,14 @@ use Talav\Component\Media\Provider\ProviderPool;
 
 final class TalavMediaExtensionTest extends KernelTestCase
 {
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_correctly_registers_providers(): void
     {
         self::assertTrue(static::getContainer()->has('talav.media.provider.file'));
         self::assertTrue(static::getContainer()->has('talav.media.provider.image'));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_adds_all_contexts_to_provider_pool(): void
     {
         /** @var ProviderPool $pool */
@@ -28,9 +24,7 @@ final class TalavMediaExtensionTest extends KernelTestCase
         self::assertCount(2, $pool->getProviderList());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_adds_all_formats_to_providers(): void
     {
         /** @var ProviderPool $pool */
@@ -39,9 +33,7 @@ final class TalavMediaExtensionTest extends KernelTestCase
         self::assertCount(3, $pool->getProvider('image')->getFormats());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_sets_template_config(): void
     {
         /** @var ProviderPool $pool */

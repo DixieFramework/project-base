@@ -23,9 +23,7 @@ class RegistrationControllerTest extends WebTestCase
         $this->databaseTool->loadFixtures([UserFixtures::class]);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_correctly_shows_registration_page()
     {
         $crawler = $this->client->request('GET', '/register');
@@ -33,9 +31,7 @@ class RegistrationControllerTest extends WebTestCase
         $this->assertNotNull($crawler->selectLink('Log in')->getNode(0));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_shows_error_messages_for_empty_values()
     {
         $crawler = $this->submitForm();
@@ -44,36 +40,28 @@ class RegistrationControllerTest extends WebTestCase
         $this->assertStringContainsStringIgnoringCase('Please enter a password.', $crawler->html());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_shows_error_messages_for_incorrect_email()
     {
         $crawler = $this->submitForm(['talav_user_registration[email]' => 'incorrectemail']);
         $this->assertStringContainsStringIgnoringCase('The email is not valid.', $crawler->html());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_shows_error_messages_for_existing_email()
     {
         $crawler = $this->submitForm(['talav_user_registration[email]' => 'tester@test.com']);
         $this->assertStringContainsStringIgnoringCase('The email is already used.', $crawler->html());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_shows_error_messages_for_existing_username()
     {
         $crawler = $this->submitForm(['talav_user_registration[username]' => 'tester']);
         $this->assertStringContainsStringIgnoringCase('The username is already used', $crawler->html());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_shows_error_messages_for_password_mismatch()
     {
         $crawler = $this->submitForm([
@@ -83,9 +71,7 @@ class RegistrationControllerTest extends WebTestCase
         $this->assertStringContainsStringIgnoringCase("The entered passwords don't match.", $crawler->html());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_allows_to_register_and_authenticate_user_redirect_to_success_page()
     {
         $this->databaseTool->loadFixtures([UserFixtures::class]);
@@ -104,9 +90,7 @@ class RegistrationControllerTest extends WebTestCase
         $this->assertStringContainsStringIgnoringCase('Default page after successful login or registration', $crawler->html());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_allows_to_register_and_sends_welcome_email()
     {
         $this->databaseTool->loadFixtures([UserFixtures::class]);

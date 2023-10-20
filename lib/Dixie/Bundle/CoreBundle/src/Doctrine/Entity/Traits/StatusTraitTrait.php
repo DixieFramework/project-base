@@ -9,10 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait StatusTraitTrait
 {
-    /**
-     * @ORM\Column(type="smallint", nullable=false, options={"default":0, "unsigned"=true})
-     */
     #[ORM\Column(type: Types::SMALLINT, nullable: false, options: ['default' => 0, 'unsigned' => true])]
+    #[ORM\Column(type: 'smallint', nullable: false, options: ['default' => 0, 'unsigned' => true])]
     protected int $status;
 
     static public function getStatusFormChoices(): array

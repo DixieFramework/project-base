@@ -10,12 +10,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 trait CommentTrait
 {
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     *
-     * @Assert\Length(max=65000)
-     */
+    
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Assert\Length(max: 65000)]
+    #[ORM\Column(type: 'text', nullable: true)]
     #[Assert\Length(max: 65000)]
     protected ?string $comment = null;
 

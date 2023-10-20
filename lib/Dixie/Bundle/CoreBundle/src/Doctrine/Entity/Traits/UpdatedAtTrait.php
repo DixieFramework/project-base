@@ -9,11 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait UpdatedAtTrait
 {
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-//    #[ORM\Column(name: 'updated_at', type: Types::DATETIME_MUTABLE, nullable: true)]
+    //    #[ORM\Column(name: 'updated_at', type: Types::DATETIME_MUTABLE, nullable: true)]
     #[ORM\Column(name: 'updated_at', type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?\DateTimeInterface $updatedAt;
 
     public function getUpdatedAt(): ?\DateTimeInterface

@@ -36,10 +36,9 @@ class SearchController extends AbstractController
     }
 
     /**
-     * @Route("/search/members", name="search_members")
-     *
      * @return Response
      */
+    #[Route(path: '/search/members', name: 'search_members')]
     public function searchMembers(Request $request)
     {
 		$options = [
@@ -87,13 +86,13 @@ class SearchController extends AbstractController
     }
 
     /**
-     * @Route("/search/locations", name="search_locations")
      *
      * @return Response
      *
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.StaticAccess)
      */
+    #[Route(path: '/search/locations', name: 'search_locations')]
     public function searchLocations(Request $request, TranslatorInterface $translator, SerializerInterface $serializer)
     {
         $pager = null;
@@ -222,12 +221,11 @@ class SearchController extends AbstractController
      * This method is used on the home screen to allow people interested in BeWelcome to check how many members are
      * available in a location.
      *
-     * @Route("/search/map", name="search_map")
      *
      * @return Response|RedirectResponse
-     *
      * @SuppressWarnings(PHPMD.StaticAccess)
      */
+    #[Route(path: '/search/map', name: 'search_map')]
     public function showMapAction(Request $request, TranslatorInterface $translator): Response
     {
         // do not allow access to this page when logged in, redirect to /search/locations
@@ -280,12 +278,11 @@ class SearchController extends AbstractController
     }
 
     /**
-     * @Route("/search/locations/ajax", name="search_members_ajax")
      *
      * @return Response
-     *
      * @SuppressWarnings(PHPMD.StaticAccess)
      */
+    #[Route(path: '/search/locations/ajax', name: 'search_members_ajax')]
     public function searchGetPageResultsAjax(Request $request, TranslatorInterface $translator)
     {
         if ('POST' !== $request->getMethod()) {

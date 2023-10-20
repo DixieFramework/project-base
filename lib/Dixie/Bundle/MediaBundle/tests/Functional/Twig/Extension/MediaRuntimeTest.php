@@ -18,25 +18,19 @@ class MediaRuntimeTest extends WebTestCase
         $this->client->getContainer()->get(DatabaseToolCollection::class)->get()->loadFixtures([AuthorFixtures::class]);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_correctly_renders_media_path_for_txt_document(): void
     {
         self::assertMatchesRegularExpression("/\/media\/doc\/0001\/00\/[0-9a-z]*\.txt/", $this->client->request('GET', '/view/test1')->html());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_correctly_renders_media_path_for_media_document(): void
     {
         self::assertMatchesRegularExpression("/\/media\/avatar\/0002\/00\/[0-9a-z]*\.jpeg/", $this->client->request('GET', '/view/test2')->html());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_correctly_validates_that_thumb_paths_and_media_path_are_different(): void
     {
         $crawler = $this->client->request('GET', '/view/test3')->filter('div');
@@ -51,9 +45,7 @@ class MediaRuntimeTest extends WebTestCase
         self::assertNotEquals($crawler->getNode(1)->nodeValue, $crawler->getNode(2)->nodeValue);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_correctly_generates_thumbnail_img_tags(): void
     {
         $crawler = $this->client->request('GET', '/view/test4')->filter('img');

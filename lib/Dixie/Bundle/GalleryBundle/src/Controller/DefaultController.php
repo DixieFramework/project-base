@@ -11,9 +11,7 @@ use Talav\CoreBundle\Controller\AbstractController;
 
 class DefaultController extends AbstractController
 {
-    /**
-     * @Route("/talav_gallery")
-     */
+    #[Route(path: '/talav_gallery')]
     public function indexAction(Request $request): Response
     {
         return new Response('Hello world from talav_gallery');

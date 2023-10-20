@@ -10,15 +10,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 trait UrlTrait
 {
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     *
-     * @Assert\Url()
-     * @Assert\Length(max=255)
-     */
+    
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     #[Assert\Length(max: 255)]
     #[Assert\Url()]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Assert\Url]
+    #[Assert\Length(max: 255)]
     protected ?string $url = null;
 
     public function getUrl(): ?string

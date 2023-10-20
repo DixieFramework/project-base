@@ -91,54 +91,51 @@ class UserRelationController extends AbstractController
 	}
 
 //	/**
-//	 * @Route("/add/{username}", name="add_relation")
-//	 */
-//	#[Route(path: '/add/{username}', name: 'user_profile_user_relation_add', requirements: ['username' => Requirement::ASCII_SLUG])]
-//	#[ParamConverter('member', class: UserInterface::class, options: ['mapping' => ['username' => 'username']])]
-//	public function add(Request $request, User $member): Response
-//	{
-//		/** @var UserInterface $loggedInMember */
-//		$loggedInMember = $this->getUser();
-//		if ($member === $loggedInMember) {
-//			return $this->redirectToRoute(AbstractController::HOME_PAGE);
-////			return $this->redirectToRoute('members_profile', ['username' => $loggedInMember->getusername()]);
-//		}
-//
-//		$relation = $this->findRelationBetween($loggedInMember, $member);
-//		if (null !== $relation) {
-//			return $this->redirectToRoute('edit_relation', ['username' => $member->getUsername()]);
-//		}
-//
-//		$form = $this->createForm(UserRelationType::class, $relation);
-//
-//		$form->handleRequest($request);
-//		if ($form->isSubmitted() && $form->isValid()) {
-//			/** @var UserRelation $relation */
-//			$relation = $form->getData();
-//			$relation->setOwner($loggedInMember);
-//			$relation->setReceiver($member);
-//
-//			$this->entityManager->persist($relation);
-//			$this->entityManager->flush();
-//
-//			//$mailer->sendRelationNotification($relation);
-//
-//			return $this->redirectToRoute('relations', ['username' => $loggedInMember->getUsername()]);
-//		}
-//
-//		return $this->render('@TalavProfile/user_relation/add.html.twig', [
-//			'form' => $form->createView(),
-//			'member' => $member,
-////			'globals_js_json' => $this->globals->getGlobalsJsAsJson($member, $loggedInMember),
-////			'submenu' => $this->profileSubmenu->getSubmenu($member, $loggedInMember, ['active' => 'add_relation']),
-//		]);
-//	}
-
-	/**
-	 * @Route("/members/{username}/relation/edit", name="edit_relation")
-	 */
-	#[Route(path: '/edit/{username}', name: 'edit_relation', requirements: ['username' => Requirement::ASCII_SLUG])]
+ //	 * @Route("/add/{username}", name="add_relation")
+ //	 */
+ //	#[Route(path: '/add/{username}', name: 'user_profile_user_relation_add', requirements: ['username' => Requirement::ASCII_SLUG])]
+ //	#[ParamConverter('member', class: UserInterface::class, options: ['mapping' => ['username' => 'username']])]
+ //	public function add(Request $request, User $member): Response
+ //	{
+ //		/** @var UserInterface $loggedInMember */
+ //		$loggedInMember = $this->getUser();
+ //		if ($member === $loggedInMember) {
+ //			return $this->redirectToRoute(AbstractController::HOME_PAGE);
+ ////			return $this->redirectToRoute('members_profile', ['username' => $loggedInMember->getusername()]);
+ //		}
+ //
+ //		$relation = $this->findRelationBetween($loggedInMember, $member);
+ //		if (null !== $relation) {
+ //			return $this->redirectToRoute('edit_relation', ['username' => $member->getUsername()]);
+ //		}
+ //
+ //		$form = $this->createForm(UserRelationType::class, $relation);
+ //
+ //		$form->handleRequest($request);
+ //		if ($form->isSubmitted() && $form->isValid()) {
+ //			/** @var UserRelation $relation */
+ //			$relation = $form->getData();
+ //			$relation->setOwner($loggedInMember);
+ //			$relation->setReceiver($member);
+ //
+ //			$this->entityManager->persist($relation);
+ //			$this->entityManager->flush();
+ //
+ //			//$mailer->sendRelationNotification($relation);
+ //
+ //			return $this->redirectToRoute('relations', ['username' => $loggedInMember->getUsername()]);
+ //		}
+ //
+ //		return $this->render('@TalavProfile/user_relation/add.html.twig', [
+ //			'form' => $form->createView(),
+ //			'member' => $member,
+ ////			'globals_js_json' => $this->globals->getGlobalsJsAsJson($member, $loggedInMember),
+ ////			'submenu' => $this->profileSubmenu->getSubmenu($member, $loggedInMember, ['active' => 'add_relation']),
+ //		]);
+ //	}
+ #[Route(path: '/edit/{username}', name: 'edit_relation', requirements: ['username' => Requirement::ASCII_SLUG])]
 	#[ParamConverter('member', class: User::class, options: ['mapping' => ['username' => 'username']])]
+ #[Route(path: '/members/{username}/relation/edit', name: 'edit_relation')]
 	public function edit(Request $request, UserInterface $member): Response
 	{
 		/** @var UserInterface $loggedInMember */
@@ -199,11 +196,9 @@ class UserRelationController extends AbstractController
 		return $this->redirectToRoute('user_relation_relations', ['username' => StringUtils::slug($member->getUsername())]);
 	}
 
-	/**
-	 * @Route("/confirm/{username}", name="confirm_relation")
-	 */
 	#[Route(path: '/confirm/{username}', name: 'confirm', requirements: ['username' => Requirement::ASCII_SLUG])]
 	#[ParamConverter('member', class: UserInterface::class, options: ['mapping' => ['username' => 'username']])]
+ #[Route(path: '/confirm/{username}', name: 'confirm_relation')]
 	public function confirm(User $member, EntityManagerInterface $entityManager): Response
 	{
 		/** @var UserInterface $loggedInMember */
@@ -228,10 +223,8 @@ class UserRelationController extends AbstractController
 		return $this->redirectToRoute('user_relation_relations', ['username' => StringUtils::slug($member->getUsername())]);
 	}
 
-	/**
-	 * @Route("/members/{username}/relation/dismiss", name="dismiss_relation")
-	 */
-	public function dismiss(UserInterface $member, EntityManagerInterface $entityManager): Response
+	#[Route(path: '/members/{username}/relation/dismiss', name: 'dismiss_relation')]
+ public function dismiss(UserInterface $member, EntityManagerInterface $entityManager): Response
 	{
 		/** @var UserInterface $loggedInMember */
 		$loggedInMember = $this->getUser();
@@ -254,10 +247,8 @@ class UserRelationController extends AbstractController
 		return $this->redirectToRoute('relations', ['username' => StringUtils::slug($member->getUsername())]);
 	}
 
-	/**
-	 * @Route("/relations/{username}/{page}", name="relations")
-	 */
 	#[Route(path: '/relations/{username}/{page}', name: 'relations', requirements: ['username' => Requirement::ASCII_SLUG])]
+ #[Route(path: '/relations/{username}/{page}', name: 'relations')]
 	public function relations(User $member, int $page = 1): Response
 	{
 		/** @var UserInterface $loggedInMember */

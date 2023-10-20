@@ -14,6 +14,7 @@ use Talav\Component\Resource\Model\ResourceTrait;
 use Talav\Component\Resource\Model\TimestampableTrait;
 use Talav\Component\User\Model\UserInterface;
 use Talav\ProfileBundle\Enum\Gender;
+use Talav\WebBundle\Entity\City;
 
 #[ORM\MappedSuperclass]
 abstract class Profile implements ProfileInterface
@@ -32,7 +33,11 @@ abstract class Profile implements ProfileInterface
 
     protected ?string $bio = null;
 
-    protected UserInterface $user;
+//	#[ORM\OneToOne(targetEntity: City::class)]
+//	#[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
+	protected ?City $city = null;
+
+	protected UserInterface $user;
 
 	/**
 	 * User preferences
@@ -162,6 +167,22 @@ abstract class Profile implements ProfileInterface
     {
         $this->bio = $bio;
     }
+
+	/**
+	 * @return City|null
+	 */
+	public function getCity(): ?City
+	{
+		return $this->city;
+	}
+
+	/**
+	 * @param City|null $city
+	 */
+	public function setCity(?City $city): void
+	{
+		$this->city = $city;
+	}
 
     /**
      * @return UserInterface

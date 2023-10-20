@@ -9,10 +9,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 trait CreatedByUserTrait
 {
-    /**
-     * @ORM\ManyToOne(targetEntity="Symfony\Component\Security\Core\User\UserInterface")
-     */
     #[ORM\ManyToOne(targetEntity: UserInterface::class)]
+    #[ORM\ManyToOne(targetEntity: 'Symfony\Component\Security\Core\User\UserInterface')]
     protected ?UserInterface $created_by_user = null;
 
     /**

@@ -9,10 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait DeletedAtTrait
 {
-    /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
-     */
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected ?\DateTimeImmutable $deleted_at = null;
 
     public function getDeletedAt(): ?\DateTimeImmutable

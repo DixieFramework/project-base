@@ -28,9 +28,7 @@ final class StripeEventHandlerTest extends KernelTestCase
         $this->productManager = static::getContainer()->get('app.manager.product');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_maps_product_event_to_new_product_entity()
     {
         $handler = self::getContainer()->get(StripeEventHandler::class);
@@ -45,9 +43,7 @@ final class StripeEventHandlerTest extends KernelTestCase
         $this->assertEquals('Premium plan', $entity->getName());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_maps_price_event_to_new_price_entity_and_links_to_product()
     {
         $handler = self::getContainer()->get(StripeEventHandler::class);
@@ -60,9 +56,7 @@ final class StripeEventHandlerTest extends KernelTestCase
         $this->assertCount(1, $product->getPrices());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_maps_customer_event_to_new_customer_entity()
     {
         $handler = self::getContainer()->get(StripeEventHandler::class);

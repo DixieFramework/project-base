@@ -41,9 +41,7 @@ class MapperConfigTest extends TestCase
         $this->extractor = new EventExtractor(null);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_maps_price_created_event_to_new_price_entity()
     {
         $price = new Price();
@@ -63,9 +61,7 @@ class MapperConfigTest extends TestCase
         self::assertEquals($eventData->unit_amount_decimal, $price->getUnitAmountDecimal());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_maps_price_created_event_and_overrides_embedded_object()
     {
         $price = new Price();
@@ -78,9 +74,7 @@ class MapperConfigTest extends TestCase
         self::assertEquals($eventData->recurring['interval_count'], $price->getRecurring()->getIntervalCount());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_maps_customer_created_event()
     {
         $customer = new Customer();

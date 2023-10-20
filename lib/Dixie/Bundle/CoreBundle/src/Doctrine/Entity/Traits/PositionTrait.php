@@ -10,13 +10,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 trait PositionTrait
 {
-    /**
-     * @ORM\Column(type="smallint", nullable=false, options={"default":0, "unsigned"=true})
-     *
-     * @Assert\Range(min="0", max="65000")
-     */
+    
     #[ORM\Column(type: Types::SMALLINT, nullable: false, options: ['default' => 0, 'unsigned' => true])]
     #[Assert\Range(min: 0, max: 65000)]
+    #[ORM\Column(type: 'smallint', nullable: false, options: ['default' => 0, 'unsigned' => true])]
+    #[Assert\Range(min: '0', max: '65000')]
     protected int $position = 0;
 
     public function setPosition(?int $position): self

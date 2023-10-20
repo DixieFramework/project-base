@@ -6,9 +6,8 @@ namespace Talav\PermissionBundle\Enum;
 
 /**
  * Class Role
- *
- * @codeCoverageIgnore
  */
+#[\PHPUnit\Framework\Attributes\CodeCoverageIgnore]
 final class Role
 {
     /**

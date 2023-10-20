@@ -10,15 +10,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 trait DescriptionNotBlankTrait
 {
-    /**
-     * @ORM\Column(type="text", nullable=false)
-     *
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     */
+    
     #[ORM\Column(type: Types::TEXT, nullable: false)]
     #[Assert\NotBlank()]
     #[Assert\NotNull()]
+    #[ORM\Column(type: 'text', nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
     protected string $description = '';
 
     public function getDescription(): string

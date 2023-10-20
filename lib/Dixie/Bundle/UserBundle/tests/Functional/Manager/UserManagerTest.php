@@ -19,9 +19,7 @@ final class UserManagerTest extends KernelTestCase
         static::getContainer()->get(DatabaseToolCollection::class)->get()->loadFixtures([UserFixtures::class]);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_updates_canonical()
     {
         $user = $this->userManager->create();
@@ -31,9 +29,7 @@ final class UserManagerTest extends KernelTestCase
         $this->assertEquals('test@test.com', $user->getEmailCanonical());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_updates_username_if_its_not_provided()
     {
         $user = $this->userManager->create();
@@ -44,9 +40,7 @@ final class UserManagerTest extends KernelTestCase
         $this->assertEquals('test@test.com', $user->getUsernameCanonical());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_saves_user_and_allows_to_find_it_by_username()
     {
         $user = $this->userManager->create();
@@ -56,9 +50,7 @@ final class UserManagerTest extends KernelTestCase
         $this->assertNotNull($foundUser);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_saves_user_and_allows_to_find_it_by_email()
     {
         $user = $this->userManager->create();
@@ -68,9 +60,7 @@ final class UserManagerTest extends KernelTestCase
         $this->assertNotNull($foundUser);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_saves_user_and_allows_to_find_it_by_email_or_username()
     {
         $user = $this->userManager->create();
@@ -82,9 +72,7 @@ final class UserManagerTest extends KernelTestCase
         $this->assertNotNull($foundUser);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_reloads_user()
     {
         $user = $this->userManager->create();
@@ -94,9 +82,7 @@ final class UserManagerTest extends KernelTestCase
         $this->assertNotNull($user->getId());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_deletes_user()
     {
         $user = $this->userManager->create();

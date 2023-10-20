@@ -40,9 +40,7 @@ class AvatarController extends AbstractController
         $this->bus = $bus;
     }
 
-    /**
-     * @Route("/user/profile/avatar", name="talav_user_profile_avatar")
-     */
+    #[Route(path: '/user/profile/avatar', name: 'talav_user_profile_avatar')]
     public function updateAvatar(Request $request): Response
     {
         $user = $this->getUser();
@@ -74,9 +72,7 @@ class AvatarController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/user/profile/cover", name="talav_user_profile_cover")
-     */
+    #[Route(path: '/user/profile/cover', name: 'talav_user_profile_cover')]
     public function updateCover(Request $request): Response
     {
         $user = $this->getUser();

@@ -10,13 +10,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 trait EmailTrait
 {
-    /**
-     * @ORM\Column(type="string", length=120, nullable=true)
-     *
-     * @Assert\Email(mode="strict")
-     * @Assert\Length(max=120)
-     */
+    
     #[ORM\Column(type: Types::STRING, length: 120, nullable: true)]
+    #[Assert\Email(mode: 'strict')]
+    #[Assert\Length(max: 120)]
+    #[ORM\Column(type: 'string', length: 120, nullable: true)]
     #[Assert\Email(mode: 'strict')]
     #[Assert\Length(max: 120)]
     protected ?string $email = null;

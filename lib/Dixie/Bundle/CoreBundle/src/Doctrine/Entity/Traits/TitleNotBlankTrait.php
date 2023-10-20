@@ -10,17 +10,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 trait TitleNotBlankTrait
 {
-    /**
-     * @ORM\Column(type="string", length=255, nullable=false)
-     *
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @Assert\Length(max=255)
-     */
+    
     #[ORM\Column(type: Types::STRING, length: 255, nullable: false)]
     #[Assert\Length(max: 255)]
     #[Assert\NotBlank()]
     #[Assert\NotNull()]
+    #[ORM\Column(type: 'string', length: 255, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[Assert\Length(max: 255)]
     protected string $title;
 
     public function getTitle(): string

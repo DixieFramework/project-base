@@ -9,11 +9,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 trait UserTrait
 {
-    /**
-     * @ORM\ManyToOne(targetEntity="Symfony\Component\Security\Core\User\UserInterface")
-     * @ORM\JoinColumn(nullable=true)
-     */
     #[ORM\ManyToOne(targetEntity: UserInterface::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\ManyToOne(targetEntity: 'Symfony\Component\Security\Core\User\UserInterface')]
     #[ORM\JoinColumn(nullable: true)]
     protected ?UserInterface $user = null;
 

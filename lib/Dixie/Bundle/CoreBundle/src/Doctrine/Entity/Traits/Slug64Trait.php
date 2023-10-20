@@ -10,17 +10,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 trait Slug64Trait
 {
-    /**
-     * @ORM\Column(type="string", length=64, nullable=false, unique=true)
-     *
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @Assert\Length(max=64)
-     */
+    
     #[ORM\Column(type: Types::STRING, length: 64, nullable: false, unique: true)]
     #[Assert\Length(max: 64)]
     #[Assert\NotBlank()]
     #[Assert\NotNull()]
+    #[ORM\Column(type: 'string', length: 64, nullable: false, unique: true)]
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[Assert\Length(max: 64)]
     protected string $slug;
 
     public function getSlug(): string

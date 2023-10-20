@@ -9,10 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait DateTrait
 {
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[ORM\Column(type: 'date', nullable: true)]
     protected ?\DateTimeInterface $date = null;
 
     public function getDate(): ?\DateTimeInterface

@@ -9,10 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait UserIdTrait
 {
-    /**
-     * @ORM\Column(type="string", length=36, nullable=true)
-     */
     #[ORM\Column(type: Types::STRING, length: 36, nullable: true)]
+    #[ORM\Column(type: 'string', length: 36, nullable: true)]
     protected ?string $user_id = null;
 
     /**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Talav\WebBundle\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
@@ -25,10 +26,10 @@ class City
 //     * @Groups("serialize")
 //     */
 //    private Uuid $id;
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    #[Groups('serialize')]
+	#[ORM\Id]
+	#[ORM\GeneratedValue(strategy: 'AUTO')]
+	#[ORM\Column(type: Types::INTEGER, options: ['unsigned' => true])]
+//    #[Groups('serialize')]
     protected mixed $id = null;
 
     #[ORM\ManyToOne(targetEntity: Region::class, inversedBy: 'cities')]
@@ -101,9 +102,7 @@ class City
         return $this;
     }
 
-    /**
-     * @Groups("serialize")
-     */
+    #[Groups('serialize')]
     public function getName(): string
     {
         return $this->name;

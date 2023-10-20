@@ -9,11 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait IdTrait
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer", options={"unsigned"=true})
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[ORM\Column(type: Types::INTEGER, options: ['unsigned' => true])]

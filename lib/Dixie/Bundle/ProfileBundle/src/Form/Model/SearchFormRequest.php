@@ -22,14 +22,14 @@ class SearchFormRequest
 {
     /**
      * @var string
-     * @Assert\NotNull(message="search.location.invalid", groups={"text-search"})
      */
+    #[Assert\NotNull(message: 'search.location.invalid', groups: ['text-search'])]
     public $location;
 
     /**
      * @var int
-     * @Assert\NotNull(message="search.location.dropdown", groups={"text-search"})
      */
+    #[Assert\NotNull(message: 'search.location.dropdown', groups: ['text-search'])]
     public $location_fullname;
 
     public $location_name;
@@ -94,9 +94,8 @@ class SearchFormRequest
 
     /**
      * @var int
-     *
-     * @Assert\Choice({ -1, 0, 5, 10, 15, 20, 50, 100, 200})
      */
+    #[Assert\Choice([-1, 0, 5, 10, 15, 20, 50, 100, 200])]
     public $distance = 20;
 
     /**
@@ -160,9 +159,7 @@ class SearchFormRequest
     /** @var int */
     public $items = 20;
 
-    /**
-     * @Assert\IsTrue(message="search.location.invalid", groups={"text-search"})
-     */
+    #[Assert\IsTrue(message: 'search.location.invalid', groups: ['text-search'])]
     public function isLocationValid()
     {
         // Check if the form was submitted through the map javascript
@@ -187,9 +184,7 @@ class SearchFormRequest
         return false;
     }
 
-    /**
-     * @Assert\IsTrue(message="search.accommodation.invalid", groups={"text-search"})
-     */
+    #[Assert\IsTrue(message: 'search.accommodation.invalid', groups: ['text-search'])]
     public function isAccommodationValid()
     {
         return $this->accommodation_anytime || $this->accommodation_neverask;

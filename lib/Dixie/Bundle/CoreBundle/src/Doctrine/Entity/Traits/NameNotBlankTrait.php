@@ -10,15 +10,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 trait NameNotBlankTrait
 {
-    /**
-     * @ORM\Column(type="string", length=255, nullable=false)
-     *
-     * @Assert\NotBlank()
-     * @Assert\Length(max=255)
-     */
+    
     #[ORM\Column(type: Types::STRING, length: 255, nullable: false)]
     #[Assert\Length(max: 255)]
     #[Assert\NotBlank()]
+    #[ORM\Column(type: 'string', length: 255, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
     protected string $name;
 
     public function __toString(): string

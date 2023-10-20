@@ -25,9 +25,7 @@ class ResettingControllerTest extends WebTestCase
         $this->databaseTool->loadFixtures([UserFixtures::class]);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_correctly_shows_reset_page()
     {
         $crawler = $this->client->request('GET', '/reset');
@@ -35,18 +33,14 @@ class ResettingControllerTest extends WebTestCase
         $this->assertNotNull($crawler->selectLink('Log in')->getNode(0));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_shows_error_message_for_empty_values()
     {
         $crawler = $this->submitForm();
         $this->assertStringContainsStringIgnoringCase('The username is not found.', $crawler->html());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_allows_to_request_password_reset_for_valid_user()
     {
         $crawler = $this->submitForm([
@@ -58,9 +52,7 @@ class ResettingControllerTest extends WebTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_redirects_to_login_page_if_reset_token_not_found()
     {
         $this->client->followRedirects(true);
@@ -69,9 +61,7 @@ class ResettingControllerTest extends WebTestCase
         $this->assertStringContainsStringIgnoringCase('Incorrect password reset token', $crawler->html());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_redirects_to_password_reset_page_for_expired_token()
     {
         $this->submitForm([
@@ -90,9 +80,7 @@ class ResettingControllerTest extends WebTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_does_not_allow_to_generate_tokens_too_often()
     {
         $this->submitForm([
@@ -107,17 +95,13 @@ class ResettingControllerTest extends WebTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_allows_to_open_reset_password()
     {
         $this->openResetPasswordPage();
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_shows_error_for_mismatched_passwords()
     {
         $crawler = $this->submitResetPasswordForm([
@@ -127,9 +111,7 @@ class ResettingControllerTest extends WebTestCase
         $this->assertStringContainsStringIgnoringCase("The entered passwords don't match.", $crawler->html());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_allows_to_change_password_and_login_with_new_password()
     {
         $crawler = $this->submitResetPasswordForm([

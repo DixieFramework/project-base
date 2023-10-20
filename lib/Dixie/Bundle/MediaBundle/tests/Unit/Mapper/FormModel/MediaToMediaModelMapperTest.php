@@ -8,9 +8,7 @@ use Talav\MediaBundle\Form\Model\MediaModel;
 
 class MediaToMediaModelMapperTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_maps_context_and_provider_for_media()
     {
         $mapper = new MediaToMediaModelMapper();

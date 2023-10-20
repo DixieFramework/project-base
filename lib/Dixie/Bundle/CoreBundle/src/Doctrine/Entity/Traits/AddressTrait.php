@@ -10,13 +10,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 trait AddressTrait
 {
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     *
-     * @Assert\Length(max=255)
-     */
+    
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     #[Assert\Length(max: 65000)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Assert\Length(max: 255)]
     protected ?string $address = null;
 
     public function getAddress(): ?string

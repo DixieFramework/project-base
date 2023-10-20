@@ -48,7 +48,7 @@ class ProfileRepository extends ResourceRepository
         if ($onlineOnly) {
             $qb->andWhere('p.currentResourceId IS NOT NULL');
         }
-        if ($profile) {
+        if ($profile instanceof \Talav\ProfileBundle\Entity\ProfileInterface) {
             $qb->andWhere('p.id != :profileId');
             $qb->setParameter('profileId', $profile->getId());
         }

@@ -23,9 +23,7 @@ class SecurityControllerTest extends WebTestCase
         $this->databaseTool->loadFixtures([UserFixtures::class]);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_correctly_shows_login_page()
     {
         $crawler = $this->client->request('GET', '/login');
@@ -34,9 +32,7 @@ class SecurityControllerTest extends WebTestCase
         $this->assertNotNull($crawler->selectLink('Forgot password?')->getNode(0));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_shows_error_message_for_incorrect_credentials()
     {
         $crawler = $this->login('incorrect', 'incorrect');
@@ -44,9 +40,7 @@ class SecurityControllerTest extends WebTestCase
         $this->assertStringContainsStringIgnoringCase('Invalid credentials', $crawler->html());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_redirects_to_defined_login_success_page_for_correct_credentials()
     {
         $crawler = $this->login();
@@ -55,9 +49,7 @@ class SecurityControllerTest extends WebTestCase
         $this->assertStringContainsStringIgnoringCase('logout', $crawler->html());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_redirects_to_profile_page_after_login_if_user_tried_access_profile()
     {
         $this->client->request('GET', '/user/profile');
@@ -67,9 +59,7 @@ class SecurityControllerTest extends WebTestCase
         $this->assertStringContainsStringIgnoringCase('logout', $crawler->html());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_supports_logout()
     {
         $crawler = $this->login();

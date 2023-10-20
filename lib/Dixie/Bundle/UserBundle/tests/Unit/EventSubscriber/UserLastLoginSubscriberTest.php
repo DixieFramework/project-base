@@ -15,9 +15,7 @@ use UserAppBundle\Entity\User;
 
 final class UserLastLoginSubscriberTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_updates_last_login_on_user_event()
     {
         $subscriber = new UserLastLoginSubscriber($this->getManagerMock());
@@ -27,9 +25,7 @@ final class UserLastLoginSubscriberTest extends TestCase
         $this->assertNotNull($user->getLastLogin());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_updates_last_login_on_interactive_login()
     {
         $subscriber = new UserLastLoginSubscriber($this->getManagerMock());

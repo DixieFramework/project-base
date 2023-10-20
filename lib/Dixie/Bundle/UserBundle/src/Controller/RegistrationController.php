@@ -58,9 +58,7 @@ class RegistrationController extends AbstractController
     ) {
     }
 
-    /**
-     * @Route("/register", name="talav_user_register")
-     */
+    #[Route(path: '/register', name: 'talav_user_register')]
     public function register(Request $request): Response
     {
         /** @var UserInterface $user */

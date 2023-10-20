@@ -39,9 +39,7 @@ class IndexController extends AbstractController
         $this->bus = $bus;
     }
 
-    /**
-     * @Route("/test1", name="talav_media_test1")
-     */
+    #[Route(path: '/test1', name: 'talav_media_test1')]
     public function test1(Request $request): Response
     {
         $form = $this->createForm(AuthorForm::class, new AuthorModel());
@@ -69,9 +67,7 @@ class IndexController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/test2", name="talav_media_test2")
-     */
+    #[Route(path: '/test2', name: 'talav_media_test2')]
     public function test2(Request $request): Response
     {
         $form = $this->createForm(AuthorRequiredForm::class, new AuthorModel());
@@ -90,9 +86,7 @@ class IndexController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/form/test3/{id}/edit", name="talav_media_form_test3")
-     */
+    #[Route(path: '/form/test3/{id}/edit', name: 'talav_media_form_test3')]
     public function test3(int $id, Request $request): Response
     {
         $author = $this->authorManager->getRepository()->find($id);
@@ -116,9 +110,7 @@ class IndexController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/view/test1", name="talav_media_view_test_1")
-     */
+    #[Route(path: '/view/test1', name: 'talav_media_view_test_1')]
     public function testView1(): Response
     {
         return $this->render('@MediaApp/view_test1.html.twig', [
@@ -126,9 +118,7 @@ class IndexController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/view/test2", name="talav_media_view_test_2")
-     */
+    #[Route(path: '/view/test2', name: 'talav_media_view_test_2')]
     public function testView2(): Response
     {
         return $this->render('@MediaApp/view_test2.html.twig', [
@@ -136,9 +126,7 @@ class IndexController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/view/test3", name="talav_media_view_test_3")
-     */
+    #[Route(path: '/view/test3', name: 'talav_media_view_test_3')]
     public function testView3(): Response
     {
         return $this->render('@MediaApp/view_test3.html.twig', [
@@ -146,9 +134,7 @@ class IndexController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/view/test4", name="talav_media_view_test_4")
-     */
+    #[Route(path: '/view/test4', name: 'talav_media_view_test_4')]
     public function testView4(): Response
     {
         return $this->render('@MediaApp/view_test4.html.twig', [

@@ -37,7 +37,7 @@ class UserFriendRepository extends EntityRepository implements RepositoryInterfa
             ->setParameter('user', $user)
             ->innerJoin('f.friend', 'u', Join::WITH, 'u.enabled = 1');
 
-        if ($lastActivity) {
+        if ($lastActivity instanceof \DateTime) {
             $queryBuilder->andWhere('u.lastActivityAt > :lastActivity');
             $queryBuilder->setParameter('lastActivity', $lastActivity);
         }

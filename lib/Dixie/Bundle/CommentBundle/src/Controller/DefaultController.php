@@ -11,9 +11,7 @@ use Talav\CoreBundle\Controller\AbstractController;
 
 class DefaultController extends AbstractController
 {
-    /**
-     * @Route("/talav_comment")
-     */
+    #[Route(path: '/talav_comment')]
     public function indexAction(Request $request): Response
     {
         return new Response('Hello world from talav_comment');

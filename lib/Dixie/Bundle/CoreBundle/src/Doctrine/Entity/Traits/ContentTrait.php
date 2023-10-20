@@ -9,10 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait ContentTrait
 {
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $content = null;
 
     public function getContent(): ?string

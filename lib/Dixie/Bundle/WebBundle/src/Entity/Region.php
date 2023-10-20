@@ -6,6 +6,7 @@ namespace Talav\WebBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
@@ -28,9 +29,9 @@ class Region
 //     * @Groups("serialize")
 //     */
 //    private Uuid $id;
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+	#[ORM\Id]
+	#[ORM\GeneratedValue(strategy: 'AUTO')]
+	#[ORM\Column(type: Types::INTEGER, options: ['unsigned' => true])]
     #[Groups('serialize')]
     protected mixed $id = null;
 

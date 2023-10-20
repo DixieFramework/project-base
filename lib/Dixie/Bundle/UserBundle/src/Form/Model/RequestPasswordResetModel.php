@@ -9,6 +9,6 @@ use Talav\Component\User\Model\UserInterface;
 
 final class RequestPasswordResetModel
 {
-    /** @Assert\NotBlank(message="talav.username.not_found") */
+    #[Assert\NotBlank(message: 'talav.username.not_found')]
     public ?UserInterface $user = null;
 }

@@ -23,9 +23,7 @@ final class CreateProductHandlerTest extends KernelTestCase
         ApiRequestor::setHttpClient(new MockStripeProductClient());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_creates_stripe_product_and_product_entity()
     {
         $productName = 'Premium plan';

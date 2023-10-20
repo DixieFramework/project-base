@@ -27,9 +27,7 @@ final class TalavResourceExtensionTest extends KernelTestCase
         $databaseTool->loadFixtures();
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_correctly_auto_wires_default_values(): void
     {
         $service = static::getContainer()->get(FirstAutowiredService::class);
@@ -39,9 +37,7 @@ final class TalavResourceExtensionTest extends KernelTestCase
         $this->assertInstanceOf(ManagerInterface::class, $service->getBookManager());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_correctly_auto_wires_custom_interfaces(): void
     {
         $service = static::getContainer()->get(SecondAutowiredService::class);
@@ -51,9 +47,7 @@ final class TalavResourceExtensionTest extends KernelTestCase
         $this->assertInstanceOf(AuthorManagerInterface::class, $service->getAuthorManager());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_correctly_auto_wires_default_interfaces_with_custom_services(): void
     {
         $service = static::getContainer()->get(ThirdAutowiredService::class);
@@ -63,9 +57,7 @@ final class TalavResourceExtensionTest extends KernelTestCase
         $this->assertInstanceOf(AuthorManagerInterface::class, $service->getAuthorManager());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_registers_all_resources_in_registry(): void
     {
         /** @var RegistryTestService $registry */
@@ -75,9 +67,7 @@ final class TalavResourceExtensionTest extends KernelTestCase
         $this->assertEquals(2, count($registry->getAll()));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_registers_all_repositories_in_registry(): void
     {
         /** @var RegistryTestService $registry */
@@ -87,9 +77,7 @@ final class TalavResourceExtensionTest extends KernelTestCase
         $this->assertEquals(2, count($repoRegistry->all()));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_registers_gedmo_timestampable_extension(): void
     {
         /** @var AuthorManagerInterface $manager */

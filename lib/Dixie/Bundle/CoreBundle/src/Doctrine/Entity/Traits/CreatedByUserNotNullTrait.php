@@ -11,11 +11,10 @@ trait CreatedByUserNotNullTrait
 {
     /**
      * @var UserInterface
-     *
-     * @ORM\ManyToOne(targetEntity="Symfony\Component\Security\Core\User\UserInterface")
-     * @ORM\JoinColumn(nullable=false)
      */
     #[ORM\ManyToOne(targetEntity: UserInterface::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: 'Symfony\Component\Security\Core\User\UserInterface')]
     #[ORM\JoinColumn(nullable: false)]
     protected $created_by_user;
 

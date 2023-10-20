@@ -16,9 +16,7 @@ use Talav\CoreBundle\Interfaces\RoleInterface;
 #[Route(path: 'image', name: 'image_')]
 class DefaultController extends AbstractController
 {
-    /**
-     * @Route("/talav_image")
-     */
+    #[Route(path: '/talav_image')]
     public function indexAction(Request $request): Response
     {
         return new Response('Hello world from talav_image');

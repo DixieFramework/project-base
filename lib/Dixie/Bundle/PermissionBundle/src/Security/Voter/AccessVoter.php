@@ -44,9 +44,8 @@ class AccessVoter extends Voter
      * AccessVoter constructor.
      *
      * @param array $roles
-     *
-     * @codeCoverageIgnore
      */
+    #[\PHPUnit\Framework\Attributes\CodeCoverageIgnore]
     public function __construct(array $roles = [], $enabled = true)
     {
         $this->roles = array_merge([
