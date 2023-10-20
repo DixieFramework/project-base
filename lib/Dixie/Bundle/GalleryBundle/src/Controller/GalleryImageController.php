@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Talav\GalleryBundle\Repository\GalleryImageRepository;
+use Talav\ProfileBundle\Repository\UserAttributeRepository;
 
 /**
  * Class ImagesController.
@@ -45,8 +46,12 @@ class GalleryImageController extends AbstractController
     }
 
 	#[Route('', name: 'index', methods: 'GET|POST')]
-	public function indexAction(Request $request, ManagerInterface $profileManager): Response
+	public function indexAction(Request $request, ManagerInterface $profileManager, UserAttributeRepository $userAttributeRepository): Response
 	{
+        $attributes = $userAttributeRepository->findOneByUserAndCategory($profileManager->getRepository()->find(2), 'Sex');
+        dd($attributes);
+
+
         $profileRepo = $profileManager->getRepository();
 
         dd($profileRepo->findByProfileInfoStartsWith('11'));

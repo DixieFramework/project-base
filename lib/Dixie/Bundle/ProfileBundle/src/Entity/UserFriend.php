@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Talav\ProfileBundle\Entity;
 
 use Talav\Component\Resource\Model\ResourceInterface;

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Talav\ProfileBundle\Entity\UserAttribute" repository-class="Talav\ProfileBundle\Repository\UserAttributeRepository" table="user_attribute">
+    <id name="attribute" association-key="true"/>
+    <id name="profile" association-key="true"/>
+
+    <one-to-one field="attribute" target-entity="Talav\ProfileBundle\Entity\Attribute">
+      <join-column name="attribute_id" referenced-column-name="id"/>
+    </one-to-one>
+
+    <one-to-one field="profile" target-entity="Talav\ProfileBundle\Entity\ProfileInterface">
+      <join-column name="profile_id" referenced-column-name="id"/>
+    </one-to-one>
+  </entity>
+</doctrine-mapping>
