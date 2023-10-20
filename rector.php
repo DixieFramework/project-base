@@ -28,13 +28,13 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/public',
     ]);
 
-    // rules to skip
-    $rectorConfig->skip([
-//        Rector\PHPUnit\Rector\Class_\AddSeeTestAnnotationRector::class,
-        Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector::class => [
-            __DIR__ . '/src/Form/DataTransformer/EntityTransformer.php',
-        ],
-    ]);
+//    // rules to skip
+//    $rectorConfig->skip([
+////        Rector\PHPUnit\Rector\Class_\AddSeeTestAnnotationRector::class,
+//        Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector::class => [
+//            __DIR__ . '/src/Form/DataTransformer/EntityTransformer.php',
+//        ],
+//    ]);
 
     // cache
     $rectorConfig->cacheDirectory('./var/ci/rector');

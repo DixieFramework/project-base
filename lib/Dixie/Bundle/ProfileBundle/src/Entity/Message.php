@@ -210,7 +210,7 @@ class Message implements MessageInterface
     {
         $this->imageFile = $imageFile;
 
-        if (null !== $imageFile) {
+        if ($imageFile instanceof \Symfony\Component\HttpFoundation\File\File) {
             $this->updatedAt = new \DateTimeImmutable();
         }
     }

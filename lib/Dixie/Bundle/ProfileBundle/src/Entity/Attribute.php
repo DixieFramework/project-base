@@ -13,7 +13,7 @@ use Talav\ProfileBundle\Repository\AttributeRepository;
 #[ORM\Table('attribute')]
 class Attribute
 {
-    public const NAME = 'name';
+    final public const NAME = 'name';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -23,7 +23,7 @@ class Attribute
     #[ORM\Column(name: 'name', type: 'string', length: 255)]
     protected string $name;
 
-    #[ORM\ManyToOne(targetEntity: AttributeCategory::class)]
+    #[ORM\ManyToOne(targetEntity: AttributeCategory::class, inversedBy: 'attributes')]
     #[ORM\JoinColumn(name: 'attribute_category_id', referencedColumnName: 'id')]
     protected AttributeCategory $category;
 

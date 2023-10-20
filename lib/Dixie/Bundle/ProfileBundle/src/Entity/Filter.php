@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
 use Talav\ProfileBundle\Repository\FilterRepository;
+use Talav\WebBundle\Entity\Region;
 
 #[ORM\Entity(repositoryClass: FilterRepository::class)]
 #[ORM\Table('filter')]
@@ -20,29 +21,19 @@ class Filter
 
     #[ORM\OneToOne(targetEntity: Region::class)]
     #[ORM\JoinColumn(name: 'region_id', referencedColumnName: 'id')]
-    private ?Region $region;
+    protected ?Region $region = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
     #[ORM\Column(type: 'integer')]
-    private ?int $distance = 100_000;
+    protected ?int $distance = 100_000;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
     #[ORM\Column(type: 'integer')]
-    private int $minAge = 18;
+    protected int $minAge = 18;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
     #[ORM\Column(type: 'integer')]
-    private ?int $maxAge = 100;
+    protected ?int $maxAge = 100;
 
     public function __construct()
     {
-        $this->region = null;
     }
 
     public function setProfile(ProfileInterface $profile): Filter

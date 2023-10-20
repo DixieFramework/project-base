@@ -179,12 +179,12 @@ abstract class Profile implements ProfileInterface
     public function setUser(UserInterface $user): ProfileInterface
     {
         // unset the owning side of the relation if necessary
-        if ($user === null && $this->user !== null) {
+        if (!$user instanceof \Talav\Component\User\Model\UserInterface && $this->user instanceof \Talav\Component\User\Model\UserInterface) {
             $this->user->setProfile(null);
         }
 
         // set the owning side of the relation if necessary
-        if ($user !== null && $user->getProfile() !== $this) {
+        if ($user instanceof \Talav\Component\User\Model\UserInterface && $user->getProfile() !== $this) {
             $user->setProfile($this);
         }
 
@@ -210,7 +210,7 @@ abstract class Profile implements ProfileInterface
 	public function getPreferenceValue(string $name, mixed $default = null, bool $allowNull = true): bool|int|float|string|null
 	{
 		$preference = $this->getPreference($name);
-		if (null === $preference) {
+		if (!$preference instanceof \Talav\ProfileBundle\Entity\UserPreference) {
 			return $default;
 		}
 
@@ -225,7 +225,7 @@ abstract class Profile implements ProfileInterface
 	 */
 	public function addPreference(UserPreference $preference): ProfileInterface
 	{
-		if (null === $this->preferences) {
+		if (!$this->preferences instanceof \Doctrine\Common\Collections\Collection) {
 			$this->preferences = new ArrayCollection();
 		}
 
@@ -301,7 +301,7 @@ abstract class Profile implements ProfileInterface
 	{
 		$pref = $this->getPreference($name);
 
-		if (null === $pref) {
+		if (!$pref instanceof \Talav\ProfileBundle\Entity\UserPreference) {
 			$pref = new UserPreference($name);
 			$this->addPreference($pref);
 		}
@@ -311,7 +311,7 @@ abstract class Profile implements ProfileInterface
 
 	public function getPreference(string $name): ?UserPreference
 	{
-		if ($this->preferences === null) {
+		if (!$this->preferences instanceof \Doctrine\Common\Collections\Collection) {
 			return null;
 		}
 
@@ -375,10 +375,8 @@ abstract class Profile implements ProfileInterface
 
 	public function removeRequester(FriendshipRequest $requester): self
 	{
-		if ($this->requester->removeElement($requester)) {
-			if ($requester->getRequester() === $this) {
-				$requester->setRequester(null);
-			}
+		if ($this->requester->removeElement($requester) && $requester->getRequester() === $this) {
+			$requester->setRequester(null);
 		}
 
 		return $this;
@@ -404,11 +402,9 @@ abstract class Profile implements ProfileInterface
 
 	public function removeRequestee(FriendshipRequest $requestee): self
 	{
-		if ($this->requestee->removeElement($requestee)) {
-			// set the owning side to null (unless already changed)
-			if ($requestee->getRequestee() === $this) {
-				$requestee->setRequestee(null);
-			}
+		// set the owning side to null (unless already changed)
+  if ($this->requestee->removeElement($requestee) && $requestee->getRequestee() === $this) {
+			$requestee->setRequestee(null);
 		}
 
 		return $this;
@@ -434,10 +430,8 @@ abstract class Profile implements ProfileInterface
 
 	public function removeFriendship(Friendship $friendship): self
 	{
-		if ($this->friendships->removeElement($friendship)) {
-			if ($friendship->getProfile() === $this) {
-				$friendship->setProfile(null);
-			}
+		if ($this->friendships->removeElement($friendship) && $friendship->getProfile() === $this) {
+			$friendship->setProfile(null);
 		}
 
 		return $this;
@@ -536,10 +530,8 @@ abstract class Profile implements ProfileInterface
          */
         $userBlock = $this->blocks->matching($criteria)->first();
 
-        if ($this->blocks->removeElement($userBlock)) {
-            if ($userBlock->blocker === $this) {
-                $blocked->blockers->removeElement($this);
-            }
+        if ($this->blocks->removeElement($userBlock) && $userBlock->blocker === $this) {
+            $blocked->blockers->removeElement($this);
         }
     }
 
@@ -627,7 +619,7 @@ abstract class Profile implements ProfileInterface
     {
 //        Psl\invariant(!$this->isSuspended(), 'Unable to suspend an already suspended user.');
 
-        if (null !== $this->suspensions && !$this->suspensions->contains($suspension)) {
+        if ($this->suspensions instanceof \Doctrine\Common\Collections\Collection && !$this->suspensions->contains($suspension)) {
             $this->suspensions[] = $suspension;
             $suspension->setProfile($this);
         }
@@ -637,7 +629,7 @@ abstract class Profile implements ProfileInterface
 
     public function removeSuspension(Suspension $suspension): self
     {
-        if (null !== $this->suspensions && $this->suspensions->contains($suspension)) {
+        if ($this->suspensions instanceof \Doctrine\Common\Collections\Collection && $this->suspensions->contains($suspension)) {
             $this->suspensions->removeElement($suspension);
             // set the owning side to null (unless already changed)
             if ($suspension->getProfile() === $this) {

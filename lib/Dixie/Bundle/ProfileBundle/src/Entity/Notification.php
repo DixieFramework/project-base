@@ -18,7 +18,8 @@ use Talav\UserBundle\Model\UserInterface;
 #[ORM\HasLifecycleCallbacks]
 abstract class Notification implements NotificationInterface
 {
-	use ResourceTrait;
+	public $follow;
+ use ResourceTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

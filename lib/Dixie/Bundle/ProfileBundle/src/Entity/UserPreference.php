@@ -20,22 +20,22 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Serializer\ExclusionPolicy('all')]
 class UserPreference
 {
-    public const HOURLY_RATE = 'hourly_rate';
-    public const INTERNAL_RATE = 'internal_rate';
-    public const SKIN = 'skin';
-    public const LOCALE = 'language';
-    public const TIMEZONE = 'timezone';
-    public const FIRST_WEEKDAY = 'first_weekday';
-    public const WORK_HOURS_MONDAY = 'work_monday';
-    public const WORK_HOURS_TUESDAY = 'work_tuesday';
-    public const WORK_HOURS_WEDNESDAY = 'work_wednesday';
-    public const WORK_HOURS_THURSDAY = 'work_thursday';
-    public const WORK_HOURS_FRIDAY = 'work_friday';
-    public const WORK_HOURS_SATURDAY = 'work_saturday';
-    public const WORK_HOURS_SUNDAY = 'work_sunday';
-    public const WORK_STARTING_DAY = 'work_start_day';
-    public const PUBLIC_HOLIDAY_GROUP = 'public_holiday_group';
-    public const HOLIDAYS_PER_YEAR = 'holidays';
+    final public const HOURLY_RATE = 'hourly_rate';
+    final public const INTERNAL_RATE = 'internal_rate';
+    final public const SKIN = 'skin';
+    final public const LOCALE = 'language';
+    final public const TIMEZONE = 'timezone';
+    final public const FIRST_WEEKDAY = 'first_weekday';
+    final public const WORK_HOURS_MONDAY = 'work_monday';
+    final public const WORK_HOURS_TUESDAY = 'work_tuesday';
+    final public const WORK_HOURS_WEDNESDAY = 'work_wednesday';
+    final public const WORK_HOURS_THURSDAY = 'work_thursday';
+    final public const WORK_HOURS_FRIDAY = 'work_friday';
+    final public const WORK_HOURS_SATURDAY = 'work_saturday';
+    final public const WORK_HOURS_SUNDAY = 'work_sunday';
+    final public const WORK_STARTING_DAY = 'work_start_day';
+    final public const PUBLIC_HOLIDAY_GROUP = 'public_holiday_group';
+    final public const HOLIDAYS_PER_YEAR = 'holidays';
 
 //    #[ORM\Id]
 //    #[ORM\GeneratedValue]
@@ -52,7 +52,7 @@ class UserPreference
     #[Assert\Length(min: 2, max: 50)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
-    private string $name;
+    private readonly string $name;
 
 //    #[ORM\Column(name: 'value', type: 'string', length: 255, nullable: true)]
     #[Assert\Length(max: 250)]

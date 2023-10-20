@@ -23,7 +23,7 @@ class Suspension implements ResourceInterface
 	use TimestampableTrait;
     use ResourceTrait;
 
-	public const REASON_DEFAULT = 'Inappropriate behavior';
+	final public const REASON_DEFAULT = 'Inappropriate behavior';
 
     #[ORM\ManyToOne(targetEntity: ProfileInterface::class, inversedBy: 'suspensions')]
     #[ORM\JoinColumn(nullable: false)]
@@ -124,7 +124,7 @@ class Suspension implements ResourceInterface
     public function setSuspendedUntil(?DateTimeInterface $suspendedUntil): self
     {
         $this->suspendedUntil = match (true) {
-            null !== $suspendedUntil => \DateTimeImmutable::createFromInterface($suspendedUntil),
+            $suspendedUntil instanceof \DateTimeInterface => \DateTimeImmutable::createFromInterface($suspendedUntil),
             default => null
         };
 
@@ -163,7 +163,7 @@ class Suspension implements ResourceInterface
 
     public function addReason($reason): self
     {
-        $reason = strtoupper($reason);
+        $reason = strtoupper((string) $reason);
         if (!in_array($reason, $this->reasons, true)) {
             $this->reasons[] = $reason;
         }
