@@ -38,11 +38,11 @@ class SearchFormType extends AbstractType
     {
         $builder
             ->setMethod('GET')
-            ->add('location', TextType::class, [
-                'label' => 'landing.whereyougo',
-                'error_bubbling' => true,
-                'help' => 'search.locations.help',
-            ])
+//            ->add('location', TextType::class, [
+//                'label' => 'landing.whereyougo',
+//                'error_bubbling' => true,
+//                'help' => 'search.locations.help',
+//            ])
             ->add('keywords', TextType::class, [
                 'label' => 'texttofind',
                 'required' => false,
@@ -51,7 +51,7 @@ class SearchFormType extends AbstractType
             ->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'preSubmit'])
         ;
 
-        $this->addHiddenFields($builder);
+//        $this->addHiddenFields($builder);
         $this->addCheckboxes($builder);
         $this->addVariableSelects($builder, $options);
         $this->addAgeAndGenderSelects($builder);
@@ -74,9 +74,9 @@ class SearchFormType extends AbstractType
             ],
             'translation_domain' => 'messages',
             'allow_extra_fields' => true,
-            'error_mapping' => [
-                '.' => 'location',
-            ],
+//            'error_mapping' => [
+//                '.' => 'location',
+//            ],
         ]);
     }
 
@@ -115,8 +115,6 @@ class SearchFormType extends AbstractType
             $choices = ['search.see_map' => -1] + $choices;
         }
         $form->add('distance', ChoiceType::class, [
-            'autocomplete' => true,
-            'plugins' => [],
             'choices' => $choices,
             'label' => 'label.radius',
         ]);
@@ -170,14 +168,12 @@ class SearchFormType extends AbstractType
                 'label' => 'groups',
                 'multiple' => true,
                 'required' => false,
-                'autocomplete' => true,
             ])
             ->add('languages', ChoiceType::class, [
                 'choices' => $languages,
                 'label' => 'languages',
                 'multiple' => true,
                 'required' => false,
-                'autocomplete' => true,
             ]);
     }
 
@@ -193,24 +189,18 @@ class SearchFormType extends AbstractType
         }
         $formBuilder
             ->add('min_age', ChoiceType::class, [
-                'autocomplete' => true,
-                'plugins' => [],
                 'choices' => $minAgeArray,
                 'choice_translation_domain' => false,
                 'label' => 'findpeopleminimumage',
                 'translation_domain' => 'messages',
             ])
             ->add('max_age', ChoiceType::class, [
-                'autocomplete' => true,
-                'plugins' => [],
                 'choices' => $maxAgeArray,
                 'choice_translation_domain' => false,
                 'label' => 'findpeoplemaximumage',
                 'translation_domain' => 'messages',
             ])
             ->add('gender', ChoiceType::class, [
-                'autocomplete' => true,
-                'plugins' => [],
                 'choices' => [
                     'any' => null,
                     'male' => 1,
@@ -228,8 +218,6 @@ class SearchFormType extends AbstractType
         $formBuilder
             ->add('can_host', ChoiceType::class, [
                 'label' => 'searchcanhostatleast',
-                'autocomplete' => true,
-                'plugins' => [],
                 'choices' => [
                     1 => '1',
                     2 => '2',
@@ -244,8 +232,6 @@ class SearchFormType extends AbstractType
             ])
             ->add('last_login', ChoiceType::class, [
                 'label' => 'search.filter.last.login',
-                'autocomplete' => true,
-                'plugins' => [],
                 'choices' => [
                     'search.filter.last.login.1month' => 1,
                     'search.filter.last.login.2months' => 2,
@@ -259,8 +245,6 @@ class SearchFormType extends AbstractType
             ])
             ->add('order', ChoiceType::class, [
                 'label' => 'label.order',
-                'autocomplete' => true,
-                'plugins' => [],
                 'choices' => [
                     'search.order.accommodation' => self::ORDER_ACCOM,
                     'search.order.distance' => self::ORDER_DISTANCE,
@@ -273,8 +257,6 @@ class SearchFormType extends AbstractType
             ])
             ->add('direction', ChoiceType::class, [
                 'label' => 'label.direction',
-                'autocomplete' => true,
-                'plugins' => [],
                 'choices' => [
                     'search.direction.descending' => self::DIRECTION_DESCENDING,
                     'search.direction.ascending' => self::DIRECTION_ASCENDING,
@@ -282,8 +264,6 @@ class SearchFormType extends AbstractType
             ])
             ->add('items', ChoiceType::class, [
                 'label' => 'label.items',
-                'autocomplete' => true,
-                'plugins' => [],
                 'choices' => [
                     5 => 5,
                     10 => 10,

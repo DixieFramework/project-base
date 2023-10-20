@@ -6,7 +6,9 @@ namespace Talav\ProfileBundle\Controller;
 
 use App\Entity\Member;
 use App\Entity\Preference;
+use Talav\Component\User\Model\UserInterface;
 use Talav\ProfileBundle\Entity\ProfileInterface;
+use Talav\ProfileBundle\Entity\UserPreference;
 use Talav\ProfileBundle\Form\Model\SearchFormRequest;
 use App\Form\MapSearchFormType;
 use App\Pagerfanta\SearchAdapter;
@@ -98,23 +100,15 @@ class SearchController extends AbstractController
         $pager = null;
         $results = null;
 
-        /** @var Member $member */
-        $member = $this->getUser();
+        /** @var ProfileInterface $member */
+        $member = $this->getUser()->getProfile();
 
-        $preferenceRepository = $this->entityManager->getRepository(Preference::class);
+        $preferenceRepository = $this->entityManager->getRepository(UserPreference::class);
 
-        /** @var Preference $showMapPreference */
-        $showMapPreference = $preferenceRepository->findOneBy(['codename' => Preference::SHOW_MAP]);
-        $showMap = $member->getMemberPreferenceValue($showMapPreference);
+        $showMap = $member->getPreferenceValue(UserPreference::SHOW_MAP, false);
+        $showOptions = $member->getPreferenceValue(UserPreference::SHOW_SEARCH_OPTIONS, false);
 
-        /** @var Preference $showOptionsPreference */
-        $showOptionsPreference = $preferenceRepository->findOneBy(['codename' => Preference::SHOW_SEARCH_OPTIONS]);
-        $showOptions = $member->getMemberPreferenceValue($showOptionsPreference);
-
-        /** @var Preference $storedSearchFilter */
-        $searchOptionsPreference = $preferenceRepository->findOneBy(['codename' => Preference::SEARCH_OPTIONS]);
-        $memberSearchOptionsPreference = $member->getMemberPreference($searchOptionsPreference);
-        $searchOptions = $memberSearchOptionsPreference->getValue();
+	    $searchOptions = $member->getPreferenceValue(UserPreference::SEARCH_OPTIONS, '');
 
         if ("" !== $searchOptions) {
             $searchFormRequest = unserialize($searchOptions);
@@ -130,9 +124,7 @@ class SearchController extends AbstractController
         $tiny = $formFactory->createNamed('tiny', SearchFormType::class, $searchFormRequest);
         $home = $formFactory->createNamed('home', SearchFormType::class, $searchFormRequest);
         /** @var FormInterface $search */
-        $search = $formFactory->createNamed('search', SearchFormType::class, $searchFormRequest, [
-            'groups' => $member->getGroups(),
-            'languages' => $member->getLanguages(),
+        $search = $formFactory->createNamed('', SearchFormType::class, $searchFormRequest, [
             'search_options' => $searchOptions,
         ]);
 
@@ -172,16 +164,18 @@ class SearchController extends AbstractController
 
                 // serialize the search options and store them in the preference
                 $searchOptions = serialize($searchFormRequest);
-                $memberSearchOptionsPreference->setValue($searchOptions);
-                $em->persist($memberSearchOptionsPreference);
+                $member->setPreferenceValue(UserPreference::SEARCH_OPTIONS, $searchOptions);
+                $em->persist($member);
             }
-            $memberShowMapPreference = $member->getMemberPreference($showMapPreference);
-            $memberShowMapPreference->setValue($data->show_map ? 'Yes' : 'No');
-            $memberShowOptionsPreference = $member->getMemberPreference($showOptionsPreference);
-            $memberShowOptionsPreference->setValue($data->show_options ? 'Yes' : 'No');
-            $em->persist($memberShowMapPreference);
-            $em->persist($memberShowOptionsPreference);
-            $em->flush();
+
+			/** @var UserPreference $memberShowMapPreference */
+//            $memberShowMapPreference = $member->getPreference(UserPreference::SHOW_MAP);
+//            $memberShowMapPreference->setValue($data->show_map ? 'Yes' : 'No');
+//            $memberShowOptionsPreference = $member->getPreference(UserPreference::SHOW_SEARCH_OPTIONS);
+//            $memberShowOptionsPreference->setValue($data->show_options ? 'Yes' : 'No');
+//            $em->persist($memberShowMapPreference);
+//            $em->persist($memberShowOptionsPreference);
+//            $em->flush();
 
             $searchAdapter = new SearchAdapter(
                 $data,
@@ -208,7 +202,7 @@ class SearchController extends AbstractController
             $search->get('location')->submit($viewData->location);
         }
 
-        return $this->render('search/searchlocations.html.twig', [
+        return $this->render('@TalavProfile/search/locations.html.twig', [
             'form' => $search->createView(),
             'pager' => $pager,
             'routeName' => 'search_members_ajax',

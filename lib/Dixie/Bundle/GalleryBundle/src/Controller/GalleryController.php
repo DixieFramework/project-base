@@ -16,7 +16,9 @@ use Talav\CoreBundle\Controller\AbstractController;
 use Talav\CoreBundle\Interfaces\RoleInterface;
 use Talav\GalleryBundle\Entity\Gallery;
 use Talav\GalleryBundle\Entity\GalleryImage;
+use Talav\GalleryBundle\Form\Model\SearchFormModel;
 use Talav\GalleryBundle\Form\Type\GalleryType;
+use Talav\GalleryBundle\Form\Type\SearchGalleryImageFormType;
 use Talav\GalleryBundle\Repository\GalleryRepository;
 use Talav\GalleryBundle\Repository\GalleryImageRepository;
 use Talav\GalleryBundle\Voter\GalleryVoter;
@@ -97,9 +99,26 @@ class GalleryController extends AbstractController
             $gallery->coverImage = $this->entityManager->getRepository(GalleryImage::class)->findLastFromGallery($gallery);
         }
 
+		// Search form
+	    $searchOptions = [];
+
+	    $searchFormRequest = new SearchFormModel();
+	    $searchFormRequest->overrideFromRequest($request);
+
+	    $formFactory = $this->container->get('form.factory');
+	    $search = $formFactory->createNamed('search', SearchGalleryImageFormType::class, $searchFormRequest, [
+		    'search_options' => $searchOptions,
+	    ]);
+dd($search->createView());
+	    $search->handleRequest($request);
+	    if ($search->isSubmitted() && $search->isValid()) {
+		    $data = $search->getData();
+		    dd($data);
+	    }
 
         return $this->render('@TalavGallery/gallery/index.html.twig', [
             'galleries' => $galleries,
+	        'form' => $search->createView()
         ]);
 
 

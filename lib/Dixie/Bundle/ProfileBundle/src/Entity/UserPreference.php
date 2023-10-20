@@ -37,6 +37,10 @@ class UserPreference
     final public const PUBLIC_HOLIDAY_GROUP = 'public_holiday_group';
     final public const HOLIDAYS_PER_YEAR = 'holidays';
 
+	public const SHOW_MAP = 'PreferenceShowMap';
+	public const SHOW_SEARCH_OPTIONS = 'PreferenceShowSearchOptions';
+	public const SEARCH_OPTIONS = 'SearchOptions';
+
 //    #[ORM\Id]
 //    #[ORM\GeneratedValue]
 //    #[ORM\Column(name: 'id', type: 'integer')]

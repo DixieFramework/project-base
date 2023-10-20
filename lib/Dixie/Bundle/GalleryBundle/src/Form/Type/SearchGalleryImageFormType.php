@@ -40,7 +40,7 @@ class SearchGalleryImageFormType extends AbstractType
 		    ->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'preSubmit'])
 	    ;
 
-	    //$this->addAgeAndGenderSelects($builder);
+	    $this->addAgeAndGenderSelects($builder);
     }
 
 	protected function addAgeAndGenderSelects(FormBuilderInterface $formBuilder)
@@ -98,7 +98,7 @@ class SearchGalleryImageFormType extends AbstractType
 				->add('resetOptions', SubmitType::class, [
 					'label' => 'search.options.reset',
 					'attr' => [
-						'class' => 'o-button o-button--outline mr-1',
+						'class' => 'btn btn-secondary mr-1',
 					]
 				])
 			;
@@ -113,7 +113,7 @@ class SearchGalleryImageFormType extends AbstractType
 				->add('resetOptions', SubmitType::class, [
 					'label' => 'search.options.reset',
 					'attr' => [
-						'class' => 'o-button o-button--outline mr-1',
+						'class' => 'btn btn-secondary-outline mr-1',
 					]
 				])
 			;
@@ -129,7 +129,6 @@ class SearchGalleryImageFormType extends AbstractType
 			'search_options' => null,
 			'translation_domain' => 'TalavGalleryBundle',
 			'allow_extra_fields' => true,
-            'block_prefix' => 'lol'
 		]);
 	}
 

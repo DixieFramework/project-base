@@ -5,6 +5,41 @@
 {%- block titre '' -%}
 
 {% block body %}
+    <style type="text/css">
+	    .img-content-overlay {
+		    position: relative;
+		    background-position: center center;
+		    background-size: cover;
+	    }
+	    .img-content-caption > p {
+		    margin-bottom: 0;
+	    }
+	    .img-content-caption {
+		    color: #fff;
+	    }
+	    .img-content-overlay .img-content-caption {
+		    position: absolute;
+		    bottom: 1rem;
+		    padding: 1rem;
+		    left: 0;
+		    right: 0;
+		    background: rgb(15,36,57,.8);
+	    }
+	    .img-content-overlay-light .img-content-caption {
+		    color: #0f2439;
+	    }
+	    .img-content-overlay-light .img-content-caption {
+		    position: absolute;
+		    bottom: 1rem;
+		    padding: 1rem;
+		    left: 0;
+		    right: 0;
+		    background: rgb(255,255,255,.9);
+	    }
+
+
+    </style>
+
 {#    {% if block('page_title') is defined %}#}
     <!-- Author list title START -->
     <div class="row g-4 pb-4">
@@ -51,7 +86,7 @@
                     <div class="col-6 col-lg-3">
                         <!-- Album poster -->
                         <a href="{{ url('talav_gallery_preview', {'id': gallery.id}) }}">
-                            <img class="rounded img-fluid" src="{{ asset(gallery.coverImage.image.filePath)|imagine_filter('gallery_image_filter_small') }}" alt="">
+                            <img class="rounded img-fluid" src="{% if gallery.coverImage %}{{ asset(gallery.coverImage.image.filePath)|imagine_filter('gallery_image_filter_small') }}{% else %}{% endif %}" alt="">
                         </a>
 
                         <!-- Album name -->
@@ -93,7 +128,9 @@
             </div>
         </div>
         <div class="col-lg-3">
-
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
         </div>
     </div>
 

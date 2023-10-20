@@ -1,0 +1,238 @@
+{% extends '@TalavWeb/layouts/with_widget.html.twig' %}
+{# parameters #}
+{%- set form_attr = form_attr|default({})|merge({'id': 'edit-form', 'data-save': 'common.save_data'|trans, 'class': 'position-relative'}) -%}
+{# container #}
+{% block start_card_container %}
+    {{ parent() -}}
+    {% block start_form %}
+        {{ form_start(form, {'attr': form_attr}) }}
+    {% endblock %}
+{% endblock %}
+{# end container #}
+{% block end_card_container -%}
+    {% block end_form -%}{{ form_end(form, {'render_rest': false}) }}{%- endblock %}
+    {{ parent() }}
+{%- endblock %}
+{%- set status_bar = true -%}
+{% block container_class 'container mt-n4' %}
+{%- block content_container_class ' col-lg-8 col-xl-8 offset-xl-1' -%}
+{%- block sidebar_container_class ' col-lg-4 col-xl-3' -%}
+{%- block titre '' -%}
+{% block card_sidebar %}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form, {'render_rest': false}) }}
+
+{% endblock %}
+{% block title %}Друзья {{ user.username }}{% endblock %}
+{#{% block breadcrumbs %}#}
+{#    {{ wapinet_breadcrumbs({#}
+{#        1: {'uri': path('wapinet_users'), 'title': 'Пользователи'},#}
+{#        2: {'uri': path('wapinet_user_profile', {'username': user.username}), 'title': user.username}#}
+{#    }) }}#}
+{#{% endblock %}#}
+
+{% block body %}
+
+    <div class="card border">
+        <!-- Card header START -->
+        <div class="card-header border-bottom p-3">
+
+        </div>
+        <!-- Card header END -->
+
+        <!-- Card body START -->
+        <div class="card-body py-3">
+
+            {{ form_start(form, {'attr': {'class': 'm-1 search_form', 'onkeypress': 'return event.keyCode != 13;'}}) }}
+            {{ form_errors(form) }}
+{#            {{ form_label(form.location) }}#}
+{#            <div class="auto-search-wrapper max-height loupe">#}
+{#                <input type="text" id="{{ form.location.vars.id}}" name="{{ form.location.vars.full_name }}"#}
+{#                       class="o-input js-location-picker" autocomplete="off"#}
+{#                       placeholder="{{ 'trip.leg.location'|trans }}"#}
+{#                       aria-label="{{ 'trip.leg.location'|trans }}"#}
+{#                       {% if form.location.vars.value %}value="{{ form.location.vars.value }}"{% endif %}#}
+{#                >#}
+{#            </div>#}
+{#            <div class="u-block">{{ form_errors(form.location) }}</div>#}
+{#            <div class="u-mb-8">{{ form_help(form.location) }}</div>#}
+{#            {% do form.location.setRendered %}#}
+            <div class="row mb-3">
+                <div class="u-flex u-justify-start ml-3">
+                    {{ form_row(form.show_options, {'label_attr': {'class':'switch-custom'}, 'attr': {'class':'show_options mr-3'}}) }}<span class="mr-3"></span>
+                    {{ form_row(form.show_map, {'label_attr': {'class':'switch-custom'}, 'attr': {'class':'show_map'}}) }}
+                </div>
+                <div id="search_options"
+                     class="col-12 {% if form.show_options.vars.checked %}d-block{% else %}d-none{% endif %}">
+                    <div class="form-row">
+                        <div class="col-sm-4">
+                            <div class="row no-gutters">
+                                <div class="col-12 mb-2">
+                                    <span class="font-weight-bolder">{{ 'accommodation'|trans }}</span>
+                                </div>
+                                <div class="col-12">
+                                    {{ form_row(form.accommodation_anytime) }}
+                                </div>
+                                <div class="col-12">
+                                    {{ form_row(form.accommodation_neverask) }}
+                                </div>
+                                <div class="col-12">
+                                    {{ form_row(form.accessible) }}
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <span class="font-weight-bolder">{{ 'profile.information'|trans }}</span>
+                                </div>
+                                <div class="col-12">
+                                    {{ form_row(form.profile_picture) }}
+                                </div>
+                                <div class="col-12">
+                                    {{ form_row(form.about_me) }}
+                                </div>
+                                <div class="col-12">
+                                    {{ form_row(form.has_comments) }}
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <span class="font-weight-bolder">{{ 'restrictions'|trans }}</span>
+                                </div>
+                                <div class="col-12">
+                                    {{ form_row(form.no_alcohol) }}
+                                </div>
+                                <div class="col-12">
+                                    {{ form_row(form.no_smoking) }}
+                                </div>
+                                <div class="col-12">
+                                    {{ form_row(form.no_drugs) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="row no-gutters">
+                                <div class="col-12">
+                                    {{ form_row(form.can_host) }}
+                                </div>
+                                <div class="col-12">
+                                    {{ form_row(form.keywords) }}
+                                </div>
+                                <div class="col-12">
+                                    {{ form_row(form.groups) }}
+                                </div>
+                                <div class="col-12">
+                                    {{ form_row(form.languages) }}
+                                </div>
+                                <div class="col-12">
+                                    {{ form_row(form.last_login) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="row no-gutters">
+                                <div class="col-12">
+                                    {{ form_row(form.distance) }}
+                                </div>
+                                <div class="col-12">
+                                    {{ form_row(form.min_age) }}
+                                </div>
+                                <div class="col-12">
+                                    {{ form_row(form.max_age) }}
+                                </div>
+                                <div class="col-12">
+                                    {{ form_row(form.gender) }}
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <span class="font-weight-bolder">{{ 'offers'|trans }}</span>
+                                </div>
+                                <div class="col-12">
+                                    {{ form_row(form.offerdinner) }}
+                                </div>
+                                <div class="col-12">
+                                    {{ form_row(form.offertour) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            {{ form_row(form.order) }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ form_row(form.direction) }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ form_row(form.items) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="u-flex u-justify-end">
+                        {% if form.resetOptions is defined %}
+                            {{ form_widget(form.resetOptions) }}
+                        {% endif %}
+                        {{ form_widget(form.updateMap) }}
+                    </div>
+                </div>
+            </div>
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
+
+
+            {% if profiles is defined %}
+
+                {% for profile in profiles %}
+
+                    {{ profile.username }}
+
+                {% endfor %}
+
+            {% endif %}
+
+        </div>
+        <!-- Card body END -->
+
+        <!-- Card Footer START -->
+        <div class="card-footer p-3">
+
+        </div>
+        <!-- Card Footer END -->
+    </div>
+
+    <div class="pagerfanta">
+        {#        {{ pagerfanta(pagerfanta) }}#}
+    </div>
+
+{#    <script type="text/javascript">#}
+{#        // $(document).ready(function () {#}
+{#        //     $('#tab-link-4').tab('show');#}
+{#        // });#}
+{#	    (function (jQuery) {#}
+{#            $('#tab-link-4').tab('show');#}
+{#		});#}
+{#    </script>#}
+{% endblock body %}
+
+{% block javascripts %}
+{{ parent() }}
+{#    {{- asset_js('js/application/tab_remember.js') }}#}
+{#    {{- asset_js('js/application/register_events.js') }}#}
+{% endblock %}
+
+{% block js %}
+    <script>
+		$(function () {
+			$(".show_options").click(function(){
+				$("#search_options").toggleClass("d-block").toggleClass("d-none");
+				$(".search").toggleClass("d-block").toggleClass("d-none");
+			});
+
+			if ($(".show_map").is(":checked")) {
+				map.showMap();
+			}
+			$(".show_map").click(function(){
+				if ($(this).is(":checked")) {
+					map.showMap();
+				} else {
+					map.hideMap();
+				}
+			});
+		});
+    </script>
+{% endblock %}

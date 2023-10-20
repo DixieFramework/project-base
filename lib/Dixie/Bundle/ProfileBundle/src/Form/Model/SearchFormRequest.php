@@ -20,17 +20,17 @@ use Talav\ProfileBundle\Form\Type\SearchFormType;
  */
 class SearchFormRequest
 {
-    /**
-     * @var string
-     */
-    #[Assert\NotNull(message: 'search.location.invalid', groups: ['text-search'])]
-    public $location;
+//    /**
+//     * @var string
+//     */
+//    #[Assert\NotNull(message: 'search.location.invalid', groups: ['text-search'])]
+//    public $location;
 
-    /**
-     * @var int
-     */
-    #[Assert\NotNull(message: 'search.location.dropdown', groups: ['text-search'])]
-    public $location_fullname;
+//    /**
+//     * @var int
+//     */
+//    #[Assert\NotNull(message: 'search.location.dropdown', groups: ['text-search'])]
+//    public $location_fullname;
 
     public $location_name;
 
@@ -159,30 +159,30 @@ class SearchFormRequest
     /** @var int */
     public $items = 20;
 
-    #[Assert\IsTrue(message: 'search.location.invalid', groups: ['text-search'])]
-    public function isLocationValid()
-    {
-        // Check if the form was submitted through the map javascript
-        $showOnMap = (bool) ($this->showOnMap);
-        if (true === $showOnMap) {
-            return true;
-        }
-
-        if (empty($this->location)) {
-            // Empty location is never correct
-            return false;
-        }
-        // Check if $location_geoname_id, $location_latitude and $location_longitude are set
-        if (0 !== $this->location_geoname_id && $this->location_latitude && $this->location_longitude) {
-            // The searchpicker set all necessary information
-            return true;
-        }
-
-        // Searchpicker didn't get a chance to set the location information
-        // \todo Try to find one based on the entered information in the location field
-
-        return false;
-    }
+//    #[Assert\IsTrue(message: 'search.location.invalid', groups: ['text-search'])]
+//    public function isLocationValid()
+//    {
+//        // Check if the form was submitted through the map javascript
+//        $showOnMap = (bool) ($this->showOnMap);
+//        if (true === $showOnMap) {
+//            return true;
+//        }
+//
+//        if (empty($this->location)) {
+//            // Empty location is never correct
+//            return false;
+//        }
+//        // Check if $location_geoname_id, $location_latitude and $location_longitude are set
+//        if (0 !== $this->location_geoname_id && $this->location_latitude && $this->location_longitude) {
+//            // The searchpicker set all necessary information
+//            return true;
+//        }
+//
+//        // Searchpicker didn't get a chance to set the location information
+//        // \todo Try to find one based on the entered information in the location field
+//
+//        return false;
+//    }
 
     #[Assert\IsTrue(message: 'search.accommodation.invalid', groups: ['text-search'])]
     public function isAccommodationValid()
