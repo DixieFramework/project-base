@@ -2,6 +2,10 @@
 
 /* globals Toaster, bootstrap */
 
+function getIntIdFromElement(element) {
+    return element.id.substring(element.id.lastIndexOf("-") + 1);
+}
+
 /**
  * Ready function
  */

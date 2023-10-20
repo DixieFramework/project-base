@@ -6,10 +6,12 @@ namespace Talav\WebBundle\Controller;
 
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Talav\CoreBundle\Controller\BaseController;
+use Talav\CoreBundle\Form\User\UserLoginType;
 use Talav\CoreBundle\Traits\EventDispatcherAwareTrait;
 use Talav\CoreBundle\Traits\KernelAwareTrait;
 use Talav\WebBundle\Event\BuildJsEvent;
@@ -180,6 +182,33 @@ class JsController extends BaseController
     }
 
     /**
+     * Return the edit item dialog template.
+     */
+    #[Route(path: '/ajax/dialog', name: 'ajax_dialog', methods: [Request::METHOD_GET, Request::METHOD_POST])]
+    public function renderModal(): JsonResponse
+    {
+        $parameters = [
+            'form' => $this->createForm(UserLoginType::class),
+        ];
+
+        //return $this->render('@TalavWeb/test/tags_edit.html.twig', ['form' => $this->createForm(UserLoginType::class)->createView()]);
+        return $this->renderDialog('@TalavWeb/test/tags_edit.html.twig', $parameters);
+    }
+
+    /**
+     * Return the edit item dialog template.
+     */
+    #[Route(path: '/ajax/dialog/item', name: 'ajax_dialog_item', methods: Request::METHOD_GET)]
+    public function renderItemDialog(): JsonResponse
+    {
+        $parameters = [
+            'form' => $this->createForm(UserLoginType::class),
+        ];
+
+        return $this->renderDialog('@TalavWeb/dialog/dialog_edit_item.html.twig', $parameters);
+    }
+
+    /**
      * Build a JS header for the Mautic embedded JS.
      *
      * @return string
@@ -197,5 +226,10 @@ class JsController extends BaseController
  * @license     GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  */
 JS;
+    }
+
+    private function renderDialog(string $view, array $parameters): JsonResponse
+    {
+        return $this->json($this->renderView($view, $parameters));
     }
 }

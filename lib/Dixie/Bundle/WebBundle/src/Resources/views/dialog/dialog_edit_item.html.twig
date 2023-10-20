@@ -1,0 +1,109 @@
+{# Modal dialog to edit a calculation item #}
+{% extends '@TalavWeb/dialog/dialog_edit.html.twig' %}
+{# parameters #}
+{#{%- set icon = ICON_PRODUCT -%}#}
+{%- set form_prefix = 'item' -%}
+{%- set add_title = 'calculationitem.add.title'|trans -%}
+{%- set edit_title = 'calculationitem.edit.title'|trans -%}
+{# body #}
+{% block modal_body %}
+<div class="row" id="item_search_row">
+    <div class="col-md-4 form-group mb-3">
+        <input type="search" class="form-control" id="item_search_input" name="item_search_input" aria-label="{{ 'list.search_placeholder'|trans }}" placeholder="{{ 'list.search_placeholder'|trans }}">
+    </div>
+</div>
+
+    <form id="item_form" autocomplete="off" data-add="New article" data-edit="Editing an article" novalidate="novalidate">
+        <div class="modal-header cursor-move">
+            <h1 class="modal-title fs-5" id="item_modal"><i class="fa-regular fa-file-alt"></i>&nbsp;<span class="dialog-title">New article</span></h1>    <button type="button" class="btn-close" data-bs-dismiss="modal" data-bs-target="#item_modal" aria-label="Close" title="Close">
+            </button>
+
+        </div>
+        <div class="modal-body">
+            <div class="row" id="item_search_row">
+                <div class="col-md-4 form-group mb-3">
+                    <input type="search" class="form-control" id="item_search_input" name="item_search_input" aria-label="To research" placeholder="To research"><div class="typeahead dropdown-menu" role="listbox"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3 form-group"><label for="item_description" class="form-label required">Description</label><input type="text" id="item_description" name="item[description]" required="required" class="form-control">        </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="mb-3 form-group"><label class="form-label required" for="item_category">Category</label><select id="item_category" name="item[category]" class="form-select"><optgroup label="llllllll">
+                                <option value="1" data-group-id="1" data-group-code="llllllll">3e33e3e</option></optgroup></select>        </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3 form-group"><label for="item_unit" class="form-label">Unit</label><input type="text" id="item_unit" name="item[unit]" maxlength="15" class="form-control"><div class="typeahead dropdown-menu" role="listbox"></div>        </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="mb-3 form-group"><label for="item_price" class="form-label required">Price</label><input type="number" id="item_price" name="item[price]" required="required" class="text-end form-control" inputmode="decimal" scale="2" step="any">        </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3 form-group"><label for="item_quantity" class="form-label required">Quantity</label><input type="number" id="item_quantity" name="item[quantity]" required="required" class="text-end form-control" inputmode="decimal" scale="2" step="any">        </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mb-3">
+                        <span class="form-label">Total</span>
+                        <div id="item_total" class="form-control-plaintext form-control-readonly text-end">1.00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer align-items-start">
+            <input type="submit" role="button" id="item_submit_button" class="btn btn-form btn-primary" value="OK">
+            <input type="button" role="button" id="item_cancel_button" class="btn btn-form btn-secondary" value="Cancel" data-bs-dismiss="modal">
+            <input type="button" role="button" id="item_delete_button" class="btn btn-form btn-outline-danger" value="DELETE" style="display: none;">
+            <small class="flex-grow-1 text-sm-end"><span class="text-danger">*</span> = Required value</small>
+        </div>
+    </form>
+
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.username) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            {{ form_row(form.password) }}
+        </div>
+{#        <div class="col-md-4">#}
+{#            {{ form_row(form.unit) }}#}
+{#        </div>#}
+    </div>
+{#<div class="row">#}
+{#    <div class="col">#}
+{#        {{ form_row(form.description) }}#}
+{#    </div>#}
+{#</div>#}
+{#<div class="row">#}
+{#    <div class="col-md-8">#}
+{#        {{ form_row(form.category) }}#}
+{#    </div>#}
+{#    <div class="col-md-4">#}
+{#        {{ form_row(form.unit) }}#}
+{#    </div>#}
+{#</div>#}
+{#<div class="row">#}
+{#    <div class="col-md-4">#}
+{#        {{ form_row(form.price) }}#}
+{#    </div>#}
+{#    <div class="col-md-4">#}
+{#        {{ form_row(form.quantity) }}#}
+{#    </div>#}
+{#    <div class="col-md-4">#}
+{#        <div class="form-group mb-3">#}
+{#            <span class="form-label">{{ 'calculationitem.fields.total'|trans }}</span>#}
+{#            <div id="item_total" class="form-control-plaintext form-control-readonly text-end">{{ 0|amount }}</div>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+{% endblock %}
+{#  buttons #}
+{% block modal_buttons %}
+<input type="button" role="button" id="item_delete_button" class="btn btn-form btn-outline-danger" value="{{ 'common.button_delete'|trans }}">
+{% endblock %}

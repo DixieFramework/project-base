@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Talav\CoreBundle\Twig\Extension;
 
 use Talav\CoreBundle\Twig\Runtime\CoreExtensionRuntime;
+use Talav\CoreBundle\Utils\ColorUtils;
 use Talav\CoreBundle\Utils\Truncator;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -86,6 +87,11 @@ final class CoreExtension extends AbstractExtension
 //            new TwigFilter('filter', [$this, 'filterFunc'], ['needs_environment' => true]),
 //            new TwigFilter('map', [$this, 'mapFunc'], ['needs_environment' => true]),
 //            new TwigFilter('reduce', [$this, 'reduceFunc'], ['needs_environment' => true]),
+
+              // design
+              new TwigFilter('colorize', [$this, 'colorize']),
+              new TwigFilter('font_contrast', [$this, 'calculateFontContrastColor']),
+              new TwigFilter('default_color', [$this, 'defaultColor']),
         ];
     }
     public function getFunctions(): array
@@ -161,5 +167,36 @@ final class CoreExtension extends AbstractExtension
     public static function safeTruncateHtml($text, $length = 25, $ellipsis = '...')
     {
         return Truncator::truncateWords($text, $length, $ellipsis);
+    }
+
+    public function colorize(?string $color, ?string $identifier = null, ?string $fallback = null): string
+    {
+        if ($color !== null) {
+            return $color;
+        }
+
+        if ($this->randomColors === null) {
+            $this->randomColors = false;//$this->configuration->isThemeRandomColors();
+        }
+
+        if ($this->randomColors) {
+            return (new ColorUtils())->getRandom($identifier);
+        }
+
+        if ($fallback !== null) {
+            return $fallback;
+        }
+
+        return ColorUtils::DEFAULT_COLOR;
+    }
+
+    public function calculateFontContrastColor(string $color): string
+    {
+        return (new ColorUtils())->getFontContrastColor($color);
+    }
+
+    public function defaultColor(?string $color = null): string
+    {
+        return $color ?? ColorUtils::DEFAULT_COLOR;
     }
 }

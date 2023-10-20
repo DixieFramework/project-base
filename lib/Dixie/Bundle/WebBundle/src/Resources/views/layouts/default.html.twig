@@ -1,5 +1,14 @@
 {% extends '@TalavWeb/base.html.twig' %}
 
+{% block after_body_start %}
+    {% embed '@TalavWeb/embeds/modal.html.twig' %}
+        {% block modal_id %}remote_form_modal{% endblock %}
+        {% block modal_title %}{% endblock %}
+        {% block modal_body %}{% endblock %}
+        {% block modal_footer %}{% endblock %}
+    {% endembed %}
+{% endblock %}
+
 {% block layout %}
     {% block layout_header '' %}
     <div class="{% block container_class 'container' %}" id="{% block page_id 'page' %}">

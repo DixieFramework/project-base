@@ -102,6 +102,7 @@ _______     __  _   _ _____ _____ _    _ _______
 </head>
 {#<body itemscope itemtype="http://schema.org/WebPage">#}
 <body{% if status_bar %} class="status-bar"{% endif %} data-cookie-path="{{ cookie_path }}">
+{% block after_body_start %}{% endblock %}
 {# vertical navigation #}
 {%- block navigation_vertical -%}
     {{- include('@TalavWeb/navigation/vertical/navigation.html.twig') }}
@@ -247,6 +248,10 @@ _______     __  _   _ _____ _____ _    _ _______
 {# java scripts #}
 <noscript>{{ 'common.no_script_support'|trans }}</noscript>
 {% block javascripts %}
+
+
+
+
     {% if app.debug %}
 {#        {{- asset_js('js/vendor/jquery/jquery.js') }}#}
 {#        {{- asset_js('js/vendor/bootstrap/js/bootstrap.bundle.js') }}#}

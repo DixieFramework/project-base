@@ -4,6 +4,7 @@
 {%- set enabled = app.user ? app.user.enabled() : false -%}
 {#{%- set enabled = app.user and app.user.enabled() -%}#}
 {%- set show_navigation_search = enabled -%}
+{%- set editable = true -%}
 {%- block titre  '' -%}
 {# show body #}
 {% block body -%}
@@ -28,6 +29,9 @@
                     </a>
                 </ul>
             </div>
+
+            <a href="{{ path('ajax_dialog') }}" class="modal-ajax-form">Try Me</a>
+            <a href="#" class="btn btn-secondary btn-add-item" role="button" title="Add item" style=""><i class="fa-regular fa-file-alt" style=""></i></a>
 
             <a href="" data-xhr="{{ path('talav_web_js_smallmodal') }}" class="btn btn-primary" data-spinner="true">
                 Small modal
@@ -154,3 +158,57 @@
 
 
 {%- endblock %}
+
+{% block js -%}
+    {# no call to parent(), as we use a custom built for the frontend assets and don't want the default <script> #}
+    <script type="text/javascript">
+        window.addEventListener('load', function() {
+            var loader = new KimaiWebLoader(
+                {
+                    login: '{{ path('talav_user_login') }}',
+                    locale: '{{ app.request.locale }}',
+                    twentyFourHours: {{ true ? 'true' : 'false' }},
+                },
+                {
+                    {#                        {% for key, translation in javascript_translations() -%}#}
+                    {#                        '{{ key }}': '{{ translation.0|trans({}, translation.1)|escape('js') }}',#}
+                    {#                        {%- endfor %}#}
+                }
+            );
+            window.kimai = loader.getKimai();
+        });
+    </script>
+{%- endblock %}
+
+{% block javascripts %}
+    {% if app.debug %}
+        {{ parent() -}}
+        {{ asset_js('js/application/calculation_error.js') }}
+        {% if editable %}
+            {{ asset_js('js/vendor/jquery-validation/jquery.validate.js') }}
+            {{ asset_js('js/vendor/jquery-validation/additional-methods.js') }}
+            {{ asset_js('js/vendor/jquery-validation/localization/messages_fr.js') }}
+            {{ asset_js('js/vendor/html5sortable/html5sortable.js') }}
+            {{ asset_js('js/vendor/jquery-contextmenu/jquery.contextMenu.js') }}
+            {{ asset_js('js/extensions/contextmenu-extensions.js') }}
+            {{ asset_js('js/extensions/validator-extensions.js') }}
+            {{ asset_js('js/extensions/validator-extensions-fr.js') }}
+            {{ asset_js('js/extensions/typeahead-extensions.js') }}
+            {{ asset_js('js/plugins/plugin-typeahead.js') }}
+            {{ asset_js('js/plugins/plugin-rowlink.js') }}
+            {{ asset_js('js/plugins/plugin-input-number.js') }}
+            {{ asset_js('js/plugins/plugin-drag-modal.js') }}
+            {{ asset_js('js/plugins/plugin-cell-edit.js') }}
+            {{ asset_js('js/application/calculation_edit_dialog.js') }}
+            {{ asset_js('js/application/calculation_edit_item.js') }}
+            {{ asset_js('js/application/calculation_edit_task.js') }}
+            {{ asset_js('js/application/calculation_edit.js') }}
+        {% endif %}
+    {% else %}
+        {% if editable %}
+            {{ asset_js('js/calculation_edit.js') }}
+        {% else %}
+            {{ asset_js('js/calculation_error.js') }}
+        {% endif %}
+    {% endif %}
+{% endblock %}

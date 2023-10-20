@@ -4,6 +4,13 @@
 
 {%- block titre '' -%}
 
+{% block stylesheets %}
+{{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('js/vendor/glightbox-master/dist/css/glightbox.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('js/vendor/dropzone/dist/min/dropzone.min.css') }}" />
+
+{% endblock %}
+
 {% block header %}
     <div class="page-title-overlap bg-body-tertiary pt-4 mt-n4 shadow-sm">
         <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
@@ -57,7 +64,14 @@
 			position: absolute;
 			background: rgb(255,255,255,.9);
 		}
-
+        .elem-opacity:hover {
+            opacity: 1.0;
+            filter: alpha(opacity=50); /* For IE8 and earlier */
+        }
+        .elem-opacity {
+            opacity: .7;
+            filter: alpha(opacity=100); /* For IE8 and earlier */
+        }
 
     </style>
     <!-- Title -->
@@ -126,8 +140,8 @@
                                 <a href="{{ path('talav_gallery_image_view', {'id': image.id}) }}" data-gallery="image-popup" data-glightbox="description: .custom-desc2; descPosition: left;" class=" d-flex align-content-bottom">
                                     <img class="rounded img-fluid" src="{{ asset(image.image.filePath) |imagine_filter('gallery_thumb') }}" alt="{{ image.title }}">
 
-                                    <div class="img-content-caption rounded-bottom bottom-0 mx-2 p-1">
-                                        <p class="small text-white">{{ image.title|truncate(20)|raw }}</p>
+                                    <div class="img-content-caption rounded-bottom bottom-0 mx-2 p-2 elem-opacity">
+                                        <p class="small text-white opacity-100">{{ image.title|truncate(20)|raw }}</p>
                                     </div>
                                 </a>
                             </div>
@@ -155,5 +169,12 @@
     <div class="row g-3">
 
     </div>
+
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+    <script src="{{ asset('js/vendor/glightbox-master/dist/js/glightbox.min.js') }}"></script>
+    <script src="{{ asset('js/vendor/dropzone/dist/min/dropzone.min.js') }}"></script>
 
 {% endblock %}

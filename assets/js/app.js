@@ -128,4 +128,11 @@ class App {
     }
 }
 
+// ------ Kimai itself ------
+require('./kimai/KimaiWebLoader.js');
+global.KimaiPaginatedBoxWidget = require('./kimai/widgets/KimaiPaginatedBoxWidget').default;
+global.KimaiReloadPageWidget = require('./kimai/widgets/KimaiReloadPageWidget').default;
+global.KimaiCookies = require('./kimai/widgets/KimaiCookies').default;
+global.KimaiStorage = require('./kimai/widgets/KimaiStorage').default;
+
 window.App = new App();

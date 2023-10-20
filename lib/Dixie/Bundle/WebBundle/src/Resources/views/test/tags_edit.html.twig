@@ -1,0 +1,27 @@
+{% extends app.request.xmlHttpRequest ? '@TalavWeb/form.html.twig' : '@TalavWeb/layouts/default.html.twig' %}
+{% import "@TalavWeb/macros/_widgets.html.twig" as widgets %}
+{#{% import "tags/actions.html.twig" as actions %}#}
+
+{% block page_title %}{{ 'tags'|trans }}{% endblock %}
+{#{% block page_actions %}{{ actions.tag(tag, 'edit') }}{% endblock %}#}
+
+{% block body %}
+    {% set formEditTemplate = app.request.xmlHttpRequest ? '@TalavWeb/layouts/modal/_form_modal.html.twig' : '@TalavWeb/layouts/_form.html.twig' %}
+    {% set formOptions = {
+        'title': tag.name|default('create'|trans),
+        'form': form,
+        'back': path('homepage')
+    } %}
+    {% embed formEditTemplate with formOptions %}
+        {% block form_body %}
+            <div class="row">
+                <div class="col-md-10">
+                    {{ form_row(form.username) }}
+                </div>
+                <div class="col-md-2">
+                    {{ form_row(form.password) }}
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
