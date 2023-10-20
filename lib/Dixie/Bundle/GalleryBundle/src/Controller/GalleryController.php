@@ -109,7 +109,7 @@ class GalleryController extends AbstractController
 	    $search = $formFactory->createNamed('search', SearchGalleryImageFormType::class, $searchFormRequest, [
 		    'search_options' => $searchOptions,
 	    ]);
-dd($search->createView());
+
 	    $search->handleRequest($request);
 	    if ($search->isSubmitted() && $search->isValid()) {
 		    $data = $search->getData();
