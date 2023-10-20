@@ -36,14 +36,14 @@ class Region
 
     #[ORM\Column(name: 'name', type: 'string')]
     #[Groups('serialize')]
-    private string $name;
+    protected string $name;
 
     #[ORM\ManyToOne(targetEntity: Country::class, inversedBy: 'regions')]
     #[ORM\JoinColumn(name: 'country_id', referencedColumnName: 'id')]
-    private Country $country;
+    protected Country $country;
 
     #[ORM\OneToMany(mappedBy: 'region', targetEntity: City::class)]
-    private Collection $cities;
+    protected Collection $cities;
 
     public function __construct()
     {
