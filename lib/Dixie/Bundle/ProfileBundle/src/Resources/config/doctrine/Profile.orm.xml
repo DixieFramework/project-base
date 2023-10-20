@@ -17,6 +17,12 @@
 
         <one-to-one field="user" target-entity="Talav\Component\User\Model\UserInterface" mapped-by="profile"/>
 
+        <one-to-many field="preferences" target-entity="Talav\ProfileBundle\Entity\UserPreference" mapped-by="profile">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+
         <one-to-many field="requester" target-entity="Talav\ProfileBundle\Entity\FriendshipRequestInterface" mapped-by="requester"/>
 
         <one-to-many field="requestee" target-entity="Talav\ProfileBundle\Entity\FriendshipRequestInterface" mapped-by="requestee">

@@ -8,11 +8,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+use OpenApi\Attributes as OA;
 use Talav\Component\Resource\Model\ResourceTrait;
 use Talav\Component\Resource\Model\TimestampableTrait;
 use Talav\Component\User\Model\UserInterface;
 use Talav\ProfileBundle\Enum\Gender;
-use Talav\ProfileBundle\Entity\ProfileInterface;
 
 #[ORM\MappedSuperclass]
 abstract class Profile implements ProfileInterface
@@ -32,6 +33,20 @@ abstract class Profile implements ProfileInterface
     protected ?string $bio = null;
 
     protected UserInterface $user;
+
+	/**
+	 * User preferences
+	 *
+	 * List of preferences for this user, required ones have dedicated fields/methods
+	 *
+	 * This Collection can be null for one edge case ONLY:
+	 * if a currently logged-in user will be deleted and then refreshed from the session from one of the UserProvider
+	 * e.g. see LdapUserProvider::refreshUser() it might crash if $user->getPreferenceValue() is called
+	 *
+	 * @var Collection<UserPreference>|null
+	 */
+	#[ORM\OneToMany(mappedBy: 'profile', targetEntity: UserPreference::class, cascade: ['persist'])]
+	protected ?Collection $preferences = null;
 
 	protected Collection $requester;
 
@@ -69,6 +84,7 @@ abstract class Profile implements ProfileInterface
 
     public function __construct()
     {
+	    $this->preferences = new ArrayCollection();
 	    $this->requester = new ArrayCollection();
 	    $this->requestee = new ArrayCollection();
 	    $this->friendships = new ArrayCollection();
@@ -176,6 +192,168 @@ abstract class Profile implements ProfileInterface
 
         return $this;
     }
+
+	public function setTimezone(?string $timezone): void
+	{
+		if ($timezone === null) {
+			$timezone = date_default_timezone_get();
+		}
+		$this->setPreferenceValue(UserPreference::TIMEZONE, $timezone);
+	}
+
+	/**
+	 * @param string $name
+	 * @param bool|int|float|string|null $default
+	 * @param bool $allowNull
+	 * @return bool|int|float|string|null
+	 */
+	public function getPreferenceValue(string $name, mixed $default = null, bool $allowNull = true): bool|int|float|string|null
+	{
+		$preference = $this->getPreference($name);
+		if (null === $preference) {
+			return $default;
+		}
+
+		$value = $preference->getValue();
+
+		return $allowNull ? $value : ($value ?? $default);
+	}
+
+	/**
+	 * @param UserPreference $preference
+	 * @return ProfileInterface
+	 */
+	public function addPreference(UserPreference $preference): ProfileInterface
+	{
+		if (null === $this->preferences) {
+			$this->preferences = new ArrayCollection();
+		}
+
+		$this->preferences->add($preference);
+		$preference->setProfile($this);
+
+		return $this;
+	}
+
+	/**
+	 * Read-only list of of all visible user preferences.
+	 *
+	 * @internal only for API usage
+	 * @return UserPreference[]
+	 */
+	#[Serializer\VirtualProperty]
+	#[Serializer\SerializedName('preferences')]
+	#[Serializer\Groups(['User_Entity'])]
+//	#[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/UserPreference'))]
+	public function getVisiblePreferences(): array
+	{
+		// hide all internal preferences, which are either available in other fields
+		// or which are only used within the Kimai UI
+		$skip = [
+			UserPreference::TIMEZONE,
+			UserPreference::LOCALE,
+			UserPreference::SKIN,
+			'calendar_initial_view',
+			'login_initial_view',
+			'update_browser_title',
+			'daily_stats',
+			'export_decimal',
+		];
+
+		$all = [];
+		foreach ($this->preferences as $preference) {
+			if ($preference->isEnabled() && !\in_array($preference->getName(), $skip)) {
+				$all[] = $preference;
+			}
+		}
+
+		return $all;
+	}
+
+	/**
+	 * @return Collection<UserPreference>
+	 */
+	public function getPreferences(): Collection
+	{
+		return $this->preferences;
+	}
+
+	/**
+	 * @param iterable<UserPreference> $preferences
+	 * @return ProfileInterface
+	 */
+	public function setPreferences(iterable $preferences): ProfileInterface
+	{
+		$this->preferences = new ArrayCollection();
+
+		foreach ($preferences as $preference) {
+			$this->addPreference($preference);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @param string $name
+	 * @param bool|int|string|float|null $value
+	 */
+	public function setPreferenceValue(string $name, $value = null): void
+	{
+		$pref = $this->getPreference($name);
+
+		if (null === $pref) {
+			$pref = new UserPreference($name);
+			$this->addPreference($pref);
+		}
+
+		$pref->setValue($value);
+	}
+
+	public function getPreference(string $name): ?UserPreference
+	{
+		if ($this->preferences === null) {
+			return null;
+		}
+
+		foreach ($this->preferences as $preference) {
+			if ($preference->matches($name)) {
+				return $preference;
+			}
+		}
+
+		return null;
+	}
+
+	#[Serializer\VirtualProperty]
+	#[Serializer\SerializedName('language')]
+	#[Serializer\Groups(['User_Entity'])]
+//	#[OA\Property(type: 'string')]
+	public function getLocale(): string
+	{
+		return $this->getPreferenceValue(UserPreference::LOCALE, ProfileInterface::DEFAULT_LANGUAGE, false);
+	}
+
+	#[Serializer\VirtualProperty]
+	#[Serializer\SerializedName('timezone')]
+	#[Serializer\Groups(['User_Entity'])]
+//	#[OA\Property(type: 'string')]
+	public function getTimezone(): string
+	{
+		return $this->getPreferenceValue(UserPreference::TIMEZONE, date_default_timezone_get(), false);
+	}
+
+	public function getLanguage(): string
+	{
+		return $this->getLocale();
+	}
+
+	public function setLanguage(?string $language): void
+	{
+		if ($language === null) {
+			$language = ProfileInterface::DEFAULT_LANGUAGE;
+		}
+		$this->setPreferenceValue(UserPreference::LOCALE, $language);
+	}
 
 	/**
 	 * @return Collection<int, FriendshipRequest>

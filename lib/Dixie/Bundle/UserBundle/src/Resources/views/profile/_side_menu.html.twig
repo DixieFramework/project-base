@@ -9,7 +9,7 @@
         <div class="text-center">
             <!-- Avatar -->
             <div class="avatar avatar-xl mt-n5 mb-3">
-                <a href="#!"><img class="avatar-img rounded border border-tertiary border-3 bg-body-tertiary" src="{% if app.user.avatar %}{{ media_thumb_reference(app.user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar/male.png') }}{% endif %}" alt=""></a>
+                <a href="#!"><img class="avatar-img rounded border border-tertiary border-3 bg-body-tertiary" src="{% if app.user and app.user.avatar %}{{ media_thumb_reference(app.user.avatar, 'square_small') }}{% else %}{{ asset('images/avatar/male.png') }}{% endif %}" alt=""></a>
                 <div class="position-absolute bottom-0 end-0">
                     <!-- Dropdown START -->
                     <div class="dropdown mb-2 me-2">

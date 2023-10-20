@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Talav\ProfileBundle\Entity\UserPreference" table="user_preference">
+
+    <unique-constraints>
+      <unique-constraint columns="profile_id,name"/>
+    </unique-constraints>
+
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+
+    <many-to-one field="profile" target-entity="Talav\ProfileBundle\Entity\ProfileInterface" inversed-by="preferences">
+      <join-column nullable="false" on-delete="CASCADE" />
+    </many-to-one>
+
+    <field name="name" column="name" length="50" nullable="false" />
+    <field name="value" column="value" length="255" nullable="false" />
+
+  </entity>
+</doctrine-mapping>

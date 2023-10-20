@@ -6,9 +6,9 @@ namespace Talav\ProfileBundle\Controller;
 
 use App\Entity\Member;
 use App\Entity\Preference;
+use Talav\ProfileBundle\Entity\ProfileInterface;
 use Talav\ProfileBundle\Form\Model\SearchFormRequest;
 use App\Form\MapSearchFormType;
-use Talav\ProfileBundle\Form\SearchFormType;
 use App\Pagerfanta\SearchAdapter;
 use App\Repository\MemberRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,6 +23,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Talav\ProfileBundle\Form\Type\SearchFormType;
+use Talav\ProfileBundle\Repository\ProfileRepository;
 
 class SearchController extends AbstractController
 {
@@ -40,30 +42,45 @@ class SearchController extends AbstractController
      */
     public function searchMembers(Request $request)
     {
+		$options = [
+			// enable/disable CSRF protection for this form
+			'csrf_protection' => true,
+			// the name of the hidden HTML field that stores the token
+			'csrf_field_name' => '_csrf_token',
+			// an arbitrary string used to generate the value of the token
+			// using a different string for each form improves its security
+			'csrf_token_id'   => 'authenticate',
+		];
+
         $members = null;
-        $memberSearch = $this->createFormBuilder()
+        $memberSearch = $this->createFormBuilder(null, $options)
             ->add('username', TextType::class, [
                 'label' => 'label.username',
                 'attr' => [
-                    'class' => 'member-autocomplete-start',
+                    'class' => 'form-control bg-transparent',
                 ],
                 'help' => 'help.username.auto.complete',
             ])
             ->add('search', SubmitType::class, [
-                'label' => 'label.search.username',
+                'label' => false,
+	            'icon' => 'fa-search fs-6',
+	            'attr' => [
+					'class' => 'btn bg-transparent border-0 px-2 py-0 position-absolute top-50 end-0 translate-middle-y'
+	            ]
             ])
-            ->getForm()
+	        ->getForm()
         ;
+
         $memberSearch->handleRequest($request);
         if ($memberSearch->isSubmitted() && $memberSearch->isValid()) {
             $data = $memberSearch->getData();
             $username = $data['username'];
-            /** @var MemberRepository $memberRepository */
-            $memberRepository = $this->entityManager->getRepository(Member::class);
+            /** @var ProfileRepository $memberRepository */
+            $memberRepository = $this->entityManager->getRepository(ProfileInterface::class);
             $members = $memberRepository->findByProfileInfoStartsWith($username);
         }
 
-        return $this->render('search/searchmembers.html.twig', [
+        return $this->render('@TalavProfile/search/members.html.twig', [
             'form' => $memberSearch->createView(),
             'members' => $members,
         ]);
@@ -110,7 +127,7 @@ class SearchController extends AbstractController
         $searchFormRequest->show_options = ('Yes' === $showOptions);
 
         // There are three different forms that might end up on this page
-        $formFactory = $this->get('form.factory');
+        $formFactory = $this->container->get('form.factory');
         $tiny = $formFactory->createNamed('tiny', SearchFormType::class, $searchFormRequest);
         $home = $formFactory->createNamed('home', SearchFormType::class, $searchFormRequest);
         /** @var FormInterface $search */
@@ -318,4 +335,14 @@ class SearchController extends AbstractController
 
         return $request;
     }
+//
+//	/**
+//	 * Creates and returns a form builder instance.
+//	 *
+//	 * @final
+//	 */
+//	protected function createFormBuilder($data = null, array $options = []): FormBuilderInterface
+//	{
+//		return $this->container->get('form.factory')->createBuilder(FormType::class, $data, $options);
+//	}
 }

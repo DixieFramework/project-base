@@ -16,6 +16,7 @@
         "doctrine/orm": "^2.12",
         "exercise/htmlpurifier-bundle": "^4.1",
         "ezyang/htmlpurifier": "^4.16",
+        "jms/serializer-bundle": "^5.0",
         "knplabs/knp-menu-bundle": "^3.2",
         "matthiasmullie/minify": "*",
         "nelmio/cors-bundle": "^2.2",

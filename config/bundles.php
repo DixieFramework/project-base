@@ -54,4 +54,5 @@ return [
     Sonata\BlockBundle\SonataBlockBundle::class => ['all' => true],
     Sonata\AdminBundle\SonataAdminBundle::class => ['all' => true],
     Talav\AdminBundle\TalavAdminBundle::class => ['all' => true],
+    JMS\SerializerBundle\JMSSerializerBundle::class => ['all' => true],
 ];

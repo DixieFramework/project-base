@@ -701,73 +701,73 @@ abstract class User extends AbstractUser implements UserInterface, UserAvatarInt
 //        return true;
 //    }
 
-    public function __serialize(): array
-    {
-        return [
-            $this->id,
-            $this->username,
-            $this->usernameCanonical,
-            $this->email,
-            $this->emailCanonical,
-            $this->password,
-            $this->salt,
-            $this->enabled,
-            $this->state
-        ];
-    }
-
-    public function __unserialize(array $data): void
-    {
-        if (8 === count($data)) {
-            [
-                $this->id,
-                $this->username,
-                $this->usernameCanonical,
-                $this->email,
-                $this->emailCanonical,
-                $this->password,
-                $this->salt,
-                $this->enabled,
-                $this->state
-            ] = $data;
-        }
-    }
-
-//    /**
-//     * Serializes the user just with the id, as it is enough.
-//     *
-//     * @see http://php.net/manual/en/serializable.serialize.php
-//     *
-//     * @return string The string representation of the object or null
-//     */
-//    public function serialize(): string
+//    public function __serialize(): array
 //    {
-//        return \serialize(
+//        return [
+//            $this->id,
+//            $this->username,
+//            $this->usernameCanonical,
+//            $this->email,
+//            $this->emailCanonical,
+//            $this->password,
+//            $this->salt,
+//            $this->enabled,
+//            $this->state
+//        ];
+//    }
+//
+//    public function __unserialize(array $data): void
+//    {
+//        if (8 === count($data)) {
 //            [
 //                $this->id,
-//                $this->password,
-//                $this->salt,
 //                $this->username,
 //                $this->usernameCanonical,
 //                $this->email,
 //                $this->emailCanonical,
+//                $this->password,
+//                $this->salt,
 //                $this->enabled,
 //                $this->state
-//            ]
-//        );
+//            ] = $data;
+//        }
 //    }
-//
-//    /**
-//     * Constructs the object.
-//     *
-//     * @see http://php.net/manual/en/serializable.unserialize.php
-//     *
-//     * @param string $serialized The string representation of the object
-//     */
-//    public function unserialize($serialized): void
-//    {
-//        list(
-//            $this->id, $this->password, $this->salt, $this->username, $this->usernameCanonical, $this->email, $this->emailCanonical, $this->enabled, $this->state
-//            ) = \unserialize($serialized);
-//    }
+
+    /**
+     * Serializes the user just with the id, as it is enough.
+     *
+     * @see http://php.net/manual/en/serializable.serialize.php
+     *
+     * @return string The string representation of the object or null
+     */
+    public function serialize(): string
+    {
+        return \serialize(
+            [
+                $this->id,
+                $this->password,
+                $this->salt,
+                $this->username,
+                $this->usernameCanonical,
+                $this->email,
+                $this->emailCanonical,
+                $this->enabled,
+                $this->state
+            ]
+        );
+    }
+
+    /**
+     * Constructs the object.
+     *
+     * @see http://php.net/manual/en/serializable.unserialize.php
+     *
+     * @param string $serialized The string representation of the object
+     */
+    public function unserialize($serialized): void
+    {
+        list(
+            $this->id, $this->password, $this->salt, $this->username, $this->usernameCanonical, $this->email, $this->emailCanonical, $this->enabled, $this->state
+            ) = \unserialize($serialized);
+    }
 }
