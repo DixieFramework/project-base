@@ -65,7 +65,7 @@ interface UserInterface extends SymfonyUserInterface, PasswordAuthenticatedUserI
 
 	public function isVerified(): bool;
 
-	public function setVerified(bool $verified): void;
+	public function setVerified(bool $verified): self;
 
     /**
      * Returns all the roles the user has assigned.
@@ -127,7 +127,11 @@ interface UserInterface extends SymfonyUserInterface, PasswordAuthenticatedUserI
 
     public function isEnabled(): bool;
 
-    public function setEnabled(bool $enabled): void;
+    public function setEnabled(bool $enabled): self;
+
+	public function getSalt(): string;
+
+	public function setSalt(string $salt): self;
 
     /**
      * Tells if the the given user has the super admin role.

@@ -24,7 +24,7 @@ class RoleFixtures extends Fixture
 
     public const ROLE_USER = 'ROLE_USER';
 
-    public const ROLE_DEV = 'ROLE_DEV';
+    public const ROLE_DEVELOPER = 'ROLE_DEVELOPER';
 
     public function __construct(
         private EntityManagerInterface $entityManager,

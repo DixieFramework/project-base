@@ -17,9 +17,7 @@ use Talav\ProfileBundle\Enum\Gender;
 
 class UserFixtures extends Fixture implements DependentFixtureInterface
 {
-    private const PASS = 'qwerty';
-
-    private $passwordEncoder;
+    private const PASS = '123456';
 
     private $security;
 
@@ -32,8 +30,26 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         RoleFixtures::ROLE_ADMIN,
         RoleFixtures::ROLE_SUPER_ADMIN,
         RoleFixtures::ROLE_ROOT,
-        RoleFixtures::ROLE_DEV,
+        RoleFixtures::ROLE_DEVELOPER,
     ];
+
+	const ROLE_USER             = 0;
+	const ROLE_MODERATOR        = 1;
+	const ROLE_SUPER_MODERATOR  = 2;
+	const ROLE_ADMIN            = 3;
+	const ROLE_SUPER_ADMIN      = 4;
+	const ROLE_ROOT             = 8;
+	const ROLE_DEVELOPER        = 9;
+
+	const ROLE_TYPES = [
+		self::ROLE_USER             => 'ROLE_USER',
+		self::ROLE_MODERATOR        => 'ROLE_MODERATOR',
+		self::ROLE_SUPER_MODERATOR  => 'ROLE_SUPER_MODERATOR',
+		self::ROLE_ADMIN            => 'ROLE_ADMIN',
+		self::ROLE_SUPER_ADMIN      => 'ROLE_SUPER_ADMIN',
+		self::ROLE_ROOT             => 'ROLE_ROOT',
+		self::ROLE_DEVELOPER        => 'ROLE_DEVELOPER',
+	];
 
     public const EMAIL_ROOT = 'root@example.com';
 
@@ -47,15 +63,13 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
 
     public const EMAIL_USER = 'user@example.com';
 
-    public const EMAIL_DEV = 'dev@example.com';
+    public const EMAIL_DEVELOPER = 'developer@example.com';
 
     public function __construct(
         private readonly UserManagerInterface $userManager,
-        private readonly ManagerInterface     $profileManager,
-        UserPasswordHasherInterface $passwordEncoder
+        private readonly ManagerInterface     $profileManager
     )
     {
-        $this->passwordEncoder = $passwordEncoder;
     }
 
     public function load(ObjectManager $manager)
@@ -75,8 +89,8 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $user = $this->createUser($manager, Roles::developer(), self::EMAIL_USER);
         $this->addReference(self::EMAIL_USER, $user);
 
-        $user = $this->createUser($manager, Roles::developer(), self::EMAIL_DEV);
-        $this->addReference(self::EMAIL_DEV, $user);
+        $user = $this->createUser($manager, Roles::developer(), self::EMAIL_DEVELOPER);
+        $this->addReference(self::EMAIL_DEVELOPER, $user);
     }
 
     private function createUser(ObjectManager $manager, Roles|array $roles, string $email)
@@ -88,14 +102,16 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
 //                $user,
 //                self::PASS
 //            ))
-            ->setUsername(current(explode('.', $email)))
+            ->setUsername(current(explode('@', $email)))
             ->setPlainPassword(self::PASS)
             ->setRoles($roles)
-            ->setStatus(1)
-            ->setVerified(1)
+            ->setEnabled(true)
+            ->setVerified(true)
             ->setEmail($email)
         ;
 
+	    $this->userManager->updateCanonicalFields($user);
+	    $this->userManager->updatePassword($user);
 
         if (!$user->getProfile()) {
             /** @var ProfileInterface $profile */
@@ -106,8 +122,14 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             $profile->setBirthdate(\DateTime::createFromFormat('j-M-Y', '01-Jan-1970'));
 
             $user->setProfile($profile);
-
         }
+
+		$userType = strtoupper(str_replace('-', '_', current(explode('@', $email))));
+	    $roles = (new \ReflectionClass(self::class))->getConstants();
+		if (in_array('ROLE_' . $userType, $roles['ROLES'])) {
+			$userRole = $this->getReference('ROLE_' . $userType);
+			$user->sync('userRoles', new ArrayCollection([$userRole]));
+		}
 
         $this->userManager->update($user, true);
 //        $manager->persist($user);

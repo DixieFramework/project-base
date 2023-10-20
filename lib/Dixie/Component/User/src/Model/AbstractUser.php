@@ -48,7 +48,7 @@ abstract class AbstractUser implements UserInterface
 
     protected ?string $confirmationToken = null;
 
-    protected bool $verified = false;
+    protected bool $verified;
 
 //    protected iterable $userRoles = [];
     protected Roles $roles;
@@ -81,7 +81,8 @@ abstract class AbstractUser implements UserInterface
 
         $this->oauthAccounts = new ArrayCollection();
         $this->salt = base_convert(bin2hex(random_bytes(20)), 16, 36);
-        $this->enabled = false;
+	    $this->enabled = false;
+	    $this->verified = false;
     }
 
 //    public function getUsername(): ?Username
@@ -124,9 +125,11 @@ abstract class AbstractUser implements UserInterface
         return $this->enabled;
     }
 
-    public function setEnabled(bool $enabled): void
+    public function setEnabled(bool $enabled): self
     {
         $this->enabled = $enabled;
+
+		return $this;
     }
 
     public function getSalt(): string
@@ -134,9 +137,11 @@ abstract class AbstractUser implements UserInterface
         return $this->salt;
     }
 
-    public function setSalt(string $salt): void
+    public function setSalt(string $salt): self
     {
         $this->salt = $salt;
+
+		return $this;
     }
 
     public function getPassword(): ?string
@@ -228,9 +233,11 @@ abstract class AbstractUser implements UserInterface
     /**
      * @param bool $verified
      */
-    public function setVerified(bool $verified): void
+    public function setVerified(bool $verified): self
     {
         $this->verified = $verified;
+
+		return $this;
     }
 
     public function getRoles(): array

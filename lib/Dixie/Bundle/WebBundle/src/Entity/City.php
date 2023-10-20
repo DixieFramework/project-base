@@ -36,7 +36,7 @@ class City
     #[ORM\JoinColumn(name: 'region_id', referencedColumnName: 'id')]
     protected Region $region;
 
-    #[ORM\OneToOne(targetEntity: Country::class)]
+    #[ORM\ManyToOne(targetEntity: Country::class)]
     #[ORM\JoinColumn(name: 'country_id', referencedColumnName: 'id')]
     protected Country $country;
 
@@ -46,7 +46,13 @@ class City
     #[ORM\Column(type: 'float')]
     protected float $latitude;
 
-    #[ORM\Column(type: 'string')]
+	#[ORM\Column(type: 'string')]
+	protected string $municipality;
+
+	#[ORM\Column(type: 'integer')]
+	protected int $zip;
+
+	#[ORM\Column(type: 'string')]
     protected string $name;
 
     public function getId(): mixed
@@ -101,6 +107,36 @@ class City
 
         return $this;
     }
+
+	/**
+	 * @return string
+	 */
+	public function getMunicipality(): string
+	{
+		return $this->municipality;
+	}
+
+	/**
+	 * @param string $municipality
+	 */
+	public function setMunicipality(string $municipality): City
+	{
+		$this->municipality = $municipality;
+
+		return $this;
+	}
+
+	public function getZip(): int
+	{
+		return $this->zip;
+	}
+
+	public function setZip(int $zip): City
+	{
+		$this->zip = $zip;
+
+		return $this;
+	}
 
     #[Groups('serialize')]
     public function getName(): string

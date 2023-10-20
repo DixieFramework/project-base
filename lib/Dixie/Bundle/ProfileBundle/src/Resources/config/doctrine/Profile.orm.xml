@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
     <mapped-superclass name="Talav\ProfileBundle\Entity\Profile" repository-class="Talav\ProfileBundle\Repository\ProfileRepository" table="user_profile">
-        <id name="id" type="integer" column="id">
-            <generator strategy="IDENTITY"/>
-        </id>
+<!--        <id name="id" type="integer" column="id">-->
+<!--            <generator strategy="IDENTITY"/>-->
+<!--        </id>-->
 <!--        <id name="user" association-key="true"/>-->
 
         <field name="firstName" column="first_name" nullable="true" />

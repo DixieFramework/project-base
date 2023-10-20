@@ -12,10 +12,10 @@ use Talav\ProfileBundle\Entity\Profile as BaseProfile;
 #[ORM\Table(name: 'user_profile')]
 class Profile extends BaseProfile
 {
-//	#[ORM\Id]
-//	#[ORM\Column(type: 'integer')]
-//	#[ORM\GeneratedValue(strategy: 'AUTO')]
-//	protected mixed $id;
+	#[ORM\Id]
+	#[ORM\Column(type: 'integer')]
+	#[ORM\GeneratedValue(strategy: 'AUTO')]
+	protected mixed $id;
 //    #[ORM\Id]
 //    #[ORM\Column(type: 'uuid', unique: true)]
 //    #[ORM\GeneratedValue(strategy: 'CUSTOM')]

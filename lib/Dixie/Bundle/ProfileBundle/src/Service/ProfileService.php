@@ -13,6 +13,15 @@ use Talav\CoreBundle\Traits\PropertyServiceTrait;
 use Talav\ProfileBundle\Entity\UserProperty;
 use Talav\ProfileBundle\Repository\UserPropertyRepository;
 
+//INSERT INTO `region` (`id`, `country_id`, `name`) VALUES (1, 1, 'Nordjyland');
+//INSERT INTO `region` (`id`, `country_id`, `name`) VALUES (2, 1, 'Midtjylland');
+//INSERT INTO `region` (`id`, `country_id`, `name`) VALUES (3, 1, 'Syddanmark');
+//INSERT INTO `region` (`id`, `country_id`, `name`) VALUES (4, 1, 'Hovedstaden');
+//INSERT INTO `region` (`id`, `country_id`, `name`) VALUES (5, 1, 'Sjælland');
+
+
+//INSERT INTO `region` (`id`, `country_id`, `name`) VALUES (4, 1, 'Faroe Islands');
+
 /**
  * Service to manage user properties.
  */
