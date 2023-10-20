@@ -40,7 +40,7 @@ class ProfileSearchController extends AbstractController
 	{
 	}
 
-	#[Route('/', name: 'index', methods: ['GET'])]
+	#[Route('/', name: 'index', methods: ['GET', 'POST'])]
     public function indexAction(Request $request): Response
     {
 	    /** @var UserInterface $currentUser */
@@ -80,9 +80,13 @@ class ProfileSearchController extends AbstractController
 			    $this->userInterestFilterService->createUserInterestFilters($currentProfileId, $filterForm->getInterests());
 		    });
 
-		    return new RedirectResponse($this->generateUrl('user_search_index'));
+		    return new RedirectResponse($this->generateUrl('profile_search_index'));
 	    }
 
-	    return new Response('Hello world from talav_profile');
+//        dd($filter);
+
+        return $this->render('@TalavProfile/search/profiles.html.twig', [
+            'form' => $filterFormType->createView(),
+        ]);
     }
 }

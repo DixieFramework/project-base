@@ -4,153 +4,123 @@ declare(strict_types=1);
 
 namespace Groshy\DataFixtures;
 
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Groshy\Entity\Profile;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\String\Slugger\SluggerInterface;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Talav\Component\Resource\Manager\ManagerInterface;
 use Talav\Component\User\Manager\UserManagerInterface;
-use Talav\Component\User\Message\Command\CreateUserCommand;
-use Talav\Component\User\Message\Dto\CreateUserDto;
+use Talav\Component\User\ValueObject\Roles;
+use Talav\ProfileBundle\Entity\ProfileInterface;
 use Talav\ProfileBundle\Enum\Gender;
 
-final class UserFixtures extends BaseFixture implements OrderedFixtureInterface
+class UserFixtures extends Fixture implements DependentFixtureInterface
 {
-    public const SUPER_ADMIN_USER_REFERENCE = 'super-admin-user';
-    public const ADMIN_USER_REFERENCE = 'admin-user';
-    public const SUPER_MODERATOR_USER_REFERENCE = 'super-moderator-user';
-    public const MODERATOR_USER_REFERENCE = 'moderator-user';
-    public const USER_USER_REFERENCE = 'user-user';
+    private const PASS = 'qwerty';
 
-	public function __construct(
-        private readonly MessageBusInterface  $messageBus,
+    private $passwordEncoder;
+
+    private $security;
+
+    private $roleService;
+
+    private const ROLES = [
+        RoleFixtures::ROLE_USER,
+        RoleFixtures::ROLE_MODERATOR,
+        RoleFixtures::ROLE_SUPER_MODERATOR,
+        RoleFixtures::ROLE_ADMIN,
+        RoleFixtures::ROLE_SUPER_ADMIN,
+        RoleFixtures::ROLE_ROOT,
+        RoleFixtures::ROLE_DEV,
+    ];
+
+    public const EMAIL_ROOT = 'root@example.com';
+
+    public const EMAIL_SUPER_ADMIN = 'super-admin@example.com';
+
+    public const EMAIL_ADMIN = 'admin@example.com';
+
+    public const EMAIL_SUPER_MODERATOR = 'super-moderator@example.com';
+
+    public const EMAIL_MODERATOR = 'moderator@example.com';
+
+    public const EMAIL_USER = 'user@example.com';
+
+    public const EMAIL_DEV = 'dev@example.com';
+
+    public function __construct(
         private readonly UserManagerInterface $userManager,
-		private readonly ManagerInterface     $profileManager,
-		private readonly SluggerInterface     $slugger
-	) {
+        private readonly ManagerInterface     $profileManager,
+        UserPasswordHasherInterface $passwordEncoder
+    )
+    {
+        $this->passwordEncoder = $passwordEncoder;
     }
 
-    public function loadData(): void
+    public function load(ObjectManager $manager)
     {
-	    $rootUsername = 'root';
-	    $rootEmail = 'root@local.dev';
-	    $rootPassword = '123456';
+        $user = $this->createUser($manager, Roles::superAdmin(), self::EMAIL_SUPER_ADMIN);
+        $this->addReference(self::EMAIL_SUPER_ADMIN, $user);
 
-        $users = [
-            1 => [
-                'rootUsername' => 'root',
-                'rootEmail' => 'root@local.dev',
-                'rootPassword' => '123456',
-            ],
-            2 => [
-                'rootUsername' => 'user',
-                'rootEmail' => 'user@local.dev',
-                'rootPassword' => '123456',
-            ],
-            3 => [
-                'rootUsername' => 'moderator',
-                'rootEmail' => 'moderator@local.dev',
-                'rootPassword' => '123456',
-            ],
-            4 => [
-                'rootUsername' => 'admin',
-                'rootEmail' => 'admin@local.dev',
-                'rootPassword' => '123456',
-            ],
+        $user = $this->createUser($manager, Roles::admin(), self::EMAIL_ADMIN);
+        $this->addReference(self::EMAIL_ADMIN, $user);
+
+        $user = $this->createUser($manager, Roles::admin(), self::EMAIL_SUPER_MODERATOR);
+        $this->addReference(self::EMAIL_SUPER_MODERATOR, $user);
+
+        $user = $this->createUser($manager, Roles::admin(), self::EMAIL_MODERATOR);
+        $this->addReference(self::EMAIL_MODERATOR, $user);
+
+        $user = $this->createUser($manager, Roles::developer(), self::EMAIL_USER);
+        $this->addReference(self::EMAIL_USER, $user);
+
+        $user = $this->createUser($manager, Roles::developer(), self::EMAIL_DEV);
+        $this->addReference(self::EMAIL_DEV, $user);
+    }
+
+    private function createUser(ObjectManager $manager, Roles|array $roles, string $email)
+    {
+        $user = $this->userManager->create();
+
+        $user
+//            ->setPassword($this->passwordEncoder->encodePassword(
+//                $user,
+//                self::PASS
+//            ))
+            ->setUsername(current(explode('.', $email)))
+            ->setPlainPassword(self::PASS)
+            ->setRoles($roles)
+            ->setStatus(1)
+            ->setVerified(1)
+            ->setEmail($email)
+        ;
+
+
+        if (!$user->getProfile()) {
+            /** @var ProfileInterface $profile */
+            $profile = $this->profileManager->create();
+            $profile->setFirstName('John');
+            $profile->setLastName('Doe');
+            $profile->setGender(Gender::X);
+            $profile->setBirthdate(\DateTime::createFromFormat('j-M-Y', '01-Jan-1970'));
+
+            $user->setProfile($profile);
+
+        }
+
+        $this->userManager->update($user, true);
+//        $manager->persist($user);
+//        $manager->flush();
+
+        return $user;
+    }
+
+    public function getDependencies()
+    {
+        return [
+            PermissionsFixtures::class,
+            RoleFixtures::class,
         ];
-
-        foreach ($users as $key => $user) {
-            $newUser = $this->userManager
-                ->findUserByEmail($user['rootEmail']);
-
-            if (!$newUser) {
-                $newUser = $this->userManager->create();
-                $newUser->setUsername($user['rootUsername']);
-                $newUser->setEmail($user['rootEmail']);
-                $newUser->setPlainPassword($user['rootPassword']);
-                $this->userManager->updateCanonicalFields($newUser);
-                $this->userManager->updatePassword($newUser);
-
-				if (!$newUser->getProfile()) {
-					/** @var Profile $profile */
-					$profile = $this->profileManager->create();
-					$profile->setFirstName('John');
-					$profile->setLastName('Doe');
-					$profile->setGender(Gender::X);
-					$profile->setBirthdate(\DateTime::createFromFormat('j-M-Y', '01-Jan-1970'));
-
-					$newUser->setProfile($profile);
-
-				}
-
-                $this->userManager->update($newUser);
-            }
-
-            switch ($key) {
-                case 1:
-                    $this->addReference(self::SUPER_ADMIN_USER_REFERENCE, $newUser);
-                    break;
-                case 2:
-                    $this->addReference(self::USER_USER_REFERENCE, $newUser);
-                    break;
-                case 3:
-                    $this->addReference(self::MODERATOR_USER_REFERENCE, $newUser);
-                    break;
-                case 4:
-                    $this->addReference(self::ADMIN_USER_REFERENCE, $newUser);
-                    break;
-            }
-//            $this->addReference(self::ADMIN_USER_REFERENCE, $newUser);
-        }
-
-
-        for ($i = 0; $i < 10; ++$i) {
-			if ($i === 1) {
-				$userAdmin = $this->userManager
-					->findUserByEmail($rootEmail);
-
-				if (!$userAdmin) {
-					$userAdmin = $this->userManager->create();
-					$userAdmin->setUsername($rootUsername);
-					$userAdmin->setEmail($rootEmail);
-					$userAdmin->setPlainPassword($rootPassword);
-					$this->userManager->updateCanonicalFields($userAdmin);
-					$this->userManager->updatePassword($userAdmin);
-
-					if (!$userAdmin->getProfile()) {
-						/** @var Profile $profile */
-						$profile = $this->profileManager->create();
-						$profile->setFirstName('John');
-						$profile->setLastName('Doe');
-						$profile->setGender(Gender::X);
-						$profile->setBirthdate(\DateTime::createFromFormat('j-M-Y', '01-Jan-1970'));
-
-						$userAdmin->setProfile($profile);
-					}
-
-					$this->userManager->update($userAdmin);
-				}
-
-				$this->addReference(self::ADMIN_USER_REFERENCE.$i, $userAdmin);
-			} else {
-				$this->messageBus->dispatch(new CreateUserCommand(new CreateUserDto(
-					'user'.$i,
-					'user'.$i.'@test.com',
-					'user'.$i,
-					$i <= 3 || $this->faker->boolean,
-					$this->faker->firstName,
-					$this->faker->lastName,
-				)));
-			}
-
-        }
-
-        $this->addReferences($this->userManager);
-        $this->userManager->flush();
-    }
-
-    public function getOrder(): int
-    {
-        return 1;
     }
 }

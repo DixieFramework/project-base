@@ -16,9 +16,9 @@
         <field name="birthdate" type="datetime" column="birthdate" nullable="true" />
         <field name="bio" column="bio" type="text" nullable="true" />
 
-        <one-to-one field="city" target-entity="Talav\WebBundle\Entity\City">
+        <many-to-one field="city" target-entity="Talav\WebBundle\Entity\City">
             <join-column name="city_id" referenced-column-name="id"/>
-        </one-to-one>
+        </many-to-one>
 
 <!--        <one-to-one field="user" target-entity="Talav\Component\User\Model\UserInterface" mapped-by="profile"/>-->
         <one-to-one field="user" target-entity="Talav\Component\User\Model\UserInterface"/>

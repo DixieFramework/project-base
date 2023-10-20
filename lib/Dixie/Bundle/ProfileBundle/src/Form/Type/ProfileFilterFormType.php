@@ -47,29 +47,29 @@ class ProfileFilterFormType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add(
-            'colors',
-            ChoiceType::class,
-            [
-                'choices' => $this->categoryRepository->findOneBy(['name' => 'color'])->getAttributes(),
-                'choice_label' => 'name',
-                'choice_translation_domain' => 'attributes',
-                'multiple' => true,
-                'expanded' => true
-            ]
-        );
-
-        $builder->add(
-            'shapes',
-            ChoiceType::class,
-            [
-                'choices' => $this->categoryRepository->findOneBy(['name' => 'shape'])->getAttributes(),
-                'choice_label' => 'name',
-                'choice_translation_domain' => 'attributes',
-                'multiple' => true,
-                'expanded' => true
-            ]
-        );
+//        $builder->add(
+//            'colors',
+//            ChoiceType::class,
+//            [
+//                'choices' => $this->categoryRepository->findOneBy(['name' => 'color'])->getAttributes(),
+//                'choice_label' => 'name',
+//                'choice_translation_domain' => 'attributes',
+//                'multiple' => true,
+//                'expanded' => true
+//            ]
+//        );
+//
+//        $builder->add(
+//            'shapes',
+//            ChoiceType::class,
+//            [
+//                'choices' => $this->categoryRepository->findOneBy(['name' => 'shape'])->getAttributes(),
+//                'choice_label' => 'name',
+//                'choice_translation_domain' => 'attributes',
+//                'multiple' => true,
+//                'expanded' => true
+//            ]
+//        );
 
         $builder->add('region', EntityType::class, [
             'choices' => $options[self::REGIONS],

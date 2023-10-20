@@ -1,6 +1,9 @@
 imports:
     - { resource: './form.yaml' }
 
+parameters:
+    talav_core.security.anonymous_access: false
+
 services:
     # default configuration for services in *only in this* file
     _defaults:

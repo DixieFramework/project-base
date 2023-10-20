@@ -22,7 +22,7 @@ class InterestRepository extends ServiceEntityRepository
 
     public function findAll(): array
     {
-        $query = $this->getEntityManager()->createQuery('SELECT i FROM DatingLibre\AppBundle\Entity\Interest i');
+        $query = $this->getEntityManager()->createQuery('SELECT i FROM Talav\ProfileBundle\Entity\Interest i');
         $query->enableResultCache();
         $query->useQueryCache(true);
         return $query->getResult();

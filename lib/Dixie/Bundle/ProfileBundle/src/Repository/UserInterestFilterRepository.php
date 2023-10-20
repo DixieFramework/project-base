@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Talav\ProfileBundle\Repository;
 
+use Doctrine\ORM\Query\Expr\Join;
 use Talav\ProfileBundle\Entity\UserInterestFilter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
@@ -24,6 +25,15 @@ class UserInterestFilterRepository extends ServiceEntityRepository
 
     public function findInterestFiltersByProfileId(mixed $profileId): array
     {
+        return $this->createQueryBuilder('uif')
+            ->select('i.id, i.name')
+            ->innerJoin('uif.interest', 'i', Join::WITH, 'i.id = uif.interest')
+            ->where('uif.profile = :profile')
+            ->setParameter('profile', $profileId)
+            ->getQuery()
+            ->getResult();
+
+
         $rsm = new ResultSetMapping();
         $rsm->addEntityResult('Talav\ProfileBundle\Entity\Interest', 'interest');
         $rsm->addFieldResult('interest', 'id', 'id');
@@ -32,11 +42,11 @@ class UserInterestFilterRepository extends ServiceEntityRepository
         $query = $this->getEntityManager()
             ->createNativeQuery(<<<EOD
 SELECT i.id, i.name FROM user_interest_filter uif
-INNER JOIN interest i ON i.id = uif.interest_id 
+INNER JOIN interest i ON i.id = uif.interest_id
 WHERE uif.profile_id = :profileId
 EOD, $rsm);
 
-        $query->setParameter('profileId', $profileId);
+        $query->setParameter(':profileId', $profileId);
 
         return $query->getResult();
     }
@@ -44,11 +54,13 @@ EOD, $rsm);
     public function deleteByUserId(mixed $userId): void
     {
         $query = $this->getEntityManager()
-            ->createNativeQuery(<<<EOD
-DELETE FROM user_interest_filter uif WHERE uif.profile_id = :userId 
-EOD, new ResultSetMapping());
+            ->createQuery('DELETE FROM Talav\ProfileBundle\Entity\UserInterestFilter uif WHERE uif.profile = :userId')
+//            ->createNativeQuery(<<<EOD
+//DELETE FROM Talav\ProfileBundle\Entity\UserInterestFilter uif
+//WHERE uif.profile_id = :userId
+//EOD, new ResultSetMapping());
 
-        $query->setParameter('userId', $userId);
-        $query->execute();
+        ->setParameter(':userId', $userId)
+        ->execute();
     }
 }

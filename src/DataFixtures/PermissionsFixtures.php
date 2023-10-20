@@ -37,7 +37,7 @@ class PermissionsFixtures extends Fixture implements DependentFixtureInterface
 	    $imageListPermission   = $this->findOrCreate('IMAGE_LIST');
 
 	    /** @var Role $userRole */
-	    $userRole = $this->getReference(RolesFixtures::User_ROLE_REFERENCE);
+	    $userRole = $this->getReference(RoleFixtures::ROLE_USER);
 	    $userRole->sync('permissions', new ArrayCollection([
 		    $galleryCreatePermission, $galleryReadPermission, $galleryUpdatePermission, $galleryDeletePermission, $galleryListPermission,
 		    $imageCreatePermission, $imageReadPermission, $imageUpdatePermission, $imageDeletePermission, $imageListPermission
@@ -51,7 +51,7 @@ class PermissionsFixtures extends Fixture implements DependentFixtureInterface
         $unblockPost = $this->findOrCreate('unblockPost');
 
         /** @var Role $superAdministratorRole */
-        $superAdministratorRole = $this->getReference(RolesFixtures::SuperAdministrator_ROLE_REFERENCE);
+        $superAdministratorRole = $this->getReference(RoleFixtures::ROLE_SUPER_ADMIN);
         $superAdministratorRole->sync('permissions', new ArrayCollection([
             $manageUsersPermission, $viewUsersPermission, $manageStoriesPermission, $manageCategoriesPermission,
             $canBeAuthor, $unblockPost
@@ -64,7 +64,7 @@ class PermissionsFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            RolesFixtures::class
+            RoleFixtures::class
         ];
     }
 
