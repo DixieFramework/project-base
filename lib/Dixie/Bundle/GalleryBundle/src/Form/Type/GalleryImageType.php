@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Talav\GalleryBundle\Form\Type;
 
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Talav\GalleryBundle\Entity\GalleryImage;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -40,19 +42,15 @@ class GalleryImageType extends AbstractType
     {
         $builder->add('title', TextType::class, [
 			'label' => 'label.title',
-			'required' => true,
+			'required' => false,
 			'attr' => ['max_length' => 255],
         ]);
 
-        $builder->add(
-            'description',
-            TextareaType::class,
-            [
-                'label' => 'label.description',
-                'required' => true,
-                'attr' => ['max_length' => 255],
-            ]
-        );
+        $builder->add('description', TextareaType::class, [
+            'label' => 'label.description',
+            'required' => false,
+            'attr' => ['max_length' => 255],
+        ]);
 
 		$builder->add('image', FileType::class, [
 			'required' => true,
@@ -67,7 +65,54 @@ class GalleryImageType extends AbstractType
 			'mapped' => false,
 		]);
 
-	    $builder->addEventSubscriber($this->imageListener->setFieldName('image'));
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'onPreSubmit'], 10);
+        $builder->addEventSubscriber($this->imageListener->setFieldName('image'));
+//
+//        // make value not empty
+//        $builder->addEventListener(
+//            FormEvents::POST_SUBMIT,
+//            function (FormEvent $event) {
+//                /** @var GalleryImage $galleryImage */
+//                $galleryImage = $event->getData();
+//                if ($galleryImage) {
+//                    dd($galleryImage);
+//                    $galleryImage->setTitle('hehe');
+//                }
+//            }, 1
+//        );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function onPreSubmit(FormEvent $event)
+    {
+        $form = $event->getForm();
+
+        /** @var GalleryImage|null $galleryImage */
+        $galleryImage = $form->getData();
+        if (!$galleryImage) {
+            return;
+        }
+
+        $submittedData = $event->getData();
+        if (empty($submittedData['title'])) {
+            $submittedData['title'] = $submittedData['image']->getClientOriginalName();
+        }
+
+        $event->setData($submittedData);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function onPostSubmit(FormEvent $event)
+    {
+        $form = $event->getForm();
+
+        /** @var GalleryImage|null $product */
+        $product = $form->getData();
+        dd($product);
     }
 
     /**
@@ -89,16 +134,16 @@ class GalleryImageType extends AbstractType
         ]);
     }
 
-    /**
-     * Returns the prefix of the template block name for this type.
-     *
-     * The block prefix defaults to the underscored short class name with
-     * the "Type" suffix removed (e.g. "UserProfileType" => "user_profile").
-     *
-     * @return string Prefix
-     */
+//    /**
+//     * Returns the prefix of the template block name for this type.
+//     *
+//     * The block prefix defaults to the underscored short class name with
+//     * the "Type" suffix removed (e.g. "UserProfileType" => "user_profile").
+//     *
+//     * @return string Prefix
+//     */
 //    public function getBlockPrefix(): string
 //    {
-//        return 'image';
+//        return '';
 //    }
 }

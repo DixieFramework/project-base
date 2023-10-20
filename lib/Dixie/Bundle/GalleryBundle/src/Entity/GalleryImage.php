@@ -24,14 +24,14 @@ class GalleryImage implements ResourceInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: Types::INTEGER)]
-    private int $id;
+    protected ?int $id;
 
     #[ORM\Column(type: Types::STRING)]
-    #[Assert\NotBlank]
+//    #[Assert\NotBlank]
     private string $title;
 
-    #[ORM\Column(type: Types::STRING)]
-    #[Assert\NotBlank]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+//    #[Assert\NotBlank]
     private string $description;
 
     #[ORM\Column(type: Types::BOOLEAN, nullable: true)]

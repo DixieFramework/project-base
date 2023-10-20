@@ -1,6 +1,7 @@
 {% extends '@TalavWeb/layouts/default.html.twig' %}
 
 {% block title 'View Photo' %}
+{%- block titre '' -%}
 
 {% block body %}
 <!-- Card feed item START -->
@@ -8,12 +9,15 @@
 
     <!-- Card header START -->
     <div class="card-header pb-0">
-        <h3 class="card-title h6">Title: {{ gallery_image.title }}</h3>
+        <h3 class="card-title h6">{{ gallery_image.title|truncate(30) }}</h3>
     </div>
     <!-- Card header START -->
 
     <!-- Card body START -->
     <div class="card-body m-n3">
+
+
+        {% if false %}
 
         <div class="row mx-0">{# align-items-center#}
             <div class="col-md-8 border-end p-4 p-sm-5 align-items-start text-center">
@@ -59,6 +63,7 @@
             </div>
         </div>
 
+        {% endif %}
 {#        <img src="{{ asset(gallery_image.image.filePath)|imagine_filter('gallery_image_filter_full') }}" class="" alt="">#}
     </div>
     <!-- Card body END -->
