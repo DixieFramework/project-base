@@ -40,7 +40,7 @@ class CommentController extends AbstractController
 			case 'post':
 				$entity = $this->entityManager->getRepository(PostInterface::class)->find($entityId);
 				break;
-			case 'gallery-image':
+			case 'galleryImage':
 				$entity = $this->entityManager->getRepository(GalleryImage::class)->find($entityId);
 				break;
 			default:
@@ -93,7 +93,7 @@ class CommentController extends AbstractController
 			case 'post':
 				$entity = $this->entityManager->getRepository(PostInterface::class)->find($entityId);
 				break;
-			case 'gallery-image':
+			case 'galleryImage':
 				$entity = $this->entityManager->getRepository(GalleryImage::class)->find($entityId);
 				break;
 			default:
@@ -127,7 +127,7 @@ class CommentController extends AbstractController
             case 'post':
                 $entity = $this->entityManager->getRepository(PostInterface::class)->find($entityId);
                 break;
-            case 'gallery-image':
+            case 'galleryImage':
                 $entity = $this->entityManager->getRepository(GalleryImage::class)->find($entityId);
                 break;
             default:
